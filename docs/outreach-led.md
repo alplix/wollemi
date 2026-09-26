@@ -23,9 +23,29 @@ Reference: the naked-eye limit is about magnitude 6, the ISS about -4. A 10 degr
 ground track; the nadir-pointing attitude keeps the beam on the Earth during imaging orbits. Colour: an RGB emitter can flash red, green, blue or white; the eye
 sees colour on objects brighter than roughly magnitude 3-4, so a 10 W unit shows colour only for a well-placed observer, and a long-exposure camera records it easily.
 
+## A purple light: what it is good for (`python sim/led_visibility.py`)
+
+The operator wants a **purple/violet light visible from Earth and from other objects in space**. Physics splits that in two:
+
+| Observer | Violet 405 nm (10 W electrical, 10 deg beam) |
+|---|---|
+| Naked eye on the ground | **invisible** (about magnitude 11.7): the eye is ~300 times less sensitive to 405 nm than to red; blue 450 nm is marginal (mag 7), red 630 nm is visible (mag 5) |
+| Long-exposure camera on the ground (1000 km) | magnitude ~5 versus a bright star at mag 0: **clearly recorded** |
+| Another spacecraft's camera or star tracker at 100 km / 10 km | magnitude ~0 / ~-5: **very bright** |
+
+So violet is an excellent **optical beacon for cameras** (ground astro-photographers, cameras and star trackers on nearby spacecraft, inspection or rendezvous demonstrations)
+but a poor light for people looking up. To look purple to the naked eye a flasher needs red and blue of similar perceived brightness, which would take roughly 50 W on the
+blue side alone. Design choice: **violet 405 nm as the main channel** (camera beacon, purple in photographs), plus red (and a little blue) so that naked-eye observers
+still see a red-to-white flash; colour photographs of the red + violet combination look magenta/purple.
+
+Extra uses of the violet beacon: optical tracking test (cameras can measure the spacecraft position and attitude from its flash pattern), identification by pattern (for example a
+pulse code that spells the spacecraft ID), and demonstration of spacecraft-to-spacecraft optical detection.
+
+Caution: 405 nm is near-ultraviolet; irradiance at these ranges is many orders of magnitude below eye-safety limits, but confirm against the photobiological safety standard for the chosen emitter.
+
 ## What is in the design
 
-- Module `OUTREACH: RGB LED flasher (10 W burst, 10 deg collimated, nadir) + status LEDs`: 0.09 kg, 100 cm3, 10 W at 1 % duty (0.1 W average), at the nadir end of column Q3
+- Module `OUTREACH: RGB LED flasher (violet 405 nm main + red + blue, 10 W burst, 10 deg collimated, nadir) + status LEDs`: 0.09 kg, 100 cm3, 10 W at 1 % duty (0.1 W average), at the nadir end of column Q3
   behind a window in the nadir plate (`configs/12u_science.toml`, `12u_geometry.toml`, `12u_layout.toml`); CAD model includes the window.
 - Constant-current driver with PWM colour mixing, hardware maximum on-time and thermal cut-off; enabled only by a signed, time-tagged command.
 

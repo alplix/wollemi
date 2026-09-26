@@ -566,7 +566,7 @@ volume_cm3 = 0
 tier = "core"
 
 [[module]]
-name = "OUTREACH: RGB LED flasher (10 W burst, 10 deg collimated, nadir) + status LEDs"
+name = "OUTREACH: RGB LED flasher (violet 405 nm main + red + blue, 10 W burst, 10 deg collimated, nadir) + status LEDs"
 mass_kg = 0.09
 power_w = 10.0
 duty = 0.01
