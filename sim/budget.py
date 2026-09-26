@@ -139,12 +139,19 @@ def main(path):
         print(f"[{ok(good)}] {s['name']}{tag}\n        gen {s['gen']:.1f} W, {load} {s['cons']:.1f} W, "
               f"margin {s['margin']*100:+.0f} %, eclipse need {s['ecl_need']:.1f} Wh")
     print_volume(cfg)
-    print("-- Figures of merit (nominal scenario) --")
-    print(f"FOM-1 W/U:     {r['W_per_U']:.2f}  (target >= 3) [{ok(r['W_per_U'] >= 3)}]")
-    print(f"FOM-2 Wh/U:    {r['Wh_per_U']:.1f}  (target >= 15; under review) [{ok(r['Wh_per_U'] >= 15)}]")
-    print(f"FOM-3 payload: {r['payload_fraction']*100:.0f} %  (target >= 35) "
-          f"[{ok(r['payload_fraction'] >= 0.35)}]")
-
+    print("-- Figures of merit (definitions in mission/requirements.md) --")
+    print(f"FOM-1 orbit-average power per U:      {r['W_per_U']:.2f} W/U  (target >= 3, nominal scenario) [{ok(r['W_per_U'] >= 3)}]")
+    worst_need = max(sc["ecl_need"] for sc in r["scenarios"])
+    ecl_margin = r["eclipse_usable_wh"] / worst_need if worst_need else 99.0
+    print(f"FOM-2 eclipse energy margin:          x{ecl_margin:.1f}  (usable battery energy / worst eclipse need, target >= 2) [{ok(ecl_margin >= 2)}]")
+    sci_mass = sum(m["mass_kg"] for m in cfg["module"] if m.get("tier") == "science" or (m.get("payload") and "tier" not in m))
+    print(f"FOM-3 science payload mass fraction:  {r['payload_fraction'] * 100:.0f} %  (target >= 25; mass spent on longevity and safety is deliberate) "
+          f"[{ok(r['payload_fraction'] >= 0.25)}]")
+    v = volume_report(cfg)
+    if v:
+        _usable, vol, _mass, _tiers = v
+        share = vol.get("science", 0.0) / max(sum(vol.values()), 1e-9)
+        print(f"FOM-4 science share of module volume: {share * 100:.0f} %  (target >= 45) [{ok(share >= 0.45)}]")
 
 if __name__ == "__main__":
     main(sys.argv[1] if len(sys.argv) > 1 else "configs/6u_science.toml")

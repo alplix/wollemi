@@ -39,6 +39,7 @@ OPTIONAL = [
     ("Mission simulation", "sim/mission_sim.py", [PY, "sim/mission_sim.py"], "Verdict", r"Verdict.*", True),
     ("Cost estimate", "sim/cost.py", [PY, "sim/cost.py"], "Total", r"Total.*", False),
     ("FMEA coverage", "tools/fmea_check.py", [PY, "tools/fmea_check.py"], "FMEA coverage OK", r"FMEA coverage.*", False),
+    ("Requirements sync", "tools/req_sync_check.py", [PY, "tools/req_sync_check.py"], "REQ SYNC OK", r"REQ SYNC.*", False),
     ("Test plan coverage", "tools/test_plan_check.py", [PY, "tools/test_plan_check.py"], "TEST PLAN coverage OK", r"TEST PLAN coverage.*", False),
 ]
 
