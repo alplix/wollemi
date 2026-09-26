@@ -19,7 +19,7 @@ static int checks = 0, failures = 0;
 static gk_inputs_t healthy(void) {
   gk_inputs_t in;
   memset(&in, 0, sizeof in);
-  in.fc_ok = in.packs_ok = in.heavy_compute_ok = in.thruster_ok = in.temp_ok = 1;
+  in.fc_ok = in.packs_ok = in.heavy_compute_ok = in.light_compute_ok = in.thruster_ok = in.temp_ok = 1;
   in.sunlit = in.sun_biased = in.wings_deployed = 1;
   in.soc_pct = 90;
   return in;
@@ -77,9 +77,20 @@ static void test_modes(void) {
   in.heavy_compute_ok = 0;
   gk_modes_step(&s, &in);
   CHECK(s.level == 1 && !s.allow_heavy_compute);
+  in.soc_pct = 90;
   in.science_requested = 1;
   gk_modes_step(&s, &in);
-  CHECK(s.mode == GK_MODE_NOMINAL); /* science needs heavy compute */
+  CHECK(s.mode == GK_MODE_SCIENCE_LITE && !s.allow_heavy_compute && s.allow_light_compute && s.allow_payloads); /* imaging continues on the CM5 */
+  in.light_compute_ok = 0;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_NOMINAL); /* no compute for imaging at all */
+  in.light_compute_ok = 1;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SCIENCE_LITE);
+  in.heavy_compute_ok = 1;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SCIENCE && s.allow_heavy_compute); /* the Jetson coming back restores full science */
+  in.heavy_compute_ok = 0;
   /* packs lost: safe, level 2 */
   in.packs_ok = 0;
   gk_modes_step(&s, &in);

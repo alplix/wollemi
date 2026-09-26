@@ -24,18 +24,18 @@ import budget  # noqa: E402
 CFG = tomllib.load(open(os.path.join(ROOT, "configs", "12u_science.toml"), "rb"))
 R = budget.compute(CFG)
 OUT = os.path.join(ROOT, "sim", "out")
-MODES = ["LAUNCH", "DEPLOY", "COMMISSION", "NOMINAL", "SCIENCE", "BURN", "ECLIPSE", "SAFE", "SURVIVAL"]
+MODES = ["LAUNCH", "DEPLOY", "COMMISSION", "NOMINAL", "SCIENCE", "BURN", "ECLIPSE", "SAFE", "SURVIVAL", "SCIENCE_LITE"]
 
 
 class Inputs(ctypes.Structure):
     _fields_ = [(n, ctypes.c_uint8) for n in (
-        "fc_ok", "packs_ok", "heavy_compute_ok", "thruster_ok", "temp_ok", "sunlit", "sun_biased", "wings_deployed",
+        "fc_ok", "packs_ok", "heavy_compute_ok", "light_compute_ok", "thruster_ok", "temp_ok", "sunlit", "sun_biased", "wings_deployed",
         "sep_timer_done", "deploy_done", "commissioning_ok", "science_requested", "burn_requested", "soc_pct")]
 
 
 class State(ctypes.Structure):
     _fields_ = [("mode", ctypes.c_int), ("level", ctypes.c_uint8), ("allow_payloads", ctypes.c_uint8),
-                ("allow_heavy_compute", ctypes.c_uint8), ("allow_thruster", ctypes.c_uint8)]
+                ("allow_heavy_compute", ctypes.c_uint8), ("allow_light_compute", ctypes.c_uint8), ("allow_thruster", ctypes.c_uint8)]
 
 
 _LIB = None
@@ -72,7 +72,7 @@ def power_model():
         "gen_biased_typ": nominal["gen"] / 0.62,          # instantaneous sunlit power, sun-biased attitude, eclipse orbit
         "gen_biased_dd": dd["gen"] / 0.98,
         "gen_tumble": tumbling["gen"] / 0.62,
-        "load": {"LAUNCH": 1.5, "DEPLOY": 4.0, "COMMISSION": 18.0, "NOMINAL": full, "SCIENCE": full + 7.5, "BURN": burn,
+        "load": {"LAUNCH": 1.5, "DEPLOY": 4.0, "COMMISSION": 18.0, "NOMINAL": full, "SCIENCE": full + 7.5, "SCIENCE_LITE": full + 1.5, "BURN": burn,
                  "ECLIPSE": full - 2.5, "SAFE": safe, "SURVIVAL": 0.7},
     }
 
@@ -122,10 +122,11 @@ def simulate(beta_deg, days=60, dt=30.0, verbose=False):
         inp.fc_ok = 0 if fc_hang else 1
         inp.packs_ok = 1
         inp.heavy_compute_ok = 0 if jetson_dead else 1
+        inp.light_compute_ok = 1                             # the Pi CM5 stays healthy in this scenario
         inp.thruster_ok = 1
         inp.temp_ok = 0 if temp_bad else 1
         inp.sunlit = 1 if sunlit else 0
-        biased = st.mode in (3, 4, 5, 6, 2)                 # attitude control keeps the wings toward the sun in operational modes
+        biased = st.mode in (3, 4, 5, 6, 2, 9)                 # attitude control keeps the wings toward the sun in operational modes
         inp.sun_biased = 1 if biased else 0
         inp.wings_deployed = 1 if t > 3600 else 0
         inp.sep_timer_done = 1 if t > 1800 else 0
@@ -166,7 +167,7 @@ def simulate(beta_deg, days=60, dt=30.0, verbose=False):
             stats["burn_h"] += dt / 3600.0
         if burn and sunlit:
             stats["burn_wanted_h"] += dt / 3600.0
-        if mode == "SCIENCE":
+        if mode in ("SCIENCE", "SCIENCE_LITE"):
             stats["science_h"] += dt / 3600.0
     return stats, trans_log, period
 

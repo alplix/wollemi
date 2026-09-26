@@ -169,7 +169,7 @@ note = "TweetNaCl for the host build; review a maintained/verified library befor
 
 [[req]]
 id = "FW-1"
-text = "Mode manager, FDIR escalation, time-tagged command queue and A/B OTA with rollback behave as specified (65 unit checks, gcc -Werror)."
+text = "Mode manager, FDIR escalation, time-tagged command queue and A/B OTA with rollback behave as specified (68 unit checks, gcc -Werror), including SCIENCE_LITE when the heavy computer is lost."
 method = "T"
 auto = "firmware_tests"
 evidence = ["firmware/common/gk_modes.c", "firmware/common/gk_fdir.c", "firmware/common/gk_cmdq.c", "firmware/common/gk_ota.c"]

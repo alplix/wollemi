@@ -20,15 +20,16 @@ orbit, power and fault model for 60 days, at 30 s steps, for two orbits. Power n
 | Thruster burn delivered | 7.7 h of 7.7 h requested | 12.0 h of 12.0 h |
 | Flight controller hang (day 40) | NOMINAL -> SURVIVAL -> SAFE -> NOMINAL, recovered in ~2 h | same |
 | Temperature excursion (day 50) | NOMINAL -> SAFE -> NOMINAL in ~30 min | same |
-| Science time before the Jetson failure | 9 h | 15 h |
+| Science (imaging) time over 60 days | 76 h | 119 h (continues on the CM5 after the Jetson fails) |
 
 Verdict: no brownout and correct degradation and recovery in both orbits.
 
 ## Findings
 
 - The mode ladder behaves as designed with hysteresis (safe mode entered below 20 % charge, left above 45 %), and the thruster runs only in sunlight and only with a sun-biased attitude.
-- **After the Jetson failure the spacecraft never returns to SCIENCE mode**, because that mode requires heavy compute. The long-life instruments keep running in NOMINAL, but imaging campaigns stop entirely.
-  Improvement to make: a **SCIENCE-LITE** mode where the Pi CM5 does compression and selection so imaging continues at reduced rate (level 1 of the ladder).
+- The first run showed that **after the Jetson failure the spacecraft never returned to SCIENCE mode**, because that mode required heavy compute, so imaging campaigns stopped entirely.
+  Fix made: a **SCIENCE_LITE** mode (`gk_modes`): with the Jetson lost, imaging continues on the Pi CM5 at reduced processing; the Jetson coming back restores SCIENCE. Unit tests added (68 checks) and the simulation re-run:
+  science time rose from 9 h and 15 h to 76 h and 119 h.
 - In an eclipse orbit the mode changes every half orbit (about 28 per day); harmless but the telemetry and event log must not flood: log mode changes only when the cause is not a routine eclipse.
 - Energy is plentiful: the batteries are full most of the time and much sunlight is shed, so more power-hungry instruments or a bigger heater budget fit if the volume and thermal design allow.
 
@@ -40,5 +41,4 @@ Verdict: no brownout and correct degradation and recovery in both orbits.
 
 ## Next
 
-- Add SCIENCE-LITE to `gk_modes` with unit tests and re-run the simulation.
 - Extend the simulation with the thermal model and with an eclipse-entry cold-soak case for the optics heater.

@@ -12,14 +12,16 @@ typedef enum {
   GK_MODE_BURN,
   GK_MODE_ECLIPSE,
   GK_MODE_SAFE,
-  GK_MODE_SURVIVAL
+  GK_MODE_SURVIVAL,
+  GK_MODE_SCIENCE_LITE /* imaging with the light computer only (heavy compute lost); appended to keep earlier values stable */
 } gk_mode_t;
 
 /* degradation level: 0 full, 1 no heavy compute, 2 sun-only, 3 survival (supervisor + beacon) */
 typedef struct {
   uint8_t fc_ok;             /* flight controller alive and healthy */
   uint8_t packs_ok;          /* at least one main pack usable */
-  uint8_t heavy_compute_ok;  /* Jetson / CM5 healthy */
+  uint8_t heavy_compute_ok;  /* Jetson healthy */
+  uint8_t light_compute_ok;  /* Pi CM5 healthy */
   uint8_t thruster_ok;
   uint8_t temp_ok;           /* all monitored temperatures inside limits */
   uint8_t sunlit;
@@ -38,6 +40,7 @@ typedef struct {
   uint8_t level;
   uint8_t allow_payloads;
   uint8_t allow_heavy_compute;
+  uint8_t allow_light_compute;
   uint8_t allow_thruster;
 } gk_state_t;
 
