@@ -35,6 +35,14 @@ FACE_COLS = {"px": (1, 4), "mx": (2, 3), "py": (1, 2), "my": (3, 4), "pz": (1, 2
 
 # ---- masses and dissipation per column from the packing ----
 mods = {m["name"]: m for m in cfg["module"]}
+# heaters that are simulated explicitly (thermostats below) must not also count as constant dissipation
+EXPLICIT_HEATERS = ("Bus: telescope column thermostatic heater", "Thermal (heaters)", "Battery containment")
+
+
+def dissipation(m):
+    return 0.0 if m["name"].startswith(EXPLICIT_HEATERS) else m["power_w"] * m["duty"]
+
+
 col_mass = {q: th["conduction"]["structure_mass_per_column_kg"] for q in (1, 2, 3, 4)}
 col_power = {q: 0.0 for q in (1, 2, 3, 4)}
 col_power_safe = {q: 0.0 for q in (1, 2, 3, 4)}
@@ -43,7 +51,7 @@ tank_mass = 0.0
 for p in pl["placed"]:
     m = mods[p["name"]]
     q = p["col"]
-    pw = m["power_w"] * m["duty"]
+    pw = dissipation(m)
     if p["name"].startswith("LiFePO4 pack"):
         batt_mass += m["mass_kg"]
         col_power[q] += 0.0
@@ -61,9 +69,9 @@ for m in cfg["module"]:
     if m["name"] not in {p["name"] for p in pl["placed"]}:
         for q in (1, 2, 3, 4):
             col_mass[q] += m["mass_kg"] / 4
-            col_power[q] += m["power_w"] * m["duty"] / 4
+            col_power[q] += dissipation(m) / 4
             if m.get("safe_mode"):
-                col_power_safe[q] += m["power_w"] * m["duty"] / 4
+                col_power_safe[q] += dissipation(m) / 4
 JETSON_Q = next(p["col"] for p in pl["placed"] if p["name"].startswith("Mission computer: Jetson"))
 NODES = ["Q1", "Q2", "Q3", "Q4", "BATT", "TANK"]
 CP = {"Q1": th["constants"]["cp_body"], "Q2": th["constants"]["cp_body"], "Q3": th["constants"]["cp_body"],

@@ -1,0 +1,211 @@
+# Requirements traceability: requirement -> verification method -> evidence.
+# method: A analysis, T test, I inspection, D demonstration. status: designed (in the design, not yet proven),
+# open (missing), or auto (a numeric check in sim/trace_check.py evaluates it on every run).
+# `auto` names a check function in sim/trace_check.py.
+
+[[req]]
+id = "SYS-1"
+text = "12U CubeSat envelope (226.3 x 226.3 x 340.5 mm) with rails; deployer interface compatible."
+method = "I"
+evidence = ["mechanical/ginkgo_cad.py", "configs/12u_geometry.toml"]
+status = "designed"
+note = "Rails and envelope modelled; dispenser tabs, springs and contact surfaces simplified: check against the chosen dispenser drawing."
+
+[[req]]
+id = "SYS-2"
+text = "Total mass <= 24 kg (deployer limit); planned margin >= 20 % (<= 19 kg)."
+method = "A"
+auto = "mass"
+evidence = ["sim/budget.py", "configs/12u_science.toml"]
+
+[[req]]
+id = "SYS-3"
+text = "All modules fit geometrically inside their assigned columns with no interference (exact boolean check)."
+method = "A"
+auto = "fit"
+evidence = ["mechanical/pack.py", "mechanical/ginkgo_cad.py"]
+
+[[req]]
+id = "SYS-4"
+text = "Centre of mass within 20 mm (x, y) and 70 mm (z) of the geometric centre at launch."
+method = "A"
+auto = "com"
+evidence = ["mechanical/ginkgo_cad.py"]
+note = "Typical dispenser targets; verify with the chosen dispenser."
+
+[[req]]
+id = "SYS-5"
+text = "Stowed wing stack thickness <= 6.5 mm protrusion allowance."
+method = "A"
+auto = "wingstack"
+evidence = ["configs/12u_geometry.toml"]
+
+[[req]]
+id = "PWR-1"
+text = "Orbit-average power margin >= 20 % in every power scenario (nominal, tumbling, dawn-dusk, safe, burn)."
+method = "A"
+auto = "power_margin"
+evidence = ["sim/budget.py"]
+
+[[req]]
+id = "PWR-2"
+text = "Eclipse energy covered by the usable battery capacity with margin >= 2x."
+method = "A"
+auto = "eclipse"
+evidence = ["sim/budget.py"]
+
+[[req]]
+id = "PWR-3"
+text = "An independent survival power path (pack C, own string and charger) keeps supervisor and beacon alive when packs A and B are lost."
+method = "T"
+evidence = ["docs/power-architecture.md"]
+status = "designed"
+note = "Needs an electrical test of fault injection on the EPS engineering model."
+
+[[req]]
+id = "PWR-4"
+text = "Solar string voltages stay inside the MPPT input window over the temperature range."
+method = "A"
+auto = "strings"
+evidence = ["sim/eps_design.py"]
+
+[[req]]
+id = "PWR-5"
+text = "Wing panels carry cells on both faces (needed for the dawn-dusk power scenarios)."
+method = "I"
+evidence = ["docs/adcs.md", "mechanical/README.md"]
+status = "open"
+note = "Feasibility of a 2.1 mm double-sided panel (stiffness, mass, cost) is unproven."
+
+[[req]]
+id = "THM-1"
+text = "Electronics stay within -20..+60 C in nominal and eclipse orbits; battery within 0..40 C."
+method = "A"
+auto = "thermal"
+evidence = ["sim/thermal.py", "configs/12u_thermal.toml"]
+note = "Lumped model with estimated coatings; needs thermal-vacuum test."
+
+[[req]]
+id = "THM-2"
+text = "Telescope column 10..30 C with swing <= 6 K while imaging."
+method = "A"
+auto = "optics"
+evidence = ["sim/thermal.py"]
+
+[[req]]
+id = "ADCS-1"
+text = "90 degree slew in 120 s with torque and momentum margin >= 3x."
+method = "A"
+auto = "slew"
+evidence = ["sim/adcs.py"]
+
+[[req]]
+id = "ADCS-2"
+text = "Thruster misalignment torque during a burn stays below the magnetorquer average torque (thrust line through the CoM +-5 mm)."
+method = "A"
+auto = "thrust_torque"
+evidence = ["mechanical/ginkgo_cad.py", "docs/adcs.md"]
+
+[[req]]
+id = "PROP-1"
+text = "Total delta-v >= 500 m/s (station keeping to ~700 km, collision avoidance, controlled deorbit)."
+method = "A"
+auto = "deltav"
+evidence = ["docs/propulsion.md"]
+note = "Vendor impulse figure (about 9500 Ns class); confirm power, mass and plume data on the datasheet."
+
+[[req]]
+id = "PROP-2"
+text = "Exhaust plume clear of the solar wings."
+method = "A"
+auto = "plume"
+evidence = ["mechanical/ginkgo_cad.py"]
+note = "Plume half-angle 12 deg is an assumption; verify with the vendor plume map."
+
+[[req]]
+id = "COM-1"
+text = "One S-band station at the reference site (Pamukkale) receives all daily science data with >= 2x margin."
+method = "A"
+auto = "data_capacity"
+evidence = ["sim/data_budget.py", "configs/12u_data.toml"]
+
+[[req]]
+id = "COM-2"
+text = "S-band link margin >= 3 dB at 1 Mbps with a 1.2 m ground dish at 10 degrees elevation."
+method = "A"
+auto = "link"
+evidence = ["sim/link_budget.py"]
+
+[[req]]
+id = "COM-3"
+text = "Packet encode/decode is bit-exact between flight (C) and ground (Python) and rejects every single-bit corruption."
+method = "T"
+auto = "protocol_tests"
+evidence = ["protocol/tests/test_protocol.py"]
+
+[[req]]
+id = "COM-4"
+text = "Telecommands carry a valid Ed25519 signature, counter and validity window; the supervisor rejects others."
+method = "T"
+evidence = ["docs/protocol.md"]
+status = "open"
+note = "Signature verification not implemented yet (needs a vetted library and tests)."
+
+[[req]]
+id = "DATA-1"
+text = "On-board storage holds >= 100 days of raw data and tolerates any two device failures."
+method = "A"
+auto = "storage"
+evidence = ["sim/data_budget.py", "docs/firmware-architecture.md"]
+
+[[req]]
+id = "LONG-1"
+text = "Survival chain (supervisor + beacon) operates from body cells without any battery (sun-only mode)."
+method = "T"
+evidence = ["docs/longevity.md", "docs/power-architecture.md"]
+status = "designed"
+
+[[req]]
+id = "LONG-2"
+text = "Long-record science instruments never depend on Linux nodes for acquisition or downlink."
+method = "I"
+evidence = ["docs/firmware-architecture.md"]
+status = "designed"
+note = "A static build check (planned sim/chain_check.py) should enforce this."
+
+[[req]]
+id = "LONG-3"
+text = "Main packs still cover eclipse after 25 years; safe-mode power holds for 50 years (with the modelled degradation)."
+method = "A"
+auto = "longevity"
+evidence = ["sim/longevity.py"]
+
+[[req]]
+id = "ELEC-1"
+text = "Card template passes KiCad DRC with the spine notch, connectors and keep-outs defined."
+method = "A"
+auto = "kicad_drc"
+evidence = ["electronics/gen_card.py", "electronics/kicad/ginkgo_card_template.kicad_pcb"]
+
+[[req]]
+id = "OPEN-1"
+text = "All design files, data and protocol are public under open licences (hardware CERN-OHL-S, software Apache-2.0, docs CC-BY)."
+method = "I"
+evidence = ["README.md"]
+status = "open"
+note = "Repository is private until the design is complete; licence files are not applied yet."
+
+[[req]]
+id = "COLAV-1"
+text = "Operator of record registered for conjunction data messages; collision-avoidance burns validated on the ground."
+method = "D"
+evidence = ["mission/requirements.md"]
+status = "open"
+note = "Needs a licensed operator and registration; process not started."
+
+[[req]]
+id = "REG-1"
+text = "Frequency coordination and amateur-satellite licensing completed before launch."
+method = "I"
+evidence = ["mission/requirements.md"]
+status = "open"

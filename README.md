@@ -27,8 +27,8 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 
 | Path | Content |
 |---|---|
-| `mission/` | Requirements, figures of merit, open access, collision avoidance |
-| `docs/` | Architecture, decision records (`docs/decisions/`), power, layout, data plan, propulsion, longevity, firmware, protocol, electrical interface, ADCS, thermal, prior art, ground-station kit, design identity |
+| `mission/` | Requirements, figures of merit, open access, collision avoidance, `traceability.toml` (requirement -> verification) |
+| `docs/` | Architecture, decision records (`docs/decisions/`), power, layout, data plan, propulsion, longevity, firmware, protocol, electrical interface, ADCS, thermal, verification matrix, risks, prior art, ground-station kit, design identity |
 | `configs/` | Single source of truth: `12u_science.toml`, `12u_layout.toml`, `12u_data.toml`, `12u_longevity.toml` (+ 2U/3U/6U variants) |
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
 | `protocol/` | Message definitions (`messages.toml`), C/Python generator, tests (round trip, corruption, C<->Python byte-exact) |
@@ -45,6 +45,7 @@ python sim/layout_check.py                           # cell fill and separation 
 python sim/balance.py                                # centre of mass and per-column heat
 python sim/data_budget.py                            # science data vs downlink and storage
 python sim/longevity.py                              # year-by-year power, battery and radiation dose
+python sim/trace_check.py                            # live requirements verification matrix (writes docs/verification-matrix.md)
 python sim/thermal.py                                # orbital thermal model: column temperatures, heaters, limits
 python sim/adcs.py                                   # disturbance torques, wheels, magnetorquers, telescope smear
 python sim/eps_design.py                             # solar strings, MPPT, battery pack, charge limits
