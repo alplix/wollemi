@@ -24,7 +24,7 @@ R = RE + th["orbit"]["altitude_km"]
 PERIOD = 2 * math.pi * math.sqrt(R ** 3 / 398600.4418)
 RHO = math.asin(RE / R)
 VF_NADIR = math.sin(RHO) ** 2
-VF_SIDE = 0.17
+VF_SIDE = (RHO - math.sin(RHO) * math.cos(RHO)) / math.pi   # plate whose normal is perpendicular to nadir (analytic)
 
 A_L = th["geometry"]["face_large_m2"]
 A_E = th["geometry"]["face_end_m2"]
@@ -151,7 +151,7 @@ for q in (1, 2, 3, 4):
     COL_RAD[q] = lst
 
 
-def simulate(beta_deg, power, extra=None, orbits=25, dt=10.0, heater=True, tank_w=0.0):
+def simulate(beta_deg, power, extra=None, orbits=25, dt=10.0, heater=True, tank_w=0.0, optics_heater=True):
     """Return per-node (min, max) over the last 5 orbits, heater duty and eclipse minutes per orbit."""
     lim = th["limits"]
     T = {n: 15.0 for n in NODES}
@@ -182,7 +182,7 @@ def simulate(beta_deg, power, extra=None, orbits=25, dt=10.0, heater=True, tank_
             elif T["BATT"] > lim["battery_heater_off_c"]:
                 heat_state = 0
             q["BATT"] += lim["battery_heater_w"] * heat_state
-        if OPT and heater:
+        if OPT and heater and optics_heater:
             if T["Q1"] < OPT["heater_on_c"]:
                 opt_state = 1
             elif T["Q1"] > OPT["heater_off_c"]:
@@ -205,6 +205,9 @@ def simulate(beta_deg, power, extra=None, orbits=25, dt=10.0, heater=True, tank_
 def report(title, beta, power, **kw):
     lim = th["limits"]
     res, hduty, ecl_min = simulate(beta, power, **kw)
+    imaging = kw.get("optics_heater", True)      # optics window applies only when the telescope is meant to image
+    report.last_heater_w = hduty * lim["battery_heater_w"] + simulate.last_opt_duty * (OPT["heater_w"] if OPT else 0.0)
+    report.failed = getattr(report, "failed", False)
     print(f"-- {title} (beta {beta} deg, eclipse {ecl_min:.0f} min/orbit, battery heater duty {hduty * 100:.0f} %, "
           f"optics heater {simulate.last_opt_duty * 100:.0f} %, total heat {sum(power.values()):.1f} W) --")
     for n in NODES:
@@ -212,10 +215,12 @@ def report(title, beta, power, **kw):
         flag = ""
         if n == "BATT" and (lo < lim["battery_min_c"] or hi > lim["battery_max_c"]):
             flag = "  <-- OUT OF BATTERY LIMITS"
-        elif n == "Q1" and (hi - lo > lim["optics_swing_max_k"] or lo < lim["optics_min_c"] or hi > lim["optics_max_c"]):
+        elif n == "Q1" and imaging and (hi - lo > lim["optics_swing_max_k"] or lo < lim["optics_min_c"] or hi > lim["optics_max_c"]):
             flag = "  <-- telescope column outside optics limits (10..30 C, swing <= 6 K)"
         elif n.startswith("Q") and (lo < lim["electronics_min_c"] or hi > lim["electronics_max_c"]):
             flag = "  <-- OUT OF ELECTRONICS LIMITS"
+        if flag and ("BATTERY" in flag or "ELECTRONICS" in flag):
+            report.failed = True
         print(f"   {n:5s} {lo:6.1f} .. {hi:6.1f} C   swing {hi - lo:5.1f} K{flag}")
     return res
 
@@ -234,16 +239,34 @@ def main():
     burst[JETSON_Q] += 10.0
     report("SCIENCE BURST (Jetson +10 W continuous), dawn-dusk", 80, burst)
     print()
-    report("SAFE MODE (essential loads only), with eclipse", 0, col_power_safe)
+    report("SAFE MODE (essential loads only, optics heater off: telescope may cool to the electronics limit), with eclipse", 0, col_power_safe, optics_heater=False)
+    heater_w = report.last_heater_w
+    safe_budget = sum(m["power_w"] * m["duty"] for m in cfg["module"] if m.get("safe_mode") and ("heater" in m["name"].lower() or "battery containment" in m["name"].lower()))
+    print(f"   safe-mode heater power from this model: {heater_w:.1f} W average; budgeted for heaters in safe mode: {safe_budget:.1f} W "
+          f"-> {'OK' if heater_w <= safe_budget else 'BUDGET TOO LOW'}")
+    if heater_w > safe_budget:
+        report.failed = True
+    print()
+    # environment extremes: cold (aphelion, low albedo) safe mode and hot (perihelion, high albedo) science burst
+    global S, ALB, EIR
+    keep = (S, ALB, EIR)
+    S, ALB, EIR = 1322.0, 0.25, 218.0
+    print()
+    report("SAFE MODE, COLD environment extreme (flux 1322, albedo 0.25, Earth IR 218)", 0, col_power_safe, optics_heater=False)
+    S, ALB, EIR = 1414.0, 0.35, 258.0
+    print()
+    report("SCIENCE BURST, HOT environment extreme (flux 1414, albedo 0.35, Earth IR 258)", 80, burst)
+    S, ALB, EIR = keep
     print()
     burn = dict(col_power_safe)
     burn[JETSON_Q] += 0.0
     res = report("BURN MODE (minimal loads, 50 W thruster; ~35 W lost as heat into the bay), dawn-dusk", 80, burn,
-                 tank_w=35.0)
+                 tank_w=35.0, optics_heater=False)
     print()
     print("Reading: batteries and electronics limits are checked automatically; a flagged line means the coating, conduction or")
     print("heater assumptions need to change (radiator area, heat straps, wing-back radiators, heater power).")
+    return 1 if report.failed else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

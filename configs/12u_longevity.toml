@@ -10,9 +10,9 @@ degradation_per_year = 0.015       # exponential, radiation + thermal cycling + 
 
 [battery]
 packs_wh_total = 84                # packs A + B (2S2P 26650 LiFePO4, 42 Wh each)
-max_dod_usable = 0.80
+max_dod_usable = 0.40           # must equal max_depth_of_discharge in 12u_science.toml (checked by longevity.py)
 cycle_life_at_100dod = 3000        # LiFePO4, conservative
-dod_exponent = 1.5                 # life ~ N100 * DoD^-exponent
+dod_exponent = 1.0                 # life ~ N100 * DoD^-exponent (1.0 = conservative; LEO qualification data suggest 30-40k cycles at 20-30 % DoD)
 calendar_fade_per_year = 0.01
 fade_at_end_of_life = 0.20         # capacity fraction lost at cycle-life end
 

@@ -8,8 +8,8 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
 | Item | Result |
 |---|---|
 | Solar arrays (1.5 %/yr loss) | Full load still covered in ADCS-biased mode for 50 yr; tumbling mode falls below the 20.4 W full load at ~28 yr |
-| Safe mode (body cells only, 3.1 W including survival heaters) | Holds for about 90 yr |
-| Main LiFePO4 packs A+B (2S2P 26650, 42 Wh each) | ~5300 eclipse cycles/yr, ~15 % DoD (heaters and extra loads raised the eclipse need to ~12 Wh): ~10 yr to 20 % fade; can no longer cover eclipse after ~28 yr |
+| Safe mode (body cells only, 3.1 W including 2.2 W of heaters; optics heater off, telescope column may cool to about -17 C, which `sim/thermal.py` checks together with the heater budget) | Power holds for about 90 yr; electronics stay above the -20 C limit with only ~3 K margin (cold extreme -16 C), so it is a thin margin |
+| Main LiFePO4 packs A+B (2S2P 26650, 42 Wh each) | ~5300 eclipse cycles/yr, planning depth of discharge capped at 40 % (the same value the power budget uses), cycle-life exponent 1.0 (conservative): can no longer cover the eclipse after ~10 yr; the 3000 x DoD^-1.5 law used earlier extrapolated cycle life beyond the data and gave a too rosy ~28 yr |
 | Total ionising dose (2 mm Al) | 2 krad/yr, ~100 krad over 50 yr |
 | COTS SoC (Jetson / Pi, ~15 krad) | ~8 yr at 2 mm, ~17 yr at 5 mm, ~33 yr at 10 mm |
 | STM32H7 (~30 krad) | ~33 yr at 5 mm, ~67 yr at 10 mm |
@@ -17,8 +17,8 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
 
 ## What this means: 50 years is a *tiered* lifetime, not one number
 
-1. **Survival chain (target 50+ yr):** MSP430 supervisor, beacon transmitter, survival bus, body-
-   mounted cells. Must keep working with no battery (sun-only, AO-7 style); design the beacon so
+1. **Survival chain (target 50+ yr, honest limit):** MSP430 supervisor (~111 yr at 10 mm Al-equivalent), beacon transmitter, survival bus, body-
+   mounted cells. The radio ICs (~20 krad) reach only ~44 yr at 10 mm Al-equivalent, so 50 years needs a thicker vault (about 14 mm) or a rad-tolerant radio part; until then the claim is 40+ years for the beacon. Must keep working with no battery (sun-only, AO-7 style); design the beacon so
    it runs directly from the solar string.
 2. **Long-life science chain (target 30-50 yr):** magnetometer, TSI radiometer, dosimeter,
    particle spectrometer, atomic clock, housekeeping, logged and downlinked by the **STM32
@@ -26,7 +26,7 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
    on the Pi or Jetson for its data path.
 3. **Heavy compute (target ~10-15 yr):** Jetson and Pi. Expect radiation-limited life; treat as
    consumables. Design for graceful loss (science keeps flowing through chain 2).
-4. **Main batteries (target ~10-28 yr):** after fade, switch to sun-only operation (no eclipse
+4. **Main batteries (target ~10 yr in an eclipse orbit, no wear-out limit in a dawn-dusk orbit):** after fade, switch to sun-only operation (no eclipse
    operations for heavy loads). A dawn-dusk orbit removes the eclipse problem entirely.
 
 ## Design responses adopted

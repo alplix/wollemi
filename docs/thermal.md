@@ -27,7 +27,7 @@ requirement on the panel and skin layout, not only a coating choice.
 | Nominal, dawn-dusk (beta 80 deg, no eclipse) | 15-32 C | 24-25 C, swing 0.6 K | 15.5 C, heater off |
 | Nominal, eclipse orbit (beta 0 deg, 35 min eclipse) | 6-15 C | 12.6-17.2 C, swing 4.5 K, heater 70 % | 9 C |
 | Science burst (Jetson +10 W), dawn-dusk | 25-41 C | 30.7-31.3 C (about 1 K above the 30 C limit) | 25 C |
-| Safe mode, eclipse orbit | -10..-1 C | 7-12 C | 4-9 C |
+| Safe mode, eclipse orbit (optics heater off) | -16..-8 C | -17..-12 C (optics window not applicable) | 4-9 C |
 | Burn mode, dawn-dusk | 32-55 C (Q2 next to the bay) | 36 C (no imaging during a burn) | 32 C |
 
 The optics limit (10-30 C, swing <= 6 K) only has to hold while imaging, so the science-burst overshoot is managed by not imaging during long Jetson bursts.
@@ -40,6 +40,8 @@ The optics limit (10-30 C, swing <= 6 K) only has to hold while imaging, so the 
 - The temperature swing in the electronics columns (5-8 K per orbit in eclipse orbits) contributes to solder-joint fatigue (see `docs/longevity.md`).
 
 ## Open items
+
+- Physics review: safe mode needs the optics heater off (8 W would exceed the 10.9 W body-cell power); `sim/thermal.py` now checks the modelled heater power against the budgeted 2.2 W, uses the analytic side view factor (0.23 instead of 0.17) and adds cold and hot environment extremes. Not yet modelled: wing panels, the cell operating point (cells that do not extract power run hotter, up to ~20 W extra on a lit face in the worst case), a tank temperature limit.
 
 - Propulsion bay: tank and thruster reach ~100 C in burn mode in this model; real thermal isolation, radiator and the vendor's heat rejection must be designed.
 - Wing-back radiators are not needed for the nominal case but remain an option for high-power burst operation.

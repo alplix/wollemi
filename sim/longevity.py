@@ -27,6 +27,8 @@ def main(cfg_path, lg_path):
     period_min = 2 * math.pi * math.sqrt(a ** 3 / 398600) / 60
     orbits_yr = 365.25 * 24 * 60 / period_min if lg["orbit"]["has_eclipse"] else 0
     b = lg["battery"]
+    if abs(b["max_dod_usable"] - cfg["battery"]["max_depth_of_discharge"]) > 1e-9:
+        raise SystemExit("longevity max_dod_usable must equal battery.max_depth_of_discharge of the science config")
     dod = nominal["ecl_need"] / b["packs_wh_total"] if lg["orbit"]["has_eclipse"] else 0
     n_life = b["cycle_life_at_100dod"] * (max(dod, 1e-3)) ** (-b["dod_exponent"])
     print(f"Orbit {alt} km: period {period_min:.1f} min, {orbits_yr:.0f} eclipse cycles/year")

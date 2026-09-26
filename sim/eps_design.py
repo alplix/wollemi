@@ -71,7 +71,7 @@ gen = 2 * 3 * p_panel
 print()
 print(f"Average load {load:.1f} W; peak wing power {gen:.0f} W; chargeable {2 * ch_max_a * 6.4:.0f} W -> "
       f"excess must be shed: MPPT channels back off (peak-power tracking is not required when loads + charge are lower).")
-print(f"Eclipse energy at full loads (35 min): {load * 35 / 60:.1f} Wh of {2 * pack_wh * 0.8:.0f} Wh usable")
+print(f"Eclipse energy at full loads (35 min): {load * 35 / 60:.1f} Wh of {2 * pack_wh * cfg['battery']['max_depth_of_discharge']:.0f} Wh usable (planning depth of discharge)")
 
 # ---- burn mode ----
 burn = 51.1
