@@ -231,6 +231,11 @@ def c_mission_sim():
     return out.returncode == 0, line[:120]
 
 
+def c_fmea():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "fmea_check.py")], capture_output=True, text=True)
+    return out.returncode == 0, out.stdout.strip().splitlines()[-1][:120] if out.stdout.strip() else out.stderr[-100:]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 

@@ -211,6 +211,14 @@ auto = "mission_sim"
 evidence = ["sim/mission_sim.py", "firmware/common/gk_modes.c", "docs/mission-simulation.md"]
 
 [[req]]
+id = "FMEA-1"
+text = "FMEA covers all subsystems; every failure mode of severity >= 4 has a detection and a response from the FDIR vocabulary."
+method = "A"
+auto = "fmea"
+evidence = ["mission/fmea.toml", "tools/fmea_check.py", "docs/fmea.md"]
+note = "Qualitative team estimate; needs independent review and part-level extension."
+
+[[req]]
 id = "ELEC-1"
 text = "Card template passes KiCad DRC with the spine notch, connectors and keep-outs defined."
 method = "A"

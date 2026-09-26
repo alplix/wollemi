@@ -1,0 +1,549 @@
+# Failure modes and effects analysis (draft v0). Severity S and likelihood L on 1-5 (5 worst); detection D 1-5 (5 = hard to detect).
+# fdir vocabulary: hardware, retry, restart, power_cycle, switch_redundant, degrade, kill, safe_mode, survival_mode, sun_only, ground_action, design
+# tools/fmea_check.py enforces: every subsystem covered, every S >= 4 has a detection and a response, values from the vocabulary.
+
+[[fm]]
+id = "PWR-01"
+sys = "Power"
+item = "Solar wing string (one panel)"
+mode = "open circuit or short of a panel string"
+effect = "loss of about 1/6 of wing power; MPPT channel idles"
+detect = "per-channel current and voltage telemetry (hk_power), string current comparison"
+response = "MPPT channel disabled, other channels continue; ground informed"
+fdir = "degrade"
+S = 2
+L = 3
+D = 2
+
+[[fm]]
+id = "PWR-02"
+sys = "Power"
+item = "Wing deployment"
+mode = "wing fails to deploy or one panel jams"
+effect = "generation limited to body cells (10.9 W tumbling); imaging and burns impossible"
+detect = "deployment confirmation switches, generation vs sun angle"
+response = "retry burn wire (independent survival supply), then safe mode on body cells; ground decides on operations without wings"
+fdir = "retry"
+S = 4
+L = 2
+D = 2
+
+[[fm]]
+id = "PWR-03"
+sys = "Power"
+item = "MPPT / EPS-A card"
+mode = "card failure (short, no output)"
+effect = "wing A power lost, pack A charger lost; bus B and pack B continue"
+detect = "loss of EPS-A telemetry, bus A voltage, heartbeat"
+response = "isolated by ideal diode; supervisor kills the slot if needed; operate on EPS-B and half the power"
+fdir = "switch_redundant"
+S = 3
+L = 2
+D = 2
+
+[[fm]]
+id = "PWR-04"
+sys = "Power"
+item = "Battery pack A or B"
+mode = "cell short, open cell, overheating"
+effect = "one pack lost; risk of venting or fire in the vault"
+detect = "pack voltage/current/temperature, BMS flags, hardware cut-off"
+response = "hardware disconnect and fuse; vault contains the event; operate on the other pack and the survival pack"
+fdir = "hardware"
+S = 5
+L = 2
+D = 2
+
+[[fm]]
+id = "PWR-05"
+sys = "Power"
+item = "Both main packs"
+mode = "both packs fail or fade below eclipse needs"
+effect = "no eclipse operation; sun-only mode"
+detect = "state-of-charge model, eclipse voltage sag"
+response = "sun-only mode (heavy loads only in sunlight), survival bus keeps supervisor and beacon"
+fdir = "sun_only"
+S = 4
+L = 3
+D = 2
+
+[[fm]]
+id = "PWR-06"
+sys = "Power"
+item = "Bus short circuit or card short"
+effect = "voltage collapse on one bus"
+mode = "short on a card input or backplane"
+detect = "per-card eFuse trip, FAULT_N wired-OR, bus voltage monitor"
+response = "the card's own eFuse latches off; supervisor kills the slot with SLOT_SEL/KILL_N if it stays faulty"
+fdir = "kill"
+S = 4
+L = 2
+D = 2
+
+[[fm]]
+id = "PWR-07"
+sys = "Power"
+item = "Survival chain (pack C, survival string)"
+mode = "pack C dead or string open"
+effect = "supervisor and beacon rely on the main buses only"
+detect = "pack C telemetry; loss of survival-path current"
+response = "supervisor keeps running from bus A/B; beacon designed to run direct from the solar string (sun-only)"
+fdir = "design"
+S = 3
+L = 3
+D = 3
+
+[[fm]]
+id = "PWR-08"
+sys = "Power"
+item = "Charge control"
+mode = "charger fails to stop (overcharge) or charges below 0 C"
+effect = "cell damage, plating, vent risk"
+detect = "cell voltage and temperature comparators independent of software"
+response = "hardware OVP/UVP and low-temperature charge inhibit"
+fdir = "hardware"
+S = 5
+L = 2
+D = 2
+
+[[fm]]
+id = "THM-01"
+sys = "Thermal"
+item = "Battery heater or thermostat"
+mode = "stuck off or stuck on"
+effect = "cold battery (no charging) or overheating"
+detect = "vault temperature, heater current telemetry"
+response = "hardware over-temperature cut-off; charge inhibit below 0 C; second heater element"
+fdir = "hardware"
+S = 4
+L = 2
+D = 2
+
+[[fm]]
+id = "THM-02"
+sys = "Thermal"
+item = "Telescope column heater"
+mode = "fails off in eclipse orbits"
+effect = "optics cold, swing beyond 6 K; imaging degraded, possible focus shift"
+detect = "column temperature sensors"
+response = "imaging inhibited outside the temperature window; ground reconfigures the orbit plan"
+fdir = "degrade"
+S = 2
+L = 3
+D = 2
+
+[[fm]]
+id = "THM-03"
+sys = "Thermal"
+item = "Propulsion bay and tank"
+mode = "iodine tank overheats or freezes plumbing / cold spots"
+effect = "thruster cannot start or wrong pressure; heat into neighbours"
+detect = "tank and bay temperature sensors, thruster telemetry"
+response = "burn aborted, bay isolated, heaters thermostatic; mode manager leaves BURN"
+fdir = "degrade"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "THM-04"
+sys = "Thermal"
+item = "Multilayer insulation / coating degradation"
+mode = "gradual optical property change (UV, atomic oxygen, contamination)"
+effect = "temperatures drift over the years"
+detect = "long-term temperature trend vs the model"
+response = "heater and duty-cycle adjustment from the ground; wider margins"
+fdir = "ground_action"
+S = 2
+L = 4
+D = 3
+
+[[fm]]
+id = "CMP-01"
+sys = "Compute"
+item = "Flight controller"
+mode = "hang or single-event upset"
+effect = "loss of control functions"
+detect = "supervisor watchdog and CAN heartbeat"
+response = "escalation retry, restart, power-cycle, switch to FC-B; SURVIVAL mode if all fail"
+fdir = "power_cycle"
+S = 4
+L = 3
+D = 1
+
+[[fm]]
+id = "CMP-02"
+sys = "Compute"
+item = "Radiation latch-up on any card"
+mode = "current runaway in a COTS device"
+effect = "card overheats, bus sag"
+detect = "eFuse over-current trip"
+response = "eFuse latches off, retry after a delay; permanent latch-up leaves the card off"
+fdir = "hardware"
+S = 3
+L = 4
+D = 1
+
+[[fm]]
+id = "CMP-03"
+sys = "Compute"
+item = "Jetson Orin Nano"
+mode = "death by radiation or fault"
+effect = "no heavy processing (imaging pipeline degraded)"
+detect = "heartbeat and error counters"
+response = "degradation level 1; SCIENCE_LITE on the CM5; science chain unaffected"
+fdir = "degrade"
+S = 2
+L = 4
+D = 1
+
+[[fm]]
+id = "CMP-04"
+sys = "Compute"
+item = "Pi CM5"
+mode = "death"
+effect = "no bulk data handling or S-band engine on the Linux side"
+detect = "heartbeat"
+response = "FC and MMU keep the long-life science chain and downlink via the S-band modem interface"
+fdir = "degrade"
+S = 3
+L = 4
+D = 1
+
+[[fm]]
+id = "CMP-05"
+sys = "Compute"
+item = "Mass memory unit"
+mode = "one or two flash devices fail; controller hang"
+effect = "capacity loss; risk of data loss on a third failure"
+detect = "scrubbing errors, device status (mmu_status)"
+response = "6+2 erasure coding, adaptive stripe width; controller restart; data downlinked and released as soon as acknowledged"
+fdir = "restart"
+S = 3
+L = 4
+D = 2
+
+[[fm]]
+id = "CMP-06"
+sys = "Compute"
+item = "Time base"
+mode = "loss of GNSS/CSAC lock or clock drift"
+effect = "timestamps degraded, time-tagged commands mis-timed"
+detect = "clock quality bits, PPS monitoring"
+response = "fall back to the FC oscillator with quality flag; ground time_set command"
+fdir = "degrade"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "CMP-07"
+sys = "Compute"
+item = "Supervisor (MSP430FR)"
+mode = "hang or upset"
+effect = "no watchdog and no beacon"
+detect = "its own hardware watchdog; external supervisor timer"
+response = "hardware watchdog reset; FRAM state protected by checksums; stays the simplest and best-shielded device"
+fdir = "hardware"
+S = 5
+L = 1
+D = 2
+
+[[fm]]
+id = "COM-01"
+sys = "Comms"
+item = "S-band transmitter"
+mode = "power amplifier failure"
+effect = "no bulk downlink; UHF only (about 0.5 MB/day)"
+detect = "TX telemetry, ground non-reception"
+response = "UHF carries priority-1 subsets; ground commands the spare or repeats"
+fdir = "degrade"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "COM-02"
+sys = "Comms"
+item = "UHF radio and antenna"
+mode = "antenna fails to deploy or radio fails"
+effect = "loss of beacon and commanding path"
+detect = "no contact at expected passes"
+response = "survival beacon designed as a separate low-power path; deployment retried with burn-wire on the survival supply"
+fdir = "retry"
+S = 5
+L = 2
+D = 3
+
+[[fm]]
+id = "COM-03"
+sys = "Comms"
+item = "Command channel"
+mode = "replay or forged telecommand"
+effect = "unauthorised spacecraft control"
+detect = "signature, counter and validity check (gk_auth)"
+response = "command rejected and logged; key rotation available"
+fdir = "design"
+S = 5
+L = 2
+D = 1
+
+[[fm]]
+id = "COM-04"
+sys = "Comms"
+item = "Ground network"
+mode = "single station outage (weather, failure, power)"
+effect = "no contacts for a day or more; collision-avoidance commands delayed"
+detect = "planned contact log"
+response = "second station, volunteer network, autonomous store-and-forward; commanding planned with 24-48 h margin"
+fdir = "ground_action"
+S = 3
+L = 4
+D = 1
+
+[[fm]]
+id = "ADC-01"
+sys = "ADCS"
+item = "Reaction wheel"
+mode = "wheel failure or bearing wear"
+effect = "one axis lost; slews and pointing degraded"
+detect = "wheel speed and current telemetry, pointing error"
+response = "remaining wheels plus magnetorquers; degraded imaging; safe mode sun-pointing by torquers"
+fdir = "degrade"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "ADC-02"
+sys = "ADCS"
+item = "Magnetorquer or driver"
+mode = "stuck on"
+effect = "uncontrolled torque, magnetic disturbance to the magnetometer"
+detect = "torquer current telemetry, attitude drift"
+response = "hardware current limit, driver disabled by supervisor, wheels take over"
+fdir = "kill"
+S = 3
+L = 2
+D = 2
+
+[[fm]]
+id = "ADC-03"
+sys = "ADCS"
+item = "Star tracker"
+mode = "blinded by the Sun or Earth, or failed"
+effect = "no fine attitude"
+detect = "solution quality flags"
+response = "gyro/sun-sensor propagation, coarse pointing mode, tracker exclusion angles from the wing geometry"
+fdir = "degrade"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "ADC-04"
+sys = "ADCS"
+item = "Attitude loss after separation or fault"
+mode = "tumbling"
+effect = "power falls to 28 W average with wings, 11 W on body cells; no burns or imaging"
+detect = "rate gyros, sun sensors"
+response = "detumble with magnetorquers in safe mode; body-cell power covers the safe loads"
+fdir = "safe_mode"
+S = 3
+L = 3
+D = 1
+
+[[fm]]
+id = "PRP-01"
+sys = "Propulsion"
+item = "Electric thruster"
+mode = "fails to start or loses thrust"
+effect = "no station keeping or collision avoidance; no controlled descent"
+detect = "thruster telemetry, no delta-v measured from GNSS"
+response = "abort burn, drag sail as passive disposal, planning without manoeuvres"
+fdir = "degrade"
+S = 4
+L = 3
+D = 2
+
+[[fm]]
+id = "PRP-02"
+sys = "Propulsion"
+item = "Thruster stuck on / valve or heater failure"
+mode = "uncommanded thrust"
+effect = "orbit change and torque, propellant loss"
+detect = "acceleration from GNSS/gyros, thruster telemetry"
+response = "hardware cut through the supervisor kill path and the three-inhibit chain; power removed"
+fdir = "kill"
+S = 4
+L = 1
+D = 2
+
+[[fm]]
+id = "PRP-03"
+sys = "Propulsion"
+item = "Iodine plume and corrosion"
+mode = "contamination of optics, cells or radiators"
+effect = "gradual loss of optical performance and power"
+detect = "image degradation, generation trend"
+response = "thruster placed away from optics and cells with canted exhaust; limit burn hours; plume shielding"
+fdir = "design"
+S = 3
+L = 3
+D = 4
+
+[[fm]]
+id = "PRP-04"
+sys = "Propulsion"
+item = "Thrust line off the centre of mass"
+mode = "CoM shift beyond +-5 mm (ballast, propellant use)"
+effect = "torque during burns exceeds the magnetorquer capacity; wheel saturation"
+detect = "wheel momentum during burns"
+response = "shorter burns with dumping; ground updates the cant/CoM model; burn aborted on saturation"
+fdir = "safe_mode"
+S = 3
+L = 3
+D = 2
+
+[[fm]]
+id = "STR-01"
+sys = "Structure"
+item = "Burn-wire / hold-down release"
+mode = "release does not occur"
+effect = "wing or antenna stays stowed"
+detect = "deployment switches"
+response = "retry, second wire, independent supply; see PWR-02 and COM-02"
+fdir = "retry"
+S = 4
+L = 2
+D = 2
+
+[[fm]]
+id = "STR-02"
+sys = "Structure"
+item = "Launch damage (vibration, shock)"
+mode = "loosened fastener, cracked solder, panel damage"
+effect = "any function may fail at first contact"
+detect = "post-launch checkout of every subsystem"
+response = "design margins (docs/structure.md), workmanship, environmental tests, staged commissioning"
+fdir = "design"
+S = 4
+L = 2
+D = 3
+
+[[fm]]
+id = "STR-03"
+sys = "Structure"
+item = "Debris or micrometeoroid impact"
+mode = "penetration of tank, vault or electronics; solar panel damage"
+effect = "random failures up to loss of mission"
+detect = "impact sensor, sudden telemetry change"
+response = "Whipple protection on tank and batteries, redundancy (A/B/C), collision avoidance for tracked objects"
+fdir = "design"
+S = 5
+L = 1
+D = 3
+
+[[fm]]
+id = "PAY-01"
+sys = "Payload"
+item = "Telescope and hyperspectral optics"
+mode = "contamination, defocus, mechanical shift"
+effect = "image quality loss"
+detect = "calibration targets, star fields, focus telemetry"
+response = "calibration campaigns, thermal control, focus adjustment from the ground"
+fdir = "ground_action"
+S = 2
+L = 3
+D = 3
+
+[[fm]]
+id = "PAY-02"
+sys = "Payload"
+item = "Long-life science chain sensors"
+mode = "individual instrument failure (magnetometer, TSI, dosimeter...)"
+effect = "loss of that data record"
+detect = "instrument health flags and data validity"
+response = "other instruments continue; redundant dosimetry; ground reconfiguration"
+fdir = "degrade"
+S = 2
+L = 3
+D = 2
+
+[[fm]]
+id = "PAY-03"
+sys = "Payload"
+item = "Outreach LED flasher"
+mode = "stuck on or unintended flash during imaging"
+effect = "stray light, power drain, sky nuisance"
+detect = "LED current telemetry"
+response = "hardware maximum on-time and thermal cut-off; disabled by mode manager in SCIENCE and SAFE"
+fdir = "hardware"
+S = 2
+L = 2
+D = 2
+
+[[fm]]
+id = "SWD-01"
+sys = "Software"
+item = "Over-the-air update"
+mode = "corrupt or interrupted update"
+effect = "node fails to boot the new image"
+detect = "hash check before commit, confirm timeout"
+response = "A/B slots, confirm-or-rollback (gk_ota); never overwrite the running slot"
+fdir = "design"
+S = 4
+L = 3
+D = 1
+
+[[fm]]
+id = "SWD-02"
+sys = "Software"
+item = "Flight software defect"
+mode = "logic error in FDIR or mode manager"
+effect = "wrong mode or missed recovery"
+detect = "unit tests, closed-loop simulation, hardware-in-the-loop, telemetry review"
+response = "supervisor independent of flight software; safe mode; patch via OTA"
+fdir = "survival_mode"
+S = 4
+L = 3
+D = 3
+
+[[fm]]
+id = "SWD-03"
+sys = "Software"
+item = "Key or signature failure"
+mode = "operational key lost or compromised"
+effect = "cannot command, or unauthorised command risk"
+detect = "rejected commands, ground audit"
+response = "previous key still valid, key_rotate signed by the offline root key"
+fdir = "ground_action"
+S = 4
+L = 2
+D = 3
+
+[[fm]]
+id = "GND-01"
+sys = "Ground"
+item = "Operator error"
+mode = "wrong command or wrong sequence uploaded"
+effect = "unintended mode, burn or data deletion"
+detect = "ground checks, validity windows, simulation before upload"
+response = "time-tagged sequences validated against power/attitude/thermal state on the ground; expiry windows; two-person rule for manoeuvres"
+fdir = "ground_action"
+S = 4
+L = 3
+D = 2
+
+[[fm]]
+id = "GND-02"
+sys = "Ground"
+item = "Loss of operator or organisation over decades"
+mode = "no one commands or receives"
+effect = "open-loop spacecraft; data unrecovered"
+detect = "project governance review"
+response = "open protocol and tools, public archive, autonomy in the survival chain; documented operator hand-over"
+fdir = "design"
+S = 3
+L = 4
+D = 3
