@@ -22,7 +22,7 @@ OUT = os.path.join(HERE, "out")
 MIN3 = (Align.MIN, Align.MIN, Align.MIN)
 CTR = (Align.CENTER, Align.CENTER, Align.MIN)
 
-COL_COLOR = {1: (90, 140, 240), 2: (240, 160, 75), 3: (85, 185, 105), 4: (215, 85, 80)}
+COL_COLOR = {0: (235, 195, 70), 1: (90, 140, 240), 2: (240, 160, 75), 3: (85, 185, 105), 4: (215, 85, 80)}
 FRAME_COLOR = (172, 178, 190)
 WING_COLOR = (55, 90, 215)
 EXT_COLOR = (230, 205, 80)
@@ -122,6 +122,18 @@ def build_frame(geo, placed):
     add("Bulkhead Y+", box(cr / 2, -cr / 2, zi0, ih, cr / 2, zi1) - spine_outer)
     add("Bulkhead Y-", box(-ih, -cr / 2, zi0, -cr / 2, cr / 2, zi1) - spine_outer)
 
+    bay = find("Bus: micro-propulsion")
+    if bay and bay["shape"] == "cylx":
+        from build123d import Axis
+        cyl = Pos((bay["min"][0] + bay["max"][0]) / 2, (bay["min"][1] + bay["max"][1]) / 2,
+                  (bay["min"][2] + bay["max"][2]) / 2) * Cylinder(
+            (bay["max"][1] - bay["min"][1]) / 2 + 1.0, (bay["max"][0] - bay["min"][0]) + 2.0,
+            align=(Align.CENTER, Align.CENTER, Align.CENTER)).rotate(Axis.Y, 90)
+        for p_ in parts:
+            if p_["name"] == "Bulkhead Y-":
+                p_["shape"] = p_["shape"] - cyl
+                p_["shape"].label = "Bulkhead Y-"
+
     # thruster nozzle through the trailing (-X) wall
     prop = find("Bus: micro-propulsion")
     plume = None
@@ -174,7 +186,12 @@ def build_modules(placed):
     for m in placed:
         x0, y0, z0 = m["min"]
         x1, y1, z1 = m["max"]
-        if m["shape"] == "cyl":
+        if m["shape"] == "cylx":
+            from build123d import Axis
+            L_ = x1 - x0
+            shp = Pos((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2) * Cylinder(
+                (y1 - y0) / 2, L_, align=(Align.CENTER, Align.CENTER, Align.CENTER)).rotate(Axis.Y, 90)
+        elif m["shape"] == "cyl":
             d = x1 - x0
             shp = Pos((x0 + x1) / 2, (y0 + y1) / 2, z0) * Cylinder(d / 2, z1 - z0, align=CTR)
         else:
@@ -270,26 +287,40 @@ def mass_props(placed, cfg, wings_deployed, geo):
     return M, (cx - 0.0, cy - 0.0, cz - oz / 2), I
 
 
-def plume_check(plume, geo, half_angle_deg):
+def thrust_geometry(plume, com_offset, geo):
+    """Cant the fixed thruster so its thrust line passes through the centre of mass.
+
+    plume = nozzle exit point on the -X face (mm, world). com_offset = CoM relative to the geometric centre.
+    Returns (cant_y_deg, cant_z_deg, miss_uncanted_mm).
+    """
+    fr = geo["frame"]
+    oz = fr["outer"][2]
+    px, py, pz = plume
+    cx, cy, cz = com_offset[0], com_offset[1], oz / 2 + com_offset[2]
+    dx, dy, dz = cx - px, cy - py, cz - pz
+    return math.degrees(math.atan2(dy, dx)), math.degrees(math.atan2(dz, dx)), math.hypot(dy, dz)
+
+
+def plume_check(plume, geo, half_angle_deg, cant_y_deg=0.0):
+    """Does the exhaust cone (axis canted toward +Y by cant_y) touch the wing B plane?"""
     if not plume:
         return None
     fr = geo["frame"]
     hy = fr["outer"][1] / 2
-    px, py, pz = plume                       # nozzle exit on the -X face, exhaust toward -X
+    px, py, pz = plume
     wg = geo["wings"]
     pw, pl, pt = wg["panel"]
     hx = fr["outer"][0] / 2
-    yplane = -(hy + wg["standoff"])          # wing B plane (extends toward -X)
-    t = math.tan(math.radians(half_angle_deg))
-    # plume edge reaches the wing plane at distance d from the exit
-    d = (py - yplane) / t if py > yplane else None
-    x_hit = px - d if d else None
+    yplane = -(hy + wg["standoff"])                      # wing B plane, extends toward -X
+    alpha = -cant_y_deg                                  # positive = exhaust tilted toward +Y
+    edge = alpha - half_angle_deg                        # angle of the cone edge that opens toward -Y
     wing_end = -(hx + wg["panels_per_wing"] * pw)
-    if d is None:
-        return "no impingement"
-    hit = x_hit >= wing_end            # x_hit is negative; wing spans px .. wing_end
-    return f"plume edge meets wing B plane at x = {x_hit:.0f} mm (wing ends at {wing_end:.0f} mm): " \
-           + ("IMPINGES on wing B" if hit else "clear")
+    if edge >= 0:
+        return f"exhaust axis tilted {alpha:+.1f} deg, cone edge at {edge:+.1f} deg never reaches wing B: clear"
+    d = (py - yplane) / math.tan(math.radians(-edge))
+    x_hit = px - d
+    return (f"cone edge meets the wing B plane at x = {x_hit:.0f} mm (wing ends at {wing_end:.0f} mm): "
+            + ("IMPINGES on wing B" if x_hit >= wing_end else "clear"))
 
 
 def to_mesh(shape, tol=0.7):
@@ -438,8 +469,19 @@ def main():
     print(f"Deployed span (x): {2 * (ox / 2 + wg['panels_per_wing'] * wg['panel'][0]):.0f} mm, "
           f"wing area per wing {wg['panels_per_wing'] * wg['panel'][0] * wg['panel'][1] / 1e6:.3f} m2")
 
-    print("\n== Thruster plume vs wings (15 deg half-angle) ==")
-    print(plume_check(plume, geo, 15.0))
+    pa = geo.get("thruster", {}).get("plume_half_angle_deg", 15.0)
+    M0, com0, _I = mass_props(placed, cfg, False, geo)
+    cy_deg, cz_deg, miss = thrust_geometry(plume, com0, geo)
+    print("\n== Thruster line through the centre of mass ==")
+    print(f"CoM offset from the geometric centre: ({com0[0]:+.1f}, {com0[1]:+.1f}, {com0[2]:+.1f}) mm; "
+          f"nozzle at y = {plume[1]:+.1f}, z = {plume[2]:.1f} mm")
+    print(f"Uncanted thrust line misses the CoM by {miss:.1f} mm -> {1.1e-3 * miss * 1e-3 * 1e6:.1f} uN m disturbance "
+          f"(magnetorquer average ~18 uN m)")
+    print(f"Fixed cant to pass through the CoM: {cy_deg:+.1f} deg (y), {cz_deg:+.1f} deg (z); "
+          f"thrust loss {(1 - math.cos(math.radians(math.hypot(cy_deg, cz_deg)))) * 100:.1f} %")
+    print(f"\n== Thruster plume vs wings ({pa:.0f} deg half-angle) ==")
+    print("uncanted:", plume_check(plume, geo, pa, 0.0))
+    print("canted  :", plume_check(plume, geo, pa, cy_deg))
 
     print("\n== Mass properties (module boxes, uniform density) ==")
     for dep, lab in ((False, "stowed"), (True, "deployed")):

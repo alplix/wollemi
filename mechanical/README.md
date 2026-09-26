@@ -33,6 +33,10 @@ Outputs in `out/`: `ginkgo_12u_stowed.step/.stl`, `ginkgo_12u_deployed.step/.stl
   a wider plume (Hall thruster) would impinge on panels 2-3. Mitigation: gridded ion thruster, shorter
   wing B, or a canted nozzle.
 
+- **Thruster line vs centre of mass:** with the nozzle in a column the lever arm was ~70 mm (about 70 uN m at 1.1 mN). The propulsion module is now a bay on the -X face centre
+  line (keep-out in Q2/Q3) with a fixed cant of about 8.6/2.9 deg through the CoM; that cant also clears the exhaust from wing B. See `docs/adcs.md`.
+- **Wings must be double-sided:** with the sun on +Y in a dawn-dusk orbit, one single-sided wing faces away; the power scenarios assume cells on both faces.
+
 ## Limits (be honest)
 
 - Modules are bounding boxes (cylinder for telescope and tank), not vendor CAD; sizes are estimates.

@@ -39,7 +39,8 @@ def main(cfg_path, lay_path):
         v = m.get("volume_cm3", 0)
         mass, pw = m["mass_kg"], m["power_w"] * m["duty"]
         if isinstance(q, str):
-            parts.append((m["name"], mass, 0.0, 0.0, 0.0, pw))
+            x_ = -65.0 if q == "bay" else 0.0          # propulsion bay centre (mm), mid-height on the -X side
+            parts.append((m["name"], mass, x_, 0.0, 0.0, pw))
             continue
         share = {}
         if hit.get("pack") == "sequential":

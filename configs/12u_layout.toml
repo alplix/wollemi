@@ -36,7 +36,7 @@ match = "ADCS:"
 at = "Q2/1-2"
 [[place]]
 match = "Bus: micro-propulsion"
-at = "Q2/2-3"
+at = "bay"   # propulsion bay on the -X face centre line (mechanical/pack.py keepout)
 [[place]]
 match = "Bus: star tracker"
 at = "Q2/3"
@@ -46,25 +46,28 @@ match = "Mission computer: Jetson"
 at = "Q3/1"
 [[place]]
 match = "Mission computer B"
-at = "Q3/2"
+at = "Q2/3"
 [[place]]
 match = "SCI: multi-computer"
 at = "Q3/1"
 [[place]]
 match = "Flight controller"
-at = "Q3/1"
-[[place]]
-match = "UHF LoRa comms"
 at = "Q3/2"
 [[place]]
-match = "S-band transceiver"
+match = "UHF LoRa comms"
+at = "Q2/2"
+[[place]]
+match = "S-band transceiver (high-rate downlink, RX)"
+at = "Q3/1"
+[[place]]
+match = "S-band transceiver (TX)"
 at = "Q3/2"
 [[place]]
 match = "Payload A: SEU"
 at = "Q3/2"
 [[place]]
 match = "Payload C: temp"
-at = "Q3/1"
+at = "Q3/2"
 [[place]]
 match = "Payload D: store"
 at = "Q3/2"
@@ -88,7 +91,7 @@ match = "Payload H: dual-frequency GNSS"
 at = "Q3/3"
 [[place]]
 match = "SCI: total solar irradiance"
-at = "Q3/1"
+at = "Q2/2"
 
 [[place]]
 match = "LiFePO4 pack A"
@@ -228,7 +231,7 @@ at = "Q3/1"
 
 [[place]]
 match = "Mass memory unit"
-at = "Q3/2"
+at = "Q3/1"
 [[place]]
 match = "SCI: flash memory"
 at = "Q3/3"

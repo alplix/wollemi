@@ -1,6 +1,30 @@
 {
  "placed": [
   {
+   "name": "Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)",
+   "col": 0,
+   "tier": "core",
+   "mass_kg": 2.0,
+   "shape": "cylx",
+   "size": [
+    89,
+    95,
+    95
+   ],
+   "notched": false,
+   "min": [
+    -109.65,
+    -47.5,
+    122.75
+   ],
+   "max": [
+    -20.650000000000006,
+    47.5,
+    217.75
+   ],
+   "true_volume_cm3": 803.225
+  },
+  {
    "name": "Payload E: telescope camera (85 mm Cassegrain, ~5 m GSD at 700 km)",
    "col": 1,
    "tier": "science",
@@ -191,30 +215,6 @@
    ],
    "notched": false,
    "true_volume_cm3": 31.5
-  },
-  {
-   "name": "Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)",
-   "col": 2,
-   "tier": "core",
-   "mass_kg": 2.0,
-   "shape": "cyl",
-   "size": [
-    100,
-    100,
-    100
-   ],
-   "min": [
-    -101.5,
-    6.5,
-    155.5
-   ],
-   "max": [
-    -6.5,
-    101.5,
-    255.5
-   ],
-   "notched": false,
-   "true_volume_cm3": 1000.0
   },
   {
    "name": "EO: hyperspectral spectrometer (shares telescope fore-optics, ~50 bands 400-1000 nm)",
@@ -505,6 +505,30 @@
    "true_volume_cm3": 153.9
   },
   {
+   "name": "SCI: total solar irradiance radiometer (climate-grade, long series)",
+   "col": 2,
+   "tier": "science",
+   "mass_kg": 0.15,
+   "shape": "box",
+   "size": [
+    55,
+    55,
+    50
+   ],
+   "min": [
+    -56.5,
+    54.0,
+    118.0
+   ],
+   "max": [
+    -1.5,
+    109.0,
+    168.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 151.25
+  },
+  {
    "name": "S-band transceiver (high-rate downlink, RX)",
    "col": 3,
    "tier": "core",
@@ -518,12 +542,12 @@
    "min": [
     -91.5,
     -109.0,
-    203.0
+    48.0
    ],
    "max": [
     -1.5,
     -29.0,
-    225.5
+    70.5
    ],
    "notched": false,
    "true_volume_cm3": 151.2
@@ -554,48 +578,24 @@
   },
   {
    "name": "Mission computer B: Raspberry Pi CM5 (always-on, low power, data handling)",
-   "col": 3,
+   "col": 2,
    "tier": "science",
    "mass_kg": 0.1,
    "shape": "box",
    "size": [
-    90,
     60,
+    90,
     28
    ],
    "min": [
-    -91.5,
     -109.0,
-    173.0
+    1.5,
+    225.5
    ],
    "max": [
-    -1.5,
     -49.0,
-    203.0
-   ],
-   "notched": false,
-   "true_volume_cm3": 151.2
-  },
-  {
-   "name": "SCI: total solar irradiance radiometer (climate-grade, long series)",
-   "col": 3,
-   "tier": "science",
-   "mass_kg": 0.15,
-   "shape": "box",
-   "size": [
-    60,
-    60,
-    42
-   ],
-   "min": [
-    -61.5,
-    -109.0,
-    48.0
-   ],
-   "max": [
-    -1.5,
-    -49.0,
-    90.5
+    91.5,
+    255.5
    ],
    "notched": false,
    "true_volume_cm3": 151.2
@@ -638,12 +638,12 @@
    "min": [
     -91.5,
     -91.5,
-    113.0
+    70.5
    ],
    "max": [
     -1.5,
     -1.5,
-    133.0
+    90.5
    ],
    "notched": true,
    "true_volume_cm3": 145.8
@@ -674,24 +674,24 @@
   },
   {
    "name": "UHF LoRa comms (RX)",
-   "col": 3,
+   "col": 2,
    "tier": "core",
    "mass_kg": 0.1,
    "shape": "box",
    "size": [
     90,
-    60,
-    22
+    55,
+    24
    ],
    "min": [
     -91.5,
-    -109.0,
-    150.5
+    54.0,
+    168.0
    ],
    "max": [
     -1.5,
-    -49.0,
-    173.0
+    109.0,
+    193.0
    ],
    "notched": false,
    "true_volume_cm3": 118.8
@@ -704,21 +704,21 @@
    "shape": "box",
    "size": [
     90,
-    80,
-    14
+    55,
+    23
    ],
    "min": [
     -91.5,
     -109.0,
-    133.0
+    200.5
    ],
    "max": [
     -1.5,
-    -29.0,
-    148.0
+    -54.0,
+    225.5
    ],
    "notched": false,
-   "true_volume_cm3": 100.8
+   "true_volume_cm3": 113.85
   },
   {
    "name": "LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for propellant tank and battery vaults",
@@ -775,19 +775,19 @@
    "mass_kg": 0.08,
    "shape": "box",
    "size": [
-    40,
     90,
+    40,
     22
    ],
    "min": [
-    -101.5,
+    -91.5,
     -109.0,
-    48.0
+    178.0
    ],
    "max": [
-    -61.5,
-    -19.0,
-    70.5
+    -1.5,
+    -69.0,
+    200.5
    ],
    "notched": false,
    "true_volume_cm3": 79.2
@@ -852,14 +852,14 @@
     25
    ],
    "min": [
-    -109.0,
     -41.5,
-    148.0
+    -109.0,
+    153.0
    ],
    "max": [
-    -69.0,
     -1.5,
-    173.0
+    -69.0,
+    178.0
    ],
    "notched": false,
    "true_volume_cm3": 40.0
@@ -876,14 +876,14 @@
     25
    ],
    "min": [
-    -109.0,
     -41.5,
-    173.0
+    -109.0,
+    128.0
    ],
    "max": [
-    -69.0,
     -1.5,
-    198.0
+    -69.0,
+    153.0
    ],
    "notched": false,
    "true_volume_cm3": 40.0
@@ -900,14 +900,14 @@
     35
    ],
    "min": [
-    -51.5,
-    -31.5,
-    55.5
+    -71.5,
+    -109.0,
+    143.0
    ],
    "max": [
-    -21.5,
-    -1.5,
-    90.5
+    -41.5,
+    -79.0,
+    178.0
    ],
    "notched": false,
    "true_volume_cm3": 31.5
@@ -1034,7 +1034,7 @@
   },
   {
    "name": "UHF LoRa comms (TX)",
-   "col": 3,
+   "col": 2,
    "tier": "core",
    "mass_kg": 0.0,
    "shape": "box",
@@ -1045,13 +1045,13 @@
    ],
    "min": [
     -11.5,
-    -101.5,
-    123.0
+    21.5,
+    118.0
    ],
    "max": [
     -1.5,
-    -91.5,
-    133.0
+    31.5,
+    128.0
    ],
    "notched": false,
    "true_volume_cm3": 1.0
@@ -1068,14 +1068,14 @@
     10
    ],
    "min": [
-    -31.5,
-    -11.5,
-    103.0
+    -101.5,
+    -109.0,
+    48.0
    ],
    "max": [
-    -21.5,
-    -1.5,
-    113.0
+    -91.5,
+    -99.0,
+    58.0
    ],
    "notched": false,
    "true_volume_cm3": 1.0

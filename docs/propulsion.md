@@ -19,6 +19,11 @@ All numbers below are estimates; confirm with thruster datasheets and vendors.
 - Emergency avoidance therefore needs 24-48 h notice (CDMs give days) and burns spread over several
   sunlit passes.
 
+## Placement and thrust line
+
+The thruster sits in a **propulsion bay on the -X face centre line** (y = 0, mid-height) and is canted about 8.6 deg (y) and 2.9 deg (z) so the thrust line
+passes through the centre of mass; see `docs/adcs.md`. The cant also keeps the exhaust cone clear of wing B (12 deg half-angle assumed).
+
 ## Burn mode (minimal services)
 - All payloads and heavy computers off; ADCS, flight controller, supervisor, comms RX, heaters stay on.
 - Thruster runs **only in sunlight**; the eclipse is covered by the normal (minimal) load.

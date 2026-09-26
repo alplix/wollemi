@@ -27,14 +27,14 @@ def main(cfg_path, lay_path):
     where = {}       # module name -> (q, decks)
     unassigned = []
     fill = {(q, d): 0.0 for q in range(1, cols + 1) for d in range(1, decks + 1)}
-    other = {"skin": 0.0, "spine": 0.0, "structure": 0.0}
+    other = {"skin": 0.0, "spine": 0.0, "structure": 0.0, "bay": 0.0}
     for m in cfg["module"]:
         hit = next((p for p in lay["place"] if m["name"].startswith(p["match"])), None)
         if not hit:
             unassigned.append(m["name"])
             continue
         q, ds = parse_at(hit["at"])
-        where[m["name"]] = (q, ds)
+        where[m["name"]] = (0, [2]) if q == "bay" else (q, ds)
         v = m.get("volume_cm3", 0)
         if isinstance(q, int) and hit.get("pack") == "sequential":
             rem = v
@@ -66,7 +66,7 @@ def main(cfg_path, lay_path):
             print(f"[OVER] column Q{q}: {tot:.0f} cm3 > {cell_cap * decks:.0f} cm3")
     for q, d in over:
         print(f"[warn] cell Q{q}/D{d} over capacity: {fill[(q, d)]:.0f} > {cell_cap:.0f} cm3")
-    print(f"Outside cells: skin {other['skin']:.0f} cm3, spine {other['spine']:.0f} cm3")
+    print(f"Outside cells: skin {other['skin']:.0f} cm3, spine {other['spine']:.0f} cm3, propulsion bay {other['bay']:.0f} cm3")
     if unassigned:
         print("[FAIL] unassigned modules:", unassigned)
 

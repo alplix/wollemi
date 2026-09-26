@@ -23,6 +23,14 @@ panels_per_wing = 3
 panel = [226.3, 340.5, 2.1]      # width, length, thickness (PCB + cells); 3 stowed must stay <= protrusion_limit
 standoff = 6.5                   # hinge offset of the deployed wing plane from the rail plane
 
+[thruster]
+plume_half_angle_deg = 12.0      # assumed for a gridded ion thruster; verify with the vendor plume data
+
+[[keepout]]
+name = "propulsion bay (thruster axis along X through the -X face centre, mid-height)"
+min = [-110.0, -50.0, 122.5]     # world x, y, z (z measured from the nadir plate outer face)
+max = [-20.0, 50.0, 218.0]
+
 [[box]]
 match = "Payload E: telescope"
 size = [100, 100, 250]
@@ -54,9 +62,8 @@ size = [50, 50, 80]
 end = "zenith"
 [[box]]
 match = "Bus: micro-propulsion"
-size = [100, 100, 100]
-align = "top"
-shape = "cyl"
+size = [89, 95, 95]          # cylinder axis along X: length 89 (x), diameter 95 (y, z)
+special = "propulsion_bay"   # not packed in a column: sits on the -X face centre line so the thrust line passes the CoM
 [[box]]
 match = "Mission computer B"
 size = [90, 60, 28]
@@ -73,7 +80,7 @@ match = "Flight controller"
 size = [90, 40, 22]
 [[box]]
 match = "UHF LoRa comms (RX)"
-size = [90, 60, 22]
+size = [90, 55, 24]
 [[box]]
 match = "UHF LoRa comms (TX)"
 size = [10, 10, 10]
@@ -82,7 +89,7 @@ match = "S-band transceiver (high-rate downlink, RX)"
 size = [90, 80, 21]
 [[box]]
 match = "S-band transceiver (TX)"
-size = [90, 80, 14]
+size = [90, 55, 23]
 [[box]]
 match = "Payload A: SEU"
 size = [40, 40, 25]
@@ -117,7 +124,7 @@ end = "zenith"
 slack_mm = 45
 [[box]]
 match = "SCI: total solar irradiance"
-size = [60, 60, 42]
+size = [55, 55, 50]
 [[box]]
 match = "Payload I: radiation dosimeter"
 size = [30, 30, 35]

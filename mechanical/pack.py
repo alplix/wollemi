@@ -111,10 +111,37 @@ def build(cfg_path, lay_path, geo_path, quiet=False):
         g[n - rl:, n - rl:, :] = True            # u,v large = outer corner (rail)
         grids[q] = g
 
+    # keepout volumes (world coordinates) blocked in every column they touch
+    for ko in geo.get("keepout", []):
+        (kx0, ky0, kz0), (kx1, ky1, kz1) = ko["min"], ko["max"]
+        for q, (sx, sy) in SIGN.items():
+            idx = np.arange(n)
+            xa = sx * (fr["cross"] / 2 + idx * v)
+            xb = sx * (fr["cross"] / 2 + (idx + 1) * v)
+            ya = sy * (fr["cross"] / 2 + idx * v)
+            yb = sy * (fr["cross"] / 2 + (idx + 1) * v)
+            xm = (np.minimum(xa, xb) < kx1) & (np.maximum(xa, xb) > kx0)
+            ym = (np.minimum(ya, yb) < ky1) & (np.maximum(ya, yb) > ky0)
+            zk = np.arange(nz)
+            zm = (fr["wall"] + zk * v < kz1) & (fr["wall"] + (zk + 1) * v > kz0)
+            grids[q][np.ix_(xm, ym, zm)] = True
+
+    special = []
     jobs, unboxed = [], []
     for m in cfg["module"]:
         hit = next((p for p in lay["place"] if m["name"].startswith(p["match"])), None)
         loc = parse_at(hit["at"]) if hit else None
+        box = next((b for b in geo["box"] if m["name"].startswith(b["match"])), None)
+        if box and box.get("special") == "propulsion_bay":
+            ko = geo["keepout"][0]
+            sx_, sy_, sz_ = box["size"]
+            zc = (ko["min"][2] + ko["max"][2]) / 2
+            special.append({"name": m["name"], "col": 0, "tier": m.get("tier", "core"), "mass_kg": m["mass_kg"],
+                            "shape": "cylx", "size": [sx_, sy_, sz_], "notched": False,
+                            "min": [-fr["outer"][0] / 2 + fr["wall"] + 0.5, -sy_ / 2, zc - sz_ / 2],
+                            "max": [-fr["outer"][0] / 2 + fr["wall"] + 0.5 + sx_, sy_ / 2, zc + sz_ / 2],
+                            "true_volume_cm3": sx_ * sy_ * sz_ / 1000})
+            continue
         if loc is None:
             continue
         box = next((b for b in geo["box"] if m["name"].startswith(b["match"])), None)
@@ -205,6 +232,7 @@ def build(cfg_path, lay_path, geo_path, quiet=False):
             "true_volume_cm3": o[0] * o[1] * o[2] / 1000,
         })
 
+    placed = special + placed
     occ_tot = sum(int(g.sum()) for g in grids.values())
     blocked_static = 4 * (sp * sp + rl * rl) * nz
     mod_vox = occ_tot - blocked_static
