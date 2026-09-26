@@ -87,7 +87,7 @@ def build_frame(geo, placed):
     if tel:
         cx, cy = (tel["min"][0] + tel["max"][0]) / 2, (tel["min"][1] + tel["max"][1]) / 2
         nadir_cuts.append(Pos(cx, cy, -1) * Cylinder(45.0, w + 2, align=CTR))
-    for pre, s in (("Payload F: wide-field", 34), ("Payload G: thermal IR", 26), ("EO: lightning", 20)):
+    for pre, s in (("Payload F: wide-field", 34), ("Payload G: thermal IR", 26), ("EO: lightning", 20), ("OUTREACH: RGB LED flasher", 36)):
         m = find(pre)
         if m:
             cx, cy = (m["min"][0] + m["max"][0]) / 2, (m["min"][1] + m["max"][1]) / 2

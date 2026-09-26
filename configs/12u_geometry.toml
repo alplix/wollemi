@@ -143,8 +143,7 @@ match = "SCI: flash memory"
 size = [30, 30, 35]
 [[box]]
 match = "LONG: radiation vault"
-size = [90, 90, 12]
-notched = true
+size = [90, 55, 20]          # reshaped from 90 x 90 x 12: fits the strip beside the propulsion bay
 [[box]]
 match = "SCI: multi-computer"
 size = [10, 10, 10]
@@ -195,6 +194,10 @@ size = [10, 10, 5]
 [[box]]
 match = "Bus: survival heaters"
 size = [10, 10, 5]
+[[box]]
+match = "OUTREACH: RGB LED flasher"
+size = [60, 55, 30]
+end = "nadir"
 [[box]]
 match = "Bus: drag sail"
 size = [100, 100, 20]

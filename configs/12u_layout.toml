@@ -67,7 +67,7 @@ match = "Payload A: SEU"
 at = "Q3/2"
 [[place]]
 match = "Payload C: temp"
-at = "Q3/2"
+at = "Q3/3"
 [[place]]
 match = "Payload D: store"
 at = "Q3/2"
@@ -226,12 +226,12 @@ kind = "different_deck"
 
 [[place]]
 match = "LONG: radiation vault"
-at = "Q3/1"
+at = "Q3/2"
 
 
 [[place]]
 match = "Mass memory unit"
-at = "Q3/1"
+at = "Q3/1-2"
 [[place]]
 match = "SCI: flash memory"
 at = "Q3/3"
@@ -247,3 +247,7 @@ at = "spine"
 [[place]]
 match = "Bus: telescope column thermostatic heater"
 at = "Q1/3"
+
+[[place]]
+match = "OUTREACH: RGB LED flasher"
+at = "Q3/1"

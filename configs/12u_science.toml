@@ -564,3 +564,12 @@ duty = 0.30
 payload = false
 volume_cm3 = 0
 tier = "core"
+
+[[module]]
+name = "OUTREACH: RGB LED flasher (10 W burst, 10 deg collimated, nadir) + status LEDs"
+mass_kg = 0.09
+power_w = 10.0
+duty = 0.01
+payload = false
+volume_cm3 = 100
+tier = "service"
