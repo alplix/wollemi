@@ -6,12 +6,15 @@ single fault.
 
 ## What is new, what is borrowed
 
+See `docs/prior-art.md` for the honest comparison with OreSat, LibreCube, UPSat and others. In short: the
+card/backplane idea is **not** ours (OreSat is the closest precedent); our contribution is the combination below.
+
 We do not claim to have invented every part. We claim a distinctive *combination*, published
 openly, and we document prior art honestly. A `docs/prior-art.md` review is part of phase 1.
 
 ### Distinctive contributions
 
-1. **Ginkgo Cell Standard (GCS).** The 12U body is a 2 x 2 x 3 grid of ~113 mm cells around a
+1. **Ginkgo Cell Standard (GCS)** (close to OreSat's card/backplane; the differences are the grid, spine, notched card and checked rules). The 12U body is a 2 x 2 x 3 grid of ~113 mm cells around a
    central spine and cross bulkheads. Each payload is a self-contained "cassette" occupying a
    defined number of cells, with fixed mechanical, thermal, power and data interfaces. New
    missions re-use the bus and swap cassettes. The cell grid is derived directly from the
