@@ -131,6 +131,14 @@ evidence = ["mechanical/ginkgo_cad.py"]
 note = "Plume half-angle 12 deg is an assumption; verify with the vendor plume map."
 
 [[req]]
+id = "ORB-1"
+text = "At end of life the spacecraft can reach reentry within 25 years: passive with the drag sail, plus a propulsive descent option; total delta-v plan within the available budget."
+method = "A"
+auto = "orbit"
+evidence = ["sim/orbit_life.py", "docs/orbit-and-debris.md"]
+note = "Rough atmosphere model (factor 2-3); collision risk not evaluated; a 50-year science life conflicts with the 25-year guideline unless a disposal manoeuvre ends the mission."
+
+[[req]]
 id = "COM-1"
 text = "One S-band station at the reference site (Pamukkale) receives all daily science data with >= 2x margin."
 method = "A"

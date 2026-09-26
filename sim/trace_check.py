@@ -219,6 +219,12 @@ def c_structure():
     return out.returncode == 0, line[:110]
 
 
+def c_orbit():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "sim", "orbit_life.py")], capture_output=True, text=True)
+    line = next((l for l in out.stdout.splitlines() if l.startswith("Verdict")), "")
+    return out.returncode == 0, line[:120]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 
