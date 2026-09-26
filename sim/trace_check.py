@@ -206,6 +206,13 @@ def c_kicad_backplane():
     return ok, "Found 0 DRC violations, 0 unconnected pads" if ok else txt[:120]
 
 
+def c_firmware_tests():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "firmware", "tests", "run_tests.py")], capture_output=True, text=True)
+    ok = "ALL FIRMWARE TESTS PASSED" in out.stdout
+    lines = [l for l in out.stdout.splitlines() if "checks" in l or "cross-checks" in l]
+    return ok, "; ".join(l.strip() for l in lines)[:120] if ok else (out.stdout + out.stderr)[-160:]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 

@@ -3,3 +3,7 @@ __pycache__/
 *.exe
 protocol/tests/c_crosscheck
 *.kicad_prl
+firmware/tests/*.exe
+firmware/tests/*.o
+firmware/tests/auth_cli
+firmware/tests/test_firmware

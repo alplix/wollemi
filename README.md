@@ -35,7 +35,7 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | `mechanical/` | Parametric CAD (build123d): voxel packing, full 12U assembly, STEP/STL/renders, interference + mass properties |
 | `electronics/` | Card connector pinout (single source), KiCad card template and 15-slot backplane strip (both DRC clean), EPS block diagram |
 | `groundstation/` | Pass prediction and Doppler (SGP4), reference packet decoder |
-| `firmware/` | Planned |
+| `firmware/` | Host-testable core: command authentication (Ed25519), mode manager, FDIR, command queue, A/B OTA; 65 unit checks + signature cross-checks |
 
 ## Quick start
 
@@ -50,6 +50,7 @@ python sim/thermal.py                                # orbital thermal model: co
 python sim/adcs.py                                   # disturbance torques, wheels, magnetorquers, telescope smear
 python sim/eps_design.py                             # solar strings, MPPT, battery pack, charge limits
 python sim/link_budget.py                            # S-band link margin versus dish size and rate
+python firmware/tests/run_tests.py                   # firmware core tests and Ed25519 cross-checks
 python protocol/gen.py && python protocol/tests/test_protocol.py   # protocol code generation and tests
 ```
 
