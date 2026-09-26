@@ -17,6 +17,9 @@ columns of the 12U frame. This document defines what a card sees. Tools: `sim/ep
 
 ## 2. Two connectors per card
 
+The exact pin-by-pin table is generated from `electronics/card_pinout.toml` (see `electronics/pinout.md`) and is the same data that
+drives the KiCad card template `electronics/kicad/ginkgo_card_template.kicad_pcb` (KiCad 10, DRC clean).
+
 **GK-P (power and control), 2 x 30 pins, 0.8 mm pitch class, blind-mate board-to-board.**
 Connector family to be chosen after checking current rating, mating cycles and outgassing data (candidates in the Samtec ERM8/ERF8
 class and similar); the pin allocation below is independent of the vendor.
@@ -25,7 +28,7 @@ class and similar); the pin allocation below is independent of the vendor.
 |---|---|---|---|
 | Power A | 5 | `VBAT_A` (switched, current limited per slot by the EPS) | 5 pins ~ 5 A |
 | Power B | 5 | `VBAT_B` (switched, current limited per slot by the EPS) | independent bus B |
-| Ground | 12 | `GND` | interleaved, return current and shielding |
+| Ground | 16 | `GND` | interleaved between the differential pairs, return current and shielding |
 | CAN-FD A | 2 | `CAN_A_H/L` | 1 Mbps arbitration, up to 5 Mbps data |
 | CAN-FD B | 2 | `CAN_B_H/L` | redundant bus |
 | Time | 4 | `PPS_P/N`, `SYNC_P/N` | 1 pulse-per-second and frame sync, differential |
@@ -33,15 +36,16 @@ class and similar); the pin allocation below is independent of the vendor.
 | Control | 6 | `PWR_EN`, `FAULT_N` (open drain), `RESET_N`, `HB` (heartbeat to supervisor), `CARD_PRESENT_N`, `SPARE` | EPS/supervisor manage power; card reports faults |
 | Housekeeping | 4 | `I2C_SCL/SDA`, `UART_TX/RX` | I2C reaches the card ID EEPROM; UART is the console/bootloader |
 | Debug | 4 | `SWD_CLK/IO`, `NRST_DBG`, `VREF` | ground use and integration test |
-| Reserve | 12 | reserved | left free on purpose |
+| Reserve | 8 | `RSV` | left free on purpose |
 
 **GK-D (data), optional, 2 x 15 pins, only for data-plane cards** (Jetson, CM5, mass memory unit, S-band modem).
 
 | Group | Pins | Signals |
 |---|---|---|
 | Ethernet | 8 | 4 differential pairs (1000BASE-T or 1000BASE-KX class, decided with the switch chip) |
-| Fast lanes | 8 | 2 x differential pairs reserved (future PCIe/SerDes) |
+| Fast lanes | 4 | 2 differential pairs reserved (future PCIe/SerDes) |
 | Ground / shield | 14 | `GND` |
+| Reserve | 4 | `RSV` |
 
 RF signals never use the backplane connectors: coax (SMP/MMCX) directly from the card to its antenna or window.
 

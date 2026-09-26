@@ -33,7 +33,8 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
 | `protocol/` | Message definitions (`messages.toml`), C/Python generator, tests (round trip, corruption, C<->Python byte-exact) |
 | `mechanical/` | Parametric CAD (build123d): voxel packing, full 12U assembly, STEP/STL/renders, interference + mass properties |
-| `electronics/`, `firmware/`, `groundstation/` | Planned |
+| `electronics/` | Card connector pinout (single source), KiCad card template (DRC clean), generator |
+| `firmware/`, `groundstation/` | Planned |
 
 ## Quick start
 
@@ -61,4 +62,4 @@ python mechanical/ginkgo_cad.py     # STEP/STL/PNG into mechanical/out/
 
 Phase 0 complete: requirements, architecture, budgets, layout and analysis tooling. All numbers are
 engineering estimates (module sizes are bounding boxes, not vendor CAD). Parametric CAD assembly now exists and passes
-the interference check; firmware architecture, prior-art review and ground-station kit drafted; protocol spec with generated code and tests done; next: electronics, OreSat interoperability decision, ground kit prototype.
+the interference check; firmware architecture, prior-art review and ground-station kit drafted; protocol spec with generated code and tests done; card template and electrical interface done; next: backplane and EPS card, OreSat interoperability decision, ground kit prototype.

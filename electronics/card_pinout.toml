@@ -1,0 +1,51 @@
+# Ginkgo card connector pinouts: single source for the KiCad card template and the interface document.
+# Each connector is a list of pin PAIRS (odd pin = row A, even pin = row B): pair k holds pins 2k-1 and 2k.
+# Differential pairs sit in one pair with ground pairs between them.
+
+[gkp]
+title = "GK-P power and control, 2 x 30"
+pairs = [
+  ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"],
+  ["GND", "GND"],
+  ["CAN_A_H", "CAN_A_L"],
+  ["GND", "GND"],
+  ["CAN_B_H", "CAN_B_L"],
+  ["GND", "GND"],
+  ["PPS_P", "PPS_N"],
+  ["GND", "GND"],
+  ["SYNC_P", "SYNC_N"],
+  ["GND", "GND"],
+  ["SLOT_ID0", "SLOT_ID1"],
+  ["SLOT_ID2", "SLOT_ID3"],
+  ["PWR_EN", "FAULT_N"],
+  ["RESET_N", "HB"],
+  ["CARD_PRESENT_N", "SPARE"],
+  ["GND", "GND"],
+  ["I2C_SCL", "I2C_SDA"],
+  ["UART_TX", "UART_RX"],
+  ["GND", "GND"],
+  ["SWD_CLK", "SWD_IO"],
+  ["NRST_DBG", "VREF"],
+  ["GND", "GND"],
+  ["RSV", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"],
+]
+
+[gkd]
+title = "GK-D data, 2 x 15 (data-plane cards only)"
+pairs = [
+  ["ETH0_P", "ETH0_N"], ["GND", "GND"],
+  ["ETH1_P", "ETH1_N"], ["GND", "GND"],
+  ["ETH2_P", "ETH2_N"], ["GND", "GND"],
+  ["ETH3_P", "ETH3_N"], ["GND", "GND"],
+  ["LANE0_P", "LANE0_N"], ["GND", "GND"],
+  ["LANE1_P", "LANE1_N"], ["GND", "GND"],
+  ["GND", "GND"],
+  ["RSV", "RSV"], ["RSV", "RSV"],
+]
+
+[card]
+size = [100.0, 100.0]
+notch = [20.0, 20.0]       # cut-out at the spine corner (bottom-left in the template)
+thickness = 1.6
+guide_keepout = 3.0        # edge-guide keep-out along the two outer edges
+hole_d = 2.7               # M2.5 clearance

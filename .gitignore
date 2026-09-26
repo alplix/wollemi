@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 *.exe
 protocol/tests/c_crosscheck
+*.kicad_prl
