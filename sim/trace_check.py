@@ -213,6 +213,12 @@ def c_firmware_tests():
     return ok, "; ".join(l.strip() for l in lines)[:120] if ok else (out.stdout + out.stderr)[-160:]
 
 
+def c_structure():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "sim", "structure.py")], capture_output=True, text=True)
+    line = next((l for l in out.stdout.splitlines() if l.startswith("Verdict")), "")
+    return out.returncode == 0, line[:110]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 

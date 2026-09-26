@@ -17,8 +17,8 @@ manufacturing come after. Status boxes are updated as work is finished; `docs/st
 
 | # | Step | Deliverable | Status |
 |---|---|---|---|
-| 1 | Master plan and one-command regression | `docs/plan.md`, `tools/check_all.py`, `docs/status.md` | [ ] |
-| 2 | Structural and launch-load analysis | `sim/structure.py`, `docs/structure.md` (frequency, quasi-static loads, wing hold-down, margins) | [ ] |
+| 1 | Master plan and one-command regression | `docs/plan.md`, `tools/check_all.py`, `docs/status.md` | [x] |
+| 2 | Structural and launch-load analysis | `sim/structure.py`, `docs/structure.md` (frequency, quasi-static loads, wing hold-down, margins) | [x] |
 | 3 | Orbit lifetime and debris compliance | `sim/orbit_life.py`, `docs/orbit-and-debris.md` (decay with and without sail, disposal options) | [ ] |
 | 4 | Closed-loop mission simulation | `sim/mission_sim.py` (firmware mode manager + power + faults over 60 days), results in `docs/mission-simulation.md` | [ ] |
 | 5 | FMEA | `docs/fmea.md` with machine-checked coverage of the critical functions | [ ] |

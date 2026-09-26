@@ -41,6 +41,14 @@ auto = "wingstack"
 evidence = ["configs/12u_geometry.toml"]
 
 [[req]]
+id = "STR-1"
+text = "Fundamental frequencies of the frame, side walls and stowed wing panels >= 100 Hz; all structural margins >= 1 at the design load factor (hand analysis)."
+method = "A"
+auto = "structure"
+evidence = ["sim/structure.py", "configs/12u_structure.toml", "docs/structure.md"]
+note = "Hand calculation only; needs FEM and vibration test with the launch provider's specification."
+
+[[req]]
 id = "PWR-1"
 text = "Orbit-average power margin >= 20 % in every power scenario (nominal, tumbling, dawn-dusk, safe, burn)."
 method = "A"

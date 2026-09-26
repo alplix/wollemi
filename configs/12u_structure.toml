@@ -1,0 +1,90 @@
+# Structural and launch-load inputs (estimates; rideshare provider load specifications must replace them).
+
+[materials.al6061]
+E_gpa = 68.9
+rho = 2700.0
+yield_mpa = 240.0            # 6061-T6 (T651 plate), conservative
+ultimate_mpa = 290.0
+nu = 0.33
+
+[materials.pcb_cell_panel]   # wing panel: thin PCB core with cells (effective)
+E_gpa = 25.0
+rho = 2000.0
+
+[launch]
+quasi_static_g = 20.0        # design limit load factor, all axes (typical rideshare envelope is lower; conservative)
+local_amplification = 2.0    # component-level amplification on top of the quasi-static factor
+factor_of_safety_yield = 1.25
+factor_of_safety_ultimate = 1.5
+random_asd_g2_per_hz = 0.04  # flat 20-2000 Hz random profile (about 8.9 Grms)
+random_f_low = 20.0
+random_f_high = 2000.0
+q_factor = 10.0              # structural amplification at resonance
+minimum_first_mode_hz = 100.0
+
+[frame]
+outer_m = 0.2263
+wall_m = 0.003
+length_m = 0.3405
+rail_m = 0.0085
+plate_thickness_m = 0.003
+
+[fastener.m3_steel_a2_70]
+shear_area_mm2 = 5.03
+shear_strength_mpa = 350.0    # A2-70 ultimate shear ~ 0.6 x 560 MPa (conservative 350)
+tensile_area_mm2 = 5.03
+tensile_strength_mpa = 700.0
+[fastener.m4_steel_a2_70]
+shear_area_mm2 = 8.78
+shear_strength_mpa = 350.0
+tensile_area_mm2 = 8.78
+tensile_strength_mpa = 700.0
+
+# Heavy items: mass comes from the config by name prefix; fasteners: count, type; lever_m = distance from mounting plane to centre of mass (overhang)
+[[mount]]
+match = "Payload E: telescope"
+count = 8
+type = "m3_steel_a2_70"
+lever_m = 0.125
+bolt_circle_m = 0.100
+[[mount]]
+match = "Bus: micro-propulsion"
+count = 4
+type = "m4_steel_a2_70"
+lever_m = 0.04
+bolt_circle_m = 0.090
+[[mount]]
+match = "LiFePO4 pack A"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.02
+bolt_circle_m = 0.080
+[[mount]]
+match = "Mission computer: Jetson"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.03
+bolt_circle_m = 0.080
+[[mount]]
+match = "ADCS:"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.03
+bolt_circle_m = 0.080
+[[mount]]
+match = "LONG: radiation vault"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.02
+bolt_circle_m = 0.070
+[[mount]]
+match = "SCI: gamma-ray"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.02
+bolt_circle_m = 0.080
+
+[wing]
+panel_areal_mass_kg_m2 = 3.5
+hold_down_points = 6          # per wing stack: 3 posts along each long edge (corners + mid-length), with preload
+preload_n = 120.0
