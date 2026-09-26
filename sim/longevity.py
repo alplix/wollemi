@@ -54,13 +54,13 @@ def main(cfg_path, lg_path):
         cap = max(0.0, 1 - b["fade_at_end_of_life"] * orbits_yr * yr / n_life - b["calendar_fade_per_year"] * yr)
         if "batt" not in events and lg["orbit"]["has_eclipse"] and nominal["ecl_need"] > b["packs_wh_total"] * cap * b["max_dod_usable"]:
             events["batt"] = yr
-        if "safe" not in events and safe["gen"] * f < r["consumed_w"] * 0 + 1.1:
+        if "safe" not in events and safe["gen"] * f < safe["cons"]:
             events["safe"] = yr
     print()
     print(f"Tumbling-mode power no longer covers full load after ~{events.get('tumble', '>100')} yr")
     print(f"Main packs no longer cover eclipse after ~{events.get('batt', '>100')} yr "
           f"(then: sun-only mode, or survival bus only)")
-    print(f"Safe-mode power (1.1 W) holds until ~{events.get('safe', '>100')} yr")
+    print(f"Safe-mode power ({safe['cons']:.1f} W) holds until ~{events.get('safe', '>100')} yr")
 
     print()
     print("-- Total ionising dose, years until part limit (dose = rate x years) --")

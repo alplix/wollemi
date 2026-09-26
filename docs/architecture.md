@@ -34,7 +34,7 @@ Overview of how the pieces fit; details are in the documents listed at the end. 
 
 ## Reliability approach (COTS in LEO)
 
-- **Tiers** (`docs/longevity.md`): survival chain (50+ years), long-life science chain (30-50), heavy compute (10-15), main batteries (15-35).
+- **Tiers** (`docs/longevity.md`): survival chain (50+ years), long-life science chain (30-50), heavy compute (10-15), main batteries (10-28).
 - Three independent power paths; every card protects itself in hardware; the supervisor can kill any slot without firmware (`SLOT_SEL`, `KILL_N`).
 - Latch-up protection per card, ECC and scrubbing, critical data in FRAM with checksums, erasure-coded mass memory, spot shielding (Ta/Al vault) for the control electronics.
 - Degradation ladder L0-L3 with modes NOMINAL, SCIENCE, SCIENCE_LITE, ECLIPSE, BURN, SAFE, SURVIVAL (`docs/mission-simulation.md`).

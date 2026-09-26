@@ -80,7 +80,7 @@ electronics and software in orbit, and publishes the design, data and tools for 
 | LONG-2 | Long-record science instruments never depend on Linux nodes for acquisition or downlink. |
 | LONG-3 | Main packs still cover eclipse after 25 years; safe-mode power holds for 50 years (with the modelled degradation). |
 
-Design life: a **tiered lifetime** (`docs/longevity.md`): survival chain 50+ years, long-life science chain 30-50 years, heavy compute about 10-15 years, main batteries about 15-35 years.
+Design life: a **tiered lifetime** (`docs/longevity.md`): survival chain 50+ years, long-life science chain 30-50 years, heavy compute about 10-15 years, main batteries about 10-28 years.
 
 ### Electronics and quality
 

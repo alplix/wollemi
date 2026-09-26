@@ -7,9 +7,9 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
 
 | Item | Result |
 |---|---|
-| Solar arrays (1.5 %/yr loss) | Full load still covered in ADCS-biased mode for 50 yr; tumbling mode falls below full load at ~48 yr |
-| Safe mode (body cells only, 1.1 W) | Holds for well over 50 yr |
-| Main LiFePO4 packs A+B (2S2P 26650, 42 Wh each) | ~5300 eclipse cycles/yr, ~11 % DoD: ~15 yr to 20 % fade; can no longer cover eclipse after ~36 yr |
+| Solar arrays (1.5 %/yr loss) | Full load still covered in ADCS-biased mode for 50 yr; tumbling mode falls below the 20.4 W full load at ~28 yr |
+| Safe mode (body cells only, 3.1 W including survival heaters) | Holds for about 90 yr |
+| Main LiFePO4 packs A+B (2S2P 26650, 42 Wh each) | ~5300 eclipse cycles/yr, ~15 % DoD (heaters and extra loads raised the eclipse need to ~12 Wh): ~10 yr to 20 % fade; can no longer cover eclipse after ~28 yr |
 | Total ionising dose (2 mm Al) | 2 krad/yr, ~100 krad over 50 yr |
 | COTS SoC (Jetson / Pi, ~15 krad) | ~8 yr at 2 mm, ~17 yr at 5 mm, ~33 yr at 10 mm |
 | STM32H7 (~30 krad) | ~33 yr at 5 mm, ~67 yr at 10 mm |
@@ -26,12 +26,12 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
    on the Pi or Jetson for its data path.
 3. **Heavy compute (target ~10-15 yr):** Jetson and Pi. Expect radiation-limited life; treat as
    consumables. Design for graceful loss (science keeps flowing through chain 2).
-4. **Main batteries (target ~15-35 yr):** after fade, switch to sun-only operation (no eclipse
+4. **Main batteries (target ~10-28 yr):** after fade, switch to sun-only operation (no eclipse
    operations for heavy loads). A dawn-dusk orbit removes the eclipse problem entirely.
 
 ## Design responses adopted
 
-- Spot radiation shielding module (Ta/Al on MCU, FRAM, supervisor, radio ICs), +0.4 kg, +60 cm3.
+- Radiation vault (graded-Z Al/Ta, about 10 mm Al-equivalent) around the flight controller, supervisor, FRAM, mass-memory controller and radio ICs: +1.6 kg, 100 cm3 (an earlier spot-shielding version was replaced).
 - Long-life science chain rule above (firmware architecture requirement).
 - Sun-only beacon mode without battery.
 - Optional high-reliability variant: rad-hard MCU (SAMRH71 / VA41630 class, ~100 krad) for the
@@ -49,7 +49,7 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
 
 ## Protection (shielding) design
 
-**Radiation.** Mass is abundant (about 11.7 kg spare) while volume is scarce (about 95 % full), so
+**Radiation.** Mass is fairly abundant (about 7 kg spare of the 24 kg limit) while volume is scarce (about 95 % of the usable volume), so
 use dense high-Z material for volume efficiency: a graded-Z Al/Ta vault (~10 mm Al-equivalent,
 2.7 g/cm2) needs about 1.6 mm of tantalum instead of 10 mm of aluminium (roughly 6x less volume for
 similar mass). The vault covers the flight controller, supervisor, FRAM, mass-memory controller and
