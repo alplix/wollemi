@@ -8,6 +8,7 @@
 columns = 4
 decks = 3
 
+# NOTE: assignments below were reconciled with the real geometric packing (mechanical/pack.py).
 # Q1  telescope column (Earth-facing optics, thermally quiet, opposite the compute column)
 # Q2  attitude + propulsion + small Earth optics
 # Q3  compute + comms (hot, EMI) at the nadir end, quiet space-science sensors at the zenith end
@@ -45,13 +46,13 @@ match = "Mission computer: Jetson"
 at = "Q3/1"
 [[place]]
 match = "Mission computer B"
-at = "Q2/1"
+at = "Q3/2"
 [[place]]
 match = "SCI: multi-computer"
 at = "Q3/1"
 [[place]]
 match = "Flight controller"
-at = "Q3/2"
+at = "Q3/1"
 [[place]]
 match = "UHF LoRa comms"
 at = "Q3/2"
@@ -63,7 +64,7 @@ match = "Payload A: SEU"
 at = "Q3/2"
 [[place]]
 match = "Payload C: temp"
-at = "Q3/2"
+at = "Q3/1"
 [[place]]
 match = "Payload D: store"
 at = "Q3/2"
@@ -87,7 +88,7 @@ match = "Payload H: dual-frequency GNSS"
 at = "Q3/3"
 [[place]]
 match = "SCI: total solar irradiance"
-at = "Q3/3"
+at = "Q3/1"
 
 [[place]]
 match = "LiFePO4 pack A"
@@ -124,10 +125,10 @@ match = "SCI: energetic particle"
 at = "Q4/2"
 [[place]]
 match = "Payload I: radiation dosimeter"
-at = "Q3/1"
+at = "Q3/3"
 [[place]]
 match = "SCI: chip-scale atomic clock"
-at = "Q3/2"
+at = "Q3/3"
 [[place]]
 match = "Payload J: micrometeoroid"
 at = "Q4/1"
@@ -222,7 +223,7 @@ kind = "different_deck"
 
 [[place]]
 match = "LONG: radiation vault"
-at = "Q3/2"
+at = "Q3/1"
 
 
 [[place]]
@@ -230,8 +231,8 @@ match = "Mass memory unit"
 at = "Q3/2"
 [[place]]
 match = "SCI: flash memory"
-at = "Q3/2"
+at = "Q3/3"
 
 [[place]]
 match = "LONG: impact protection"
-at = "Q2/2"
+at = "Q4/3"

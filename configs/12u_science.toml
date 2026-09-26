@@ -234,7 +234,7 @@ volume_cm3 = 100
 tier = "core"
 
 [[module]]
-name = "Payload E: telescope camera (90 mm Cassegrain, ~4 m GSD)"
+name = "Payload E: telescope camera (85 mm Cassegrain, ~5 m GSD at 700 km)"
 mass_kg = 0.9
 power_w = 3.0
 duty = 0.05

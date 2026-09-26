@@ -1,0 +1,185 @@
+# Geometry for the 12U CAD model (all lengths in mm).
+# size = [dx, dy, dz] bounding box of the module (dz along the long nadir-zenith axis).
+# fixed = true keeps the orientation; shape = "cyl" builds a cylinder along z inside the box.
+# Matching is by module-name prefix. Sizes are design-level estimates from typical hardware
+# and are meant to be replaced by vendor CAD as parts are chosen.
+
+# notched = true: card format with the 20 x 20 mm corner cut-out that clears the central spine;
+# such a card is anchored at the spine corner of its column.
+# end = "nadir" / "zenith": the module must sit against that end plate (windows, apertures, antennas).
+
+[frame]
+outer = [226.3, 226.3, 340.5]   # 12U envelope
+wall = 3.0                       # outer wall thickness (Al)
+cross = 3.0                      # cross bulkhead thickness (splits the interior into 4 columns)
+spine = 40.0                     # central spine square (backplane channel)
+rail = 8.5                       # corner rail cross-section
+voxel = 2.5                      # packing resolution (sizes are rounded up: built-in clearance)
+protrusion_limit = 6.5           # allowed protrusion beyond the rail plane (verify with the dispenser)
+
+[wings]
+count = 2
+panels_per_wing = 3
+panel = [226.3, 340.5, 2.1]      # width, length, thickness (PCB + cells); 3 stowed must stay <= protrusion_limit
+standoff = 6.5                   # hinge offset of the deployed wing plane from the rail plane
+
+[[box]]
+match = "Payload E: telescope"
+size = [100, 100, 250]
+end = "nadir"
+fixed = true
+shape = "cyl"
+[[box]]
+match = "EO: hyperspectral"
+size = [100, 85, 53]
+[[box]]
+match = "Payload F: wide-field"
+size = [50, 50, 60]
+end = "nadir"
+[[box]]
+match = "Payload G: thermal IR"
+size = [40, 40, 60]
+end = "nadir"
+[[box]]
+match = "EO: lightning"
+size = [30, 30, 35]
+end = "nadir"
+[[box]]
+match = "ADCS:"
+size = [90, 90, 55]
+notched = true
+[[box]]
+match = "Bus: star tracker"
+size = [50, 50, 80]
+end = "zenith"
+[[box]]
+match = "Bus: micro-propulsion"
+size = [100, 100, 100]
+align = "top"
+shape = "cyl"
+[[box]]
+match = "Mission computer B"
+size = [90, 60, 28]
+[[box]]
+match = "LONG: impact protection"
+size = [100, 100, 10]
+notched = true
+
+[[box]]
+match = "Mission computer: Jetson"
+size = [100, 80, 45]
+[[box]]
+match = "Flight controller"
+size = [90, 40, 22]
+[[box]]
+match = "UHF LoRa comms (RX)"
+size = [90, 60, 22]
+[[box]]
+match = "UHF LoRa comms (TX)"
+size = [10, 10, 10]
+[[box]]
+match = "S-band transceiver (high-rate downlink, RX)"
+size = [90, 80, 21]
+[[box]]
+match = "S-band transceiver (TX)"
+size = [90, 80, 14]
+[[box]]
+match = "Payload A: SEU"
+size = [40, 40, 25]
+[[box]]
+match = "Payload C: temp"
+size = [30, 30, 35]
+[[box]]
+match = "Payload D: store"
+size = [40, 40, 25]
+[[box]]
+match = "Antenna + deploy"
+size = [90, 40, 22]
+end = "zenith"
+[[box]]
+match = "SCI: VLF"
+size = [100, 100, 20]
+notched = true
+[[box]]
+match = "SCI: Langmuir"
+size = [60, 60, 42]
+[[box]]
+match = "Payload B: magnetometer"
+size = [40, 30, 42]
+[[box]]
+match = "SCI: deployable magnetometer boom"
+size = [90, 30, 35]
+end = "zenith"
+[[box]]
+match = "Payload H: dual-frequency GNSS"
+size = [50, 40, 30]
+end = "zenith"
+slack_mm = 45
+[[box]]
+match = "SCI: total solar irradiance"
+size = [60, 60, 42]
+[[box]]
+match = "Payload I: radiation dosimeter"
+size = [30, 30, 35]
+[[box]]
+match = "SCI: chip-scale atomic clock"
+size = [30, 30, 22]
+[[box]]
+match = "Mass memory unit"
+size = [90, 90, 18]
+notched = true
+[[box]]
+match = "SCI: flash memory"
+size = [30, 30, 35]
+[[box]]
+match = "LONG: radiation vault"
+size = [90, 90, 12]
+notched = true
+[[box]]
+match = "SCI: multi-computer"
+size = [10, 10, 10]
+
+[[box]]
+match = "LiFePO4 pack A"
+size = [100, 70, 36]
+[[box]]
+match = "EPS board B"
+size = [90, 90, 19]
+notched = true
+[[box]]
+match = "EPS board"
+size = [90, 90, 19]
+notched = true
+[[box]]
+match = "LiFePO4 pack B"
+size = [100, 70, 36]
+[[box]]
+match = "LiFePO4 pack C"
+size = [60, 40, 25]
+[[box]]
+match = "Battery containment"
+size = [100, 100, 35]
+notched = true
+[[box]]
+match = "Survival bus: containment"
+size = [60, 40, 50]
+[[box]]
+match = "Thermal (heaters)"
+size = [20, 20, 50]
+[[box]]
+match = "SCI: gamma-ray"
+size = [100, 100, 40]
+notched = true
+[[box]]
+match = "SCI: solar X-ray"
+size = [60, 50, 50]
+[[box]]
+match = "SCI: energetic particle"
+size = [100, 60, 50]
+[[box]]
+match = "Payload J: micrometeoroid"
+size = [30, 30, 35]
+[[box]]
+match = "Bus: drag sail"
+size = [100, 100, 20]
+notched = true

@@ -31,7 +31,8 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | `docs/` | Architecture, power, layout, data plan, propulsion, longevity, design identity |
 | `configs/` | Single source of truth: `12u_science.toml`, `12u_layout.toml`, `12u_data.toml`, `12u_longevity.toml` (+ 2U/3U/6U variants) |
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
-| `mechanical/`, `electronics/`, `firmware/`, `groundstation/` | Planned |
+| `mechanical/` | Parametric CAD (build123d): voxel packing, full 12U assembly, STEP/STL/renders, interference + mass properties |
+| `electronics/`, `firmware/`, `groundstation/` | Planned |
 
 ## Quick start
 
@@ -43,9 +44,17 @@ python sim/data_budget.py                            # science data vs downlink 
 python sim/longevity.py                              # year-by-year power, battery and radiation dose
 ```
 
-Requires Python 3.11+ (uses `tomllib`), no other dependencies.
+`sim/` needs only Python 3.11+ (uses `tomllib`). `mechanical/` needs `pip install build123d` (also brings numpy, scipy, pillow).
+
+Mechanical model:
+
+```
+python mechanical/pack.py
+python mechanical/ginkgo_cad.py     # STEP/STL/PNG into mechanical/out/
+```
 
 ## Status
 
 Phase 0 complete: requirements, architecture, budgets, layout and analysis tooling. All numbers are
-engineering estimates (volumes about +-30 %); next: parametric CAD, firmware architecture, ground kit.
+engineering estimates (module sizes are bounding boxes, not vendor CAD). Parametric CAD assembly now exists and passes
+the interference check; next: firmware architecture, prior-art review, ground kit.

@@ -1,0 +1,1088 @@
+{
+ "placed": [
+  {
+   "name": "Payload E: telescope camera (85 mm Cassegrain, ~5 m GSD at 700 km)",
+   "col": 1,
+   "tier": "science",
+   "mass_kg": 0.9,
+   "shape": "cyl",
+   "size": [
+    100,
+    100,
+    250
+   ],
+   "min": [
+    6.5,
+    6.5,
+    3.0
+   ],
+   "max": [
+    101.5,
+    101.5,
+    253.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 2500.0
+  },
+  {
+   "name": "Bus: star tracker (dedicated)",
+   "col": 2,
+   "tier": "core",
+   "mass_kg": 0.15,
+   "shape": "box",
+   "size": [
+    50,
+    50,
+    80
+   ],
+   "min": [
+    -109.0,
+    1.5,
+    255.5
+   ],
+   "max": [
+    -59.0,
+    51.5,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 200.0
+  },
+  {
+   "name": "Payload F: wide-field camera / star tracker",
+   "col": 2,
+   "tier": "science",
+   "mass_kg": 0.1,
+   "shape": "box",
+   "size": [
+    50,
+    50,
+    60
+   ],
+   "min": [
+    -109.0,
+    1.5,
+    3.0
+   ],
+   "max": [
+    -59.0,
+    51.5,
+    63.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 150.0
+  },
+  {
+   "name": "Payload G: thermal IR imager (160x120 microbolometer)",
+   "col": 2,
+   "tier": "science",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    40,
+    40,
+    60
+   ],
+   "min": [
+    -109.0,
+    51.5,
+    3.0
+   ],
+   "max": [
+    -69.0,
+    91.5,
+    63.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 96.0
+  },
+  {
+   "name": "SCI: deployable magnetometer boom (low-noise, away from electronics)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.15,
+   "shape": "box",
+   "size": [
+    90,
+    30,
+    35
+   ],
+   "min": [
+    -91.5,
+    -109.0,
+    300.5
+   ],
+   "max": [
+    -1.5,
+    -79.0,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 94.5
+  },
+  {
+   "name": "Antenna + deploy mech",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    90,
+    40,
+    22
+   ],
+   "min": [
+    -91.5,
+    -79.0,
+    313.0
+   ],
+   "max": [
+    -1.5,
+    -39.0,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 79.2
+  },
+  {
+   "name": "Payload H: dual-frequency GNSS (position + ionosphere TEC)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    50,
+    40,
+    30
+   ],
+   "min": [
+    -51.5,
+    -109.0,
+    270.5
+   ],
+   "max": [
+    -1.5,
+    -69.0,
+    300.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 60.0
+  },
+  {
+   "name": "EO: lightning / optical transient detector",
+   "col": 2,
+   "tier": "science",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    35
+   ],
+   "min": [
+    -59.0,
+    1.5,
+    3.0
+   ],
+   "max": [
+    -29.0,
+    31.5,
+    38.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 31.5
+  },
+  {
+   "name": "Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)",
+   "col": 2,
+   "tier": "core",
+   "mass_kg": 2.0,
+   "shape": "cyl",
+   "size": [
+    100,
+    100,
+    100
+   ],
+   "min": [
+    -101.5,
+    6.5,
+    155.5
+   ],
+   "max": [
+    -6.5,
+    101.5,
+    255.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 1000.0
+  },
+  {
+   "name": "EO: hyperspectral spectrometer (shares telescope fore-optics, ~50 bands 400-1000 nm)",
+   "col": 1,
+   "tier": "science",
+   "mass_kg": 0.7,
+   "shape": "box",
+   "size": [
+    100,
+    85,
+    53
+   ],
+   "min": [
+    1.5,
+    24.0,
+    280.5
+   ],
+   "max": [
+    101.5,
+    109.0,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 450.5
+  },
+  {
+   "name": "ADCS: 3 reaction wheels + torquers + sensors",
+   "col": 2,
+   "tier": "core",
+   "mass_kg": 0.45,
+   "shape": "box",
+   "size": [
+    90,
+    90,
+    55
+   ],
+   "min": [
+    -91.5,
+    1.5,
+    63.0
+   ],
+   "max": [
+    -1.5,
+    91.5,
+    118.0
+   ],
+   "notched": true,
+   "true_volume_cm3": 445.5
+  },
+  {
+   "name": "SCI: gamma-ray burst detector (CsI + SiPM)",
+   "col": 4,
+   "tier": "science",
+   "mass_kg": 0.4,
+   "shape": "box",
+   "size": [
+    100,
+    100,
+    40
+   ],
+   "min": [
+    1.5,
+    -101.5,
+    225.5
+   ],
+   "max": [
+    101.5,
+    -1.5,
+    265.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 400.0
+  },
+  {
+   "name": "Mission computer: Jetson Orin Nano (Linux, GPU) + conductive cooling",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.35,
+   "shape": "box",
+   "size": [
+    100,
+    80,
+    45
+   ],
+   "min": [
+    -101.5,
+    -109.0,
+    3.0
+   ],
+   "max": [
+    -1.5,
+    -29.0,
+    48.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 360.0
+  },
+  {
+   "name": "Battery containment: alu box + polyimide/ceramic barrier + heaters",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.45,
+   "shape": "box",
+   "size": [
+    100,
+    100,
+    35
+   ],
+   "min": [
+    1.5,
+    -101.5,
+    3.0
+   ],
+   "max": [
+    101.5,
+    -1.5,
+    38.0
+   ],
+   "notched": true,
+   "true_volume_cm3": 350.0
+  },
+  {
+   "name": "SCI: energetic particle spectrometer (e-/p+)",
+   "col": 4,
+   "tier": "science",
+   "mass_kg": 0.3,
+   "shape": "box",
+   "size": [
+    100,
+    60,
+    50
+   ],
+   "min": [
+    1.5,
+    -109.0,
+    175.5
+   ],
+   "max": [
+    101.5,
+    -49.0,
+    225.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 300.0
+  },
+  {
+   "name": "LiFePO4 pack A (30 Wh) + BMS + fuse",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.3,
+   "shape": "box",
+   "size": [
+    100,
+    70,
+    36
+   ],
+   "min": [
+    1.5,
+    -109.0,
+    38.0
+   ],
+   "max": [
+    101.5,
+    -39.0,
+    75.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 252.0
+  },
+  {
+   "name": "LiFePO4 pack B (30 Wh) + BMS + fuse",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.3,
+   "shape": "box",
+   "size": [
+    100,
+    70,
+    36
+   ],
+   "min": [
+    1.5,
+    -109.0,
+    138.0
+   ],
+   "max": [
+    101.5,
+    -39.0,
+    175.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 252.0
+  },
+  {
+   "name": "Bus: drag sail (passive deorbit backup)",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.3,
+   "shape": "box",
+   "size": [
+    100,
+    100,
+    20
+   ],
+   "min": [
+    1.5,
+    -101.5,
+    75.5
+   ],
+   "max": [
+    101.5,
+    -1.5,
+    95.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 200.0
+  },
+  {
+   "name": "SCI: VLF/ELF receiver (whistlers, lightning, E-field)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.2,
+   "shape": "box",
+   "size": [
+    100,
+    100,
+    20
+   ],
+   "min": [
+    -101.5,
+    -101.5,
+    225.5
+   ],
+   "max": [
+    -1.5,
+    -1.5,
+    245.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 200.0
+  },
+  {
+   "name": "EPS board",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.08,
+   "shape": "box",
+   "size": [
+    90,
+    90,
+    19
+   ],
+   "min": [
+    1.5,
+    -91.5,
+    95.5
+   ],
+   "max": [
+    91.5,
+    -1.5,
+    115.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 153.9
+  },
+  {
+   "name": "EPS board B (redundant) + ideal-diode OR-ing",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.08,
+   "shape": "box",
+   "size": [
+    90,
+    90,
+    19
+   ],
+   "min": [
+    1.5,
+    -91.5,
+    115.5
+   ],
+   "max": [
+    91.5,
+    -1.5,
+    135.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 153.9
+  },
+  {
+   "name": "S-band transceiver (high-rate downlink, RX)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.12,
+   "shape": "box",
+   "size": [
+    90,
+    80,
+    21
+   ],
+   "min": [
+    -91.5,
+    -109.0,
+    203.0
+   ],
+   "max": [
+    -1.5,
+    -29.0,
+    225.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 151.2
+  },
+  {
+   "name": "SCI: Langmuir probe (plasma density, boom)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.15,
+   "shape": "box",
+   "size": [
+    60,
+    60,
+    42
+   ],
+   "min": [
+    -109.0,
+    -61.5,
+    245.5
+   ],
+   "max": [
+    -49.0,
+    -1.5,
+    288.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 151.2
+  },
+  {
+   "name": "Mission computer B: Raspberry Pi CM5 (always-on, low power, data handling)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.1,
+   "shape": "box",
+   "size": [
+    90,
+    60,
+    28
+   ],
+   "min": [
+    -91.5,
+    -109.0,
+    173.0
+   ],
+   "max": [
+    -1.5,
+    -49.0,
+    203.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 151.2
+  },
+  {
+   "name": "SCI: total solar irradiance radiometer (climate-grade, long series)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.15,
+   "shape": "box",
+   "size": [
+    60,
+    60,
+    42
+   ],
+   "min": [
+    -61.5,
+    -109.0,
+    48.0
+   ],
+   "max": [
+    -1.5,
+    -49.0,
+    90.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 151.2
+  },
+  {
+   "name": "SCI: solar X-ray / UV monitor (flare detection)",
+   "col": 4,
+   "tier": "science",
+   "mass_kg": 0.2,
+   "shape": "box",
+   "size": [
+    60,
+    50,
+    50
+   ],
+   "min": [
+    49.0,
+    -51.5,
+    285.5
+   ],
+   "max": [
+    109.0,
+    -1.5,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 150.0
+  },
+  {
+   "name": "Mass memory unit: 8 x 128 GB eMMC/SLC, 6+2 erasure coding, autonomous scrubbing (dedicated MCU)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.12,
+   "shape": "box",
+   "size": [
+    90,
+    90,
+    18
+   ],
+   "min": [
+    -91.5,
+    -91.5,
+    113.0
+   ],
+   "max": [
+    -1.5,
+    -1.5,
+    133.0
+   ],
+   "notched": true,
+   "true_volume_cm3": 145.8
+  },
+  {
+   "name": "Survival bus: containment + isolated charger + burn-wire deploy drivers",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.1,
+   "shape": "box",
+   "size": [
+    60,
+    40,
+    50
+   ],
+   "min": [
+    49.0,
+    -91.5,
+    285.5
+   ],
+   "max": [
+    109.0,
+    -51.5,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 120.0
+  },
+  {
+   "name": "UHF LoRa comms (RX)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.1,
+   "shape": "box",
+   "size": [
+    90,
+    60,
+    22
+   ],
+   "min": [
+    -91.5,
+    -109.0,
+    150.5
+   ],
+   "max": [
+    -1.5,
+    -49.0,
+    173.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 118.8
+  },
+  {
+   "name": "S-band transceiver (TX)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.0,
+   "shape": "box",
+   "size": [
+    90,
+    80,
+    14
+   ],
+   "min": [
+    -91.5,
+    -109.0,
+    133.0
+   ],
+   "max": [
+    -1.5,
+    -29.0,
+    148.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 100.8
+  },
+  {
+   "name": "LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for propellant tank and battery vaults",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.8,
+   "shape": "box",
+   "size": [
+    100,
+    100,
+    10
+   ],
+   "min": [
+    1.5,
+    -101.5,
+    265.5
+   ],
+   "max": [
+    101.5,
+    -1.5,
+    275.5
+   ],
+   "notched": true,
+   "true_volume_cm3": 100.0
+  },
+  {
+   "name": "LONG: radiation vault (graded-Z Al/Ta box, ~10 mm Al-eq) around flight controller, supervisor, FRAM, MMU controller, radio ICs",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 1.6,
+   "shape": "box",
+   "size": [
+    90,
+    90,
+    12
+   ],
+   "min": [
+    -91.5,
+    -91.5,
+    90.5
+   ],
+   "max": [
+    -1.5,
+    -1.5,
+    103.0
+   ],
+   "notched": true,
+   "true_volume_cm3": 97.2
+  },
+  {
+   "name": "Flight controller (STM32H7 x2) + watchdog (MSP430FR)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.08,
+   "shape": "box",
+   "size": [
+    40,
+    90,
+    22
+   ],
+   "min": [
+    -101.5,
+    -109.0,
+    48.0
+   ],
+   "max": [
+    -61.5,
+    -19.0,
+    70.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 79.2
+  },
+  {
+   "name": "LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.1,
+   "shape": "box",
+   "size": [
+    40,
+    60,
+    25
+   ],
+   "min": [
+    1.5,
+    -109.0,
+    310.5
+   ],
+   "max": [
+    41.5,
+    -49.0,
+    335.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 60.0
+  },
+  {
+   "name": "Payload B: magnetometer + sun sensors",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    30,
+    40,
+    42
+   ],
+   "min": [
+    -109.0,
+    -101.5,
+    245.5
+   ],
+   "max": [
+    -79.0,
+    -61.5,
+    288.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 50.4
+  },
+  {
+   "name": "Payload A: SEU experiment",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.08,
+   "shape": "box",
+   "size": [
+    40,
+    40,
+    25
+   ],
+   "min": [
+    -109.0,
+    -41.5,
+    148.0
+   ],
+   "max": [
+    -69.0,
+    -1.5,
+    173.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 40.0
+  },
+  {
+   "name": "Payload D: store-and-forward relay",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.05,
+   "shape": "box",
+   "size": [
+    40,
+    40,
+    25
+   ],
+   "min": [
+    -109.0,
+    -41.5,
+    173.0
+   ],
+   "max": [
+    -69.0,
+    -1.5,
+    198.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 40.0
+  },
+  {
+   "name": "Payload C: temp/power telemetry",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.03,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    35
+   ],
+   "min": [
+    -51.5,
+    -31.5,
+    55.5
+   ],
+   "max": [
+    -21.5,
+    -1.5,
+    90.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 31.5
+  },
+  {
+   "name": "Payload I: radiation dosimeter (particle/dose)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.03,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    35
+   ],
+   "min": [
+    -109.0,
+    -31.5,
+    288.0
+   ],
+   "max": [
+    -79.0,
+    -1.5,
+    323.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 31.5
+  },
+  {
+   "name": "Payload J: micrometeoroid / debris impact sensor",
+   "col": 4,
+   "tier": "science",
+   "mass_kg": 0.03,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    35
+   ],
+   "min": [
+    79.0,
+    -31.5,
+    38.0
+   ],
+   "max": [
+    109.0,
+    -1.5,
+    73.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 31.5
+  },
+  {
+   "name": "SCI: flash memory endurance / radiation experiment (SLC vs TLC vs QLC samples)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.02,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    35
+   ],
+   "min": [
+    -79.0,
+    -31.5,
+    288.0
+   ],
+   "max": [
+    -49.0,
+    -1.5,
+    323.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 31.5
+  },
+  {
+   "name": "Thermal (heaters)",
+   "col": 4,
+   "tier": "core",
+   "mass_kg": 0.03,
+   "shape": "box",
+   "size": [
+    20,
+    20,
+    50
+   ],
+   "min": [
+    1.5,
+    -49.0,
+    175.5
+   ],
+   "max": [
+    21.5,
+    -29.0,
+    225.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 20.0
+  },
+  {
+   "name": "SCI: chip-scale atomic clock (precise timing, relativity tests)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.04,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    22
+   ],
+   "min": [
+    -79.0,
+    -91.5,
+    245.5
+   ],
+   "max": [
+    -49.0,
+    -61.5,
+    268.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 19.8
+  },
+  {
+   "name": "UHF LoRa comms (TX)",
+   "col": 3,
+   "tier": "core",
+   "mass_kg": 0.0,
+   "shape": "box",
+   "size": [
+    10,
+    10,
+    10
+   ],
+   "min": [
+    -11.5,
+    -101.5,
+    123.0
+   ],
+   "max": [
+    -1.5,
+    -91.5,
+    133.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 1.0
+  },
+  {
+   "name": "SCI: multi-computer radiation comparison (Jetson vs CM5 vs MCU classes, error logging)",
+   "col": 3,
+   "tier": "science",
+   "mass_kg": 0.0,
+   "shape": "box",
+   "size": [
+    10,
+    10,
+    10
+   ],
+   "min": [
+    -31.5,
+    -11.5,
+    103.0
+   ],
+   "max": [
+    -21.5,
+    -1.5,
+    113.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 1.0
+  }
+ ],
+ "failed": [],
+ "relocated": [],
+ "inner": 108.65,
+ "inner_z": 334.5
+}
