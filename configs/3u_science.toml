@@ -1,0 +1,193 @@
+# 3U multi-payload science observatory (Earth + space). Values are engineering estimates, to be refined.
+
+[platform]
+name = "3U science observatory"
+units = 3
+mass_limit_kg = 4.0
+
+[orbit]
+altitude_km = 500
+sunlit_fraction = 0.62          # ~35 min eclipse of ~95 min
+
+[solar]
+flux_w_m2 = 1361
+cell_efficiency = 0.28          # triple-junction, beginning of life
+packing_factor = 0.85
+cell_area_m2 = 0.24             # body + deployable wings
+avg_projection = 0.55           # ADCS gives partial sun pointing
+eps_efficiency = 0.90
+degradation = 0.90              # end-of-life factor
+
+[battery]
+capacity_wh = 60
+specific_energy_wh_kg = 200
+max_depth_of_discharge = 0.4
+
+# Each module: mass, average power when active, duty (0-1), payload flag.
+[[module]]
+name = "Structure + rails"
+mass_kg = 0.42
+power_w = 0.0
+duty = 1.0
+payload = false
+
+[[module]]
+name = "Solar panels + wings"
+mass_kg = 0.55
+power_w = 0.0
+duty = 1.0
+payload = false
+
+[[module]]
+name = "EPS board"
+mass_kg = 0.08
+power_w = 0.05
+duty = 1.0
+payload = false
+
+[[module]]
+name = "Battery pack"
+mass_kg = 0.30
+power_w = 0.0
+duty = 1.0
+payload = false
+
+[[module]]
+name = "OBC + watchdog"
+mass_kg = 0.06
+power_w = 0.15
+duty = 1.0
+payload = false
+
+[[module]]
+name = "UHF LoRa comms (RX)"
+mass_kg = 0.10
+power_w = 0.10
+duty = 1.0
+payload = false
+
+[[module]]
+name = "UHF LoRa comms (TX)"
+mass_kg = 0.0
+power_w = 3.0
+duty = 0.10
+payload = false
+
+[[module]]
+name = "Antenna + deploy mech"
+mass_kg = 0.05
+power_w = 0.0
+duty = 1.0
+payload = false
+
+[[module]]
+name = "Thermal (heaters)"
+mass_kg = 0.03
+power_w = 0.8
+duty = 0.15
+payload = false
+
+[[module]]
+name = "Harness"
+mass_kg = 0.10
+power_w = 0.0
+duty = 1.0
+payload = false
+
+[[module]]
+name = "Payload A: SEU experiment"
+mass_kg = 0.08
+power_w = 0.25
+duty = 1.0
+payload = true
+
+[[module]]
+name = "Payload B: magnetometer + sun sensors"
+mass_kg = 0.05
+power_w = 0.10
+duty = 0.5
+payload = true
+
+[[module]]
+name = "Payload C: temp/power telemetry"
+mass_kg = 0.03
+power_w = 0.05
+duty = 1.0
+payload = true
+
+[[module]]
+name = "Payload D: store-and-forward relay"
+mass_kg = 0.05
+power_w = 0.20
+duty = 1.0
+payload = true
+
+[[module]]
+name = "ADCS: 3 reaction wheels + torquers + sensors"
+mass_kg = 0.45
+power_w = 1.5
+duty = 1.0
+payload = false
+
+[[module]]
+name = "S-band transceiver (high-rate downlink, RX)"
+mass_kg = 0.12
+power_w = 0.3
+duty = 1.0
+payload = false
+
+[[module]]
+name = "S-band transceiver (TX)"
+mass_kg = 0.0
+power_w = 6.0
+duty = 0.05
+payload = false
+
+[[module]]
+name = "Payload E: telescope camera (90 mm Cassegrain, ~4 m GSD)"
+mass_kg = 0.9
+power_w = 3.0
+duty = 0.05
+payload = true
+
+[[module]]
+name = "Payload F: wide-field camera / star tracker"
+mass_kg = 0.1
+power_w = 1.0
+duty = 0.5
+payload = true
+
+[[module]]
+name = "Payload G: thermal IR imager (160x120 microbolometer)"
+mass_kg = 0.05
+power_w = 0.6
+duty = 0.1
+payload = true
+
+[[module]]
+name = "Payload H: dual-frequency GNSS (position + ionosphere TEC)"
+mass_kg = 0.05
+power_w = 0.8
+duty = 0.3
+payload = true
+
+[[module]]
+name = "Payload I: radiation dosimeter (particle/dose)"
+mass_kg = 0.03
+power_w = 0.1
+duty = 1.0
+payload = true
+
+[[module]]
+name = "Payload J: micrometeoroid / debris impact sensor"
+mass_kg = 0.03
+power_w = 0.05
+duty = 1.0
+payload = true
+
+[[module]]
+name = "Payload K: on-board processor (compression, cloud/ship detection)"
+mass_kg = 0.08
+power_w = 2.0
+duty = 0.15
+payload = true

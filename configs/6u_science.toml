@@ -1,0 +1,575 @@
+# 6U multi-payload science observatory (Earth + space). Values are engineering estimates, to be refined.
+
+[platform]
+name = "6U science observatory"
+units = 6
+mass_limit_kg = 12.0
+
+[orbit]
+altitude_km = 500
+sunlit_fraction = 0.62          # ~35 min eclipse of ~95 min
+
+[solar]
+flux_w_m2 = 1361
+cell_efficiency = 0.28          # triple-junction, beginning of life
+packing_factor = 0.85
+cell_area_m2 = 0.50             # body + deployable wings
+eps_efficiency = 0.90
+degradation = 0.90              # end-of-life factor
+
+[geometry]
+envelope_cm3 = 7700           # 100 x 226.3 x 340.5 mm
+structure_fraction = 0.12    # walls, rails, brackets
+packing_efficiency = 0.70    # routing, keep-outs, thermal paths, PCB gaps
+# 6U envelope 100 x 226.3 x 340.5 mm. Cell areas are the physical faces; usable fractions
+# account for cut-outs (telescope, antennas, sensors, radiators).
+large_face_m2 = 0.0770      # 226 x 340, two of them
+narrow_face_m2 = 0.0341     # 100 x 340, two of them
+end_face_m2 = 0.0226        # 100 x 226, two of them (nadir/zenith)
+body_usable_fraction = 0.65
+wings = 2
+panels_per_wing = 3         # stowed-thickness check against CDS protrusion limit still open
+wing_panel_m2 = 0.0770      # 226 x 340, single-sided cells
+wing_usable_fraction = 0.90
+
+# body_proj / wing_proj: average fraction of that cell area effectively lit while sunlit.
+# Convex tumbling body: 0.25. Sun-facing plate: ~1.0.
+[[scenario]]
+name = "Typical LEO, ADCS sun-biased (NOMINAL)"
+body_proj = 0.25
+wing_proj = 0.70
+sunlit = 0.62
+nominal = true
+
+[[scenario]]
+name = "Typical LEO, tumbling, wings deployed"
+body_proj = 0.25
+wing_proj = 0.25
+sunlit = 0.62
+
+[[scenario]]
+name = "Dawn-dusk SSO, nadir pointing, wings face sun"
+body_proj = 0.30
+wing_proj = 0.95
+sunlit = 0.98
+
+[[scenario]]
+name = "SAFE MODE: tumbling, wings failed to deploy"
+body_proj = 0.25
+wing_proj = 0.0
+sunlit = 0.62
+safe = true
+
+[battery]
+capacity_wh = 60
+specific_energy_wh_kg = 110   # LiFePO4 pack level, hard-case cells
+max_depth_of_discharge = 0.4
+
+# Each module: mass, average power when active, duty (0-1), payload flag.
+[[module]]
+name = "Structure + rails"
+mass_kg = 0.80
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 0
+tier = "core"
+
+[[module]]
+name = "Solar panels + wings"
+mass_kg = 1.10
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 350
+tier = "core"
+
+[[module]]
+name = "EPS board"
+mass_kg = 0.08
+power_w = 0.05
+duty = 1.0
+payload = false
+safe_mode = true
+volume_cm3 = 150
+tier = "core"
+
+[[module]]
+name = "LiFePO4 pack A (30 Wh) + BMS + fuse"
+mass_kg = 0.30
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 250
+tier = "core"
+
+[[module]]
+name = "Flight controller (STM32H7 x2) + watchdog (MSP430FR)"
+mass_kg = 0.08
+power_w = 0.35
+duty = 1.0
+payload = false
+safe_mode = true
+volume_cm3 = 80
+tier = "core"
+
+[[module]]
+name = "UHF LoRa comms (RX)"
+mass_kg = 0.10
+power_w = 0.10
+duty = 1.0
+payload = false
+safe_mode = true
+volume_cm3 = 120
+tier = "core"
+
+[[module]]
+name = "UHF LoRa comms (TX)"
+mass_kg = 0.0
+power_w = 3.0
+duty = 0.10
+payload = false
+safe_mode = true
+volume_cm3 = 0
+tier = "core"
+
+[[module]]
+name = "Antenna + deploy mech"
+mass_kg = 0.05
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 80
+tier = "core"
+
+[[module]]
+name = "Thermal (heaters)"
+mass_kg = 0.03
+power_w = 0.8
+duty = 0.15
+payload = false
+safe_mode = true
+volume_cm3 = 20
+tier = "core"
+
+[[module]]
+name = "Harness"
+mass_kg = 0.20
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 300
+tier = "core"
+
+[[module]]
+name = "Payload A: SEU experiment"
+mass_kg = 0.08
+power_w = 0.25
+duty = 1.0
+payload = true
+volume_cm3 = 40
+tier = "core"
+
+[[module]]
+name = "Payload B: magnetometer + sun sensors"
+mass_kg = 0.05
+power_w = 0.10
+duty = 0.5
+payload = true
+volume_cm3 = 50
+tier = "core"
+
+[[module]]
+name = "Payload C: temp/power telemetry"
+mass_kg = 0.03
+power_w = 0.05
+duty = 1.0
+payload = true
+volume_cm3 = 30
+tier = "core"
+
+[[module]]
+name = "Payload D: store-and-forward relay"
+mass_kg = 0.05
+power_w = 0.20
+duty = 1.0
+payload = true
+volume_cm3 = 40
+tier = "core"
+
+[[module]]
+name = "ADCS: 3 reaction wheels + torquers + sensors"
+mass_kg = 0.45
+power_w = 1.5
+duty = 1.0
+payload = false
+volume_cm3 = 450
+tier = "core"
+
+[[module]]
+name = "S-band transceiver (high-rate downlink, RX)"
+mass_kg = 0.12
+power_w = 0.3
+duty = 1.0
+payload = false
+volume_cm3 = 150
+tier = "core"
+
+[[module]]
+name = "S-band transceiver (TX)"
+mass_kg = 0.0
+power_w = 6.0
+duty = 0.05
+payload = false
+volume_cm3 = 100
+tier = "core"
+
+[[module]]
+name = "Payload E: telescope camera (90 mm Cassegrain, ~4 m GSD)"
+mass_kg = 0.9
+power_w = 3.0
+duty = 0.05
+payload = true
+volume_cm3 = 2200
+tier = "core"
+
+[[module]]
+name = "Payload F: wide-field camera / star tracker"
+mass_kg = 0.1
+power_w = 1.0
+duty = 0.5
+payload = true
+volume_cm3 = 150
+tier = "core"
+
+[[module]]
+name = "Payload G: thermal IR imager (160x120 microbolometer)"
+mass_kg = 0.05
+power_w = 0.6
+duty = 0.1
+payload = true
+volume_cm3 = 100
+tier = "expansion"
+
+[[module]]
+name = "Payload H: dual-frequency GNSS (position + ionosphere TEC)"
+mass_kg = 0.05
+power_w = 0.8
+duty = 0.3
+payload = true
+volume_cm3 = 60
+tier = "core"
+
+[[module]]
+name = "Payload I: radiation dosimeter (particle/dose)"
+mass_kg = 0.03
+power_w = 0.1
+duty = 1.0
+payload = true
+volume_cm3 = 30
+tier = "core"
+
+[[module]]
+name = "Payload J: micrometeoroid / debris impact sensor"
+mass_kg = 0.03
+power_w = 0.05
+duty = 1.0
+payload = true
+volume_cm3 = 30
+tier = "expansion"
+
+[[module]]
+name = "Mission computer: Jetson Orin Nano (Linux, GPU) + conductive cooling"
+mass_kg = 0.35
+power_w = 10.0
+duty = 0.25
+payload = true
+volume_cm3 = 350
+tier = "core"
+
+[[module]]
+name = "Bus: star tracker (dedicated)"
+mass_kg = 0.15
+power_w = 0.5
+duty = 1.0
+payload = false
+volume_cm3 = 200
+tier = "core"
+
+[[module]]
+name = "Bus: micro-propulsion (water resistojet, orbit keeping + deorbit)"
+mass_kg = 1.0
+power_w = 20.0
+duty = 0.01
+payload = false
+volume_cm3 = 900
+tier = "core"
+
+[[module]]
+name = "Bus: drag sail (passive deorbit backup)"
+mass_kg = 0.3
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 200
+tier = "core"
+
+[[module]]
+name = "EO: multispectral imager (4-band VIS/NIR, wide swath)"
+mass_kg = 0.4
+power_w = 2.5
+duty = 0.05
+payload = true
+volume_cm3 = 400
+tier = "expansion"
+
+[[module]]
+name = "EO: hyperspectral push-broom imager (~50 bands)"
+mass_kg = 0.9
+power_w = 4.0
+duty = 0.03
+payload = true
+volume_cm3 = 1000
+tier = "research"
+
+[[module]]
+name = "EO: AIS receiver (ship tracking)"
+mass_kg = 0.08
+power_w = 0.5
+duty = 0.5
+payload = true
+volume_cm3 = 60
+tier = "expansion"
+
+[[module]]
+name = "EO: ADS-B receiver (aircraft tracking)"
+mass_kg = 0.1
+power_w = 1.0
+duty = 0.5
+payload = true
+volume_cm3 = 60
+tier = "expansion"
+
+[[module]]
+name = "EO: GNSS-reflectometry (soil moisture, sea state)"
+mass_kg = 0.15
+power_w = 1.5
+duty = 0.2
+payload = true
+volume_cm3 = 150
+tier = "expansion"
+
+[[module]]
+name = "EO: lightning / optical transient detector"
+mass_kg = 0.05
+power_w = 0.2
+duty = 1.0
+payload = true
+volume_cm3 = 30
+tier = "expansion"
+
+[[module]]
+name = "SCI: solar X-ray / UV monitor (flare detection)"
+mass_kg = 0.2
+power_w = 1.0
+duty = 0.6
+payload = true
+volume_cm3 = 150
+tier = "expansion"
+
+[[module]]
+name = "SCI: energetic particle spectrometer (e-/p+)"
+mass_kg = 0.3
+power_w = 1.0
+duty = 1.0
+payload = true
+volume_cm3 = 300
+tier = "expansion"
+
+[[module]]
+name = "SCI: Langmuir probe (plasma density, boom)"
+mass_kg = 0.15
+power_w = 0.5
+duty = 0.5
+payload = true
+volume_cm3 = 150
+tier = "expansion"
+
+[[module]]
+name = "SCI: VLF/ELF receiver (whistlers, lightning, E-field)"
+mass_kg = 0.2
+power_w = 0.5
+duty = 0.5
+payload = true
+volume_cm3 = 200
+tier = "expansion"
+
+[[module]]
+name = "SCI: gamma-ray burst detector (CsI + SiPM)"
+mass_kg = 0.4
+power_w = 1.0
+duty = 1.0
+payload = true
+volume_cm3 = 400
+tier = "research"
+
+[[module]]
+name = "SCI: RF spectrum monitor / interference map (SDR)"
+mass_kg = 0.12
+power_w = 2.0
+duty = 0.2
+payload = true
+volume_cm3 = 100
+tier = "expansion"
+
+[[module]]
+name = "TECH: reconfigurable FPGA radiation experiment"
+mass_kg = 0.1
+power_w = 0.8
+duty = 1.0
+payload = true
+volume_cm3 = 100
+tier = "expansion"
+
+[[module]]
+name = "TECH: material exposure plate (3D-printed polymers, coatings)"
+mass_kg = 0.1
+power_w = 0.0
+duty = 1.0
+payload = true
+volume_cm3 = 50
+tier = "expansion"
+
+[[module]]
+name = "OPEN: FM/linear amateur transponder (public voice/data)"
+mass_kg = 0.15
+power_w = 3.0
+duty = 0.1
+payload = true
+volume_cm3 = 150
+tier = "expansion"
+
+[[module]]
+name = "OPEN: external selfie camera (public imagery)"
+mass_kg = 0.05
+power_w = 0.5
+duty = 0.05
+payload = true
+volume_cm3 = 40
+tier = "expansion"
+
+[[module]]
+name = "Mission computer B: Raspberry Pi CM5 (always-on, low power, data handling)"
+mass_kg = 0.10
+power_w = 3.0
+duty = 1.0
+payload = true
+volume_cm3 = 150
+tier = "core"
+
+[[module]]
+name = "SCI: dual-computer radiation comparison (Pi vs Jetson error logging)"
+mass_kg = 0.0
+power_w = 0.0
+duty = 1.0
+payload = true
+volume_cm3 = 0
+tier = "core"
+
+[[module]]
+name = "LiFePO4 pack B (30 Wh) + BMS + fuse"
+mass_kg = 0.30
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 250
+tier = "core"
+
+[[module]]
+name = "EPS board B (redundant) + ideal-diode OR-ing"
+mass_kg = 0.08
+power_w = 0.05
+duty = 1.0
+payload = false
+safe_mode = true
+volume_cm3 = 150
+tier = "core"
+
+[[module]]
+name = "Battery containment: alu box + polyimide/ceramic barrier + heaters"
+mass_kg = 0.45
+power_w = 0.6
+duty = 0.15
+payload = false
+
+# ---- longevity / precision additions ----
+safe_mode = true
+volume_cm3 = 350
+tier = "core"
+
+[[module]]
+name = "SCI: deployable magnetometer boom (low-noise, away from electronics)"
+mass_kg = 0.15
+power_w = 0.0
+duty = 1.0
+payload = true
+volume_cm3 = 90
+tier = "core"
+
+[[module]]
+name = "LONG: laser retroreflector array (satellite laser ranging, passive)"
+mass_kg = 0.05
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 30
+tier = "core"
+
+[[module]]
+name = "LONG: memory plate (sapphire/nickel disc with open design archive, passive)"
+mass_kg = 0.05
+power_w = 0.0
+duty = 1.0
+payload = true
+volume_cm3 = 20
+tier = "core"
+
+[[module]]
+name = "SCI: total solar irradiance radiometer (climate-grade, long series)"
+mass_kg = 0.15
+power_w = 0.3
+duty = 1.0
+payload = true
+volume_cm3 = 150
+tier = "expansion"
+
+[[module]]
+name = "SCI: chip-scale atomic clock (precise timing, relativity tests)"
+mass_kg = 0.04
+power_w = 0.15
+duty = 1.0
+payload = true
+
+# ---- survival bus (independent emergency source) ----
+volume_cm3 = 20
+tier = "expansion"
+
+[[module]]
+name = "LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse"
+mass_kg = 0.10
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 60
+tier = "core"
+
+[[module]]
+name = "Survival bus: containment + isolated charger + burn-wire deploy drivers"
+mass_kg = 0.10
+power_w = 0.03
+duty = 1.0
+payload = false
+safe_mode = true
+volume_cm3 = 120
+tier = "core"
+

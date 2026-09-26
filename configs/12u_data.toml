@@ -1,0 +1,125 @@
+# Science data streams and downlink assumptions for the 12U observatory.
+# raw_mb_day = raw production per day; ratio = compression achieved; priority 1 = must reach ground.
+# All values are engineering estimates, to be refined with real instrument designs.
+
+[link]
+sband_rate_bps = 1_000_000        # amateur S-band 2.4 GHz, volunteer stations with ~1-2 m dishes
+link_efficiency = 0.65            # framing, retransmissions, Doppler/tracking losses
+pass_s = 420                      # average usable seconds per pass (700 km, elevation > 10 deg)
+passes_per_station_day = 5
+uhf_rate_bps = 5_000              # LoRa
+uhf_efficiency = 0.5
+ota_reserve_mb_day = 5            # software updates and command uploads (uplink side, tracked here)
+
+[[scenario]]
+name = "1 S-band station"
+stations = 1
+[[scenario]]
+name = "3 S-band stations"
+stations = 3
+[[scenario]]
+name = "10 S-band stations (volunteer network)"
+stations = 10
+
+[[stream]]
+name = "Housekeeping telemetry"
+raw_mb_day = 17.3
+ratio = 10
+priority = 1
+[[stream]]
+name = "Attitude / star tracker log"
+raw_mb_day = 2.8
+ratio = 3
+priority = 1
+[[stream]]
+name = "SEU experiment + dual-computer error log"
+raw_mb_day = 6
+ratio = 3
+priority = 1
+[[stream]]
+name = "Radiation dosimeter"
+raw_mb_day = 0.3
+ratio = 2
+priority = 1
+[[stream]]
+name = "Magnetometer (10 Hz)"
+raw_mb_day = 5.2
+ratio = 2
+priority = 1
+[[stream]]
+name = "Energetic particle spectrometer"
+raw_mb_day = 22
+ratio = 10
+priority = 1
+[[stream]]
+name = "Solar X-ray / UV monitor"
+raw_mb_day = 8.6
+ratio = 8
+priority = 1
+[[stream]]
+name = "Total solar irradiance"
+raw_mb_day = 0.7
+ratio = 1
+priority = 1
+[[stream]]
+name = "Gamma-ray burst counts + triggers"
+raw_mb_day = 12
+ratio = 2
+priority = 1
+[[stream]]
+name = "Atomic clock"
+raw_mb_day = 0.3
+ratio = 2
+priority = 2
+[[stream]]
+name = "Langmuir probe (10 Hz)"
+raw_mb_day = 3.5
+ratio = 2
+priority = 2
+[[stream]]
+name = "Dual-frequency GNSS / TEC"
+raw_mb_day = 17
+ratio = 4
+priority = 2
+[[stream]]
+name = "VLF/ELF snapshots + spectrograms"
+raw_mb_day = 60
+ratio = 4.6
+priority = 2
+[[stream]]
+name = "Thermal IR frames"
+raw_mb_day = 4
+ratio = 2
+priority = 2
+[[stream]]
+name = "Wide-field camera frames (aurora, night lights)"
+raw_mb_day = 15
+ratio = 3
+priority = 2
+[[stream]]
+name = "Lightning / transient events"
+raw_mb_day = 0.05
+ratio = 1
+priority = 3
+[[stream]]
+name = "Micrometeoroid impact events"
+raw_mb_day = 0.01
+ratio = 1
+priority = 3
+
+# Imaging is a campaign: image counts are chosen to fill leftover capacity.
+[imaging.telescope]
+raw_mb_per_image = 18
+ratio = 8
+[imaging.hyperspectral]
+raw_mb_per_scene = 384          # ~100 km strip, 1024 px x 50 bands x 12 bit
+ratio = 8
+
+[storage]
+devices = 8                   # eMMC / SLC-NAND modules on the mass memory unit
+gb_each = 128
+parity = 2                    # 6+2 erasure coding: any two devices may fail
+raw_ring_gb = 300             # rolling buffer of raw data
+imaging_telescope_per_day = 50
+imaging_hyperspectral_per_day = 2
+device_failure_per_year = 0.03

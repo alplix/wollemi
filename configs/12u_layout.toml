@@ -1,0 +1,237 @@
+# 12U internal layout: 2 x 2 x 3 cell grid.
+# Columns Q1..Q4 run around the cross-section (ring order Q1-Q2-Q3-Q4-Q1).
+# Decks D1 (nadir end) .. D3 (zenith end). A module is placed as "Qn/d" or "Qn/d1-d2"
+# (spread evenly over the listed decks). "skin" = outer solar/panel layer, "spine" = central
+# backplane channel, "structure" = frame itself.
+
+[grid]
+columns = 4
+decks = 3
+
+# Q1  telescope column (Earth-facing optics, thermally quiet, opposite the compute column)
+# Q2  attitude + propulsion + small Earth optics
+# Q3  compute + comms (hot, EMI) at the nadir end, quiet space-science sensors at the zenith end
+# Q4  energy vault (packs A/B/C in separate decks) + hard-radiation science
+
+[[place]]
+match = "Payload E: telescope"
+at = "Q1/1-3"
+pack = "sequential"   # tube fills D1, D2, then the tip of D3
+[[place]]
+match = "EO: hyperspectral"
+at = "Q1/3"
+
+[[place]]
+match = "Payload F: wide-field"
+at = "Q2/1"
+[[place]]
+match = "Payload G: thermal IR"
+at = "Q2/1"
+[[place]]
+match = "EO: lightning"
+at = "Q2/1"
+[[place]]
+match = "ADCS:"
+at = "Q2/1-2"
+[[place]]
+match = "Bus: micro-propulsion"
+at = "Q2/2-3"
+[[place]]
+match = "Bus: star tracker"
+at = "Q2/3"
+
+[[place]]
+match = "Mission computer: Jetson"
+at = "Q3/1"
+[[place]]
+match = "Mission computer B"
+at = "Q2/1"
+[[place]]
+match = "SCI: multi-computer"
+at = "Q3/1"
+[[place]]
+match = "Flight controller"
+at = "Q3/2"
+[[place]]
+match = "UHF LoRa comms"
+at = "Q3/2"
+[[place]]
+match = "S-band transceiver"
+at = "Q3/2"
+[[place]]
+match = "Payload A: SEU"
+at = "Q3/2"
+[[place]]
+match = "Payload C: temp"
+at = "Q3/2"
+[[place]]
+match = "Payload D: store"
+at = "Q3/2"
+[[place]]
+match = "Antenna + deploy"
+at = "Q3/3"
+[[place]]
+match = "SCI: VLF"
+at = "Q3/3"
+[[place]]
+match = "SCI: Langmuir"
+at = "Q3/3"
+[[place]]
+match = "Payload B: magnetometer"
+at = "Q3/3"
+[[place]]
+match = "SCI: deployable magnetometer boom"
+at = "Q3/3"
+[[place]]
+match = "Payload H: dual-frequency GNSS"
+at = "Q3/3"
+[[place]]
+match = "SCI: total solar irradiance"
+at = "Q3/3"
+
+[[place]]
+match = "LiFePO4 pack A"
+at = "Q4/1"
+[[place]]
+match = "EPS board B"
+at = "Q4/2"
+[[place]]
+match = "EPS board"
+at = "Q4/1"
+[[place]]
+match = "LiFePO4 pack B"
+at = "Q4/2"
+[[place]]
+match = "LiFePO4 pack C"
+at = "Q4/3"
+[[place]]
+match = "Battery containment"
+at = "Q4/1-3"
+[[place]]
+match = "Survival bus: containment"
+at = "Q4/3"
+[[place]]
+match = "Thermal (heaters)"
+at = "Q4/1-3"
+[[place]]
+match = "SCI: gamma-ray"
+at = "Q4/3"
+[[place]]
+match = "SCI: solar X-ray"
+at = "Q4/3"
+[[place]]
+match = "SCI: energetic particle"
+at = "Q4/2"
+[[place]]
+match = "Payload I: radiation dosimeter"
+at = "Q3/1"
+[[place]]
+match = "SCI: chip-scale atomic clock"
+at = "Q3/2"
+[[place]]
+match = "Payload J: micrometeoroid"
+at = "Q4/1"
+[[place]]
+match = "Bus: drag sail"
+at = "Q4/1"
+
+[[place]]
+match = "Solar panels + wings"
+at = "skin"
+[[place]]
+match = "LONG: laser retroreflector"
+at = "skin"
+[[place]]
+match = "LONG: memory plate"
+at = "skin"
+[[place]]
+match = "TECH: material exposure"
+at = "skin"
+[[place]]
+match = "Harness"
+at = "spine"
+[[place]]
+match = "Structure + rails"
+at = "structure"
+[[place]]
+match = "UHF LoRa comms (TX)"
+at = "Q3/2"
+
+# ---- separation rules ----
+# kinds: different_column, different_deck, opposite_column (ring distance 2), not_adjacent
+
+[[rule]]
+why = "magnetometer far from batteries (currents)"
+a = "SCI: deployable magnetometer boom"
+b = "LiFePO4 pack A"
+kind = "different_column"
+
+[[rule]]
+why = "magnetometer far from reaction wheels"
+a = "SCI: deployable magnetometer boom"
+b = "ADCS:"
+kind = "different_column"
+
+[[rule]]
+why = "VLF receiver away from hot, noisy compute"
+a = "SCI: VLF"
+b = "Mission computer: Jetson"
+kind = "different_deck"
+
+[[rule]]
+why = "telescope opposite the hottest compute (thermal distortion)"
+a = "Payload E: telescope"
+b = "Mission computer: Jetson"
+kind = "opposite_column"
+
+[[rule]]
+why = "batteries not in the telescope column"
+a = "Payload E: telescope"
+b = "LiFePO4 pack A"
+kind = "different_column"
+
+[[rule]]
+why = "propellant not next to batteries"
+a = "Bus: micro-propulsion"
+b = "LiFePO4 pack A"
+kind = "different_column"
+
+[[rule]]
+why = "compute not in the battery column"
+a = "Mission computer: Jetson"
+b = "LiFePO4 pack A"
+kind = "different_column"
+
+[[rule]]
+why = "survival pack C separate deck from pack A"
+a = "LiFePO4 pack C"
+b = "LiFePO4 pack A"
+kind = "different_deck"
+
+[[rule]]
+why = "survival pack C separate deck from pack B"
+a = "LiFePO4 pack C"
+b = "LiFePO4 pack B"
+kind = "different_deck"
+
+[[rule]]
+why = "pack A and pack B separate decks"
+a = "LiFePO4 pack A"
+b = "LiFePO4 pack B"
+kind = "different_deck"
+
+[[place]]
+match = "LONG: radiation vault"
+at = "Q3/2"
+
+
+[[place]]
+match = "Mass memory unit"
+at = "Q3/2"
+[[place]]
+match = "SCI: flash memory"
+at = "Q3/2"
+
+[[place]]
+match = "LONG: impact protection"
+at = "Q2/2"

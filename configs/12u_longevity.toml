@@ -1,0 +1,41 @@
+# Longevity assumptions for the 12U observatory. ALL VALUES ARE ESTIMATES: replace with
+# SPENVIS/OMERE dose runs, cell datasheets and part-level radiation test data before relying on them.
+
+[orbit]
+altitude_km = 700
+has_eclipse = true                 # false for a dawn-dusk sun-synchronous orbit
+
+[solar]
+degradation_per_year = 0.015       # exponential, radiation + thermal cycling + UV
+
+[battery]
+packs_wh_total = 60                # packs A + B
+max_dod_usable = 0.80
+cycle_life_at_100dod = 3000        # LiFePO4, conservative
+dod_exponent = 1.5                 # life ~ N100 * DoD^-exponent
+calendar_fade_per_year = 0.01
+fade_at_end_of_life = 0.20         # capacity fraction lost at cycle-life end
+
+[radiation]
+# Total ionising dose rate (krad(Si) per year) versus aluminium-equivalent shielding thickness (mm),
+# rough 700 km sun-synchronous values.
+dose_rate_by_mm = { "2" = 2.0, "5" = 0.9, "8" = 0.55, "10" = 0.45, "20" = 0.2 }
+
+[[part]]
+name = "Jetson Orin Nano (COTS SoC + LPDDR)"
+tid_krad = 15
+[[part]]
+name = "Raspberry Pi CM5 (COTS SoC + LPDDR)"
+tid_krad = 15
+[[part]]
+name = "STM32H7 flight controller"
+tid_krad = 30
+[[part]]
+name = "MSP430FR supervisor (FRAM)"
+tid_krad = 50
+[[part]]
+name = "LoRa / S-band radio ICs"
+tid_krad = 20
+[[part]]
+name = "Rad-hard MCU option (e.g. SAMRH71 / VA41630 class)"
+tid_krad = 100
