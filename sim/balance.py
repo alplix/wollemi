@@ -1,4 +1,4 @@
-"""Centre-of-mass and per-column thermal check for the 12U layout.
+"""Centre-of-mass (from the real CAD placement) and per-column heat check for the 12U layout.
 
 Usage: python sim/balance.py configs/12u_science.toml configs/12u_layout.toml
 Cell centres: x,y = +-CELL_XY around the geometric centre, z = deck offset (D1 nadir = -CELL_Z).
@@ -63,17 +63,19 @@ def main(cfg_path, lay_path):
         parts.append((m["name"], mass, x, y, z, pw))
         col_power[q] += pw
 
-    def com(items):
-        M = sum(p[1] for p in items)
-        return M, tuple(sum(p[1] * p[i] for p in items) / M for i in (2, 3, 4))
-
-    M, (cx, cy, cz) = com(parts)
-    # end of life: water gone from the tank position
-    prop = next(p for p in parts if p[0].startswith("Bus: micro-propulsion"))
-    eol = [p if p is not prop else (p[0], p[1] - PROP_WATER_KG, p[2], p[3], p[4], p[5]) for p in parts]
-    Me, (ex, ey, ez) = com(eol)
+    # centre of mass from the real geometric placement (same function as the CAD model); the deck-level estimate above is only used for the heat table
+    import json
+    import os
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, os.path.join(root, "mechanical"))
+    import ginkgo_cad as gc
+    placed = json.load(open(os.path.join(root, "mechanical", "out", "placement.json")))["placed"]
+    gmod = tomllib.load(open(os.path.join(root, "configs", "12u_geometry.toml"), "rb"))
+    M, (cx, cy, cz), _I = gc.mass_props(placed, cfg, False, gmod)
+    placed_eol = [dict(p_, mass_kg=p_["mass_kg"] - PROP_WATER_KG) if p_["name"].startswith("Bus: micro-propulsion") else p_ for p_ in placed]
+    Me, (ex, ey, ez), _I2 = gc.mass_props(placed_eol, cfg, False, gmod)
     ok = lambda a, b: "OK  " if a <= LIMIT_XY and b <= LIMIT_Z else "FAIL"
-    print(f"== Mass balance ({M:.2f} kg BOL, {Me:.2f} kg EOL) ==")
+    print(f"== Mass balance from the CAD placement ({M:.2f} kg BOL, {Me:.2f} kg EOL after using the iodine) ==")
     print(f"BOL CoM offset: x {cx:+.1f}, y {cy:+.1f}, z {cz:+.1f} mm [{ok(max(abs(cx), abs(cy)), abs(cz))}]")
     print(f"EOL CoM offset: x {ex:+.1f}, y {ey:+.1f}, z {ez:+.1f} mm [{ok(max(abs(ex), abs(ey)), abs(ez))}]")
     print(f"Targets (typical, verify with dispenser): |x|,|y| <= {LIMIT_XY:.0f} mm, |z| <= {LIMIT_Z:.0f} mm")
