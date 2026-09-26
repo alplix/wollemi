@@ -1,0 +1,284 @@
+# Planned verification activities. Each test lists the requirement IDs (mission/traceability.toml) it covers.
+# level: component, board, subsystem, system, environmental, precursor, ground, review
+# effort_days: engineering effort for one campaign (estimate); external: cost class of outside facilities (none, low, medium, high).
+# waive: requirements intentionally verified by analysis only, with the reason.
+
+[waive]
+"SIM-1" = "software simulation result; the hardware-in-the-loop test HW-01 repeats it on real timing"
+"FMEA-1" = "document quality gate; its fault-injection consequences are covered by SYS-03 and SYS-05"
+"FW-1" = "unit tests already run automatically on every check; hardware runs are covered by SYS-02"
+
+# ---------------------------------------------------------------- component and board level
+[[test]]
+id = "CMP-01"
+name = "Battery pack cell and pack tests (capacity, DoD cycling at the LEO profile, vent and short tests in the vault)"
+level = "component"
+covers = ["PWR-2", "PWR-3", "LONG-3"]
+method = "T"
+effort_days = 40
+external = "low"
+phase = "before_flight"
+
+[[test]]
+id = "CMP-02"
+name = "Solar cell and double-sided panel coupon tests (I-V at temperature, thermal cycling, bending and vibration of a 2.1 mm panel)"
+level = "component"
+covers = ["PWR-4", "PWR-5", "STR-1", "SYS-5"]
+method = "T"
+effort_days = 30
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "CMP-03"
+name = "Radiation screening of COTS parts: total dose (control electronics, radios, flash) and single-event/latch-up (Jetson, CM5, MCUs)"
+level = "component"
+covers = ["LONG-1", "LONG-2", "LONG-3"]
+method = "T"
+effort_days = 25
+external = "high"
+phase = "before_flight"
+
+[[test]]
+id = "BRD-01"
+name = "Card template and backplane bring-up: fit check of notched cards in a 3D-printed column, continuity of every backplane net, DRC-to-fab check"
+level = "board"
+covers = ["ELEC-1", "ELEC-2", "SYS-3"]
+method = "T"
+effort_days = 15
+external = "low"
+phase = "before_flight"
+
+[[test]]
+id = "BRD-02"
+name = "EPS card engineering models: MPPT efficiency, cold start from a dead pack, charge control limits, OVP/UVP, eFuse trips, survival path with pack C removed"
+level = "board"
+covers = ["ELEC-3", "PWR-3", "PWR-4", "PWR-1"]
+method = "T"
+effort_days = 45
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "BRD-03"
+name = "Supervisor and hardware kill: SLOT_SEL/KILL_N latch-off of a card, watchdog and beacon on the survival string alone"
+level = "board"
+covers = ["PWR-3", "LONG-1", "ELEC-1"]
+method = "T"
+effort_days = 20
+external = "none"
+phase = "before_flight"
+
+# ---------------------------------------------------------------- subsystem level
+[[test]]
+id = "SUB-01"
+name = "Telecommand authentication on the target processors: signature, replay, expiry, key rotation, timing of Ed25519 verify"
+level = "subsystem"
+covers = ["COM-4"]
+method = "T"
+effort_days = 10
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-02"
+name = "Packet and CFDP stack on target hardware with the ground decoder: bit-exactness, corruption, loss and resume across passes"
+level = "subsystem"
+covers = ["COM-3", "DATA-1"]
+method = "T"
+effort_days = 20
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-03"
+name = "Mass memory unit: erasure-coding stress, device failure injection (two devices), scrubbing, power-loss safety, data volume for 100 days of raw data"
+level = "subsystem"
+covers = ["DATA-1"]
+method = "T"
+effort_days = 25
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-04"
+name = "ADCS bench: wheels, torquers, sensors on an air-bearing or torsion table; slew and momentum dumping; magnetic moment measurement"
+level = "subsystem"
+covers = ["ADCS-1", "ADCS-2"]
+method = "T"
+effort_days = 40
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-05"
+name = "Iodine thruster with the spacecraft bay: thrust and plume measurement, thermal behaviour, contamination witness plates, canted mount alignment"
+level = "subsystem"
+covers = ["PROP-1", "PROP-2", "ADCS-2", "THM-1"]
+method = "T"
+effort_days = 40
+external = "high"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-06"
+name = "Telescope and hyperspectral optics: focus, MTF, thermal focus shift, ground sample distance on a collimator or a distant target"
+level = "subsystem"
+covers = ["THM-2"]
+method = "T"
+effort_days = 35
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "SUB-07"
+name = "Wing deployment and hold-down: burn-wire release repeatability, deployment shock, hinge torque, stowed frequency of the stack"
+level = "subsystem"
+covers = ["SYS-5", "STR-1", "PWR-5"]
+method = "T"
+effort_days = 30
+external = "low"
+phase = "before_flight"
+
+# ---------------------------------------------------------------- system level (FlatSat and flight model)
+[[test]]
+id = "SYS-01"
+name = "FlatSat integration: all cards, computers, sensors and radios on a bench with a simulated power and orbit environment; mission simulation replayed on hardware"
+level = "system"
+covers = ["SYS-3", "PWR-1", "PWR-2", "COM-3"]
+method = "T"
+effort_days = 90
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SYS-02"
+name = "Hardware-in-the-loop mission run (60 days compressed): mode manager, FDIR, command queue, OTA with real processors and timing"
+level = "system"
+covers = ["SIM-1", "FW-1"]
+method = "T"
+effort_days = 30
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SYS-03"
+name = "Fault injection campaign from the FMEA: each severity >= 4 failure mode injected and the response verified"
+level = "system"
+covers = ["FMEA-1", "PWR-3", "LONG-2"]
+method = "T"
+effort_days = 30
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SYS-04"
+name = "Mass properties on the flight model: mass, centre of mass and moments of inertia measured against the CAD values"
+level = "system"
+covers = ["SYS-2", "SYS-4", "ADCS-2"]
+method = "T"
+effort_days = 5
+external = "low"
+phase = "before_flight"
+
+[[test]]
+id = "SYS-05"
+name = "Magnetic cleanliness survey: residual dipole of the flight model with the boom stowed and deployed"
+level = "system"
+covers = ["ADCS-2"]
+method = "T"
+effort_days = 10
+external = "medium"
+phase = "before_flight"
+
+# ---------------------------------------------------------------- environmental
+[[test]]
+id = "ENV-01"
+name = "Vibration: sine sweep for modes, random at the launch provider's levels, quasi-static; before and after signatures"
+level = "environmental"
+covers = ["STR-1", "SYS-1", "SYS-5"]
+method = "T"
+effort_days = 10
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "ENV-02"
+name = "Shock: separation and deployment shock levels on the flight model"
+level = "environmental"
+covers = ["STR-1"]
+method = "T"
+effort_days = 5
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "ENV-03"
+name = "Thermal vacuum and thermal cycling with heaters, eclipse profile and survival mode; correlate the thermal model"
+level = "environmental"
+covers = ["THM-1", "THM-2", "LONG-1", "PWR-2"]
+method = "T"
+effort_days = 20
+external = "high"
+phase = "before_flight"
+
+[[test]]
+id = "ENV-04"
+name = "EMC and RF: emissions, susceptibility, antenna patterns and link test in an anechoic setting; frequency compliance"
+level = "environmental"
+covers = ["COM-2", "REG-1"]
+method = "T"
+effort_days = 10
+external = "medium"
+phase = "before_flight"
+
+[[test]]
+id = "ENV-05"
+name = "Battery safety tests required by the launch provider (vent, short, overcharge protection) and outgassing/bake-out"
+level = "environmental"
+covers = ["PWR-3", "SYS-1"]
+method = "T"
+effort_days = 10
+external = "medium"
+phase = "before_flight"
+
+# ---------------------------------------------------------------- precursor flights and ground
+[[test]]
+id = "PRE-01"
+name = "High-altitude balloon flight (about 30 km): Jetson, CM5, cameras, LoRa link, GNSS, magnetometer, dosimeter and the packet/ground chain"
+level = "precursor"
+covers = ["COM-2", "COM-3", "LONG-2"]
+method = "D"
+effort_days = 60
+external = "medium"
+phase = "precursor"
+
+[[test]]
+id = "GND-01"
+name = "End-to-end ground chain: station at the reference site tracks a real satellite of opportunity, decodes and uploads to the archive; unattended operation for two weeks"
+level = "ground"
+covers = ["COM-1", "COM-2", "OPEN-1"]
+method = "D"
+effort_days = 30
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "REV-01"
+name = "Design reviews: preliminary and critical design review, safety review with the launch provider, licensing and coordination review"
+level = "review"
+covers = ["SYS-1", "REG-1", "COLAV-1", "ORB-1", "OPEN-1"]
+method = "I"
+effort_days = 40
+external = "low"
+phase = "before_flight"
+
+[[test]]
+id = "REV-02"
+name = "Operations readiness review: procedures, contact plan, collision-avoidance drill with a conjunction message, anomaly drills"
+level = "review"
+covers = ["COLAV-1", "COM-4", "SIM-1"]
+method = "D"
+effort_days = 20
+external = "none"
+phase = "before_flight"
