@@ -27,8 +27,8 @@ manufacturing come after. Status boxes are updated as work is finished; `docs/st
 | 8 | Verification and test plan | `docs/test-plan.md` (FlatSat, balloon precursor, environmental tests, requirement mapping), machine-checked by `tools/test_plan_check.py` | [x] |
 | 9 | Cost and schedule estimate | `configs/12u_cost.toml`, `sim/cost.py`, `docs/cost.md` (Monte Carlo ranges, three scenarios, schedule; clearly unverified estimates) | [x] |
 | 10 | Requirements refresh | `mission/requirements.md` rewritten for the 12U observatory; figures of merit redefined; synced with the traceability file by `tools/req_sync_check.py` | [x] |
-| 11 | System design document | `docs/sdd.md` generated from live tool output (`tools/gen_sdd.py`) | [ ] |
-| 12 | Licensing preparation, credits, README polish | `docs/licensing.md`, `CREDITS.md` draft (no licence applied while private) | [ ] |
+| 11 | System design document | `docs/sdd.md` generated from live tool output (`tools/gen_sdd.py`) | [x] |
+| 12 | Licensing preparation, credits, README polish | `docs/licensing.md`, `CREDITS.md` draft, README rewritten (no licence applied while private) | [x] |
 | 13 | Final regression, status report, memory update | `docs/status.md`, commit, notes for the operator | [ ] |
 
 ## Rules for this run
