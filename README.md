@@ -28,7 +28,7 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | Path | Content |
 |---|---|
 | `mission/` | Requirements, figures of merit, open access, collision avoidance |
-| `docs/` | Architecture, power, layout, data plan, propulsion, longevity, firmware, protocol, prior art, ground-station kit, design identity |
+| `docs/` | Architecture, power, layout, data plan, propulsion, longevity, firmware, protocol, electrical interface, prior art, ground-station kit, design identity |
 | `configs/` | Single source of truth: `12u_science.toml`, `12u_layout.toml`, `12u_data.toml`, `12u_longevity.toml` (+ 2U/3U/6U variants) |
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
 | `protocol/` | Message definitions (`messages.toml`), C/Python generator, tests (round trip, corruption, C<->Python byte-exact) |
@@ -43,6 +43,7 @@ python sim/layout_check.py                           # cell fill and separation 
 python sim/balance.py                                # centre of mass and per-column heat
 python sim/data_budget.py                            # science data vs downlink and storage
 python sim/longevity.py                              # year-by-year power, battery and radiation dose
+python sim/eps_design.py                             # solar strings, MPPT, battery pack, charge limits
 python sim/link_budget.py                            # S-band link margin versus dish size and rate
 python protocol/gen.py && python protocol/tests/test_protocol.py   # protocol code generation and tests
 ```

@@ -70,7 +70,7 @@ extra_load_w = 50.0
 extra_sunlit_only = true
 
 [battery]
-capacity_wh = 60
+capacity_wh = 84
 specific_energy_wh_kg = 110   # LiFePO4 pack level, hard-case cells
 max_depth_of_discharge = 0.4
 
@@ -104,8 +104,8 @@ volume_cm3 = 150
 tier = "core"
 
 [[module]]
-name = "LiFePO4 pack A (30 Wh) + BMS + fuse"
-mass_kg = 0.30
+name = "LiFePO4 pack A (2S2P 26650, 42 Wh) + BMS + fuse"
+mass_kg = 0.44
 power_w = 0.0
 duty = 1.0
 payload = false
@@ -396,8 +396,8 @@ volume_cm3 = 0
 tier = "science"
 
 [[module]]
-name = "LiFePO4 pack B (30 Wh) + BMS + fuse"
-mass_kg = 0.30
+name = "LiFePO4 pack B (2S2P 26650, 42 Wh) + BMS + fuse"
+mass_kg = 0.44
 power_w = 0.0
 duty = 1.0
 payload = false

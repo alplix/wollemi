@@ -9,7 +9,7 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
 |---|---|
 | Solar arrays (1.5 %/yr loss) | Full load still covered in ADCS-biased mode for 50 yr; tumbling mode falls below full load at ~48 yr |
 | Safe mode (body cells only, 1.1 W) | Holds for well over 50 yr |
-| Main LiFePO4 packs A+B | ~5300 eclipse cycles/yr, ~15 % DoD: ~10 yr to 20 % fade; can no longer cover eclipse after ~27 yr |
+| Main LiFePO4 packs A+B (2S2P 26650, 42 Wh each) | ~5300 eclipse cycles/yr, ~11 % DoD: ~15 yr to 20 % fade; can no longer cover eclipse after ~36 yr |
 | Total ionising dose (2 mm Al) | 2 krad/yr, ~100 krad over 50 yr |
 | COTS SoC (Jetson / Pi, ~15 krad) | ~8 yr at 2 mm, ~17 yr at 5 mm, ~33 yr at 10 mm |
 | STM32H7 (~30 krad) | ~33 yr at 5 mm, ~67 yr at 10 mm |
@@ -26,7 +26,7 @@ replace with SPENVIS/OMERE dose runs, cell data and part-level radiation test da
    on the Pi or Jetson for its data path.
 3. **Heavy compute (target ~10-15 yr):** Jetson and Pi. Expect radiation-limited life; treat as
    consumables. Design for graceful loss (science keeps flowing through chain 2).
-4. **Main batteries (target ~10-25 yr):** after fade, switch to sun-only operation (no eclipse
+4. **Main batteries (target ~15-35 yr):** after fade, switch to sun-only operation (no eclipse
    operations for heavy loads). A dawn-dusk orbit removes the eclipse problem entirely.
 
 ## Design responses adopted
