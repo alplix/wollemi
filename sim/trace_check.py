@@ -225,6 +225,12 @@ def c_orbit():
     return out.returncode == 0, line[:120]
 
 
+def c_mission_sim():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "sim", "mission_sim.py"), "60"], capture_output=True, text=True)
+    line = next((l for l in out.stdout.splitlines() if l.startswith("Verdict")), out.stderr[-120:])
+    return out.returncode == 0, line[:120]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 

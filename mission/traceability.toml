@@ -204,6 +204,13 @@ auto = "longevity"
 evidence = ["sim/longevity.py"]
 
 [[req]]
+id = "SIM-1"
+text = "Closed-loop simulation of the real mode manager over 60 days with injected faults shows no brownout and correct degradation and recovery in a typical and a dawn-dusk orbit."
+method = "A"
+auto = "mission_sim"
+evidence = ["sim/mission_sim.py", "firmware/common/gk_modes.c", "docs/mission-simulation.md"]
+
+[[req]]
 id = "ELEC-1"
 text = "Card template passes KiCad DRC with the spine notch, connectors and keep-outs defined."
 method = "A"

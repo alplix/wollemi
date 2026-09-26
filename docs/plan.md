@@ -20,7 +20,7 @@ manufacturing come after. Status boxes are updated as work is finished; `docs/st
 | 1 | Master plan and one-command regression | `docs/plan.md`, `tools/check_all.py`, `docs/status.md` | [x] |
 | 2 | Structural and launch-load analysis | `sim/structure.py`, `docs/structure.md` (frequency, quasi-static loads, wing hold-down, margins) | [x] |
 | 3 | Orbit lifetime and debris compliance | `sim/orbit_life.py`, `docs/orbit-and-debris.md` (decay with and without sail, disposal options) | [x] |
-| 4 | Closed-loop mission simulation | `sim/mission_sim.py` (firmware mode manager + power + faults over 60 days), results in `docs/mission-simulation.md` | [ ] |
+| 4 | Closed-loop mission simulation | `sim/mission_sim.py` (firmware mode manager + power + faults over 60 days), results in `docs/mission-simulation.md` | [x] |
 | 5 | FMEA | `docs/fmea.md` with machine-checked coverage of the critical functions | [ ] |
 | 6 | Interface control document | `docs/icd.md` (mechanical, electrical, data, thermal, launch interfaces) | [ ] |
 | 7 | Operations concept and commissioning plan | `docs/ops-concept.md` (LEOP, checkout, science campaigns, contact plan, anomaly response) | [ ] |
