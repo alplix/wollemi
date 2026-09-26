@@ -2,8 +2,8 @@
 
 Goal: anyone can receive Ginkgo's science data and telemetry cheaply. SatNOGS provides the network and
 database ([SatNOGS](https://satnogs.org/)) and is primarily VHF/UHF today, with S-band named as a goal, so the
-S-band part is where Ginkgo adds value. Ginkgo's high-rate data (about 170 MB per station per day, see
-`docs/data-plan.md`) needs S-band; UHF LoRa only carries about 0.7 MB/day.
+S-band part is where Ginkgo adds value. Ginkgo's high-rate data (about 136 MB per mid-latitude station per day, see
+`docs/data-plan.md`) needs S-band; UHF LoRa only carries about 0.5 MB/day.
 
 ## Two station classes
 
@@ -39,6 +39,17 @@ Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous
   decoding), open data upload, tracking from orbit elements.
 - Documentation: build guide, BOM with sourcing notes, alignment and calibration procedure.
 - Reference decoder in Python shared with the flight protocol description (`docs/protocol.md`, planned).
+
+## Pass statistics and Doppler (`groundstation/predict.py`)
+
+Synthetic 700 km sun-synchronous orbit, 10 degrees minimum elevation, 7 days: Ankara 3.9 passes/day (mean 434 s, ~28 min/day contact), Istanbul 3.7,
+Singapore 2.7, Tromso 9.7 (~76 min/day). Doppler at 2.4 GHz reaches about +-54 kHz with a rate of only ~0.6 kHz/s (433 MHz: about +-10 kHz),
+so tracking with an ordinary SDR is straightforward. Use real orbit elements once the spacecraft exists.
+
+## Software already in the repository
+
+- `groundstation/predict.py`: pass prediction, Doppler and pass statistics (needs `pip install sgp4`).
+- `groundstation/decode.py`: reference decoder for hex packets and `.gpk` archive streams, built on the generated protocol module.
 
 ## Anchor station
 

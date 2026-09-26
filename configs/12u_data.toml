@@ -6,7 +6,7 @@
 sband_rate_bps = 1_000_000        # amateur S-band 2.4 GHz, volunteer stations with ~1-2 m dishes
 link_efficiency = 0.65            # framing, retransmissions, Doppler/tracking losses
 pass_s = 420                      # average usable seconds per pass (700 km, elevation > 10 deg)
-passes_per_station_day = 5
+passes_per_station_day = 4      # mid-latitude station (groundstation/predict.py: Ankara 3.9/day, polar 9.7/day)
 uhf_rate_bps = 5_000              # LoRa
 uhf_efficiency = 0.5
 ota_reserve_mb_day = 5            # software updates and command uploads (uplink side, tracked here)
