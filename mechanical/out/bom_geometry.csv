@@ -4,44 +4,44 @@ module,column,mass_kg,dx,dy,dz,x_min,y_min,z_min,x_max,y_max,z_max
 Bus: star tracker (dedicated),Q2,0.15,50.0,50.0,80.0,-109.0,1.5,255.5,-59.0,51.5,335.5
 Payload F: wide-field camera / star tracker,Q2,0.1,50.0,50.0,60.0,-109.0,1.5,3.0,-59.0,51.5,63.0
 Payload G: thermal IR imager (160x120 microbolometer),Q2,0.05,40.0,40.0,60.0,-109.0,51.5,3.0,-69.0,91.5,63.0
-"SCI: deployable magnetometer boom (low-noise, away from electronics)",Q3,0.15,90.0,30.0,35.0,-91.5,-109.0,300.5,-1.5,-79.0,335.5
-Antenna + deploy mech,Q3,0.05,90.0,40.0,22.5,-91.5,-79.0,313.0,-1.5,-39.0,335.5
-Payload H: dual-frequency GNSS (position + ionosphere TEC),Q3,0.05,50.0,40.0,30.0,-51.5,-109.0,270.5,-1.5,-69.0,300.5
+"SCI: deployable magnetometer boom (low-noise, away from electronics)",Q3,0.15,90.0,30.0,35.0,-96.5,-109.0,300.5,-6.5,-79.0,335.5
+Antenna + deploy mech,Q3,0.05,90.0,40.0,22.5,-96.5,-79.0,313.0,-6.5,-39.0,335.5
+Payload H: dual-frequency GNSS (position + ionosphere TEC),Q3,0.05,50.0,40.0,30.0,-56.5,-109.0,270.5,-6.5,-69.0,300.5
 EO: lightning / optical transient detector,Q2,0.05,30.0,30.0,35.0,-59.0,1.5,3.0,-29.0,31.5,38.0
-"EO: hyperspectral spectrometer (shares telescope fore-optics, ~50 bands 400-1000 nm)",Q1,0.7,100.0,85.0,55.0,1.5,24.0,280.5,101.5,109.0,335.5
-ADCS: 3 reaction wheels + torquers + sensors,Q2,0.45,90.0,90.0,55.0,-91.5,1.5,63.0,-1.5,91.5,118.0
-SCI: gamma-ray burst detector (CsI + SiPM),Q4,0.4,100.0,100.0,40.0,1.5,-101.5,225.5,101.5,-1.5,265.5
-"Mission computer: Jetson Orin Nano (Linux, GPU) + conductive cooling",Q3,0.35,100.0,80.0,45.0,-101.5,-109.0,3.0,-1.5,-29.0,48.0
-Battery containment: alu box + polyimide/ceramic barrier + heaters,Q4,0.45,100.0,100.0,35.0,1.5,-101.5,3.0,101.5,-1.5,38.0
-SCI: energetic particle spectrometer (e-/p+),Q4,0.3,100.0,60.0,50.0,1.5,-109.0,175.5,101.5,-49.0,225.5
-"LiFePO4 pack A (2S2P 26650, 42 Wh) + BMS + fuse",Q4,0.44,100.0,70.0,37.5,1.5,-109.0,38.0,101.5,-39.0,75.5
-"LiFePO4 pack B (2S2P 26650, 42 Wh) + BMS + fuse",Q4,0.44,100.0,70.0,37.5,1.5,-109.0,138.0,101.5,-39.0,175.5
-Bus: drag sail (passive deorbit backup),Q4,0.3,100.0,100.0,20.0,1.5,-101.5,75.5,101.5,-1.5,95.5
-"SCI: VLF/ELF receiver (whistlers, lightning, E-field)",Q3,0.2,100.0,100.0,20.0,-101.5,-101.5,225.5,-1.5,-1.5,245.5
-EPS board,Q4,0.08,90.0,90.0,20.0,1.5,-91.5,95.5,91.5,-1.5,115.5
-EPS board B (redundant) + ideal-diode OR-ing,Q4,0.08,90.0,90.0,20.0,1.5,-91.5,115.5,91.5,-1.5,135.5
-"SCI: total solar irradiance radiometer (climate-grade, long series)",Q2,0.15,55.0,55.0,50.0,-56.5,54.0,118.0,-1.5,109.0,168.0
-"S-band transceiver (high-rate downlink, RX)",Q3,0.12,90.0,80.0,22.5,-91.5,-109.0,48.0,-1.5,-29.0,70.5
+"EO: hyperspectral spectrometer (shares telescope fore-optics, ~50 bands 400-1000 nm)",Q1,0.7,100.0,85.0,55.0,6.5,1.5,253.0,106.5,86.5,308.0
+ADCS: 3 reaction wheels + torquers + sensors,Q2,0.45,90.0,90.0,55.0,-96.5,1.5,63.0,-6.5,91.5,118.0
+SCI: gamma-ray burst detector (CsI + SiPM),Q4,0.4,100.0,100.0,40.0,6.5,-101.5,225.5,106.5,-1.5,265.5
+"Mission computer: Jetson Orin Nano (Linux, GPU) + conductive cooling",Q3,0.35,80.0,100.0,45.0,-109.0,-101.5,3.0,-29.0,-1.5,48.0
+Battery containment: alu box + polyimide/ceramic barrier + heaters,Q4,0.45,100.0,100.0,35.0,6.5,-101.5,3.0,106.5,-1.5,38.0
+SCI: energetic particle spectrometer (e-/p+),Q4,0.3,60.0,100.0,50.0,49.0,-101.5,175.5,109.0,-1.5,225.5
+"LiFePO4 pack A (2S2P 26650, 42 Wh) + BMS + fuse",Q4,0.44,70.0,100.0,37.5,39.0,-101.5,38.0,109.0,-1.5,75.5
+"LiFePO4 pack B (2S2P 26650, 42 Wh) + BMS + fuse",Q4,0.44,70.0,100.0,37.5,39.0,-101.5,138.0,109.0,-1.5,175.5
+Bus: drag sail (passive deorbit backup),Q4,0.3,100.0,100.0,20.0,6.5,-101.5,75.5,106.5,-1.5,95.5
+"SCI: VLF/ELF receiver (whistlers, lightning, E-field)",Q3,0.2,100.0,100.0,20.0,-106.5,-101.5,225.5,-6.5,-1.5,245.5
+EPS board,Q4,0.08,90.0,90.0,20.0,6.5,-91.5,95.5,96.5,-1.5,115.5
+EPS board B (redundant) + ideal-diode OR-ing,Q4,0.08,90.0,90.0,20.0,6.5,-91.5,115.5,96.5,-1.5,135.5
+"SCI: total solar irradiance radiometer (climate-grade, long series)",Q2,0.15,55.0,55.0,50.0,-61.5,54.0,118.0,-6.5,109.0,168.0
+"S-band transceiver (high-rate downlink, RX)",Q3,0.12,80.0,90.0,22.5,-109.0,-91.5,48.0,-29.0,-1.5,70.5
 "SCI: Langmuir probe (plasma density, boom)",Q3,0.15,60.0,60.0,42.5,-109.0,-61.5,245.5,-49.0,-1.5,288.0
 "Mission computer B: Raspberry Pi CM5 (always-on, low power, data handling)",Q2,0.1,60.0,90.0,30.0,-109.0,1.5,225.5,-49.0,91.5,255.5
 SCI: solar X-ray / UV monitor (flare detection),Q4,0.2,60.0,50.0,50.0,49.0,-51.5,285.5,109.0,-1.5,335.5
-"Mass memory unit: 8 x 128 GB eMMC/SLC, 6+2 erasure coding, autonomous scrubbing (dedicated MCU)",Q3,0.12,90.0,90.0,20.0,-91.5,-91.5,70.5,-1.5,-1.5,90.5
+"Mass memory unit: 8 x 128 GB eMMC/SLC, 6+2 erasure coding, autonomous scrubbing (dedicated MCU)",Q3,0.12,90.0,90.0,20.0,-96.5,-91.5,70.5,-6.5,-1.5,90.5
 Survival bus: containment + isolated charger + burn-wire deploy drivers,Q4,0.1,60.0,40.0,50.0,49.0,-91.5,285.5,109.0,-51.5,335.5
-UHF LoRa comms (RX),Q2,0.1,90.0,55.0,25.0,-91.5,54.0,168.0,-1.5,109.0,193.0
-S-band transceiver (TX),Q3,0.0,90.0,55.0,25.0,-91.5,-109.0,200.5,-1.5,-54.0,225.5
-"LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for propellant tank and battery vaults",Q4,0.8,100.0,100.0,10.0,1.5,-101.5,265.5,101.5,-1.5,275.5
-"LONG: radiation vault (graded-Z Al/Ta box, ~10 mm Al-eq) around flight controller, supervisor, FRAM, MMU controller, radio ICs",Q3,1.6,90.0,90.0,12.5,-91.5,-91.5,90.5,-1.5,-1.5,103.0
-Flight controller (STM32H7 x2) + watchdog (MSP430FR),Q3,0.08,90.0,40.0,22.5,-91.5,-109.0,178.0,-1.5,-69.0,200.5
-"LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse",Q4,0.1,40.0,60.0,25.0,1.5,-109.0,310.5,41.5,-49.0,335.5
+UHF LoRa comms (RX),Q2,0.1,90.0,55.0,25.0,-96.5,54.0,168.0,-6.5,109.0,193.0
+S-band transceiver (TX),Q3,0.0,90.0,55.0,25.0,-96.5,-109.0,200.5,-6.5,-54.0,225.5
+"LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for propellant tank and battery vaults",Q4,0.8,100.0,100.0,10.0,6.5,-101.5,265.5,106.5,-1.5,275.5
+"LONG: radiation vault (graded-Z Al/Ta box, ~10 mm Al-eq) around flight controller, supervisor, FRAM, MMU controller, radio ICs",Q3,1.6,90.0,90.0,12.5,-96.5,-91.5,90.5,-6.5,-1.5,103.0
+Flight controller (STM32H7 x2) + watchdog (MSP430FR),Q3,0.08,90.0,40.0,22.5,-96.5,-109.0,178.0,-6.5,-69.0,200.5
+"LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse",Q4,0.1,40.0,60.0,25.0,6.5,-109.0,310.5,46.5,-49.0,335.5
 Payload B: magnetometer + sun sensors,Q3,0.05,30.0,40.0,42.5,-109.0,-101.5,245.5,-79.0,-61.5,288.0
-Payload A: SEU experiment,Q3,0.08,40.0,40.0,25.0,-41.5,-109.0,153.0,-1.5,-69.0,178.0
-Payload D: store-and-forward relay,Q3,0.05,40.0,40.0,25.0,-41.5,-109.0,128.0,-1.5,-69.0,153.0
-Payload C: temp/power telemetry,Q3,0.03,30.0,30.0,35.0,-71.5,-109.0,143.0,-41.5,-79.0,178.0
+Payload A: SEU experiment,Q3,0.08,40.0,40.0,25.0,-46.5,-109.0,153.0,-6.5,-69.0,178.0
+Payload D: store-and-forward relay,Q3,0.05,40.0,40.0,25.0,-46.5,-109.0,128.0,-6.5,-69.0,153.0
+Payload C: temp/power telemetry,Q3,0.03,30.0,30.0,35.0,-76.5,-109.0,143.0,-46.5,-79.0,178.0
 Payload I: radiation dosimeter (particle/dose),Q3,0.03,30.0,30.0,35.0,-109.0,-31.5,288.0,-79.0,-1.5,323.0
-Payload J: micrometeoroid / debris impact sensor,Q4,0.03,30.0,30.0,35.0,79.0,-31.5,38.0,109.0,-1.5,73.0
+Payload J: micrometeoroid / debris impact sensor,Q4,0.03,30.0,30.0,35.0,6.5,-109.0,38.0,36.5,-79.0,73.0
 SCI: flash memory endurance / radiation experiment (SLC vs TLC vs QLC samples),Q3,0.02,30.0,30.0,35.0,-79.0,-31.5,288.0,-49.0,-1.5,323.0
-Thermal (heaters),Q4,0.03,20.0,20.0,50.0,1.5,-49.0,175.5,21.5,-29.0,225.5
+Thermal (heaters),Q4,0.03,20.0,20.0,50.0,29.0,-21.5,175.5,49.0,-1.5,225.5
 "SCI: chip-scale atomic clock (precise timing, relativity tests)",Q3,0.04,30.0,30.0,22.5,-79.0,-91.5,245.5,-49.0,-61.5,268.0
-UHF LoRa comms (TX),Q2,0.0,10.0,10.0,10.0,-11.5,21.5,118.0,-1.5,31.5,128.0
-"SCI: multi-computer radiation comparison (Jetson vs CM5 vs MCU classes, error logging)",Q3,0.0,10.0,10.0,10.0,-101.5,-109.0,48.0,-91.5,-99.0,58.0
-Bus: telescope column thermostatic heater (8 W while active; eclipse-heavy orbits),Q1,0.02,10.0,10.0,5.0,1.5,99.0,275.5,11.5,109.0,280.5
+UHF LoRa comms (TX),Q2,0.0,10.0,10.0,10.0,-16.5,21.5,118.0,-6.5,31.5,128.0
+"SCI: multi-computer radiation comparison (Jetson vs CM5 vs MCU classes, error logging)",Q3,0.0,10.0,10.0,10.0,-109.0,-101.5,48.0,-99.0,-91.5,58.0
+Bus: telescope column thermostatic heater (8 W while active; eclipse-heavy orbits),Q1,0.02,10.0,10.0,5.0,6.5,21.5,308.0,16.5,31.5,313.0

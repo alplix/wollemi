@@ -1,0 +1,13 @@
+{
+  "board": {
+    "design_settings": {
+      "rules": { "min_clearance": 0.15, "min_track_width": 0.15, "min_via_diameter": 0.5, "min_through_hole_diameter": 0.25 },
+      "rule_severities": {
+        "lib_footprint_issues": "ignore",
+        "lib_footprint_mismatch": "ignore",
+        "unconnected_items": "warning"
+      }
+    }
+  },
+  "meta": { "filename": "ginkgo_backplane_strip.kicad_pro", "version": 3 }
+}

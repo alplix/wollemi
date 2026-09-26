@@ -14,6 +14,8 @@ wall = 3.0                       # outer wall thickness (Al)
 cross = 3.0                      # cross bulkhead thickness (splits the interior into 4 columns)
 spine = 40.0                     # central spine square (backplane channel)
 rail = 8.5                       # corner rail cross-section
+backplane_gap = 4.0              # slab along each column's bulkhead wall reserved for the backplane strip and receptacles
+card_rail_relief = 8.0           # outer-corner relief of a notched card (clears the frame rail)
 voxel = 2.5                      # packing resolution (sizes are rounded up: built-in clearance)
 protrusion_limit = 6.5           # allowed protrusion beyond the rail plane (verify with the dispenser)
 
@@ -40,6 +42,7 @@ shape = "cyl"
 [[box]]
 match = "EO: hyperspectral"
 size = [100, 85, 53]
+notched = true
 [[box]]
 match = "Payload F: wide-field"
 size = [50, 50, 60]

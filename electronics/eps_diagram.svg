@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 900" width="1500" font-family="sans-serif" font-size="14">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#94a3b8"/></marker></defs>
+<rect width="1500" height="900" fill="#0f1420"/>
+<text x="20" y="30" fill="#e2e8f0" font-size="20">Ginkgo EPS block diagram (draft v0): two main chains plus an independent survival chain</text>
+<rect x="20" y="60" width="250" height="90" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="30" y="82" fill="#f1f5f9" font-weight="bold">Wing A: 3 panels (double-sided)</text>
+<text x="30" y="102" fill="#94a3b8" font-size="12">10s2p per panel, Vmp 24 V, ~24 W each</text>
+<text x="30" y="120" fill="#94a3b8" font-size="12">cold Voc ~35 V</text>
+<rect x="20" y="380" width="250" height="90" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="30" y="402" fill="#f1f5f9" font-weight="bold">Wing B: 3 panels (double-sided)</text>
+<text x="30" y="422" fill="#94a3b8" font-size="12">same as wing A</text>
+<rect x="20" y="700" width="250" height="110" rx="6" fill="#1c2b1f" stroke="#3f6212"/>
+<text x="30" y="722" fill="#f1f5f9" font-weight="bold">Body survival string</text>
+<text x="30" y="742" fill="#94a3b8" font-size="12">4s2p, ~9.6 V, 1 A (dedicated cells)</text>
+<text x="30" y="760" fill="#94a3b8" font-size="12">independent of wings and EPS-A/B</text>
+<rect x="340" y="60" width="330" height="190" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="350" y="82" fill="#f1f5f9" font-weight="bold">EPS-A card</text>
+<text x="350" y="102" fill="#94a3b8" font-size="12">3 x buck MPPT (24 W in, ~4.6 A out at 5 V)</text>
+<text x="350" y="120" fill="#94a3b8" font-size="12">pack A charger: CC-CV to 7.3 V, C/2 = 3.3 A</text>
+<text x="350" y="138" fill="#94a3b8" font-size="12">no charge below 0 C, cell balancing</text>
+<text x="350" y="156" fill="#94a3b8" font-size="12">ideal diode to bus A</text>
+<text x="350" y="174" fill="#94a3b8" font-size="12">hardware OVP/UVP, telemetry MCU + CAN</text>
+<rect x="340" y="380" width="330" height="190" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="350" y="402" fill="#f1f5f9" font-weight="bold">EPS-B card</text>
+<text x="350" y="422" fill="#94a3b8" font-size="12">identical, wing B strings</text>
+<text x="350" y="440" fill="#94a3b8" font-size="12">pack B charger</text>
+<text x="350" y="458" fill="#94a3b8" font-size="12">ideal diode to bus B</text>
+<text x="350" y="476" fill="#94a3b8" font-size="12">hardware OVP/UVP, telemetry MCU + CAN</text>
+<rect x="340" y="700" width="330" height="150" rx="6" fill="#1c2b1f" stroke="#3f6212"/>
+<text x="350" y="722" fill="#f1f5f9" font-weight="bold">Survival card</text>
+<text x="350" y="742" fill="#94a3b8" font-size="12">pack C charger (1 cell LiFePO4)</text>
+<text x="350" y="760" fill="#94a3b8" font-size="12">ideal diode: string feeds supervisor directly</text>
+<text x="350" y="778" fill="#94a3b8" font-size="12">3-inhibit burn-wire drivers x2</text>
+<text x="350" y="796" fill="#94a3b8" font-size="12">no software in the protection path</text>
+<line x1="270" y1="105" x2="340" y2="105" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="309.0" y="99.0" fill="#94a3b8" font-size="12">3 x 24 W</text>
+<line x1="270" y1="425" x2="340" y2="425" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="309.0" y="419.0" fill="#94a3b8" font-size="12">3 x 24 W</text>
+<line x1="270" y1="755" x2="340" y2="755" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="760" y="60" width="250" height="90" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="770" y="82" fill="#f1f5f9" font-weight="bold">Pack A (2S2P 26650, 42 Wh)</text>
+<text x="770" y="102" fill="#94a3b8" font-size="12">vault: Al box + poly-imide barrier</text>
+<text x="770" y="120" fill="#94a3b8" font-size="12">own fuse and BMS</text>
+<rect x="760" y="380" width="250" height="90" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="770" y="402" fill="#f1f5f9" font-weight="bold">Pack B (2S2P 26650, 42 Wh)</text>
+<text x="770" y="422" fill="#94a3b8" font-size="12">separate deck and vault</text>
+<text x="770" y="440" fill="#94a3b8" font-size="12">own fuse and BMS</text>
+<rect x="760" y="700" width="250" height="90" rx="6" fill="#1c2b1f" stroke="#3f6212"/>
+<text x="770" y="722" fill="#f1f5f9" font-weight="bold">Pack C (5 Wh, 1 cell)</text>
+<text x="770" y="742" fill="#94a3b8" font-size="12">survival, independent vault</text>
+<line x1="670" y1="105" x2="760" y2="105" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<line x1="760" y1="125" x2="670" y2="125" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="719.0" y="119.0" fill="#94a3b8" font-size="12">discharge</text>
+<line x1="670" y1="425" x2="760" y2="425" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<line x1="760" y1="445" x2="670" y2="445" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<line x1="670" y1="755" x2="760" y2="755" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="1100" y="200" width="380" height="200" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="1110" y="222" fill="#f1f5f9" font-weight="bold">Backplane buses</text>
+<text x="1110" y="242" fill="#94a3b8" font-size="12">VBAT_A / VBAT_B planes (5.0..7.3 V)</text>
+<text x="1110" y="260" fill="#94a3b8" font-size="12">each card carries its own eFuse (trip 1.5x)</text>
+<text x="1110" y="278" fill="#94a3b8" font-size="12">SLOT_SEL + KILL_N: supervisor hardware kill</text>
+<text x="1110" y="296" fill="#94a3b8" font-size="12">CAN-FD A/B, PPS, SYNC</text>
+<line x1="670" y1="160" x2="1100" y2="240" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="889.0" y="194.0" fill="#94a3b8" font-size="12">bus A</text>
+<line x1="670" y1="480" x2="1100" y2="360" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="889.0" y="414.0" fill="#94a3b8" font-size="12">bus B</text>
+<rect x="1100" y="480" width="380" height="150" rx="6" fill="#1e293b" stroke="#475569"/>
+<text x="1110" y="502" fill="#f1f5f9" font-weight="bold">Loads (cards and modules)</text>
+<text x="1110" y="522" fill="#94a3b8" font-size="12">FC, comms, ADCS, payloads, computers</text>
+<text x="1110" y="540" fill="#94a3b8" font-size="12">burn mode: 50 W thruster (sunlit only)</text>
+<line x1="1290" y1="400" x2="1290" y2="480" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<rect x="1100" y="700" width="380" height="150" rx="6" fill="#1c2b1f" stroke="#3f6212"/>
+<text x="1110" y="722" fill="#f1f5f9" font-weight="bold">Supervisor (MSP430FR)</text>
+<text x="1110" y="742" fill="#94a3b8" font-size="12">powered from bus A/B or survival path</text>
+<text x="1110" y="760" fill="#94a3b8" font-size="12">beacon, kill, watchdogs, key store</text>
+<line x1="670" y1="790" x2="1100" y2="790" stroke="#84cc16" stroke-width="2" marker-end="url(#a)"/>
+<text x="889.0" y="784.0" fill="#84cc16" font-size="12">survival bus</text>
+<line x1="1290" y1="630" x2="1290" y2="700" stroke="#94a3b8" stroke-width="2" marker-end="url(#a)"/>
+<text x="1294.0" y="659.0" fill="#94a3b8" font-size="12">control</text>
+</svg>

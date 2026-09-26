@@ -22,9 +22,9 @@ Generated from `electronics/card_pinout.toml` by `electronics/gen_card.py`; do n
 | 14 (pins 27, 28) | GND | GND |
 | 15 (pins 29, 30) | SLOT_ID0 | SLOT_ID1 |
 | 16 (pins 31, 32) | SLOT_ID2 | SLOT_ID3 |
-| 17 (pins 33, 34) | PWR_EN | FAULT_N |
-| 18 (pins 35, 36) | RESET_N | HB |
-| 19 (pins 37, 38) | CARD_PRESENT_N | SPARE |
+| 17 (pins 33, 34) | SLOT_SEL0 | SLOT_SEL1 |
+| 18 (pins 35, 36) | SLOT_SEL2 | SLOT_SEL3 |
+| 19 (pins 37, 38) | KILL_N | FAULT_N |
 | 20 (pins 39, 40) | GND | GND |
 | 21 (pins 41, 42) | I2C_SCL | I2C_SDA |
 | 22 (pins 43, 44) | UART_TX | UART_RX |
@@ -32,12 +32,12 @@ Generated from `electronics/card_pinout.toml` by `electronics/gen_card.py`; do n
 | 24 (pins 47, 48) | SWD_CLK | SWD_IO |
 | 25 (pins 49, 50) | NRST_DBG | VREF |
 | 26 (pins 51, 52) | GND | GND |
-| 27 (pins 53, 54) | RSV | RSV |
+| 27 (pins 53, 54) | RESET_N | RSV |
 | 28 (pins 55, 56) | RSV | RSV |
 | 29 (pins 57, 58) | RSV | RSV |
 | 30 (pins 59, 60) | RSV | RSV |
 
-Pin counts: CAN_A_H x1, CAN_A_L x1, CAN_B_H x1, CAN_B_L x1, CARD_PRESENT_N x1, FAULT_N x1, GND x16, HB x1, I2C_SCL x1, I2C_SDA x1, NRST_DBG x1, PPS_N x1, PPS_P x1, PWR_EN x1, RESET_N x1, RSV x8, SLOT_ID0 x1, SLOT_ID1 x1, SLOT_ID2 x1, SLOT_ID3 x1, SPARE x1, SWD_CLK x1, SWD_IO x1, SYNC_N x1, SYNC_P x1, UART_RX x1, UART_TX x1, VBAT x10, VREF x1
+Pin counts: CAN_A_H x1, CAN_A_L x1, CAN_B_H x1, CAN_B_L x1, FAULT_N x1, GND x16, I2C_SCL x1, I2C_SDA x1, KILL_N x1, NRST_DBG x1, PPS_N x1, PPS_P x1, RESET_N x1, RSV x7, SLOT_ID0 x1, SLOT_ID1 x1, SLOT_ID2 x1, SLOT_ID3 x1, SLOT_SEL0 x1, SLOT_SEL1 x1, SLOT_SEL2 x1, SLOT_SEL3 x1, SWD_CLK x1, SWD_IO x1, SYNC_N x1, SYNC_P x1, UART_RX x1, UART_TX x1, VBAT x10, VREF x1
 
 ## GK-D data, 2 x 15 (data-plane cards only)
 

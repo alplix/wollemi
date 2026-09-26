@@ -188,6 +188,21 @@ auto = "kicad_drc"
 evidence = ["electronics/gen_card.py", "electronics/kicad/ginkgo_card_template.kicad_pcb"]
 
 [[req]]
+id = "ELEC-2"
+text = "Column backplane strip (15 slots + hub, bussed CAN/PPS/SYNC/SLOT_SEL/KILL/FAULT/RESET/I2C, GND and battery planes) passes DRC with zones refilled and no unconnected items."
+method = "A"
+auto = "kicad_backplane"
+evidence = ["electronics/gen_backplane.py", "electronics/kicad/ginkgo_backplane_strip.kicad_pcb"]
+
+[[req]]
+id = "ELEC-3"
+text = "EPS cards specified (A/B chains and survival chain, hardware-only protection); schematics captured."
+method = "I"
+evidence = ["docs/eps-card.md", "electronics/eps_diagram.svg"]
+status = "open"
+note = "Specification and diagram done; schematics and parts selection still to do."
+
+[[req]]
 id = "OPEN-1"
 text = "All design files, data and protocol are public under open licences (hardware CERN-OHL-S, software Apache-2.0, docs CC-BY)."
 method = "I"

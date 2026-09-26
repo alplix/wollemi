@@ -28,12 +28,12 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | Path | Content |
 |---|---|
 | `mission/` | Requirements, figures of merit, open access, collision avoidance, `traceability.toml` (requirement -> verification) |
-| `docs/` | Architecture, decision records (`docs/decisions/`), power, layout, data plan, propulsion, longevity, firmware, protocol, electrical interface, ADCS, thermal, verification matrix, risks, prior art, ground-station kit, design identity |
+| `docs/` | Architecture, decision records (`docs/decisions/`), power, layout, data plan, propulsion, longevity, firmware, protocol, electrical interface, EPS cards, ADCS, thermal, verification matrix, risks, prior art, ground-station kit, design identity |
 | `configs/` | Single source of truth: `12u_science.toml`, `12u_layout.toml`, `12u_data.toml`, `12u_longevity.toml` (+ 2U/3U/6U variants) |
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
 | `protocol/` | Message definitions (`messages.toml`), C/Python generator, tests (round trip, corruption, C<->Python byte-exact) |
 | `mechanical/` | Parametric CAD (build123d): voxel packing, full 12U assembly, STEP/STL/renders, interference + mass properties |
-| `electronics/` | Card connector pinout (single source), KiCad card template (DRC clean), generator |
+| `electronics/` | Card connector pinout (single source), KiCad card template and 15-slot backplane strip (both DRC clean), EPS block diagram |
 | `groundstation/` | Pass prediction and Doppler (SGP4), reference packet decoder |
 | `firmware/` | Planned |
 

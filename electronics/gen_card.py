@@ -34,7 +34,8 @@ def nets_of(*conns):
 NETS = nets_of("gkp", "gkd")
 
 
-def pads(conn, pitch=0.8, row=3.0):
+def pads(conn, pitch=None, row=3.0):
+    pitch = pitch or card.get("connector_pitch", 0.8)
     """Pad expressions for a 2-row connector laid out along y (row A at -row/2, row B at +row/2)."""
     out = []
     n = len(pin[conn]["pairs"])
@@ -88,7 +89,8 @@ def text(s, x, y, layer="F.SilkS", size=1.2):
 
 def build():
     # KiCad y grows downward; origin at the card's top-left corner; notch at the bottom-left (spine corner).
-    pts = [(0, 0), (W, 0), (W, H), (NX, H), (NX, H - NY), (0, H - NY)]
+    rr = card["rail_relief"]
+    pts = [(0, 0), (W - rr, 0), (W - rr, rr), (W, rr), (W, H), (NX, H), (NX, H - NY), (0, H - NY)]
     L = ['(kicad_pcb', '  (version 20241229)', '  (generator "ginkgo_gen_card")', '  (generator_version "1.0")',
          f'  (general (thickness {card["thickness"]}) (legacy_teardrops no))', '  (paper "A4")',
          '  (layers',
@@ -107,7 +109,7 @@ def build():
     for x, y in ((4, 4), (W - 4, 4), (W - 4, H - 4), (NX + 4, H - 4)):
         L.append(hole(x, y, card["hole_d"]))
     L.append(footprint("J1", "GK-P", 8.0, 28.0, "gkp", "GK-P 2x30"))
-    L.append(footprint("J2", "GK-D", 8.0, 58.0, "gkd", "GK-D 2x15"))
+    L.append(footprint("J2", "GK-D", 8.0, 62.0, "gkd", "GK-D 2x15"))
     g = card["guide_keepout"]
     for name, poly in (("guide keepout top", [(0, 0), (W, 0), (W, g), (0, g)]),
                        ("guide keepout right", [(W - g, g), (W, g), (W, H), (W - g, H)])):
@@ -119,7 +121,7 @@ def build():
     L.append(text("GINKGO CARD v0", 26, 14))
     L.append(text("100 x 100, spine notch 20 x 20 (bottom-left)", 26, 18.5, size=0.9))
     L.append(text("SPINE SIDE", 1.5, H - NY - 4, size=0.9))
-    L.append(text("OUTER: guides 3 mm", 62, 6, size=0.9))
+    L.append(text("OUTER: guides 3 mm, rail relief 8x8", 50, 14, size=0.9))
     L.append(")")
     return "\n".join(L) + "\n"
 

@@ -10,7 +10,7 @@ columns of the 12U frame. This document defines what a card sees. Tools: `sim/ep
 |---|---|
 | Outline | 100.0 x 100.0 mm, corner cut-out 20 x 20 mm at the spine corner (the inner corner) |
 | Thickness | 1.6 mm nominal PCB |
-| Retention | edge guides on the two outer edges, 3 mm keep-out; 4 x M2.5 holes for stack-and-clamp variants |
+| Retention | edge guides on the two outer edges, 3 mm keep-out; 4 x M2.5 holes for stack-and-clamp variants; **4 mm gap** between the column wall and the card edge for the backplane strip and receptacles; **8 x 8 mm relief** at the outer corner (diagonal to the notch) clears the frame rail |
 | Height classes | Class S 10 mm pitch, Class M 20 mm, Class L 40 mm, Class XL multiples; component height limit = pitch - 3.2 mm |
 | Thermal | copper-core edge to the column wall (conduction); heat-generating cards specify a thermal contact area |
 | Larger modules | telescope tube, tank, battery packs and other non-card items occupy defined cell volumes with the same electrical interface on a card in their cell |
@@ -26,17 +26,17 @@ class and similar); the pin allocation below is independent of the vendor.
 
 | Group | Pins | Signals | Notes |
 |---|---|---|---|
-| Power A | 5 | `VBAT_A` (switched, current limited per slot by the EPS) | 5 pins ~ 5 A |
-| Power B | 5 | `VBAT_B` (switched, current limited per slot by the EPS) | independent bus B |
+| Power A | 5 | `VBAT_A` (bussed; every card protects itself) | 5 pins ~ 5 A |
+| Power B | 5 | `VBAT_B` (bussed) | independent bus B |
 | Ground | 16 | `GND` | interleaved between the differential pairs, return current and shielding |
 | CAN-FD A | 2 | `CAN_A_H/L` | 1 Mbps arbitration, up to 5 Mbps data |
 | CAN-FD B | 2 | `CAN_B_H/L` | redundant bus |
 | Time | 4 | `PPS_P/N`, `SYNC_P/N` | 1 pulse-per-second and frame sync, differential |
 | Slot ID | 4 | `SLOT_ID[3:0]` | hard-wired on the backplane; card node id = slot id |
-| Control | 6 | `PWR_EN`, `FAULT_N` (open drain), `RESET_N`, `HB` (heartbeat to supervisor), `CARD_PRESENT_N`, `SPARE` | EPS/supervisor manage power; card reports faults |
+| Hardware kill | 6 | `SLOT_SEL[3:0]`, `KILL_N`, `FAULT_N` (open drain, bussed) | Supervisor addresses a slot and pulls `KILL_N`: the card's own comparator latches its eFuse off, no software involved. `FAULT_N` is a wired-OR fault report |
 | Housekeeping | 4 | `I2C_SCL/SDA`, `UART_TX/RX` | I2C reaches the card ID EEPROM; UART is the console/bootloader |
 | Debug | 4 | `SWD_CLK/IO`, `NRST_DBG`, `VREF` | ground use and integration test |
-| Reserve | 8 | `RSV` | left free on purpose |
+| Reset + reserve | 8 | `RESET_N` (with `SLOT_SEL` qualification), 7 x `RSV` | left free on purpose |
 
 **GK-D (data), optional, 2 x 15 pins, only for data-plane cards** (Jetson, CM5, mass memory unit, S-band modem).
 
@@ -49,13 +49,19 @@ class and similar); the pin allocation below is independent of the vendor.
 
 RF signals never use the backplane connectors: coax (SMP/MMCX) directly from the card to its antenna or window.
 
+## Backplane
+
+Each column has a passive **backplane strip** (90 x 330 mm, 6 layers) on its inner wall carrying one GK-P receptacle per slot at a 20 mm pitch (up to 15 slots plus a hub receptacle). Bussed signals
+run as daisy chains between identical pins; GND and the two battery rails are planes reached through vias; `SLOT_ID[3:0]` is strapped to ground per slot. Generated from
+`electronics/card_pinout.toml` by `electronics/gen_backplane.py` (KiCad, DRC checked). The data connector GK-D is cabled to a switch card, not routed on the strip.
+
 ## 3. Power rules for cards
 
 - Input range **4.5 - 8.6 V** on `VBAT_A` and `VBAT_B` (2S LiFePO4 pack 5.0 - 7.3 V, most of the time ~6.4 V; the wide range also
   tolerates 2-cell Li-ion buses of other open platforms, 6.0 - 8.4 V).
 - Card must **OR the two inputs** (ideal diode or cross-strap) unless it declares single-bus use in its descriptor.
-- Inrush limited (soft start); no card may draw more than its declared maximum current; the EPS latching current limiter for
-  its slot trips at 1.5x declared maximum.
+- **Every card carries its own hardware eFuse / latching current limiter** at each input (trip at 1.5x its declared maximum, soft start, latch-off, retry policy set
+  by the card). The backplane is a passive bus with no per-slot power switches, so a card fault cannot take down the bus.
 - No card connects `GND` to chassis; single-point ground on the EPS (avoid ground loops that corrupt magnetometer data).
 - Hardware protection (over-current, over-voltage, under-voltage) never relies on software.
 - Sensitive analog/magnetic cards (magnetometer, VLF) declare a maximum allowed DC current in their neighbourhood so layout can keep
@@ -72,7 +78,8 @@ thermal model and health monitoring; it also feeds the geometry BOM used by the 
 - CAN-FD A and B are both active; a card listens on both and transmits on both (or uses A and fails over to B).
 - CANopen-style NMT and heartbeat (node id = slot id) for discovery and supervision; CCSDS Space Packets travel inside CAN-FD
   frames for telemetry and commands (`docs/protocol.md`).
-- Supervisor (MSP430) monitors the heartbeat line and can reset any card through `RESET_N` and cut its power through the EPS.
+- Supervisor (MSP430) watches the CAN heartbeats and can shut down any card in hardware: it places the slot number on `SLOT_SEL[3:0]` and pulls `KILL_N`;
+  the card's comparator latches its eFuse off (radiation-tolerant, no firmware). A card is re-enabled by a power-good handshake over CAN or by a reset strobe.
 
 ## 6. EPS numbers behind the interface (`sim/eps_design.py`)
 

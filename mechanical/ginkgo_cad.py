@@ -111,6 +111,12 @@ def build_frame(geo, placed):
     for nme, shp in feats:
         add(nme, shp, EXT_COLOR, "external")
 
+    # backplane strips: one per column on the bulkhead wall (x = +-1.5 plane), 1.6 mm PCB, 90 mm wide, 330 mm long
+    for q_, (sx_, sy_) in SIGN.items():
+        xa, xb = sorted((sx_ * cr / 2, sx_ * (cr / 2 + 1.6)))
+        ya, yb = sorted((sy_ * (cr / 2 + 10.0), sy_ * (cr / 2 + 100.0)))
+        add(f"Backplane strip Q{q_}", box(xa, ya, w + 2, xb, yb, w + 332), (40, 110, 70), "frame")
+
     # cross bulkheads and spine (bulkheads are cut where the spine tube passes)
     ih = hx - w
     zi0, zi1 = w, oz - w
@@ -198,12 +204,18 @@ def build_modules(placed):
             shp = box(x0, y0, z0, x1, y1, z1)
             if m.get("notched"):
                 sx, sy = SIGN[m["col"]]
-                cx = sx * 1.5
-                cy = sy * 1.5
+                x_in = x0 if sx > 0 else x1                 # card's inner edge (toward the bulkhead wall)
+                y_in = y0 if sy > 0 else y1
                 nch = 20.0
-                nx0, nx1 = sorted((cx, cx + sx * nch))
-                ny0, ny1 = sorted((cy, cy + sy * nch))
+                nx0, nx1 = sorted((x_in, x_in + sx * nch))
+                ny0, ny1 = sorted((y_in, y_in + sy * nch))
                 shp = shp - box(nx0, ny0, z0 - 1, nx1, ny1, z1 + 1)
+                rr = 8.0                                   # outer-corner relief clears the frame rail
+                x_out = x1 if sx > 0 else x0
+                y_out = y1 if sy > 0 else y0
+                rx0, rx1 = sorted((x_out, x_out - sx * rr))
+                ry0, ry1 = sorted((y_out, y_out - sy * rr))
+                shp = shp - box(rx0, ry0, z0 - 1, rx1, ry1, z1 + 1)
         shp.label = m["name"][:60]
         parts.append({"name": m["name"], "shape": shp, "color": COL_COLOR[m["col"]], "kind": "module", "meta": m})
     return parts

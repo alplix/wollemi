@@ -17,9 +17,9 @@ pairs = [
   ["GND", "GND"],
   ["SLOT_ID0", "SLOT_ID1"],
   ["SLOT_ID2", "SLOT_ID3"],
-  ["PWR_EN", "FAULT_N"],
-  ["RESET_N", "HB"],
-  ["CARD_PRESENT_N", "SPARE"],
+  ["SLOT_SEL0", "SLOT_SEL1"],
+  ["SLOT_SEL2", "SLOT_SEL3"],
+  ["KILL_N", "FAULT_N"],
   ["GND", "GND"],
   ["I2C_SCL", "I2C_SDA"],
   ["UART_TX", "UART_RX"],
@@ -27,7 +27,7 @@ pairs = [
   ["SWD_CLK", "SWD_IO"],
   ["NRST_DBG", "VREF"],
   ["GND", "GND"],
-  ["RSV", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"],
+  ["RESET_N", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"], ["RSV", "RSV"],
 ]
 
 [gkd]
@@ -49,3 +49,6 @@ notch = [20.0, 20.0]       # cut-out at the spine corner (bottom-left in the tem
 thickness = 1.6
 guide_keepout = 3.0        # edge-guide keep-out along the two outer edges
 hole_d = 2.7               # M2.5 clearance
+rail_relief = 8.0          # square relief at the outer corner (diagonal to the notch) clearing the frame rail
+connector_pitch = 1.27     # mm; 0.8 mm could not be routed on the backplane (rows block each other's chains)
+backplane_gap = 4.0        # gap between the column wall and the card edge (backplane PCB + receptacle)

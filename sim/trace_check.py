@@ -197,6 +197,15 @@ def c_kicad_drc():
     return "Found 0 DRC violations" in txt, "Found 0 DRC violations" if "Found 0 DRC violations" in txt else txt[:100]
 
 
+def c_kicad_backplane():
+    rep = os.path.join(ROOT, "electronics", "kicad", "backplane_drc_report.txt")
+    if not os.path.exists(rep):
+        return False, "no DRC report (run electronics/gen_backplane.py)"
+    txt = open(rep, encoding="utf-8", errors="ignore").read()
+    ok = "Found 0 DRC violations" in txt and "Found 0 unconnected pads" in txt
+    return ok, "Found 0 DRC violations, 0 unconnected pads" if ok else txt[:120]
+
+
 CHECKS = {k[2:]: v for k, v in globals().items() if k.startswith("c_")}
 
 

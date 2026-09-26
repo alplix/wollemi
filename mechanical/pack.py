@@ -103,11 +103,14 @@ def build(cfg_path, lay_path, geo_path, quiet=False):
     deck_h = nz / 3
     sp = math.ceil((fr["spine"] / 2 - fr["cross"] / 2) / v)          # spine corner (inner corner)
     rl = math.ceil((fr["rail"] - fr["wall"]) / v)                    # rail corner (outer corner)
+    bp = math.ceil(fr.get("backplane_gap", 0.0) / v)                 # backplane slab thickness (voxels)
+    rr = math.ceil(fr.get("card_rail_relief", 0.0) / v)              # outer-corner relief of a notched card
 
     grids = {}
     for q in SIGN:
         g = np.zeros((n, n, nz), dtype=bool)
         g[:sp, :sp, :] = True                    # u,v small = near the spine
+        g[:bp, :, :] = True                      # backplane slab along the bulkhead wall (u small)
         g[n - rl:, n - rl:, :] = True            # u,v large = outer corner (rail)
         grids[q] = g
 
@@ -177,11 +180,13 @@ def build(cfg_path, lay_path, geo_path, quiet=False):
                 a_, b2, c_ = (math.ceil(sz[0] / v), math.ceil(sz[1] / v), math.ceil(sz[2] / v))
                 keep = np.ones((a_, b2), dtype=bool)
                 keep[:sp, :sp] = False                     # card's own notch clears the spine
+                if rr:
+                    keep[a_ - rr:, b2 - rr:] = False       # outer-corner relief clears the frame rail
                 res = None
                 for z in range(a, min(b_, nz) - c_ + 1):
-                    if a_ > n or b2 > n:
+                    if bp + a_ > n or b2 > n:
                         break
-                    sub = grids[q][0:a_, 0:b2, z:z + c_]
+                    sub = grids[q][bp:bp + a_, 0:b2, z:z + c_]
                     if not (sub & keep[:, :, None]).any():
                         res = ((a_, b2, c_), (0, 0, z), tuple(sz), keep)
                         break
@@ -215,7 +220,8 @@ def build(cfg_path, lay_path, geo_path, quiet=False):
             sub = grids[q][pos[0]:pos[0] + dims[0], pos[1]:pos[1] + dims[1], pos[2]:pos[2] + dims[2]]
             sub |= mask[:, :, None]
         elif box.get("notched"):
-            grids[q][0:dims[0], 0:dims[1], pos[2]:pos[2] + dims[2]] |= notch_keep[:, :, None]
+            grids[q][bp:bp + dims[0], 0:dims[1], pos[2]:pos[2] + dims[2]] |= notch_keep[:, :, None]
+            pos = (bp, 0, pos[2])
         else:
             grids[q][pos[0]:pos[0] + dims[0], pos[1]:pos[1] + dims[1], pos[2]:pos[2] + dims[2]] = True
         sx, sy = SIGN[q]
