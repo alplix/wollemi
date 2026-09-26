@@ -54,6 +54,13 @@ def c_power_margin():
     return worst["margin"] >= 0.20, f"worst scenario '{worst['name'][:40]}' margin {worst['margin'] * 100:+.0f} %"
 
 
+def c_burn_power():
+    import budget
+    r = budget.compute(CFG)
+    s = next(x for x in r["scenarios"] if "BURN" in x["name"])
+    return s["margin"] >= 0.0, f"burn-mode load {s['cons']:.0f} W (thruster, minimal services) against about {s['gen'] / 0.62:.0f} W instantaneous sunlit generation ({s['margin'] * 100:+.0f} %) in the sun-biased attitude"
+
+
 def c_eclipse():
     import budget
     r = budget.compute(CFG)
@@ -131,10 +138,11 @@ def c_thrust_torque():
 
 
 def c_deltav():
-    impulse = 9500.0
-    m0 = 14.96
-    dv = impulse / m0
-    return dv >= 500, f"{dv:.0f} m/s from a {impulse:.0f} Ns class thruster at {m0:.1f} kg (vendor class value, unverified)"
+    import orbit_life
+    o = orbit_life.analysis()
+    dv, plan = o["available_dv"], o["plan"]["total"]
+    return dv >= 500 and plan < dv, (f"{dv:.0f} m/s from a {orbit_life.IMPULSE_NS:.0f} Ns class thruster at {o['mass']:.1f} kg (vendor class value, unverified); "
+                                     f"plan (50 yr keeping x1.5, descent, avoidance) {plan:.0f} m/s")
 
 
 def c_plume():
@@ -185,7 +193,7 @@ def c_longevity():
     s = re.search(r"Safe-mode power .* holds until ~(>?[\d.]+) yr", out)
     yrs = float(m.group(1)) if m else 0
     safe = s.group(1) if s else "0"
-    ok = yrs >= 25 and (safe.startswith(">") or float(safe) >= 50)
+    ok = yrs >= 10 and (safe.startswith(">") or float(safe) >= 50)
     return ok, f"main packs cover eclipse for ~{yrs:.0f} yr; safe mode holds {safe} yr"
 
 

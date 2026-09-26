@@ -23,7 +23,7 @@ def main():
     ap.add_argument("--lon", type=float, default=29.12)
     ap.add_argument("--alt", type=float, default=0.35)
     a = ap.parse_args()
-    l1, l2 = predict.make_tle(98.19, 40.0, 0.0011, 90.0, 0.0, 14.6, epoch=(2026, 270.0))
+    l1, l2 = predict.make_tle(98.19, 94.5, 0.0011, 90.0, 0.0, 14.575, epoch=(2026, 270.0))
     sat = Satrec.twoline2rv(l1, l2)
     start = sat_epoch_datetime(sat).astimezone(timezone.utc)
     site = (a.lat, a.lon, a.alt)

@@ -78,7 +78,7 @@ electronics and software in orbit, and publishes the design, data and tools for 
 |---|---|
 | LONG-1 | Survival chain (supervisor + beacon) operates from body cells without any battery (sun-only mode). |
 | LONG-2 | Long-record science instruments never depend on Linux nodes for acquisition or downlink. |
-| LONG-3 | Main packs still cover eclipse after 25 years; safe-mode power holds for 50 years (with the modelled degradation). |
+| LONG-3 | Main packs still cover eclipse after 10 years in an eclipse orbit (a dawn-dusk orbit has none); safe-mode power holds for 50 years (with the modelled degradation). |
 
 Design life: a **tiered lifetime** (`docs/longevity.md`): survival chain 50+ years, long-life science chain 30-50 years, heavy compute about 10-15 years, main batteries about 10-28 years.
 
@@ -103,11 +103,12 @@ Design life: a **tiered lifetime** (`docs/longevity.md`): survival chain 50+ yea
 | OPEN-6 | Rate limits and message quotas protect the relay from flooding; policy documented. |
 | OPEN-7 | Data published continuously in an open archive (for example SatNOGS DB). |
 | COLAV-1 | Operator of record registered for conjunction data messages; collision-avoidance burns validated on the ground. |
-| COLAV-2 | Avoidance burns are uploaded 24-48 h ahead (propulsion, stable attitude and >= 20 W available during the burn). |
+| COLAV-2 | Avoidance burns are uploaded 24-48 h ahead (propulsion, stable attitude and about 53 W available during the burn). |
 | COLAV-3 | Precise orbit knowledge: dual-frequency GNSS plus laser retroreflector; GNSS-derived ephemerides shared with tracking services. |
-| COLAV-4 | At least one reliable ground station guarantees command opportunities at least daily; the volunteer network supplements it. |
+| COLAV-4 | At least two reliable anchor ground stations guarantee command opportunities at least daily; the volunteer network supplements them. |
 | COLAV-5 | Impact detection is for science and status only; small untracked debris is countered by design margin, not avoidance. |
 | COLAV-6 | Passivation and end-of-life: propulsive descent or drag sail; propellant reserve kept for disposal. |
+| LONG-4 | Disposal versus 50 years: the operational life ends with a disposal manoeuvre (or a documented exception) within the 25-year guideline; the 50-year tier is a platform design life. |
 | REG-1 | Frequency coordination and amateur-satellite licensing completed before launch. |
 
 Notes on the open-access items: in-orbit open access still requires a licensed operator of record and frequency coordination; the public can use the service, the transmitter licence sits with the operator.
@@ -125,9 +126,9 @@ Onboard range sensors are not a viable collision-avoidance method in LEO (closin
 
 ## 5. Communications and coverage
 
-A single station sees a LEO spacecraft for about 2-3 % of the time (3.6 passes/day of 7.6 min at the reference site). Strategy: an open volunteer ground network, store-and-forward messaging, a UHF beacon for
+A single station sees a LEO spacecraft for about 2 % of the time (3.7 passes/day of 7.5 min at the reference site). Strategy: an open volunteer ground network, store-and-forward messaging, a UHF beacon for
 everyone, S-band for science data, and at least two anchor stations for commanding. Relay via commercial constellations is a possible later phase.
 
 ## 6. Out of scope for now
 
-Launch procurement, manufacturing, environmental testing (planned in `docs/test-plan.md`), and any commercial use of the design.
+Launch procurement, manufacturing, environmental testing (planned in `docs/test-plan.md`), and any warranty or flight-readiness certification of the design (commercial use is permitted by the open licences).

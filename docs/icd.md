@@ -38,7 +38,7 @@ the launch-provider values in section 6 are assumptions to be replaced by the pr
 | Onboard buses | CAN-FD A and B control plane; Gigabit Ethernet data plane between the Linux computers, MMU and the S-band modem |
 | UHF | 433 MHz amateur band, LoRa/AX.25 beacon and commands, about 5 kbps |
 | S-band | 2.4 GHz amateur band, 1.0 Mbps design rate (250 kbps - 2 Mbps adaptive), efficiency 0.65 |
-| Reference ground station | Pamukkale (37.9 N, 29.1 E): 3.6 passes/day of 457 s |
+| Reference ground station | Pamukkale (37.9 N, 29.1 E): 3.7 passes/day of 447 s |
 | Data products | CFDP file transfer, `.gpk` archive files and JSON index (`docs/protocol.md`) |
 
 ## 4. Thermal interfaces

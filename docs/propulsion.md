@@ -6,9 +6,9 @@ All numbers below are estimates; confirm with thruster datasheets and vendors.
 
 ## Why electric
 - Isp 1500-2500 s versus ~80 s for water: about 0.7-1 g of propellant per 1 m/s instead of ~18 g.
-- 0.5 kg of iodine gives roughly 500-700 m/s (water: 0.8 kg gives ~45 m/s).
-- That covers 50 years of drag makeup at 700 km (about 44 m/s with the solar-cycle model, `docs/orbit-and-debris.md`), many collision-avoidance burns, and
-  a **controlled descent** (54-108 m/s to 600-500 km, then drag). The drag sail is required as the passive backup: without it disposal takes 37-42 years.
+- 0.5 kg of iodine (9500 Ns class, 16.8 kg vehicle) gives about 570 m/s (water: 0.8 kg gives ~45 m/s).
+- That covers 50 years of drag makeup at 700 km (about 39 m/s, 59 m/s with margin, with the solar-cycle model, `docs/orbit-and-debris.md`), many collision-avoidance burns, and
+  a **controlled descent** (54-108 m/s to 600-500 km, then drag). The drag sail is required as the passive backup: without it disposal takes 45-50 years (sail alone: 14-20 years from 700 km).
 - Volume is similar (about 1000 cm3 versus 1200 cm3 for the water system); mass is higher (~2 kg).
 - Iodine is stored as a solid at low pressure, which suits launch safety.
 

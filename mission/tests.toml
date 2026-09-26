@@ -257,7 +257,7 @@ phase = "precursor"
 id = "GND-01"
 name = "End-to-end ground chain: station at the reference site tracks a real satellite of opportunity, decodes and uploads to the archive; unattended operation for two weeks"
 level = "ground"
-covers = ["COM-1", "COM-2", "OPEN-1"]
+covers = ["COM-1", "COM-2", "OPEN-1", "OPEN-2", "OPEN-7", "COLAV-4"]
 method = "D"
 effort_days = 30
 external = "none"
@@ -267,7 +267,7 @@ phase = "before_flight"
 id = "REV-01"
 name = "Design reviews: preliminary and critical design review, safety review with the launch provider, licensing and coordination review"
 level = "review"
-covers = ["SYS-1", "REG-1", "COLAV-1", "ORB-1", "OPEN-1"]
+covers = ["SYS-1", "REG-1", "COLAV-1", "ORB-1", "OPEN-1", "LONG-4", "COLAV-5", "COLAV-6"]
 method = "I"
 effort_days = 40
 external = "low"
@@ -277,8 +277,28 @@ phase = "before_flight"
 id = "REV-02"
 name = "Operations readiness review: procedures, contact plan, collision-avoidance drill with a conjunction message, anomaly drills"
 level = "review"
-covers = ["COLAV-1", "COM-4", "SIM-1"]
+covers = ["COLAV-1", "COLAV-2", "COM-4", "SIM-1"]
 method = "D"
 effort_days = 20
 external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "GND-02"
+name = "Open relay and protocol review: fuzz and interoperability test of the public message set with an independent decoder, quota and abuse drills, verification that no downlink content is obscured"
+level = "ground"
+covers = ["OPEN-3", "OPEN-4", "OPEN-5", "OPEN-6"]
+method = "T"
+effort_days = 15
+external = "none"
+phase = "before_flight"
+
+[[test]]
+id = "SYS-09"
+name = "Precise orbit knowledge: GNSS receiver accuracy on a hardware simulator or balloon flight, retroreflector ranging campaign plan with a laser station"
+level = "system"
+covers = ["COLAV-3"]
+method = "T"
+effort_days = 20
+external = "medium"
 phase = "before_flight"

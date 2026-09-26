@@ -198,7 +198,7 @@ note = "A static build check (planned sim/chain_check.py) should enforce this."
 
 [[req]]
 id = "LONG-3"
-text = "Main packs still cover eclipse after 25 years; safe-mode power holds for 50 years (with the modelled degradation)."
+text = "Main packs still cover eclipse after 10 years in an eclipse orbit (a dawn-dusk orbit has none); safe-mode power holds for 50 years (with the modelled degradation)."
 method = "A"
 auto = "longevity"
 evidence = ["sim/longevity.py"]
@@ -262,3 +262,96 @@ text = "Frequency coordination and amateur-satellite licensing completed before 
 method = "I"
 evidence = ["mission/requirements.md"]
 status = "open"
+
+[[req]]
+id = "COLAV-2"
+text = "Avoidance burns are uploaded 24-48 h ahead (propulsion, stable attitude and about 53 W available during the burn)."
+method = "A"
+auto = "burn_power"
+evidence = ["sim/budget.py", "sim/eps_design.py"]
+
+[[req]]
+id = "COLAV-3"
+text = "Precise orbit knowledge: dual-frequency GNSS plus laser retroreflector; GNSS-derived ephemerides shared with tracking services."
+method = "I"
+evidence = ["configs/12u_science.toml"]
+status = "designed"
+note = "GNSS receiver and retroreflector are in the module list; accuracy needs a receiver test (GND/SYS tests)."
+
+[[req]]
+id = "COLAV-4"
+text = "At least two reliable anchor ground stations guarantee command opportunities at least daily; the volunteer network supplements them."
+method = "D"
+evidence = ["docs/ground-station-kit.md", "groundstation/contact_plan.py"]
+status = "open"
+note = "The reference station at Pamukkale exists only as a plan; a second anchor site is not yet identified."
+
+[[req]]
+id = "COLAV-5"
+text = "Impact detection is for science and status only; small untracked debris is countered by design margin, not avoidance."
+method = "I"
+evidence = ["docs/orbit-and-debris.md"]
+status = "designed"
+
+[[req]]
+id = "COLAV-6"
+text = "Passivation and end-of-life: propulsive descent or drag sail; propellant reserve kept for disposal."
+method = "A"
+auto = "deltav"
+evidence = ["sim/orbit_life.py", "docs/orbit-and-debris.md"]
+
+[[req]]
+id = "LONG-4"
+text = "Disposal versus 50 years: the operational life ends with a disposal manoeuvre (or a documented exception) within the 25-year guideline; the 50-year tier is a platform design life."
+method = "D"
+evidence = ["docs/orbit-and-debris.md"]
+status = "open"
+note = "Policy decision: which of the two goals the flight article follows."
+
+[[req]]
+id = "OPEN-2"
+text = "Once launched, the spacecraft is open to everyone: anyone with a low-cost station can receive telemetry and payload data."
+method = "I"
+evidence = ["docs/protocol.md","docs/link-budget.md"]
+status = "open"
+note = "Depends on launch and licensing."
+
+[[req]]
+id = "OPEN-3"
+text = "Public relay service: any licensed amateur can send and fetch short messages through the store-and-forward payload."
+method = "I"
+evidence = ["docs/protocol.md"]
+status = "open"
+note = "Relay payload protocol messages exist; service policy not written."
+
+[[req]]
+id = "OPEN-4"
+text = "All downlinked data is unencrypted and the protocol is fully documented (amateur-band rule: no obscured meaning)."
+method = "I"
+evidence = ["docs/protocol.md","protocol/messages.toml"]
+status = "designed"
+note = "Protocol is fully specified in protocol/messages.toml; nothing is encrypted."
+
+[[req]]
+id = "OPEN-5"
+text = "Only spacecraft control commands are authenticated (signed, not encrypted); public relay traffic needs no key."
+method = "I"
+evidence = ["firmware/common/gk_auth.c"]
+status = "designed"
+note = "Signature check is implemented and tested (firmware/tests)."
+
+[[req]]
+id = "OPEN-6"
+text = "Rate limits and message quotas protect the relay from flooding; policy documented."
+method = "I"
+evidence = ["docs/protocol.md"]
+status = "open"
+note = "Quota policy not yet written."
+
+[[req]]
+id = "OPEN-7"
+text = "Data published continuously in an open archive (for example SatNOGS DB)."
+method = "I"
+evidence = ["docs/ground-station-kit.md"]
+status = "open"
+note = "Archive integration is a ground-kit task."

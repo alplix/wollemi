@@ -139,8 +139,8 @@ def main():
     if a.tle:
         l1, l2 = a.tle
     else:
-        l1, l2 = make_tle(98.19, 40.0, 0.0011, 90.0, 0.0, 14.6, epoch=(2026, 270.0))
-        print("Synthetic TLE (700 km sun-synchronous):")
+        l1, l2 = make_tle(98.19, 94.5, 0.0011, 90.0, 0.0, 14.575, epoch=(2026, 270.0))
+        print("Synthetic TLE (700 km dawn-dusk sun-synchronous, RAAN = Sun RA - 90 deg):")
         print(l1)
         print(l2)
     sat = Satrec.twoline2rv(l1, l2)

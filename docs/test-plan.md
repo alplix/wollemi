@@ -2,7 +2,7 @@
 
 Source: `mission/tests.toml` against `mission/traceability.toml`; generated and checked by `python tools/test_plan_check.py`. Effort figures are estimates in engineer-days for one campaign.
 
-27 planned activities, 35 requirements covered by tests, 3 waived (analysis only, with a reason); 0 uncovered. Total effort about 745 engineer-days (about 3.4 person-years), of which 295 days involve medium/high-cost external facilities.
+29 planned activities, 47 requirements covered by tests, 3 waived (analysis only, with a reason); 0 uncovered. Total effort about 780 engineer-days (about 3.5 person-years), of which 315 days involve medium/high-cost external facilities.
 
 ## Approach
 
@@ -51,6 +51,7 @@ Source: `mission/tests.toml` against `mission/traceability.toml`; generated and 
 | SYS-03 | Fault injection campaign from the FMEA: each severity >= 4 failure mode injected and the response verified | FMEA-1, PWR-3, LONG-2 | T | 30 | none |
 | SYS-04 | Mass properties on the flight model: mass, centre of mass and moments of inertia measured against the CAD values | SYS-2, SYS-4, ADCS-2 | T | 5 | low |
 | SYS-05 | Magnetic cleanliness survey: residual dipole of the flight model with the boom stowed and deployed | ADCS-2 | T | 10 | medium |
+| SYS-09 | Precise orbit knowledge: GNSS receiver accuracy on a hardware simulator or balloon flight, retroreflector ranging campaign plan with a laser station | COLAV-3 | T | 20 | medium |
 
 ### Environmental
 
@@ -72,14 +73,15 @@ Source: `mission/tests.toml` against `mission/traceability.toml`; generated and 
 
 | ID | Activity | Covers | Method | Days | External |
 |---|---|---|---|---|---|
-| GND-01 | End-to-end ground chain: station at the reference site tracks a real satellite of opportunity, decodes and uploads to the archive; unattended operation for two weeks | COM-1, COM-2, OPEN-1 | D | 30 | none |
+| GND-01 | End-to-end ground chain: station at the reference site tracks a real satellite of opportunity, decodes and uploads to the archive; unattended operation for two weeks | COM-1, COM-2, OPEN-1, OPEN-2, OPEN-7, COLAV-4 | D | 30 | none |
+| GND-02 | Open relay and protocol review: fuzz and interoperability test of the public message set with an independent decoder, quota and abuse drills, verification that no downlink content is obscured | OPEN-3, OPEN-4, OPEN-5, OPEN-6 | T | 15 | none |
 
 ### Review
 
 | ID | Activity | Covers | Method | Days | External |
 |---|---|---|---|---|---|
-| REV-01 | Design reviews: preliminary and critical design review, safety review with the launch provider, licensing and coordination review | SYS-1, REG-1, COLAV-1, ORB-1, OPEN-1 | I | 40 | low |
-| REV-02 | Operations readiness review: procedures, contact plan, collision-avoidance drill with a conjunction message, anomaly drills | COLAV-1, COM-4, SIM-1 | D | 20 | none |
+| REV-01 | Design reviews: preliminary and critical design review, safety review with the launch provider, licensing and coordination review | SYS-1, REG-1, COLAV-1, ORB-1, OPEN-1, LONG-4, COLAV-5, COLAV-6 | I | 40 | low |
+| REV-02 | Operations readiness review: procedures, contact plan, collision-avoidance drill with a conjunction message, anomaly drills | COLAV-1, COLAV-2, COM-4, SIM-1 | D | 20 | none |
 
 ## Requirement coverage
 
@@ -120,11 +122,23 @@ Source: `mission/tests.toml` against `mission/traceability.toml`; generated and 
 | OPEN-1 | GND-01, REV-01 |  |
 | COLAV-1 | REV-01, REV-02 |  |
 | REG-1 | ENV-04, REV-01 |  |
+| COLAV-2 | REV-02 |  |
+| COLAV-3 | SYS-09 |  |
+| COLAV-4 | GND-01 |  |
+| COLAV-5 | REV-01 |  |
+| COLAV-6 | REV-01 |  |
+| LONG-4 | REV-01 |  |
+| OPEN-2 | GND-01 |  |
+| OPEN-3 | GND-02 |  |
+| OPEN-4 | GND-02 |  |
+| OPEN-5 | GND-02 |  |
+| OPEN-6 | GND-02 |  |
+| OPEN-7 | GND-01 |  |
 
 ## Facilities and external cost drivers
 
-- No external facility: 320 engineer-days (FlatSat, board work, software, ground).
-- Low: 130 days; medium: 210 days; high: 85 days (radiation screening, thermal vacuum, thruster tests are the cost drivers).
+- No external facility: 335 engineer-days (FlatSat, board work, software, ground).
+- Low: 130 days; medium: 230 days; high: 85 days (radiation screening, thermal vacuum, thruster tests are the cost drivers).
 
 ## Open items
 

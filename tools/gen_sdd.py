@@ -124,12 +124,12 @@ def main():
         ("Structure", "Al 6061 frame with corner rails, four columns around a 40 mm spine, notched Ginkgo cards; first mode about 900 Hz (frame), 170 Hz walls, 190 Hz wing stack with six hold-down posts; all mounts >= 6x margin (`docs/structure.md`)."),
         ("Power", "Two wings of three double-sided panels plus body cells; two independent EPS chains (three buck MPPT channels each), two LiFePO4 packs and an independent survival chain; per-card eFuse and hardware kill (`docs/power-architecture.md`, `docs/eps-card.md`)."),
         ("Thermal", "Passive design with effective face emissivity ~0.5, isolated telescope column with an 8 W thermostat heater, battery vault heater, survival heaters; electronics -10..33 C, battery 4..15 C (`docs/thermal.md`)."),
-        ("Attitude and propulsion", "Three reaction wheels, magnetorquers, star tracker; iodine gridded-ion thruster in a bay on the -X centre line with a canted nozzle through the centre of mass; about 630 m/s available, 194 m/s planned; drag sail (`docs/adcs.md`, `docs/propulsion.md`)."),
+        ("Attitude and propulsion", "Three reaction wheels, magnetorquers, star tracker; iodine gridded-ion thruster in a bay on the -X centre line with a canted nozzle through the centre of mass; about 570 m/s available, 187 m/s planned (`sim/orbit_life.py`); drag sail (`docs/adcs.md`, `docs/propulsion.md`)."),
         ("Compute and firmware", "MSP430FR supervisor, two STM32H7 flight controllers, mass memory unit (8 x 128 GB, 6+2 coding), Pi CM5 and Jetson Orin Nano; host-tested firmware core (auth, modes, FDIR, command queue, OTA), 68 unit checks (`docs/firmware-architecture.md`)."),
         ("Communications and protocol", "UHF beacon and LoRa, S-band 250 kbps - 2 Mbps; CCSDS packets with signed telecommands, 27 messages, generated C and Python code with byte-exact tests (`docs/protocol.md`)."),
         ("Payload suite", "Telescope with hyperspectral spectrometer, wide-field camera, thermal IR, magnetometer boom, particle spectrometer, X-ray/UV, TSI, GRB, VLF, Langmuir, dosimeter, CSAC, GNSS/TEC, flash and SEU experiments, retroreflector, memory plate, outreach LED (`docs/data-plan.md`)."),
         ("Electronics interface", "Notched 100 x 100 mm card, GK-P (2 x 30) and GK-D (2 x 15) connectors at 1.27 mm, passive 15-slot backplane strip per column (KiCad, DRC clean), CANopen-style management over CAN-FD A/B (`docs/electrical-interface.md`)."),
-        ("Ground and operations", "Reference station at Pamukkale (3.6 passes/day, unattended operation needed), open S-band kit, contact plan tool, commissioning checklist (`docs/ops-concept.md`, `docs/ground-station-kit.md`)."),
+        ("Ground and operations", "Reference station at Pamukkale (3.7 passes/day, unattended operation needed), open S-band kit, contact plan tool, commissioning checklist (`docs/ops-concept.md`, `docs/ground-station-kit.md`)."),
     ]
     for name, text in subs:
         a(f"**{name}.** {text}")
@@ -147,7 +147,8 @@ def main():
     a("")
     a(f"- Automatic regression: {checks_line or 'run tools/check_all.py'} (`docs/status.md`).")
     a(f"- Requirements: {vm_line or 'see docs/verification-matrix.md'}")
-    a("- Test plan: 27 planned activities cover the requirements; about 745 engineer-days (`docs/test-plan.md`). No physical test has been done: everything above is analysis and simulation.")
+    tl = tomllib.load(open(os.path.join(ROOT, "mission", "tests.toml"), "rb"))["test"]
+    a(f"- Test plan: {len(tl)} planned activities cover the requirements; about {sum(t['effort_days'] for t in tl)} engineer-days (`docs/test-plan.md`). No physical test has been done: everything above is analysis and simulation.")
     a("")
     a("## 7. Risks, cost and schedule")
     a("")

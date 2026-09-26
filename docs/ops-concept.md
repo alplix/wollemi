@@ -17,9 +17,9 @@ Tool: `python groundstation/contact_plan.py` (passes and roles for the reference
 
 ## 2. Ground segment and contact plan
 
-- Reference station: Pamukkale (37.9 N, 29.1 E): about 3.6 passes/day of ~7.6 min. A multi-day plan shows the passes in **two clusters per day**: around 14-17 h local and around 01-04 h local
-  (sun-synchronous geometry). **The station must run unattended**: scheduled tracking, automatic decode and upload of the received data to the open archive, alarms on missed passes.
-- Pass roles each day: first pass = command upload and time synchronisation; highest-elevation pass = bulk S-band downlink; low passes = UHF housekeeping. About 17 min/day of usable S-band contact
+- Reference station: Pamukkale (37.9 N, 29.1 E): about 3.7 passes/day of ~7.5 min. In the dawn-dusk orbit the passes fall in **two clusters per day**: around 05-08 h local (dawn side) and around 18-20 h local (dusk side)
+  (a dawn-dusk orbit crosses every latitude at about 06:00 and 18:00 local time). **The station must run unattended**: scheduled tracking, automatic decode and upload of the received data to the open archive, alarms on missed passes.
+- Pass roles each day: first pass = command upload and time synchronisation; highest-elevation pass = bulk S-band downlink; low passes = UHF housekeeping. About 23 min/day of usable S-band contact
   (`groundstation/contact_plan.py`), enough for the ~44 MB/day of science data plus imaging (`docs/data-plan.md`).
 - Redundancy: a second station (or the volunteer network) is needed for commanding continuity; a single outage removes a day of contacts (FMEA COM-04).
 - Commanding: all commands are time-tagged sequences loaded 24-48 h ahead (COLAV-2), validated on the ground against the power, attitude and thermal state (`gk_cmdq`, `gk_auth`), signed with the operational key.
@@ -51,7 +51,7 @@ Tool: `python groundstation/contact_plan.py` (passes and roles for the reference
 
 - **Daily**: ingest the archive, review health, plan the next 48 h of sequences; imaging campaigns (three per day when heavy or light compute is available); science data priority as in `docs/data-plan.md`.
 - **Weekly**: check the FDIR event log, scrubbing statistics (`mmu_status`), battery and panel trends, temperatures vs the model; update the atmosphere and orbit forecast.
-- **Station keeping**: about 0.9 m/s per year at 700 km on average (`docs/orbit-and-debris.md`), roughly 4 h of thrusting per 1 m/s at 1.1 mN; burn mode only in sunlight with a sun-biased attitude.
+- **Station keeping**: about 0.8 m/s per year at 700 km on average (`docs/orbit-and-debris.md`), roughly 4 h of thrusting per 1 m/s at 1.1 mN; burn mode only in sunlight with a sun-biased attitude.
 - **Collision avoidance**: receive a conjunction data message, assess probability, plan a burn (0.1-0.5 m/s, 1-2.5 h), validate, upload 24-48 h ahead, verify afterwards with GNSS (COLAV-1 to COLAV-4).
 - **Updates**: OTA sequence PAY-H, PAY-L, MMU, FC-B, then FC-A (`docs/firmware-architecture.md`); every update is signed, staged, verified and confirmed or rolled back.
 - **Data policy**: all data published in the open archive with metadata; nothing encrypted; public relay quotas.

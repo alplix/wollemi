@@ -74,7 +74,7 @@ print(f"Average load {load:.1f} W; peak wing power {gen:.0f} W; chargeable {2 * 
 print(f"Eclipse energy at full loads (35 min): {load * 35 / 60:.1f} Wh of {2 * pack_wh * cfg['battery']['max_depth_of_discharge']:.0f} Wh usable (planning depth of discharge)")
 
 # ---- burn mode ----
-burn = 51.1
+burn = sum(m['power_w'] * m['duty'] for m in cfg['module'] if m.get('burn_mode')) or 53.1  # burn-mode load, see budget.py scenario
 print(f"Burn mode load {burn:.0f} W: wings supply up to {gen:.0f} W peak; needs sun-biased attitude (see docs/propulsion.md)")
 print()
 print("Survival string: 8 body cells (4s2p, ~9.6 V, 1.0 A) -> charger for pack C (3.2 V single cell, 1.5 Ah) and direct feed for")

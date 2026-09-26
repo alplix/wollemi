@@ -42,8 +42,8 @@ Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous
 
 ## Pass statistics and Doppler (`groundstation/predict.py`)
 
-Synthetic 700 km sun-synchronous orbit, 10 degrees minimum elevation, 7 days. **Reference site: Pamukkale (37.9 N, 29.1 E), the operator's home: 3.6 passes/day, mean 457 s, ~27 min/day contact, about 1.3 high passes (> 40 deg) per day.** Others: Ankara 3.9 passes/day (mean 434 s, ~28 min/day contact), Istanbul 3.7,
-Singapore 2.7, Tromso 9.7 (~76 min/day). Doppler at 2.4 GHz reaches about +-54 kHz with a rate of only ~0.6 kHz/s (433 MHz: about +-10 kHz),
+Synthetic 700 km dawn-dusk sun-synchronous orbit (RAAN = Sun RA - 90 deg), 10 degrees minimum elevation, 7-30 days. **Reference site: Pamukkale (37.9 N, 29.1 E), the operator's home: 3.7 passes/day, mean 447 s, ~28 min/day contact, about 1.3 high passes (> 40 deg) per day.** Others: Ankara 3.9 passes/day (mean 446 s, ~29 min/day contact), Istanbul 4.0,
+Singapore 2.9, Tromso 9.7 (~76 min/day). Doppler at 2.4 GHz reaches about +-54 kHz with a rate of only ~0.6 kHz/s (433 MHz: about +-10 kHz),
 so tracking with an ordinary SDR is straightforward. Use real orbit elements once the spacecraft exists.
 
 ## Software already in the repository

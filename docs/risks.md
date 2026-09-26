@@ -16,7 +16,7 @@ Likelihood (L) and impact (I) on a 1-5 scale; score = L x I. Mitigations are act
 | R10 | **Volume estimates wrong** (bounding boxes, +-30 %) | 3 | 3 | 9 | Replace with vendor CAD as parts are chosen; 41 % of the interior is still free but fragmented |
 | R11 | **Thermal model wrong** (coatings, conduction estimated) | 3 | 3 | 9 | Detailed nodal model, thermal-vacuum test; heaters give margin; dawn-dusk orbit preferred |
 | R12 | **Thermal cycling fatigue** of solder joints (5000+ cycles/yr in eclipse orbits) | 3 | 3 | 9 | Design rules (CTE match, underfill, conformal coating), test; dawn-dusk orbit reduces cycling |
-| R13 | **Volunteer S-band ground network too thin**; only the home station at Pamukkale (3.6 passes/day) | 3 | 3 | 9 | Ground kit design, at least two anchor stations, UHF beacon as fallback |
+| R13 | **Volunteer S-band ground network too thin**; only the home station at Pamukkale (3.7 passes/day) | 3 | 3 | 9 | Ground kit design, at least two anchor stations, UHF beacon as fallback |
 | R14 | **Collision avoidance response time** (few passes/day, commands 24-48 h ahead) | 3 | 4 | 12 | Second station for commanding, autonomous burn execution, keep orbit >= 700 km where conjunctions are rarer |
 | R15 | **Ed25519 signing and OTA not implemented**; security model not reviewed | 3 | 4 | 12 | Vetted library, tests, security review before any flight software release (COM-4) |
 | R16 | **Debris or micrometeoroid strike** (1 mm - 1 cm class cannot be shielded or tracked) | 2 | 5 | 10 | Redundancy (A/B/C power, computer hierarchy, survival chain), Whipple protection on tank and batteries |

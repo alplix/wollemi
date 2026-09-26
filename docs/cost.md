@@ -26,7 +26,7 @@ Schedule to launch (critical path, small team): P10 48 months, **P50 54 months (
 | Hyperspectral spectrometer (research level) | 150 k |
 | External test facilities (radiation, thermal vacuum, thruster, vibration, EMC) | ~0.7 M (0.35 - 1.4 M) |
 
-Contingency: 30 % on hardware, 15 % on services and tests. Engineering effort excludes the test campaigns (counted from the test plan: 745 engineer-days).
+Contingency: 30 % on hardware, 15 % on services and tests. Engineering effort excludes the test campaigns (counted from the test plan, `docs/test-plan.md`).
 
 ## What this tells us
 

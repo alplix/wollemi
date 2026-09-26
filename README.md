@@ -22,8 +22,8 @@ What is missing is physical: vendor data, schematics of the functional cards, pr
 | Science | ~26 instruments: telescope (5 m class) + hyperspectral, thermal IR, magnetometer, particles, X-ray/UV, TSI, VLF, GRB, dosimetry, SEU/flash experiments |
 | Compute | MSP430 supervisor, 2 x STM32H7, mass memory unit (8 x 128 GB, 6+2), Pi CM5, Jetson Orin Nano |
 | Power | two LiFePO4 chains + independent survival chain, hardware-only protection |
-| Propulsion | iodine electric thruster on the centre line, ~630 m/s, drag sail |
-| Verification | 35 requirements traced; 26 checked automatically on every run; 27 planned tests |
+| Propulsion | iodine electric thruster on the centre line, ~570 m/s available (about 190 m/s planned), drag sail |
+| Verification | 47 requirements traced (see `docs/verification-matrix.md`); most checked automatically on every run; 29 planned tests |
 
 ## Documentation
 
