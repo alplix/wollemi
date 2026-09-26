@@ -1,0 +1,71 @@
+# Thermal model inputs (estimates; replace with test data and coating datasheets).
+
+[orbit]
+altitude_km = 700
+
+[constants]
+solar_flux = 1361.0
+earth_ir = 237.0            # W/m2 (mean)
+albedo = 0.30
+cp_body = 900.0             # J/(kg K), aluminium/electronics mix
+cp_battery = 1000.0
+sigma = 5.670374e-8
+
+[geometry]
+# face areas (m2) and the columns each face belongs to (half of the face per column)
+face_large_m2 = 0.0771      # +-X and +-Y faces (226 x 340)
+face_end_m2 = 0.0512        # +-Z faces (226 x 226)
+
+[conduction]
+# W/K between columns (bulkhead plates, partially covered by modules) and through the spine
+ring_neighbour = 0.75
+diagonal_spine = 0.40
+battery_to_column = 0.10    # isolated battery vault
+tank_to_column = 0.30       # propellant tank to each adjacent column (Q2, Q3)
+structure_mass_per_column_kg = 0.9
+
+# Effective absorptivity / emissivity per face, area-weighted over cells, radiators, MLI patches and openings.
+# Result of the sweep in sim/thermal.py: about 0.5 effective emissivity keeps every case inside its limits
+# (cells are 0.85, so roughly 40 % of each face must be MLI or low-emissivity area).
+# Solar cells: alpha_eff = 0.9 absorbed - 0.3 converted to electricity = 0.6.
+[faces.px]
+alpha = 0.45
+eps = 0.50
+[faces.mx]
+alpha = 0.45
+eps = 0.50
+[faces.py]
+alpha = 0.55
+eps = 0.50
+[faces.my]
+alpha = 0.55
+eps = 0.50
+[faces.pz]
+alpha = 0.30
+eps = 0.35
+[faces.mz]
+alpha = 0.30
+eps = 0.12                  # nadir plate: apertures, MLI-like
+
+[optics]
+# Telescope column: MLI-wrapped tube isolated from the neighbours plus a thermostatic heater.
+isolation_factor = 0.15     # multiplies the conductances to Q1 (MLI-wrapped tube, low-conductance mounts)
+heater_w = 8.0
+heater_on_c = 14.0
+heater_off_c = 17.0
+# the telescope column's own outer faces (+X and +Y halves): low-absorptivity, low-emissivity coating instead of cells
+# (result of the sweep: alpha 0.2 / eps 0.3 with isolation 0.15-0.3 and an 8 W thermostatic heater keeps 10..30 C):
+face_alpha = 0.20
+face_eps = 0.30
+
+[limits]
+battery_min_c = 0.0
+battery_max_c = 40.0
+electronics_min_c = -20.0
+electronics_max_c = 60.0
+optics_min_c = 10.0
+optics_max_c = 30.0
+optics_swing_max_k = 6.0
+battery_heater_w = 8.0
+battery_heater_on_c = 4.0
+battery_heater_off_c = 9.0

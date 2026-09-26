@@ -187,6 +187,12 @@ size = [100, 60, 50]
 match = "Payload J: micrometeoroid"
 size = [30, 30, 35]
 [[box]]
+match = "Bus: telescope column thermostatic heater"
+size = [10, 10, 5]
+[[box]]
+match = "Bus: survival heaters"
+size = [10, 10, 5]
+[[box]]
 match = "Bus: drag sail"
 size = [100, 100, 20]
 notched = true

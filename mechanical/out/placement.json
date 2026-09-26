@@ -1079,6 +1079,30 @@
    ],
    "notched": false,
    "true_volume_cm3": 1.0
+  },
+  {
+   "name": "Bus: telescope column thermostatic heater (8 W while active; eclipse-heavy orbits)",
+   "col": 1,
+   "tier": "core",
+   "mass_kg": 0.02,
+   "shape": "box",
+   "size": [
+    10,
+    10,
+    5
+   ],
+   "min": [
+    1.5,
+    99.0,
+    275.5
+   ],
+   "max": [
+    11.5,
+    109.0,
+    280.5
+   ],
+   "notched": false,
+   "true_volume_cm3": 0.5
   }
  ],
  "failed": [],

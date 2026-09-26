@@ -239,3 +239,11 @@ at = "Q3/3"
 [[place]]
 match = "LONG: impact protection"
 at = "Q4/3"
+
+[[place]]
+match = "Bus: survival heaters"
+at = "spine"
+
+[[place]]
+match = "Bus: telescope column thermostatic heater"
+at = "Q1/3"

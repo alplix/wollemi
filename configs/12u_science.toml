@@ -545,3 +545,22 @@ duty = 1.0
 payload = false
 volume_cm3 = 100
 tier = "core"
+
+[[module]]
+name = "Bus: survival heaters (thermostatic, keep electronics above -20 C in safe mode)"
+mass_kg = 0.02
+power_w = 2.0
+duty = 1.0
+payload = false
+volume_cm3 = 0
+tier = "core"
+safe_mode = true
+
+[[module]]
+name = "Bus: telescope column thermostatic heater (8 W while active; eclipse-heavy orbits)"
+mass_kg = 0.02
+power_w = 8.0
+duty = 0.30
+payload = false
+volume_cm3 = 0
+tier = "core"
