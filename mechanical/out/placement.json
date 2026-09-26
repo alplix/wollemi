@@ -793,6 +793,30 @@
    "true_volume_cm3": 99.0
   },
   {
+   "name": "LONG: CoM trim ballast (tungsten, 1.7 kg) in the Q2 strip",
+   "col": 2,
+   "tier": "core",
+   "mass_kg": 1.7,
+   "shape": "box",
+   "size": [
+    30,
+    30,
+    100
+   ],
+   "min": [
+    -36.5,
+    79.0,
+    193.0
+   ],
+   "max": [
+    -6.5,
+    109.0,
+    293.0
+   ],
+   "notched": false,
+   "true_volume_cm3": 90.0
+  },
+  {
    "name": "Flight controller (STM32H7 x2) + watchdog (MSP430FR)",
    "col": 3,
    "tier": "core",

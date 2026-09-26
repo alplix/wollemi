@@ -3,7 +3,7 @@ module,column,mass_kg,dx,dy,dz,x_min,y_min,z_min,x_max,y_max,z_max
 "Payload E: telescope camera (85 mm Cassegrain, ~5 m GSD at 700 km)",Q1,0.9,95.0,95.0,250.0,6.5,6.5,3.0,101.5,101.5,253.0
 Bus: star tracker (dedicated),Q2,0.15,50.0,50.0,80.0,-109.0,1.5,255.5,-59.0,51.5,335.5
 Payload F: wide-field camera / star tracker,Q2,0.1,50.0,50.0,60.0,-109.0,1.5,3.0,-59.0,51.5,63.0
-"OUTREACH: RGB LED flasher (10 W burst, 10 deg collimated, nadir) + status LEDs",Q3,0.09,60.0,55.0,30.0,-109.0,-56.5,3.0,-49.0,-1.5,33.0
+"OUTREACH: RGB LED flasher (violet 405 nm main + red + blue, 10 W burst, 10 deg collimated, nadir) + status LEDs",Q3,0.09,60.0,55.0,30.0,-109.0,-56.5,3.0,-49.0,-1.5,33.0
 Payload G: thermal IR imager (160x120 microbolometer),Q2,0.05,40.0,40.0,60.0,-109.0,51.5,3.0,-69.0,91.5,63.0
 "SCI: deployable magnetometer boom (low-noise, away from electronics)",Q3,0.15,90.0,30.0,35.0,-96.5,-109.0,300.5,-6.5,-79.0,335.5
 Antenna + deploy mech,Q3,0.05,90.0,40.0,22.5,-96.5,-79.0,313.0,-6.5,-39.0,335.5
@@ -32,6 +32,7 @@ UHF LoRa comms (RX),Q2,0.1,90.0,55.0,25.0,-96.5,54.0,168.0,-6.5,109.0,193.0
 S-band transceiver (TX),Q3,0.0,90.0,55.0,25.0,-96.5,-109.0,200.5,-6.5,-54.0,225.5
 "LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for propellant tank and battery vaults",Q4,0.8,100.0,100.0,10.0,6.5,-101.5,265.5,106.5,-1.5,275.5
 "LONG: radiation vault (graded-Z Al/Ta box, ~10 mm Al-eq) around flight controller, supervisor, FRAM, MMU controller, radio ICs",Q3,1.6,90.0,55.0,20.0,-96.5,-109.0,180.5,-6.5,-54.0,200.5
+"LONG: CoM trim ballast (tungsten, 1.7 kg) in the Q2 strip",Q2,1.7,30.0,30.0,100.0,-36.5,79.0,193.0,-6.5,109.0,293.0
 Flight controller (STM32H7 x2) + watchdog (MSP430FR),Q3,0.08,90.0,40.0,22.5,-96.5,-109.0,158.0,-6.5,-69.0,180.5
 "LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse",Q4,0.1,40.0,60.0,25.0,6.5,-109.0,310.5,46.5,-49.0,335.5
 Payload B: magnetometer + sun sensors,Q3,0.05,30.0,40.0,42.5,-109.0,-101.5,245.5,-79.0,-61.5,288.0

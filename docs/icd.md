@@ -8,14 +8,14 @@ the launch-provider values in section 6 are assumptions to be replaced by the pr
 | Item | Value | Source |
 |---|---|---|
 | Form factor | 12U CubeSat, envelope 226.3 x 226.3 x 340.5 mm, rails 8.5 mm | `configs/12u_geometry.toml` |
-| Mass at launch | 15.05 kg (limit 24 kg) | `sim/budget.py` |
-| Centre of mass (offset from the geometric centre) | (-4.0, -18.7, +3.8) mm stowed; (-4.0, -18.7, +3.8) mm wings deployed | `mechanical/ginkgo_cad.py` |
-| Moments of inertia (kg m2) | stowed (0.170, 0.179, 0.119); deployed (0.170, 0.336, 0.277) | same |
+| Mass at launch | 16.75 kg (limit 24 kg) | `sim/budget.py` |
+| Centre of mass (offset from the geometric centre) | (-5.8, -7.3, +10.8) mm stowed; (-5.8, -7.3, +10.8) mm wings deployed | `mechanical/ginkgo_cad.py` |
+| Moments of inertia (kg m2) | stowed (0.198, 0.188, 0.139); deployed (0.198, 0.346, 0.297) | same |
 | Stowed wing stack thickness | 6.3 mm (allowed protrusion 6.5 mm), six hold-down posts per wing | `docs/structure.md` |
 | External protrusions | patch antennas 4 mm; thruster nozzle flush; boom and UHF antenna stowed inside the envelope | CAD |
 | Deployables | 2 wings x 3 panels (226 x 340 x 2.1 mm, cells both faces), deployed span 1584 mm; magnetometer boom and UHF antenna (lengths to be fixed) | CAD |
 | Internal architecture | 2 x 2 x 3 cell grid, central spine 40 mm, notched card 100 x 100 mm (20 mm notch, 8 mm relief), 4 mm backplane gap | `docs/layout.md`, `docs/electrical-interface.md` |
-| Number of modules | 47 placed with 0 interferences | CAD check |
+| Number of modules | 48 placed with 0 interferences | CAD check |
 
 ## 2. Electrical interfaces
 

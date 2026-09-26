@@ -84,6 +84,13 @@ type = "m3_steel_a2_70"
 lever_m = 0.02
 bolt_circle_m = 0.080
 
+[[mount]]
+match = "LONG: CoM trim ballast"
+count = 4
+type = "m3_steel_a2_70"
+lever_m = 0.015
+bolt_circle_m = 0.060
+
 [wing]
 panel_areal_mass_kg_m2 = 3.5
 hold_down_points = 6          # per wing stack: 3 posts along each long edge (corners + mid-length), with preload

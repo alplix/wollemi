@@ -24,9 +24,9 @@ the magnetorquer average, and a wheel saturates in about 7 minutes. Resolution a
 
 1. The propulsion module became a **propulsion bay on the -X face centre line** (y = 0, mid-height; a cylinder along X), reserved as a keep-out in
    columns Q2 and Q3 (`configs/12u_geometry.toml`, `mechanical/pack.py`).
-2. The nozzle is **canted** so the thrust line passes through the centre of mass: -8.6 deg (y) and -2.9 deg (z), thrust loss 1.2 %.
+2. The nozzle is **canted** so the thrust line passes through the centre of mass: about -3.9 deg (y) and +5.8 deg (z) with the trimmed centre of mass (it was -8.6 / -2.9 deg before the ballast), thrust loss below 1 %.
 3. The same cant tilts the exhaust away from wing B: with a 12 deg plume half-angle the cone no longer reaches wing B (uncanted it would).
-4. Requirement: centre of mass known and controlled to +-5 mm (ballast if needed); residual torque then ~5 uN m, below the magnetorquer average.
+4. Requirement: centre of mass known and controlled to +-5 mm. A **1.7 kg tungsten ballast** in the Q2 strip trims the centre of mass from y = -18.7 mm (too close to the +-20 mm dispenser limit) to y = -7.3 mm; the remaining offset is absorbed by the fixed cant; residual torque then ~5 uN m, below the magnetorquer average.
 5. Continuous magnetorquer desaturation during burns, and a burn-mode attitude controller (`docs/propulsion.md`).
 
 Deorbit or retrograde burns use a 180 degree yaw flip so the exhaust always leaves through the trailing face.

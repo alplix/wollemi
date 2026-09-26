@@ -199,6 +199,9 @@ match = "OUTREACH: RGB LED flasher"
 size = [60, 55, 30]
 end = "nadir"
 [[box]]
+match = "LONG: CoM trim ballast"
+size = [30, 30, 100]
+[[box]]
 match = "Bus: drag sail"
 size = [100, 100, 20]
 notched = true

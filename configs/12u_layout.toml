@@ -251,3 +251,7 @@ at = "Q1/3"
 [[place]]
 match = "OUTREACH: RGB LED flasher"
 at = "Q3/1"
+
+[[place]]
+match = "LONG: CoM trim ballast"
+at = "Q2/2-3"

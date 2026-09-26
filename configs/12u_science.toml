@@ -573,3 +573,12 @@ duty = 0.01
 payload = false
 volume_cm3 = 100
 tier = "service"
+
+[[module]]
+name = "LONG: CoM trim ballast (tungsten, 1.7 kg) in the Q2 strip"
+mass_kg = 1.70
+power_w = 0.0
+duty = 1.0
+payload = false
+volume_cm3 = 90
+tier = "core"
