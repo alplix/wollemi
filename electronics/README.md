@@ -13,7 +13,7 @@ python electronics/gen_card.py
 ```
 
 The template has no routing yet: `unconnected_items` and generated-library warnings are silenced in its project file on purpose. Cards derived
-from it must re-enable them. Connector footprints are placeholders (2-row, 0.8 mm pitch pads); replace with the vendor footprint once the
+from it must re-enable them. Connector footprints are placeholders (2-row, 1.27 mm pitch pads); replace with the vendor footprint once the
 connector family is chosen (`docs/electrical-interface.md`).
 
 Next: backplane board, EPS card (`sim/eps_design.py` numbers), first functional card schematic.

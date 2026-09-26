@@ -197,6 +197,11 @@ def c_longevity():
     return ok, f"main packs cover eclipse for ~{yrs:.0f} yr; safe mode holds {safe} yr"
 
 
+def c_chain():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "sim", "chain_check.py")], capture_output=True, text=True).stdout
+    return "CHAIN CHECK OK" in out, out.strip().splitlines()[-1][:160] if out.strip() else "no output"
+
+
 def c_kicad_drc():
     rep = os.path.join(ROOT, "electronics", "kicad", "drc_report.txt")
     if not os.path.exists(rep):

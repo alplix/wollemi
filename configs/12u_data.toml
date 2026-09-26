@@ -21,88 +21,141 @@ stations = 3
 name = "10 S-band stations (volunteer network)"
 stations = 10
 
+# chain: long = must survive loss of the Linux computers (acquire on the flight controller "fc" or "supervisor"); heavy = may use the Pi/Jetson.
+# checked by sim/chain_check.py (requirement LONG-2)
 [[stream]]
 name = "Housekeeping telemetry"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 17.3
 ratio = 10
 priority = 1
 [[stream]]
 name = "Attitude / star tracker log"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 2.8
 ratio = 3
 priority = 1
 [[stream]]
 name = "SEU experiment + dual-computer error log"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 6
 ratio = 3
 priority = 1
 [[stream]]
 name = "Radiation dosimeter"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 0.3
 ratio = 2
 priority = 1
 [[stream]]
 name = "Magnetometer (10 Hz)"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 5.2
 ratio = 2
 priority = 1
 [[stream]]
 name = "Energetic particle spectrometer"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 22
 ratio = 10
 priority = 1
 [[stream]]
 name = "Solar X-ray / UV monitor"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 8.6
 ratio = 8
 priority = 1
 [[stream]]
 name = "Total solar irradiance"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 0.7
 ratio = 1
 priority = 1
 [[stream]]
 name = "Gamma-ray burst counts + triggers"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 12
 ratio = 2
 priority = 1
 [[stream]]
 name = "Atomic clock"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 0.3
 ratio = 2
 priority = 2
 [[stream]]
 name = "Langmuir probe (10 Hz)"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 3.5
 ratio = 2
 priority = 2
 [[stream]]
 name = "Dual-frequency GNSS / TEC"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 17
 ratio = 4
 priority = 2
 [[stream]]
 name = "VLF/ELF snapshots + spectrograms"
+chain = "heavy"
+acquire = "pi"
+path = ["pi", "mmu", "radio"]
 raw_mb_day = 60
 ratio = 4.6
 priority = 2
 [[stream]]
 name = "Thermal IR frames"
+chain = "heavy"
+acquire = "pi"
+path = ["pi", "mmu", "radio"]
 raw_mb_day = 4
 ratio = 2
 priority = 2
 [[stream]]
 name = "Wide-field camera frames (aurora, night lights)"
+chain = "heavy"
+acquire = "pi"
+path = ["pi", "mmu", "radio"]
 raw_mb_day = 15
 ratio = 3
 priority = 2
 [[stream]]
 name = "Lightning / transient events"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 0.05
 ratio = 1
 priority = 3
 [[stream]]
 name = "Micrometeoroid impact events"
+chain = "long"
+acquire = "fc"
+path = ["fc", "mmu", "radio"]
 raw_mb_day = 0.01
 ratio = 1
 priority = 3

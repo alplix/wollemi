@@ -83,7 +83,7 @@ Interior occupancy: 48 modules, 16.75 kg, centre of mass (-5.8, -7.3, +10.8) mm 
 
 ## Propulsion bay (between Q2 and Q3)
 
-Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag ma: cylinder along X on the -X face centre line, 89 x 95 mm, 2.00 kg; keep-out in Q2 and Q3; nozzle canted through the centre of mass (`docs/adcs.md`).
+Bus: micro-propulsion (electric, iodine gridded-ion class, mass_kg is the wet mass including 0.5 kg : cylinder along X on the -X face centre line, 89 x 95 mm, 2.00 kg; keep-out in Q2 and Q3; nozzle canted through the centre of mass (`docs/adcs.md`).
 
 ## Outside the cells
 

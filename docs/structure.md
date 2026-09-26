@@ -32,6 +32,7 @@ through the panel stack and release together with the burn wire. This is a requi
 
 - Design load factor 20 g in every axis, local amplification 2x, random profile flat 0.04 g2/Hz (8.9 Grms) with Q = 10: generic and conservative; real rideshare specifications are usually lower for loads, but stiffness minima can be higher.
 - Frame frequency from a uniform cantilever with the whole mass distributed along it: optimistic for the coupled system (heavy modules on brackets, telescope tube overhang, propulsion bay opening in the bulkhead).
+- Steinberg constant: the tool uses C = 1.0; for BGA-type parts a value near 1.75 is commonly quoted, which would drop the card margin at 200 Hz to about 1.0 (a marginal pass); component types must be checked per card, and the wall-panel resonance (~167 Hz) amplifies the input to the cards (not modelled).
 - No thermal-structural effects, no fatigue life beyond Steinberg, no dispenser-spring or separation shock, no buckling, no bolt preload scatter.
 - Iodine propellant sloshing is not an issue (solid at launch); the tank is treated as a rigid mass.
 

@@ -29,7 +29,7 @@ openly, and we document prior art honestly. A `docs/prior-art.md` review is part
 4. **Dual-computer radiation experiment.** A Raspberry Pi CM5 and a Jetson Orin Nano fly side
    by side, each supervised by an MCU, and their error rates are compared as science data.
 5. **Science-first mass and volume allocation.** Payload value ranking drives the layout; the
-   spacecraft carries a 25-instrument suite designed for long, continuous data records
+   spacecraft carries a 26-instrument suite designed for long, continuous data records
    (irradiance, magnetic field, radiation, plasma, ionosphere).
 6. **Longevity artefacts.** Laser retroreflector for decades of precise orbit tracking; sapphire
    / nickel memory plate carrying the open design archive; open protocol and open ground software

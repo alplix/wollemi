@@ -493,7 +493,7 @@ volume_cm3 = 120
 tier = "core"
 
 [[module]]
-name = "Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)"
+name = "Bus: micro-propulsion (electric, iodine gridded-ion class, mass_kg is the wet mass including 0.5 kg iodine, ~570 m/s: drag makeup, collision avoidance, deorbit)"
 mass_kg = 2.0
 power_w = 50.0
 duty = 0.005

@@ -191,10 +191,10 @@ status = "designed"
 [[req]]
 id = "LONG-2"
 text = "Long-record science instruments never depend on Linux nodes for acquisition or downlink."
-method = "I"
-evidence = ["docs/firmware-architecture.md"]
-status = "designed"
-note = "A static build check (planned sim/chain_check.py) should enforce this."
+method = "A"
+auto = "chain"
+evidence = ["sim/chain_check.py", "configs/12u_data.toml", "docs/firmware-architecture.md"]
+note = "Data-path level only; the firmware build check (no Linux-node dependency in the acquisition code) is a test in the plan."
 
 [[req]]
 id = "LONG-3"

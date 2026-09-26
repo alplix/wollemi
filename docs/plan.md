@@ -29,7 +29,9 @@ manufacturing come after. Status boxes are updated as work is finished; `docs/st
 | 10 | Requirements refresh | `mission/requirements.md` rewritten for the 12U observatory; figures of merit redefined; synced with the traceability file by `tools/req_sync_check.py` | [x] |
 | 11 | System design document | `docs/sdd.md` generated from live tool output (`tools/gen_sdd.py`) | [x] |
 | 12 | Licensing preparation, credits, README polish | `docs/licensing.md`, `CREDITS.md` draft, README rewritten (no licence applied while private) | [x] |
-| 13 | Final regression, status report, memory update | `docs/status.md`, commit, notes for the operator | [ ] |
+| 13 | Final regression, status report, memory update | `docs/status.md`, commit, notes for the operator | [x] |
+| 14 | Independent review and fixes | three review passes (documents, physics, firmware/protocol): safe-mode heater budget, planning depth of discharge, auth counter window, OTA overflow, FDIR event loss, survival recovery, dawn-dusk pass statistics, 12 missing requirements traced, live orbit numbers, `sim/chain_check.py` | [x] |
+| 15 | Sponsor brief | `docs/sponsor-brief.md` | [x] |
 
 ## Rules for this run
 

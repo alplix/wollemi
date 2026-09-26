@@ -91,8 +91,6 @@ def mounts():
             continue
         fs = S["fastener"][mt["type"]]
         m = mod["mass_kg"]
-        if mod["name"].startswith("Bus: micro-propulsion"):
-            m += 0.5                       # iodine propellant is not in the module mass split
         F = m * factor
         shear_each = F / mt["count"]
         M = F * mt["lever_m"]

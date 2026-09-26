@@ -29,9 +29,8 @@ Outputs in `out/`: `ginkgo_12u_stowed.step/.stl`, `ginkgo_12u_deployed.step/.stl
 - The propulsion column (Q2) is vertically almost full: cameras + ADCS + tank + star tracker = ~333 of
   334.5 mm. Any growth there needs a design decision.
 - Stowed wing stack: 3 x 2.1 mm = 6.3 mm, inside the 6.5 mm protrusion allowance (2.2 mm panels would fail).
-- Thruster plume at 15 degrees half-angle just reaches the tip of wing B (last ~30 mm of panel 3);
-  a wider plume (Hall thruster) would impinge on panels 2-3. Mitigation: gridded ion thruster, shorter
-  wing B, or a canted nozzle.
+- Thruster: the propulsion bay sits on the -X face centre line with the nozzle canted through the centre of mass; the plume (12 degrees half-angle, gridded ion)
+  is checked against the wings by `mechanical/ginkgo_cad.py` (a wider Hall-type plume would impinge on panels 2-3).
 
 - **Thruster line vs centre of mass:** with the nozzle in a column the lever arm was ~70 mm (about 70 uN m at 1.1 mN). The propulsion module is now a bay on the -X face centre
   line (keep-out in Q2/Q3) with a fixed cant of about 3.9/5.8 deg through the CoM (after a 1.7 kg tungsten trim ballast in Q2); that cant also clears the exhaust from wing B. See `docs/adcs.md`.

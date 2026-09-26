@@ -20,7 +20,7 @@ columns of the 12U frame. This document defines what a card sees. Tools: `sim/ep
 The exact pin-by-pin table is generated from `electronics/card_pinout.toml` (see `electronics/pinout.md`) and is the same data that
 drives the KiCad card template `electronics/kicad/ginkgo_card_template.kicad_pcb` (KiCad 10, DRC clean).
 
-**GK-P (power and control), 2 x 30 pins, 0.8 mm pitch class, blind-mate board-to-board.**
+**GK-P (power and control), 2 x 30 pins, 1.27 mm pitch (0.8 mm was not routable on the notched card), blind-mate board-to-board.**
 Connector family to be chosen after checking current rating, mating cycles and outgassing data (candidates in the Samtec ERM8/ERF8
 class and similar); the pin allocation below is independent of the vendor.
 

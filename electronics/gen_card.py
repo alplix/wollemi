@@ -35,7 +35,7 @@ NETS = nets_of("gkp", "gkd")
 
 
 def pads(conn, pitch=None, row=3.0):
-    pitch = pitch or card.get("connector_pitch", 0.8)
+    pitch = pitch or card.get("connector_pitch", 1.27)
     """Pad expressions for a 2-row connector laid out along y (row A at -row/2, row B at +row/2)."""
     out = []
     n = len(pin[conn]["pairs"])

@@ -35,7 +35,7 @@ What is missing is physical: vendor data, schematics of the functional cards, pr
 | Power, thermal, attitude, propulsion | `docs/power-architecture.md`, `docs/eps-card.md`, `docs/thermal.md`, `docs/adcs.md`, `docs/propulsion.md`, `docs/orbit-and-debris.md` |
 | Electronics, software, data | `docs/electrical-interface.md`, `docs/firmware-architecture.md`, `docs/protocol.md`, `docs/data-plan.md`, `docs/mission-simulation.md` |
 | Operations and ground | `docs/ops-concept.md`, `docs/ground-station-kit.md`, `docs/longevity.md` |
-| Context | `docs/prior-art.md`, `docs/design-identity.md`, `docs/decisions/`, `docs/outreach-led.md`, `docs/cost.md`, `docs/licensing.md`, `CREDITS.md` |
+| Context | `docs/sponsor-brief.md`, `docs/prior-art.md`, `docs/design-identity.md`, `docs/decisions/`, `docs/outreach-led.md`, `docs/cost.md`, `docs/licensing.md`, `CREDITS.md` |
 
 ## Repository layout
 

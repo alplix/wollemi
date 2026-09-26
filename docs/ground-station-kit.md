@@ -38,7 +38,7 @@ Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous
 - Software: SatNOGS-compatible client plugin (decoder for the Ginkgo protocol, CFDP receiver, CCSDS frame
   decoding), open data upload, tracking from orbit elements.
 - Documentation: build guide, BOM with sourcing notes, alignment and calibration procedure.
-- Reference decoder in Python shared with the flight protocol description (`docs/protocol.md`, planned).
+- Reference decoder in Python shared with the flight protocol description (`groundstation/decode.py`, `docs/protocol.md`).
 
 ## Pass statistics and Doppler (`groundstation/predict.py`)
 

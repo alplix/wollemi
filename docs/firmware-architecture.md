@@ -63,8 +63,7 @@ X-ray/UV monitor, GRB counts, CSAC, housekeeping, attitude, SEU/flash experiment
   priority-1 subsets) even when PAY-L and PAY-H are dead;
 - use **self-describing, versioned formats** so the archive stays readable in 50 years.
 
-A static check in the build (planned: `sim/chain_check.py`) will fail the build if a long-life stream
-declares a Linux data path.
+`sim/chain_check.py` (part of the regression) fails if a long-life stream declares a Linux data path.
 
 ## 6. Mass memory unit protocol
 
@@ -122,7 +121,7 @@ declares a Linux data path.
 - Configuration lives in the same TOML files as the design (`configs/`), so a derived mission changes
   configuration, not code.
 - Protocol description (packets, files, commands) is a single source that generates both flight and ground code
-  (`docs/protocol.md`, planned).
+  (`groundstation/decode.py`, `docs/protocol.md`).
 
 ## 12. Open items
 

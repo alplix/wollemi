@@ -1,5 +1,5 @@
 module,column,mass_kg,dx,dy,dz,x_min,y_min,z_min,x_max,y_max,z_max
-"Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)",Q0,2.0,89.0,95.0,95.0,-109.7,-47.5,122.8,-20.7,47.5,217.8
+"Bus: micro-propulsion (electric, iodine gridded-ion class, mass_kg is the wet mass including 0.5 kg iodine, ~570 m/s: drag makeup, collision avoidance, deorbit)",Q0,2.0,89.0,95.0,95.0,-109.7,-47.5,122.8,-20.7,47.5,217.8
 "Payload E: telescope camera (85 mm Cassegrain, ~5 m GSD at 700 km)",Q1,0.9,95.0,95.0,250.0,6.5,6.5,3.0,101.5,101.5,253.0
 Bus: star tracker (dedicated),Q2,0.15,50.0,50.0,80.0,-109.0,1.5,255.5,-59.0,51.5,335.5
 Payload F: wide-field camera / star tracker,Q2,0.1,50.0,50.0,60.0,-109.0,1.5,3.0,-59.0,51.5,63.0

@@ -13,13 +13,13 @@ orbit, power and fault model for 60 days, at 30 s steps, for two orbits. Power n
 
 | | Eclipse orbit (beta 0) | Dawn-dusk orbit (beta 80) |
 |---|---|---|
-| Time in NOMINAL / ECLIPSE | 60 % / 34 % | 93 % / 0 % |
-| Mode transitions per day | 28 (one eclipse entry and exit per orbit) | 0.9 |
+| Time in NOMINAL / SCIENCE + SCIENCE_LITE / ECLIPSE | 55 % / 5.3 % / 34 % | 86 % / 8.2 % / 0 % |
+| Mode transitions per day | 31 (one eclipse entry and exit per orbit plus the three daily campaigns) | 5.8 (the three daily campaigns) |
 | Minimum state of charge | 75 % | 90 % |
 | Brownout | none | none |
 | Thruster burn delivered | 7.7 h of 7.7 h requested | 12.0 h of 12.0 h |
 | Flight controller hang (day 40) | NOMINAL -> SURVIVAL -> SAFE -> NOMINAL, recovered in ~2 h | same |
-| Temperature excursion (day 50) | NOMINAL -> SAFE -> NOMINAL in ~30 min | same |
+| Temperature excursion (day 50) | NOMINAL -> SAFE -> NOMINAL in ~1 h | same |
 | Science (imaging) time over 60 days | 76 h | 119 h (continues on the CM5 after the Jetson fails) |
 
 Verdict: no brownout and correct degradation and recovery in both orbits.

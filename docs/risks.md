@@ -12,8 +12,8 @@ Likelihood (L) and impact (I) on a 1-5 scale; score = L x I. Mitigations are act
 | R6 | **Residual magnetic dipole > 0.1 A m2** compromises the magnetometer and control | 4 | 3 | 12 | Magnetic cleanliness programme, material screening, dipole compensation, boom; measure on an engineering model |
 | R7 | **Iodine thruster** power, thrust, plume or corrosion differ from the estimate (contamination of optics, cells, radiators) | 3 | 4 | 12 | Vendor data and plume map, contamination shielding, place thruster away from optics; keep the drag sail as passive backup |
 | R8 | **Telescope pointing stability** (structural modes, wheel micro-vibration) worse than the rigid-body estimate | 3 | 4 | 12 | Modal analysis, isolators, jitter test on an engineering model; relax GSD or use TDI |
-| R9 | **COTS compute (Jetson, Pi) dies early** from radiation or latch-up | 4 | 2 | 8 | Already tiered: science chain does not depend on Linux nodes (LONG-2); spot shielding; treat as consumables |
-| R10 | **Volume estimates wrong** (bounding boxes, +-30 %) | 3 | 3 | 9 | Replace with vendor CAD as parts are chosen; 41 % of the interior is still free but fragmented |
+| R9 | **COTS compute (Jetson, Pi) dies early** from radiation or latch-up | 4 | 2 | 8 | Already tiered: science chain does not depend on Linux nodes (LONG-2); radiation vault for the control electronics; treat as consumables |
+| R10 | **Volume estimates wrong** (bounding boxes, +-30 %) | 3 | 3 | 9 | Replace with vendor CAD as parts are chosen; about 36 % of the interior is free by voxel packing but fragmented |
 | R11 | **Thermal model wrong** (coatings, conduction estimated) | 3 | 3 | 9 | Detailed nodal model, thermal-vacuum test; heaters give margin; dawn-dusk orbit preferred |
 | R12 | **Thermal cycling fatigue** of solder joints (5000+ cycles/yr in eclipse orbits) | 3 | 3 | 9 | Design rules (CTE match, underfill, conformal coating), test; dawn-dusk orbit reduces cycling |
 | R13 | **Volunteer S-band ground network too thin**; only the home station at Pamukkale (3.7 passes/day) | 3 | 3 | 9 | Ground kit design, at least two anchor stations, UHF beacon as fallback |

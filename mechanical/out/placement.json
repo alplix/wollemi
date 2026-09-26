@@ -1,7 +1,7 @@
 {
  "placed": [
   {
-   "name": "Bus: micro-propulsion (electric, iodine gridded-ion/Hall class, 0.5 kg iodine, ~500-700 m/s: drag makeup, collision avoidance, deorbit)",
+   "name": "Bus: micro-propulsion (electric, iodine gridded-ion class, mass_kg is the wet mass including 0.5 kg iodine, ~570 m/s: drag makeup, collision avoidance, deorbit)",
    "col": 0,
    "tier": "core",
    "mass_kg": 2.0,
