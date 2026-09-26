@@ -21,6 +21,7 @@ int gk_ota_begin(gk_ota_t *o, uint8_t slot, uint32_t size) {
 int gk_ota_chunk(gk_ota_t *o, uint32_t offset, uint32_t len) {
   if (o->state != GK_OTA_RECEIVING) return -1;
   if (offset > o->received) return -2;                 /* gap: the ground must resend from 'received' */
+  if (len > o->expected_size || offset > o->expected_size - len) return -3; /* also catches uint32 wrap-around */
   if (offset + len <= o->received) return 0;           /* duplicate of data we already have */
   if (offset + len > o->expected_size) return -3;
   o->received = offset + len;
@@ -44,6 +45,7 @@ int gk_ota_commit(gk_ota_t *o, uint32_t now_s, uint32_t confirm_timeout_s) {
   o->active_slot = o->staged_slot;
   o->confirm_timeout_s = confirm_timeout_s;
   o->trial_deadline_s = now_s + confirm_timeout_s;
+  o->trial_start_s = now_s;
   o->state = GK_OTA_TRIAL;
   return 0;
 }
@@ -55,7 +57,7 @@ int gk_ota_confirm(gk_ota_t *o) {
 }
 
 int gk_ota_tick(gk_ota_t *o, uint32_t now_s) {
-  if (o->state == GK_OTA_TRIAL && now_s >= o->trial_deadline_s) {
+  if (o->state == GK_OTA_TRIAL && (uint32_t)(now_s - o->trial_start_s) >= o->confirm_timeout_s) {
     o->active_slot = o->previous_slot; /* no confirmation in time: fall back */
     o->state = GK_OTA_ROLLED_BACK;
     return 1;

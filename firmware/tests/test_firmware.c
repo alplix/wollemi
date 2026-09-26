@@ -20,7 +20,7 @@ static gk_inputs_t healthy(void) {
   gk_inputs_t in;
   memset(&in, 0, sizeof in);
   in.fc_ok = in.packs_ok = in.heavy_compute_ok = in.light_compute_ok = in.thruster_ok = in.temp_ok = 1;
-  in.sunlit = in.sun_biased = in.wings_deployed = 1;
+  in.sunlit = in.sun_biased = in.wings_deployed = in.optics_ok = 1;
   in.soc_pct = 90;
   return in;
 }
@@ -237,11 +237,70 @@ static void test_ota(void) {
   CHECK(gk_ota_commit(&o, 20000, 60) == -1);       /* cannot commit without a verified image */
 }
 
+static void test_review_fixes(void) {
+  /* survival recovery during launch/deploy resumes the sequence instead of skipping it */
+  gk_state_t s;
+  gk_inputs_t in = healthy();
+  gk_modes_init(&s);
+  in.fc_ok = 0;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SURVIVAL);
+  in.fc_ok = 1;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_LAUNCH);
+  /* science hysteresis and unknown state of charge */
+  gk_modes_init(&s);
+  in = healthy();
+  in.sep_timer_done = in.deploy_done = in.commissioning_ok = 1;
+  in.science_requested = 1;
+  for (int i = 0; i < 4; i++) gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SCIENCE);
+  in.soc_pct = 47;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SCIENCE); /* inside the 5 % band */
+  in.soc_pct = 255;
+  gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_SAFE);    /* 255 = unknown, treated as empty */
+  in = healthy();
+  in.science_requested = 1;
+  in.optics_ok = 0;
+  gk_modes_init(&s);
+  in.sep_timer_done = in.deploy_done = in.commissioning_ok = 1;
+  for (int i = 0; i < 4; i++) gk_modes_step(&s, &in);
+  CHECK(s.mode == GK_MODE_NOMINAL); /* optics outside the window: no imaging */
+  /* OTA overflow and timer wrap */
+  gk_ota_t o;
+  gk_ota_init(&o, 0);
+  CHECK(gk_ota_begin(&o, 1, 1000) == 0);
+  CHECK(gk_ota_chunk(&o, 0, 10) == 0);
+  CHECK(gk_ota_chunk(&o, 10, 0xFFFFFFF8u) == -3);
+  gk_ota_init(&o, 0);
+  gk_ota_begin(&o, 1, 10);
+  gk_ota_chunk(&o, 0, 10);
+  gk_ota_verify(&o, 1);
+  CHECK(gk_ota_commit(&o, 0xFFFFFFF0u, 100) == 0);
+  CHECK(gk_ota_tick(&o, 0xFFFFFFF5u) == 0);         /* deadline wraps to 84: must not roll back early */
+  CHECK(gk_ota_tick(&o, 0xFFFFFFF0u + 100u) == 1);
+  /* FDIR: no event slot -> state is not advanced */
+  gk_fdir_t f;
+  gk_fdir_event_t ev[1];
+  gk_fdir_init(&f, 1000, 5000);
+  gk_fdir_monitor(&f, 0, 1, 0);
+  gk_fdir_monitor(&f, 1, 1, 0);
+  CHECK(gk_fdir_tick(&f, 2000, ev, 1) == 1);
+  CHECK(f.stage[1] == 0);
+  CHECK(gk_fdir_tick(&f, 2001, ev, 1) == 1 && ev[0].node == 1);
+  /* heartbeat stamped slightly after now: no false alarm */
+  gk_fdir_heartbeat(&f, 0, 5100);
+  CHECK(gk_fdir_tick(&f, 5000, ev, 1) == 0 || ev[0].node != 0);
+}
+
 int main(void) {
   test_modes();
   test_fdir();
   test_cmdq();
   test_ota();
+  test_review_fixes();
   printf("firmware core: %d checks, %d failures\n", checks, failures);
   return failures ? 1 : 0;
 }

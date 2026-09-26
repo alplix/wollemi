@@ -36,19 +36,17 @@ int gk_fdir_tick(gk_fdir_t *f, uint32_t now_ms, gk_fdir_event_t *out, int max) {
   int n = 0;
   for (uint8_t node = 0; node < GK_FDIR_NODES; node++) {
     if (!f->monitored[node] || f->degraded[node]) continue;
-    const uint32_t silent = now_ms - f->last_hb_ms[node];
-    if (silent > f->timeout_ms) {
+    const int32_t silent_s = (int32_t)(now_ms - f->last_hb_ms[node]); /* signed: a heartbeat stamped just after 'now' is not silence */
+    if (silent_s > 0 && (uint32_t)silent_s > f->timeout_ms) {
       /* one action per timeout period: wait a full timeout before escalating again */
-      if (f->stage[node] == 0 || now_ms - f->last_fail_ms[node] >= f->timeout_ms) {
+      if (n < max && (f->stage[node] == 0 || now_ms - f->last_fail_ms[node] >= f->timeout_ms)) { /* no room: keep the state, report on the next tick */
         f->last_fail_ms[node] = now_ms;
         f->healthy_since_ms[node] = 0;
         gk_action_t a = next_action(f, node);
         if (a == GK_ACT_DEGRADE) f->degraded[node] = 1;
-        if (n < max) {
-          out[n].node = node;
-          out[n].action = a;
-          n++;
-        }
+        out[n].node = node;
+        out[n].action = a;
+        n++;
       }
     } else if (f->stage[node] != 0) {
       if (f->healthy_since_ms[node] == 0) f->healthy_since_ms[node] = now_ms;

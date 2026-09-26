@@ -63,10 +63,14 @@ int gk_modes_step(gk_state_t *s, const gk_inputs_t *in) {
   gk_mode_t m = old;
 
   /* Overrides in strict priority order: the supervisor's view wins over everything. */
+  gk_inputs_t chk = *in;
+  if (chk.soc_pct > 100) chk.soc_pct = 0; /* out-of-range value means unknown: treat as empty */
+  in = &chk;
   if (!in->fc_ok) {
+    if (old != GK_MODE_SURVIVAL) s->resume_mode = (old == GK_MODE_LAUNCH || old == GK_MODE_DEPLOY) ? old : GK_MODE_SAFE;
     m = GK_MODE_SURVIVAL;
   } else if (old == GK_MODE_SURVIVAL) {
-    m = GK_MODE_SAFE; /* flight controller is back: recover through safe mode */
+    m = s->resume_mode; /* flight controller is back: resume the launch/deploy sequence, otherwise recover through safe mode */
   } else if (old == GK_MODE_LAUNCH) {
     if (in->sep_timer_done) m = GK_MODE_DEPLOY;
   } else if (old == GK_MODE_DEPLOY) {
@@ -90,7 +94,7 @@ int gk_modes_step(gk_state_t *s, const gk_inputs_t *in) {
       /* sunlit and healthy: choose the most useful permitted mode */
       if (in->burn_requested && in->thruster_ok && in->sun_biased && in->wings_deployed && in->soc_pct >= SOC_BURN_MIN)
         m = GK_MODE_BURN;
-      else if (in->science_requested && in->soc_pct >= SOC_SCIENCE_MIN && (old != GK_MODE_BURN || !in->burn_requested) &&
+      else if (in->science_requested && in->optics_ok && in->soc_pct >= ((old == GK_MODE_SCIENCE || old == GK_MODE_SCIENCE_LITE) ? SOC_SCIENCE_MIN - 5 : SOC_SCIENCE_MIN) && (old != GK_MODE_BURN || !in->burn_requested) &&
                (in->heavy_compute_ok || in->light_compute_ok))
         m = in->heavy_compute_ok ? GK_MODE_SCIENCE : GK_MODE_SCIENCE_LITE; /* keep imaging alive on the light computer */
       else

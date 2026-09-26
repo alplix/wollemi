@@ -116,6 +116,8 @@ def decode(pkt):
     if msg is None:
         raise ValueError(f"unknown APID {apid:#x}")
     is_tc = (word0 >> 12) & 1
+    if bool(is_tc) != (msg["kind"] == "tc"):
+        raise ValueError("TC bit does not match the message kind")
     coarse, fine, flags, ver = struct.unpack(">IHBB", pkt[6:6 + SEC_LEN])
     pos = 6 + SEC_LEN
     out = dict(name=msg["name"], apid=apid, node=NODE_NAMES[apid >> 8], seq=word1 & 0x3FFF,

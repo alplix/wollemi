@@ -30,12 +30,12 @@ MODES = ["LAUNCH", "DEPLOY", "COMMISSION", "NOMINAL", "SCIENCE", "BURN", "ECLIPS
 class Inputs(ctypes.Structure):
     _fields_ = [(n, ctypes.c_uint8) for n in (
         "fc_ok", "packs_ok", "heavy_compute_ok", "light_compute_ok", "thruster_ok", "temp_ok", "sunlit", "sun_biased", "wings_deployed",
-        "sep_timer_done", "deploy_done", "commissioning_ok", "science_requested", "burn_requested", "soc_pct")]
+        "sep_timer_done", "deploy_done", "commissioning_ok", "science_requested", "burn_requested", "soc_pct", "optics_ok")]
 
 
 class State(ctypes.Structure):
     _fields_ = [("mode", ctypes.c_int), ("level", ctypes.c_uint8), ("allow_payloads", ctypes.c_uint8),
-                ("allow_heavy_compute", ctypes.c_uint8), ("allow_light_compute", ctypes.c_uint8), ("allow_thruster", ctypes.c_uint8)]
+                ("allow_heavy_compute", ctypes.c_uint8), ("allow_light_compute", ctypes.c_uint8), ("allow_thruster", ctypes.c_uint8), ("resume_mode", ctypes.c_int)]
 
 
 _LIB = None
@@ -124,6 +124,7 @@ def simulate(beta_deg, days=60, dt=30.0, verbose=False):
         inp.heavy_compute_ok = 0 if jetson_dead else 1
         inp.light_compute_ok = 1                             # the Pi CM5 stays healthy in this scenario
         inp.thruster_ok = 1
+        inp.optics_ok = 1                                      # optics thermal window is covered by the thermal model
         inp.temp_ok = 0 if temp_bad else 1
         inp.sunlit = 1 if sunlit else 0
         biased = st.mode in (3, 4, 5, 6, 2, 9)                 # attitude control keeps the wings toward the sun in operational modes

@@ -75,77 +75,84 @@ def cycle_average_dv(h_km, ballistic, steps=132):
     return total / steps * YEAR
 
 
-def main():
+IMPULSE_NS = 9500.0        # 1.5U iodine gridded-ion class total impulse (ThrustMe NPT30-I2 1.5U, see docs/propulsion.md)
+THRUST_N = 1.1e-3
+
+
+def analysis():
+    """All numbers of the orbit-lifetime study as a dictionary (used by the printout, the document generator and the checks)."""
     mass = sum(m["mass_kg"] for m in CFG["module"])
     cd = 2.2
-    body_area = 2 * (0.2263 * 0.3405 * 2 + 0.2263 * 0.2263) / 4          # tumbling body: total surface / 4
+    body_area = 2 * (0.2263 * 0.3405 * 2 + 0.2263 * 0.2263) / 4
     wing_area = 2 * 3 * (GEO["wings"]["panel"][0] * 1e-3) * (GEO["wings"]["panel"][1] * 1e-3)
-    wings_avg = wing_area / 2                                             # flat double-sided plates, tumbling average: A/2
-    sail = 1.0                                                            # m2 drag sail (flat, tumbling average A/2)
-    cases = {
-        "stowed (no wings)": body_area,
-        "wings deployed": body_area + wings_avg,
-        "wings + 1 m2 drag sail": body_area + wings_avg + sail / 2,
-    }
-    print(f"Mass {mass:.1f} kg, Cd {cd}; tumbling projected area: body {body_area:.3f} m2, wings {wings_avg:.3f} m2, sail {sail / 2:.2f} m2 (1 m2 sail)")
-    print()
-    print("Natural decay time to 200 km (years), solar cycle model; range = best and worst starting phase of the 11-year cycle (cap 300 yr):")
-    print(f"{'altitude':>9s} " + "".join(f"{c[:24]:>26s}" for c in cases))
-    table = {}
+    wings_avg = wing_area / 2
+    sail = 1.0
+    areas = {"stowed (no wings)": body_area, "wings deployed": body_area + wings_avg, "wings + 1 m2 drag sail": body_area + wings_avg + sail / 2}
+    out = {"mass": mass, "cd": cd, "body_area": body_area, "wings_avg": wings_avg, "sail_avg": sail / 2, "cases": list(areas), "decay": {}, "dv": {}}
     for h in (500, 600, 700, 800):
-        row = []
-        for name, area in cases.items():
+        for name, area in areas.items():
             B = mass / (cd * area)
             y_a, _ = decay(h, B, "cycle", 0.0)
             y_b, _ = decay(h, B, "cycle", math.pi)
-            table[(h, name)] = (min(y_a, y_b), max(y_a, y_b))
-            row.append(f"{min(y_a, y_b):7.1f} - {max(y_a, y_b):7.1f}")
-        print(f"{h:6d} km " + "".join(f"{r:>26s}" for r in row))
+            out["decay"][(h, name)] = (min(y_a, y_b), max(y_a, y_b))
+        B = mass / (cd * areas["wings deployed"])
+        a_ = RE + h * 1e3
+        v = math.sqrt(MU / a_)
+        out["dv"][h] = (cycle_average_dv(h, B), 0.5 * density(h, 0.0) * v * v / B * YEAR, 0.5 * density(h, 1.0) * v * v / B * YEAR)
+    h0 = 700
+    B_s = mass / (cd * areas["wings + 1 m2 drag sail"])
+    v700 = math.sqrt(MU / (RE + h0 * 1e3))
+    out["descent"] = {}
+    for target in (600, 500):
+        vt = math.sqrt(MU / (RE + target * 1e3))
+        dv = abs(vt - v700)
+        y_r = (decay(target, B_s, "cycle", 0.0)[0], decay(target, B_s, "cycle", math.pi)[0])
+        out["descent"][target] = {"dv": dv, "days": mass * dv / THRUST_N / 86400, "years": (min(y_r), max(y_r))}
+    a1, a2 = RE + 700e3, RE + 300e3
+    at = (a1 + a2) / 2
+    dv_p = math.sqrt(MU / a1) - math.sqrt(MU * (2 / a1 - 1 / at))
+    out["perigee"] = {"dv": dv_p, "days": mass * dv_p / THRUST_N / 86400}
+    out["available_dv"] = IMPULSE_NS / mass
+    keep = out["dv"][700][0] * 50
+    out["plan"] = {"keeping_50y": keep, "keeping_margin": keep * 1.5, "descent": out["descent"][500]["dv"], "avoidance": 20.0}
+    out["plan"]["total"] = out["plan"]["keeping_margin"] + out["plan"]["descent"] + out["plan"]["avoidance"]
+    sail_y = out["decay"][(700, "wings + 1 m2 drag sail")]
+    wing_y = out["decay"][(700, "wings deployed")]
+    out["ok"] = sail_y[1] <= 25 and out["plan"]["total"] < out["available_dv"] and wing_y[1] > 25
+    return out
+
+
+def main():
+    o = analysis()
+    print(f"Mass {o['mass']:.1f} kg, Cd {o['cd']}; tumbling projected area: body {o['body_area']:.3f} m2, wings {o['wings_avg']:.3f} m2, sail {o['sail_avg']:.2f} m2 (1 m2 sail)")
+    print()
+    print("Natural decay time to 200 km (years), solar cycle model; range = best and worst starting phase of the 11-year cycle (cap 300 yr):")
+    print(f"{'altitude':>9s} " + "".join(f"{c[:24]:>26s}" for c in o["cases"]))
+    for h in (500, 600, 700, 800):
+        print(f"{h:6d} km " + "".join(f"{o['decay'][(h, c)][0]:7.1f} - {o['decay'][(h, c)][1]:7.1f}".rjust(26) for c in o["cases"]))
     print("(a constant mean-density model would look much slower: the solar-maximum years dominate the drag, so it is not used)")
     print()
     print("Drag make-up delta-v to hold the altitude, wings deployed (m/s per year averaged over the solar cycle; range solar min .. max):")
-    dv50 = {}
     for h in (500, 600, 700, 800):
-        B = mass / (cd * (body_area + wings_avg))
-        avg = cycle_average_dv(h, B)
-        a_ = RE + h * 1e3
-        v = math.sqrt(MU / a_)
-        lo = 0.5 * density(h, 0.0) * v * v / B * YEAR
-        hi = 0.5 * density(h, 1.0) * v * v / B * YEAR
-        dv50[h] = avg * 50
+        avg, lo, hi = o["dv"][h]
         print(f"  {h} km: {avg:8.2f} m/s/yr (min {lo:.2f} .. max {hi:.1f}); 50 years: {avg * 50:7.0f} m/s")
     print()
-
-    h0 = 700
-    y_w = table[(700, "wings deployed")]
-    y_s = table[(700, "wings + 1 m2 drag sail")]
-    print(f"Disposal from {h0} km (IADC guideline: reenter or reach a graveyard within 25 years of end of mission)")
+    y_w = o["decay"][(700, "wings deployed")]
+    y_s = o["decay"][(700, "wings + 1 m2 drag sail")]
+    print("Disposal from 700 km (IADC guideline: reenter or reach a graveyard within 25 years of end of mission)")
     print(f"  passive, wings deployed: {y_w[0]:.0f}-{y_w[1]:.0f} years: {'meets' if y_w[1] <= 25 else 'does NOT meet'} 25 years")
     print(f"  passive with a 1 m2 sail: {y_s[0]:.0f}-{y_s[1]:.0f} years: {'meets' if y_s[1] <= 25 else 'does NOT meet'} 25 years (model uncertainty is a factor 2-3)")
-    B_s = mass / (cd * (body_area + wings_avg + sail / 2))
-    v700 = math.sqrt(MU / (RE + h0 * 1e3))
-    dvs = {}
-    for target in (600, 500):
-        vt = math.sqrt(MU / (RE + target * 1e3))
-        dv = vt - v0 if False else vt - v700
-        days = mass * abs(dv) / 1.1e-3 / 86400
-        y_r = (decay(target, B_s, "cycle", 0.0)[0], decay(target, B_s, "cycle", math.pi)[0])
-        dvs[target] = (abs(dv), days, min(y_r), max(y_r))
-        print(f"  electric spiral 700 -> {target} km ({abs(dv):.0f} m/s, ~{days:.0f} days of thrusting) then drag with the sail: {min(y_r):.1f}-{max(y_r):.1f} years")
-    a1, a2 = RE + 700e3, RE + 300e3
-    at = (a1 + a2) / 2
-    dv_perigee = math.sqrt(MU / a1) - math.sqrt(MU * (2 / a1 - 1 / at))
-    print(f"  perigee lowering to 300 km (elliptical orbit, rapid decay): {dv_perigee:.0f} m/s, ~{mass * dv_perigee / 1.1e-3 / 86400:.0f} days of thrusting at 1.1 mN")
-    print(f"  available electric delta-v: about {9500.0 / mass:.0f} m/s (9500 Ns class thruster on {mass:.1f} kg; see docs/propulsion.md)")
-    budget = 9500.0 / mass
-    need = dv50[700] * 1.5 + dvs[500][0] + 20.0
+    for t, d in o["descent"].items():
+        print(f"  electric spiral 700 -> {t} km ({d['dv']:.0f} m/s, ~{d['days']:.0f} days of thrusting) then drag with the sail: {d['years'][0]:.1f}-{d['years'][1]:.1f} years")
+    print(f"  perigee lowering to 300 km (elliptical orbit, rapid decay): {o['perigee']['dv']:.0f} m/s, ~{o['perigee']['days']:.0f} days of thrusting at 1.1 mN")
+    print(f"  available electric delta-v: about {o['available_dv']:.0f} m/s ({IMPULSE_NS:.0f} Ns class thruster on {o['mass']:.1f} kg; see docs/propulsion.md)")
+    p = o["plan"]
     print()
-    print(f"Delta-v plan at 700 km: 50 years of station keeping {dv50[700]:.0f} m/s (x1.5 margin = {dv50[700] * 1.5:.0f}) + descent {dvs[500][0]:.0f} m/s + collision avoidance 20 m/s = {need:.0f} m/s of {budget:.0f} m/s available")
+    print(f"Delta-v plan at 700 km: 50 years of station keeping {p['keeping_50y']:.0f} m/s (x1.5 margin = {p['keeping_margin']:.0f}) + descent {p['descent']:.0f} m/s + collision avoidance {p['avoidance']:.0f} m/s = {p['total']:.0f} m/s of {o['available_dv']:.0f} m/s available")
     print("Debris and collision risk are not evaluated here (needs ESA MASTER or NASA ORDEM and the conjunction-assessment service).")
-    ok = y_s[1] <= 25 and need < budget and y_w[1] > 25
     print(f"Verdict: at 700 km the sail alone gives {y_s[0]:.0f}-{y_s[1]:.0f} years (meets 25 years on this model, with a factor 2-3 uncertainty), without the sail {y_w[0]:.0f}-{y_w[1]:.0f} years (fails); "
-          f"the propulsive descent to 500-600 km ({dvs[600][0]:.0f}-{dvs[500][0]:.0f} m/s) restores margin, and the total plan fits the available delta-v: {'OK' if ok else 'CHECK'}.")
-    return 0 if ok else 1
+          f"the propulsive descent to 500-600 km ({o['descent'][600]['dv']:.0f}-{o['descent'][500]['dv']:.0f} m/s) restores margin, and the total plan fits the available delta-v: {'OK' if o['ok'] else 'CHECK'}.")
+    return 0 if o["ok"] else 1
 
 
 if __name__ == "__main__":

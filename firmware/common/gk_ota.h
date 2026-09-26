@@ -21,6 +21,7 @@ typedef struct {
   uint32_t expected_size;
   uint32_t received;
   uint32_t trial_deadline_s;
+  uint32_t trial_start_s;
   uint32_t confirm_timeout_s;
   uint8_t previous_slot;
 } gk_ota_t;

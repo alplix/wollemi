@@ -33,6 +33,7 @@ typedef struct {
   uint8_t science_requested;
   uint8_t burn_requested;
   uint8_t soc_pct;           /* lowest usable pack state of charge */
+  uint8_t optics_ok;         /* telescope/detector temperatures inside the imaging window; science modes are refused otherwise */
 } gk_inputs_t;
 
 typedef struct {
@@ -42,6 +43,7 @@ typedef struct {
   uint8_t allow_heavy_compute;
   uint8_t allow_light_compute;
   uint8_t allow_thruster;
+  gk_mode_t resume_mode; /* early-phase mode to return to after SURVIVAL (LAUNCH/DEPLOY), else SAFE */
 } gk_state_t;
 
 void gk_modes_init(gk_state_t *s);

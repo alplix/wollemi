@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#define GK_AUTH_MAX_JUMP 1000000u /* largest accepted counter step: one mistyped counter cannot lock the link for ever */
 #define GK_AUTH_KEYS 2 /* current and previous operational key */
 
 typedef enum {
@@ -15,7 +16,9 @@ typedef enum {
   GK_AUTH_EXPIRED = -4,
   GK_AUTH_REPLAY = -5,
   GK_AUTH_BAD_SIG = -6,
-  GK_AUTH_NO_KEY = -7
+  GK_AUTH_NO_KEY = -7,
+  GK_AUTH_BAD_HEADER = -8,
+  GK_AUTH_JUMP = -9
 } gk_auth_result_t;
 
 typedef struct {
