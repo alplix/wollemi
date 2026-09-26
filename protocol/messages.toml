@@ -1,0 +1,278 @@
+# Ginkgo protocol: single source for flight (C) and ground (Python) code and for the message reference.
+#
+# Transport: CCSDS Space Packet (6-byte primary header) + Ginkgo secondary header (8 bytes) + payload
+#            [+ 64-byte Ed25519 signature for telecommands] + CRC-16/CCITT-FALSE. Big-endian on the wire.
+# APID (11 bits) = node (3 bits) << 8 | message id (8 bits).
+# Field types: u8 u16 u32 i8 i16 i32 f32 and bytes[N].
+
+[nodes]
+SUP = 0        # MSP430 supervisor
+FCA = 1        # flight controller A
+FCB = 2        # flight controller B
+MMU = 3        # mass memory unit
+PAYL = 4       # Raspberry Pi CM5
+PAYH = 5       # Jetson
+GND = 6        # ground / any station
+ALL = 7        # broadcast
+
+[time]
+epoch = "2000-01-01T00:00:00 TAI"
+coarse_bits = 32            # seconds
+fine_bits = 16              # 1/65536 s
+
+[secondary_header]
+# 8 bytes: coarse u32, fine u16, flags u8 (bits 7-6 clock quality, 5-4 priority P1..P3, 3-0 reserved),
+# fmt_version u8 (message layout version, incremented on any field change)
+
+[tc]
+# Telecommand extra fields carried after the secondary header: counter u32 (monotonic), valid_until u32
+# (TAI seconds); the Ed25519 signature (64 bytes) follows the application payload; the CRC follows it.
+signature_bytes = 64
+
+# ---------------------------------------------------------------- telemetry: housekeeping
+[[message]]
+name = "beacon"
+id = 1
+node = "SUP"
+kind = "tm"
+priority = 1
+doc = "Survival beacon: minimal state, decodable by any listener; sent by the supervisor even in sun-only mode."
+fields = [["mode", "u8"], ["node_health", "u8"], ["batt_a_mv", "u16"], ["batt_b_mv", "u16"], ["batt_c_mv", "u16"], ["bus_a_mv", "u16"], ["solar_ma", "u16"], ["temp_body_dc", "i16"], ["uptime_s", "u32"], ["reset_count", "u16"]]
+
+[[message]]
+name = "hk_sup"
+id = 2
+node = "SUP"
+kind = "tm"
+priority = 1
+doc = "Supervisor housekeeping."
+fields = [["watchdog_flags", "u16"], ["lcl_trips", "u16"], ["power_state", "u32"], ["last_fdir_action", "u16"], ["cmd_counter", "u32"], ["key_id", "u8"]]
+
+[[message]]
+name = "hk_fc"
+id = 3
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Flight controller housekeeping and mode manager state."
+fields = [["mode", "u8"], ["level", "u8"], ["seq_running", "u16"], ["cpu_load_pct", "u8"], ["ram_free_kb", "u16"], ["cmd_accepted", "u32"], ["cmd_rejected", "u32"], ["clock_quality", "u8"]]
+
+[[message]]
+name = "hk_power"
+id = 4
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Power subsystem sample."
+fields = [["pack_a_mv", "u16"], ["pack_b_mv", "u16"], ["pack_c_mv", "u16"], ["pack_a_ma", "i16"], ["pack_b_ma", "i16"], ["pack_c_ma", "i16"], ["solar_string_ma", "bytes[12]"], ["soc_a_pct", "u8"], ["soc_b_pct", "u8"], ["load_mw", "u32"], ["gen_mw", "u32"], ["lcl_state", "u32"]]
+
+[[message]]
+name = "hk_thermal"
+id = 5
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Temperatures (0.1 degC) at defined sensor points and heater state."
+fields = [["temp_dc", "bytes[32]"], ["heater_state", "u16"], ["radiator_state", "u8"]]
+
+[[message]]
+name = "hk_adcs"
+id = 6
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Attitude solution, wheel state and pointing mode."
+fields = [["quat", "bytes[16]"], ["rate_mdps", "bytes[6]"], ["wheel_rpm", "bytes[8]"], ["pointing_mode", "u8"], ["sun_angle_cdeg", "u16"]]
+
+# ---------------------------------------------------------------- long-life science chain (FC path)
+[[message]]
+name = "sci_mag"
+id = 16
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Magnetometer sample block: 3 axes, 16 samples at 10 Hz, nT/1e-1 units."
+fields = [["t0_fine", "u16"], ["n", "u8"], ["samples", "bytes[96]"], ["temp_dc", "i16"]]
+
+[[message]]
+name = "sci_tsi"
+id = 17
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Total solar irradiance radiometer: irradiance in mW/m2 and shutter/cavity state."
+fields = [["irradiance_mw_m2", "u32"], ["cavity_temp_dc", "i16"], ["shutter", "u8"], ["quality", "u8"]]
+
+[[message]]
+name = "sci_dose"
+id = 18
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Radiation dosimeter counters and integrated dose."
+fields = [["dose_urad", "u32"], ["counts_low", "u32"], ["counts_high", "u32"], ["temp_dc", "i16"]]
+
+[[message]]
+name = "sci_particle"
+id = 19
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Energetic particle spectrometer: 16 electron and 16 proton channels, 10 s integration."
+fields = [["integ_ds", "u16"], ["electrons", "bytes[32]"], ["protons", "bytes[32]"]]
+
+[[message]]
+name = "sci_xray"
+id = 20
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Solar X-ray/UV monitor: band fluxes and flare flag."
+fields = [["integ_ds", "u16"], ["bands", "bytes[16]"], ["flare_flag", "u8"]]
+
+[[message]]
+name = "sci_grb"
+id = 21
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "GRB detector: binned counts (1 s) in 4 energy channels; trigger information."
+fields = [["t0_fine", "u16"], ["counts", "bytes[64]"], ["trigger_flag", "u8"]]
+
+[[message]]
+name = "sci_csac"
+id = 22
+node = "FCA"
+kind = "tm"
+priority = 2
+doc = "Chip-scale atomic clock state and offset versus GNSS PPS."
+fields = [["offset_ns", "i32"], ["lock", "u8"], ["temp_dc", "i16"]]
+
+[[message]]
+name = "sci_seu"
+id = 23
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Radiation experiments: bit-flip counters per memory type and per compute node (Jetson, CM5, MCU classes)."
+fields = [["sram_flips", "u32"], ["fram_flips", "u32"], ["nand_slc_errs", "u32"], ["nand_tlc_errs", "u32"], ["nand_qlc_errs", "u32"], ["jetson_err", "u16"], ["cm5_err", "u16"], ["mcu_err", "u16"]]
+
+[[message]]
+name = "event"
+id = 32
+node = "FCA"
+kind = "tm"
+priority = 1
+doc = "Event log record (FDIR action, mode change, fault); every FDIR action is logged at priority 1."
+fields = [["event_id", "u16"], ["severity", "u8"], ["source_node", "u8"], ["arg0", "u32"], ["arg1", "u32"]]
+
+# ---------------------------------------------------------------- mass memory unit
+[[message]]
+name = "mmu_status"
+id = 48
+node = "MMU"
+kind = "tm"
+priority = 1
+doc = "Mass memory unit state: stripe width, devices alive, usage, scrub progress."
+fields = [["devices_alive", "u8"], ["stripe_data", "u8"], ["stripe_parity", "u8"], ["used_gb", "u16"], ["free_gb", "u16"], ["scrub_pct", "u8"], ["corrected_errs", "u32"], ["uncorrectable", "u16"]]
+
+[[message]]
+name = "obj_ack"
+id = 49
+node = "GND"
+kind = "tc"
+priority = 1
+doc = "Ground acknowledgment that an object arrived and verified; allows deletion of the onboard copy."
+fields = [["object_id", "u32"], ["hash8", "bytes[8]"]]
+
+# ---------------------------------------------------------------- telecommands
+[[message]]
+name = "mode_set"
+id = 64
+node = "FCA"
+kind = "tc"
+priority = 1
+doc = "Request a spacecraft mode (NOMINAL, SCIENCE, BURN, ECLIPSE, SAFE)."
+fields = [["mode", "u8"], ["reason", "u8"]]
+
+[[message]]
+name = "power_switch"
+id = 65
+node = "FCA"
+kind = "tc"
+priority = 1
+doc = "Switch a latching current limiter on or off."
+fields = [["lcl_id", "u8"], ["state", "u8"]]
+
+[[message]]
+name = "time_set"
+id = 66
+node = "FCA"
+kind = "tc"
+priority = 2
+doc = "Set or adjust the spacecraft time base."
+fields = [["coarse", "u32"], ["fine", "u16"], ["mode", "u8"]]
+
+[[message]]
+name = "seq_load"
+id = 67
+node = "FCA"
+kind = "tc"
+priority = 1
+doc = "Load a time-tagged command sequence entry (absolute time or orbit-position trigger)."
+fields = [["slot", "u16"], ["trigger_type", "u8"], ["trigger_value", "u32"], ["cmd_apid", "u16"], ["cmd_args", "bytes[16]"]]
+
+[[message]]
+name = "burn_schedule"
+id = 68
+node = "FCA"
+kind = "tc"
+priority = 1
+doc = "Schedule an electric-thruster burn (validated on the ground for power, attitude and thermal state)."
+fields = [["start_coarse", "u32"], ["duration_s", "u32"], ["dir_x_mm", "i16"], ["dir_y_mm", "i16"], ["dir_z_mm", "i16"], ["thrust_pct", "u8"]]
+
+[[message]]
+name = "key_rotate"
+id = 69
+node = "SUP"
+kind = "tc"
+priority = 1
+doc = "Install a new operational public key signed by the root key."
+fields = [["key_id", "u8"], ["pubkey", "bytes[32]"], ["root_sig", "bytes[64]"]]
+
+[[message]]
+name = "ota_begin"
+id = 80
+node = "FCA"
+kind = "tc"
+priority = 2
+doc = "Start an update: target node, image size, manifest hash."
+fields = [["target_node", "u8"], ["slot", "u8"], ["size", "u32"], ["hash", "bytes[32]"]]
+
+[[message]]
+name = "ota_commit"
+id = 81
+node = "FCA"
+kind = "tc"
+priority = 2
+doc = "Verify and switch to the new slot; the node must confirm within the timeout or roll back."
+fields = [["target_node", "u8"], ["slot", "u8"], ["confirm_timeout_s", "u16"]]
+
+[[message]]
+name = "ota_confirm"
+id = 82
+node = "SUP"
+kind = "tc"
+priority = 1
+doc = "Confirm a successfully booted update."
+fields = [["target_node", "u8"], ["slot", "u8"]]
+
+# ---------------------------------------------------------------- public relay (unsigned, rate limited)
+[[message]]
+name = "relay_msg"
+id = 96
+node = "PAYL"
+kind = "public"
+priority = 3
+doc = "Public store-and-forward message (amateur band, unencrypted)."
+fields = [["from_call", "bytes[8]"], ["to_call", "bytes[8]"], ["msg_id", "u16"], ["text", "bytes[64]"]]

@@ -28,9 +28,10 @@ bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca he
 | Path | Content |
 |---|---|
 | `mission/` | Requirements, figures of merit, open access, collision avoidance |
-| `docs/` | Architecture, power, layout, data plan, propulsion, longevity, firmware, prior art, ground-station kit, design identity |
+| `docs/` | Architecture, power, layout, data plan, propulsion, longevity, firmware, protocol, prior art, ground-station kit, design identity |
 | `configs/` | Single source of truth: `12u_science.toml`, `12u_layout.toml`, `12u_data.toml`, `12u_longevity.toml` (+ 2U/3U/6U variants) |
 | `sim/` | `budget.py`, `layout_check.py`, `balance.py`, `data_budget.py`, `longevity.py` |
+| `protocol/` | Message definitions (`messages.toml`), C/Python generator, tests (round trip, corruption, C<->Python byte-exact) |
 | `mechanical/` | Parametric CAD (build123d): voxel packing, full 12U assembly, STEP/STL/renders, interference + mass properties |
 | `electronics/`, `firmware/`, `groundstation/` | Planned |
 
@@ -43,6 +44,7 @@ python sim/balance.py                                # centre of mass and per-co
 python sim/data_budget.py                            # science data vs downlink and storage
 python sim/longevity.py                              # year-by-year power, battery and radiation dose
 python sim/link_budget.py                            # S-band link margin versus dish size and rate
+python protocol/gen.py && python protocol/tests/test_protocol.py   # protocol code generation and tests
 ```
 
 `sim/` needs only Python 3.11+ (uses `tomllib`). `mechanical/` needs `pip install build123d` (also brings numpy, scipy, pillow).
@@ -58,4 +60,4 @@ python mechanical/ginkgo_cad.py     # STEP/STL/PNG into mechanical/out/
 
 Phase 0 complete: requirements, architecture, budgets, layout and analysis tooling. All numbers are
 engineering estimates (module sizes are bounding boxes, not vendor CAD). Parametric CAD assembly now exists and passes
-the interference check; firmware architecture, prior-art review and ground-station kit drafted; next: protocol spec, electronics, ground kit prototype.
+the interference check; firmware architecture, prior-art review and ground-station kit drafted; protocol spec with generated code and tests done; next: electronics, OreSat interoperability decision, ground kit prototype.
