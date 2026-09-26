@@ -1,8 +1,8 @@
 # Design identity (draft v0): what makes this design ours
 
-Working codename: **Ginkgo**. The ginkgo is a "living fossil" that has survived for ~270 million
+Project name: **Ginkgo**. The ginkgo is a "living fossil" that has survived for ~270 million
 years, which is the design philosophy: build for decades, degrade gracefully, never die of a
-single fault. (Codename is a proposal, not final.)
+single fault.
 
 ## What is new, what is borrowed
 

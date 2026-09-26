@@ -1,14 +1,14 @@
-# OpenSat / Ginkgo (working names)
+# Ginkgo
 
 > **Private for now.** The repository will be opened to the public once the design is complete.
 > No licence has been applied yet; the plan is CERN-OHL-S-2.0 (hardware), Apache-2.0 (software),
 > CC-BY-4.0 (documents).
 
-An open, modular, fully documented small-satellite **platform** and a first mission built on it:
+Ginkgo is an open, modular, fully documented small-satellite **platform** and a first mission built on it:
 a science-first 12U observatory designed for very long life. Design-to-manufacture stage only;
 nothing is built or launched from this repo yet. Everything is meant to be adapted to other missions.
 
-*Türkçe özet:* Açık kaynak, modüler bir küçük uydu platformu ve üzerine kurulu ilk görev: uzun ömürlü,
+*Türkçe özet:* Ginkgo, açık kaynak, modüler bir küçük uydu platformu ve üzerine kurulu ilk görev: uzun ömürlü,
 bilim öncelikli 12U gözlemevi. Depo şimdilik özel; tasarım tamamlanınca herkese açılacak.
 
 ## Current design (12U science-first observatory)
