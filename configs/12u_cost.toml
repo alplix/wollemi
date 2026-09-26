@@ -1,0 +1,265 @@
+# Rough cost model (USD). ALL VALUES ARE UNVERIFIED ORDER-OF-MAGNITUDE ESTIMATES made without vendor quotes; treat each as +-2x.
+# Every item is a triangular distribution (low, likely, high). group: bus / science / optional / ground / launch / programme.
+# scope: "flight" = only needed for a flight model; "both" = also needed for a FlatSat (engineering models).
+# tier: which scenario includes it: "core" (bus + long-life science), "imaging" (telescope, cameras, hyperspectral), "extra" (outreach and research instruments).
+
+[assumptions]
+person_year_usd = 90000          # loaded cost of a professional engineer-year (labour value; volunteer labour is not cash)
+engineer_days_per_year = 220
+contingency_hardware = 0.30      # applied to hardware groups
+contingency_other = 0.15
+flatsat_fraction_of_core_hardware = 0.40     # engineering models for the FlatSat, as a fraction of the core electronics hardware
+balloon_flight_usd = [8000, 15000, 30000]
+external_cost_per_test_day = { none = 0, low = 400, medium = 1500, high = 4000 }   # USD per engineer-day of test campaign in outside facilities
+monte_carlo_samples = 20000
+monte_carlo_seed = 7
+
+# ---------------------------------------------------------------- bus (core)
+[[item]]
+name = "Structure: 12U frame, panels, bulkheads, spine, hold-down posts, fasteners"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 15000
+likely = 25000
+high = 45000
+
+[[item]]
+name = "Solar wings and body cells: ~330 space-grade cells, double-sided panels, assembly"
+group = "bus"
+tier = "core"
+scope = "flight"
+low = 120000
+likely = 200000
+high = 380000
+
+[[item]]
+name = "Battery packs A, B, C with BMS, fuses and containment vaults"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 10000
+likely = 22000
+high = 45000
+
+[[item]]
+name = "EPS cards A/B and survival card (development, boards, parts, test)"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 40000
+likely = 90000
+high = 180000
+
+[[item]]
+name = "Flight controller cards, supervisor, mass memory unit, backplanes and card fabrication"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 40000
+likely = 90000
+high = 170000
+
+[[item]]
+name = "Compute: Jetson and CM5 carrier cards, shielding hardware"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 8000
+likely = 20000
+high = 45000
+
+[[item]]
+name = "S-band and UHF transceivers, patch antennas, deployable UHF antenna"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 40000
+likely = 80000
+high = 160000
+
+[[item]]
+name = "ADCS: 3 wheels, magnetorquers, star tracker, sun sensors, gyros"
+group = "bus"
+tier = "core"
+scope = "both"
+low = 50000
+likely = 90000
+high = 170000
+
+[[item]]
+name = "Electric propulsion: iodine thruster with power unit and tank (vendor price unknown)"
+group = "bus"
+tier = "core"
+scope = "flight"
+low = 200000
+likely = 380000
+high = 650000
+
+[[item]]
+name = "Drag sail"
+group = "bus"
+tier = "core"
+scope = "flight"
+low = 30000
+likely = 55000
+high = 100000
+
+[[item]]
+name = "Radiation vault (Ta/Al), impact protection, ballast, MLI, harness, thermal hardware"
+group = "bus"
+tier = "core"
+scope = "flight"
+low = 20000
+likely = 40000
+high = 80000
+
+# ---------------------------------------------------------------- science, long-life chain (core)
+[[item]]
+name = "Long-life instruments: magnetometer and boom, dosimeter, SEU/flash experiments, CSAC, GNSS dual frequency, retroreflector, memory plate"
+group = "science"
+tier = "core"
+scope = "both"
+low = 40000
+likely = 80000
+high = 160000
+
+[[item]]
+name = "Space-weather instruments: particle spectrometer, X-ray/UV monitor, TSI radiometer, GRB detector, VLF receiver, Langmuir probe, micrometeoroid sensor"
+group = "science"
+tier = "core"
+scope = "both"
+low = 100000
+likely = 220000
+high = 450000
+
+# ---------------------------------------------------------------- imaging
+[[item]]
+name = "Telescope (85 mm Cassegrain) with detector and electronics"
+group = "science"
+tier = "imaging"
+scope = "flight"
+low = 80000
+likely = 180000
+high = 350000
+
+[[item]]
+name = "Hyperspectral spectrometer sharing the telescope optics (research level)"
+group = "science"
+tier = "imaging"
+scope = "flight"
+low = 60000
+likely = 150000
+high = 400000
+
+[[item]]
+name = "Wide-field camera, thermal IR imager, lightning detector"
+group = "science"
+tier = "imaging"
+scope = "both"
+low = 10000
+likely = 25000
+high = 60000
+
+# ---------------------------------------------------------------- extras
+[[item]]
+name = "Outreach violet/red/blue LED flasher and driver"
+group = "optional"
+tier = "extra"
+scope = "flight"
+low = 3000
+likely = 8000
+high = 20000
+
+# ---------------------------------------------------------------- ground, launch, programme
+[[item]]
+name = "Ground segment: S-band and UHF stations (two sites), rotator, SDRs, software hosting"
+group = "ground"
+tier = "core"
+scope = "both"
+low = 6000
+likely = 15000
+high = 40000
+
+[[item]]
+name = "Launch: 12U rideshare slot with integration services"
+group = "launch"
+tier = "core"
+scope = "flight"
+low = 250000
+likely = 500000
+high = 1200000
+
+[[item]]
+name = "Licensing, frequency coordination, insurance, safety documentation, operator of record"
+group = "programme"
+tier = "core"
+scope = "flight"
+low = 10000
+likely = 40000
+high = 120000
+
+[[item]]
+name = "Facilities, tools, consumables, travel"
+group = "programme"
+tier = "core"
+scope = "both"
+low = 20000
+likely = 50000
+high = 120000
+
+# ---------------------------------------------------------------- effort (person-years of engineering), excluding the test campaigns counted from mission/tests.toml
+[[effort]]
+name = "Hardware design, layout, procurement follow-up, integration"
+tier = "core"
+low = 4.0
+likely = 7.0
+high = 12.0
+
+[[effort]]
+name = "Flight software, protocol, ground software, tooling"
+tier = "core"
+low = 2.0
+likely = 4.0
+high = 7.0
+
+[[effort]]
+name = "Imaging payload integration and calibration"
+tier = "imaging"
+low = 1.0
+likely = 2.5
+high = 5.0
+
+[[effort]]
+name = "Programme management, licensing, reviews, documentation"
+tier = "core"
+low = 1.0
+likely = 2.0
+high = 3.5
+
+# ---------------------------------------------------------------- schedule (months, sequential critical path, small team)
+[[phase]]
+name = "Design freeze, procurement of long-lead items (thruster, cells, optics)"
+low = 6
+likely = 9
+high = 15
+[[phase]]
+name = "Engineering models, FlatSat integration, balloon precursor"
+low = 9
+likely = 14
+high = 22
+[[phase]]
+name = "Flight model build and acceptance tests"
+low = 8
+likely = 12
+high = 20
+[[phase]]
+name = "Environmental campaign, safety review, delivery to the launch provider"
+low = 4
+likely = 6
+high = 10
+[[phase]]
+name = "Wait for launch opportunity and integration"
+low = 3
+likely = 8
+high = 18
