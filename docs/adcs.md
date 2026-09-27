@@ -43,6 +43,12 @@ naming describes the number of folding hinge segments, not which faces carry cel
 the back. Double-sided cell mounting for this mission's geometry is therefore a **custom requirement with no found commercial precedent**, not a proven off-the-shelf option; it needs a
 custom panel design and a vendor quote, and the stiffness question is checked separately in `sim/structure.py` (`docs/structure.md`).
 
+A related but **not equivalent** concept does have real space heritage: **bifacial solar cells** (a single cell responsive to light on either face, first flown on the Soviet Salyut 3/5 space
+stations in the 1970s and now mainstream) are a different mechanism from what this design needs -- a bifacial cell is normally used with one face toward the sun and the other picking up
+reflected/albedo light onto the *same* output, not two independently populated faces each serving a different, opposite pointing direction. It does not by itself resolve PWR-5, but it does
+show that space-qualified double-sided light harvesting is not a new idea. Companies doing custom small-satellite solar work (Rocket Lab space solar, Dhruva Space, DHV Technology, in addition
+to EnduroSat and AAC Clyde Space above) are the ones to approach for an actual custom double-sided panel quote; none was confirmed to already offer one.
+
 ## Open items
 
 - Full simulation: detumble after separation, sun acquisition, nadir tracking, slews, burn mode with flexible modes.
