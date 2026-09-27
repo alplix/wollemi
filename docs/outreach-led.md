@@ -19,24 +19,31 @@ from hurting the science mission. Tool: `python sim/led_visibility.py`.
 | 10 W | 30 deg | 4700 cd | 6.1 - 6.8 |
 | 30 W | 5 deg | 500 000 cd | 1.0 - 1.8 |
 
-Reference: the naked-eye limit is about magnitude 6, the ISS about -4. A 10 degree beam covers a ground swath about 120 km wide, so an observer must be near the
-ground track; the nadir-pointing attitude keeps the beam on the Earth during imaging orbits. Colour: an RGB emitter can flash red, green, blue or white; the eye
-sees colour on objects brighter than roughly magnitude 3-4, so a 10 W unit shows colour only for a well-placed observer, and a long-exposure camera records it easily.
+These magnitudes are on the standard **photopic** (daylight, colour-vision) brightness scale, which is what "magnitude 6 naked-eye limit" normally means for a source bright enough to trigger colour
+vision. Reference: the naked-eye limit is about magnitude 6, the ISS about -4. A 10 degree beam covers a ground swath about 120 km wide, so an observer must be near the ground track; a beam fixed
+on nadir only reaches an observer close to overhead (a 45 deg elevation observer at 700 km is about 40 deg off nadir, well outside a 10 deg beam), so hitting a chosen ground observer needs the
+beam actively steered by the attitude system, not just left pointing at nadir. Colour: an RGB emitter can flash red, green, blue or white; the eye sees colour on objects brighter than roughly
+magnitude 3-4, so a 10 W unit shows colour only for a well-placed, steered observer, and a long-exposure camera records it easily regardless of colour vision.
 
 ## A purple light: what it is good for (`python sim/led_visibility.py`)
 
-The operator wants a **purple/violet light visible from Earth and from other objects in space**. Physics splits that in two:
+The operator wants a **purple/violet light visible from Earth and from other objects in space**. Physics splits that in two, and a review pass corrected the naked-eye
+part: the mag-6 naked-eye limit at a dark site is a **scotopic** (dark-adapted, rod-vision) threshold, not the daylight photopic scale used for colour matching; rods are much
+more sensitive to blue/violet and much less sensitive to red than photopic values suggest (the Purkinje effect). `sim/led_visibility.py` now reports both scales:
 
-| Observer | Violet 405 nm (10 W electrical, 10 deg beam) |
-|---|---|
-| Naked eye on the ground | **invisible** (about magnitude 11.7): the eye is ~300 times less sensitive to 405 nm than to red; blue 450 nm is marginal (mag 7), red 630 nm is visible (mag 5) |
-| Long-exposure camera on the ground (1000 km) | magnitude ~5 versus a bright star at mag 0: **clearly recorded** |
-| Another spacecraft's camera or star tracker at 100 km / 10 km | magnitude ~0 / ~-5: **very bright** |
+| Observer | Violet 405 nm | Blue 450 nm | Red 630 nm | (all at 10 W electrical, 10 deg beam) |
+|---|---|---|---|---|
+| Naked eye, photopic (colour-matching) scale | mag 11.7: invisible | mag 7.0: marginal | mag 5.1: visible | old (misleading) picture |
+| Naked eye, scotopic (dark-adapted detection) scale | mag 8.1: **invisible** | mag 4.3: **easily visible** | mag 9.9: **invisible** | the physically correct picture |
+| Long-exposure camera on the ground (1000 km) | mag ~5: clearly recorded | mag ~4: clearly recorded | mag ~5: clearly recorded | broadband, not eye-referenced |
+| Another spacecraft's camera or star tracker at 100 km / 10 km | mag ~0 / ~-5: very bright | similar | similar | broadband, not eye-referenced |
 
-So violet is an excellent **optical beacon for cameras** (ground astro-photographers, cameras and star trackers on nearby spacecraft, inspection or rendezvous demonstrations)
-but a poor light for people looking up. To look purple to the naked eye a flasher needs red and blue of similar perceived brightness, which would take roughly 50 W on the
-blue side alone. Design choice: **violet 405 nm as the main channel** (camera beacon, purple in photographs), plus red (and a little blue) so that naked-eye observers
-still see a red-to-white flash; colour photographs of the red + violet combination look magenta/purple.
+The old picture had it backwards: **red is nearly undetectable to a dark-adapted naked eye** at this power (a red flash bright enough to look red to the eye needs to trigger
+colour vision, which needs far more power than the scotopic detection threshold), while **blue is easily visible at just 10 W**, no power boost needed. Violet stays invisible
+to the eye at any reasonable power and remains an excellent **optical beacon for cameras** (ground astro-photographers, cameras and star trackers on nearby spacecraft, inspection
+or rendezvous demonstrations). Design choice, updated: **violet 405 nm as the camera beacon** (invisible to the eye, purple in photographs) **plus blue 450 nm as the naked-eye-visible
+channel** (visible at 10 W with no boost) **plus red** only for colour richness in photographs, not for naked-eye detection; a blue-violet combination is what a ground observer actually
+sees as a purple-blue flash, and a colour photograph of the red + blue + violet combination looks magenta/purple.
 
 Extra uses of the violet beacon: optical tracking test (cameras can measure the spacecraft position and attitude from its flash pattern), identification by pattern (for example a
 pulse code that spells the spacecraft ID), and demonstration of spacecraft-to-spacecraft optical detection.
@@ -62,5 +69,5 @@ Caution: 405 nm is near-ultraviolet; irradiance at these ranges is many orders o
 ## Open items
 
 - Choose emitter and optics (a 10 degree TIR lens on a high-power RGB LED) and verify the estimated luminous flux and thermal behaviour.
-- Pointing accuracy needed to place the beam on a chosen site (attitude knowledge of a few arcminutes is enough for a 10 degree beam).
+- Pointing accuracy needed to place the beam on a chosen site (attitude knowledge of a few arcminutes is enough for a 10 degree beam); a beam fixed on nadir only reaches observers close to overhead, so hitting a chosen site needs the beam steered off nadir.
 - Decide whether the flasher stays in the flight configuration or becomes a ground-test-only status board.

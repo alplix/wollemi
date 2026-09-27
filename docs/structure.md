@@ -13,7 +13,8 @@ load and stiffness specification replaces the generic values below.
 | Quasi-static 20 g: rails axial / frame bending stress | 10 / 3 MPa against 240 MPa yield | > 18x |
 | Bolted mounts (telescope, tank, packs, Jetson, ADCS, vault, GRB) at 40 g local | margins 6x to 27x | all >= 6x |
 | Wing hold-down preload vs lift-off (6 points, 120 N preload) | 53 N load per point | 2.3x |
-| Card boards, Steinberg at 200 Hz first mode | 0.21 mm 3-sigma deflection vs 0.35 mm allowed | 1.7x |
+| Card boards, Steinberg at 220 Hz first mode | 0.18 mm 3-sigma deflection vs 0.35 mm allowed (leaded parts, C=1.0) | 1.9x |
+| Card boards, Steinberg at 220 Hz, BGA/leadless parts (C=1.75) | same deflection vs 0.20 mm allowed | 1.1x |
 
 Verdict: 14 of 14 checks meet their margin after one design change.
 
@@ -25,14 +26,14 @@ through the panel stack and release together with the burn wire. This is a requi
 
 ## Cards and modules
 
-- Cards need a first mode near 200 Hz or above: edge guides on two edges, 3 mm keep-out, stiffener rails on large boards; a 100 Hz card would exceed the solder-joint limit (Steinberg margin 0.6).
+- Cards need a first mode near 220 Hz or above (raised from 200 Hz once the BGA/leadless Steinberg constant was checked): edge guides on two edges, 3 mm keep-out, stiffener rails on large boards; a 100 Hz card would exceed the solder-joint limit (Steinberg margin 0.6 for leaded parts, worse for BGA).
 - Heavy items are all bolt-mounted with large margins; the propellant tank (2.5 kg with iodine) and the radiation vault (1.6 kg) are the most loaded bolt groups.
 
 ## Assumptions and limits
 
 - Design load factor 20 g in every axis, local amplification 2x, random profile flat 0.04 g2/Hz (8.9 Grms) with Q = 10: generic and conservative; real rideshare specifications are usually lower for loads, but stiffness minima can be higher.
 - Frame frequency from a uniform cantilever with the whole mass distributed along it: optimistic for the coupled system (heavy modules on brackets, telescope tube overhang, propulsion bay opening in the bulkhead).
-- Steinberg constant: the tool uses C = 1.0; for BGA-type parts a value near 1.75 is commonly quoted, which would drop the card margin at 200 Hz to about 1.0 (a marginal pass); component types must be checked per card, and the wall-panel resonance (~167 Hz) amplifies the input to the cards (not modelled).
+- `sim/structure.py` now checks both Steinberg constants (C=1.0 leaded, C=1.75 BGA/leadless) and the 220 Hz target keeps both above 1.0 margin; component types should still be checked per card. The wall-panel resonance (~167 Hz, Q~10) amplifying the input to the cards is still not modelled.
 - No thermal-structural effects, no fatigue life beyond Steinberg, no dispenser-spring or separation shock, no buckling, no bolt preload scatter.
 - Iodine propellant sloshing is not an issue (solid at launch); the tank is treated as a rigid mass.
 

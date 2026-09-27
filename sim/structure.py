@@ -124,20 +124,24 @@ def random_vibration():
     gr = math.sqrt(asd * (LQ["random_f_high"] - LQ["random_f_low"]))
     print(f"Input random profile: flat {asd} g2/Hz, {gr:.1f} Grms. Miles: response at resonance f -> Grms = sqrt(pi/2 * f * Q * ASD)")
     print(f"{'card fundamental':>18s} {'3-sigma G':>10s} {'3-sigma deflection':>19s} {'Steinberg limit':>16s} {'margin':>7s}")
-    B_in, h_in, L_in = 3.94, 0.063, 1.0          # 100 mm card, 1.6 mm, 25 mm BGA-like component at the centre
-    z_allow_in = 0.00022 * B_in / (1.0 * h_in * 1.0 * math.sqrt(L_in))
-    worst = 1e9
-    for f in (100, 150, 200, 300, 500):
+    B_in, h_in, L_in = 3.94, 0.063, 1.0          # 100 mm card, 1.6 mm, 25 mm component at the centre
+    C_LEADED, C_BGA = 1.0, 1.75                  # Steinberg component constant: 1.0 leaded/through-hole, 1.75 leadless/BGA-like (more fatigue-sensitive)
+    z_allow_leaded_in = 0.00022 * B_in / (C_LEADED * h_in * math.sqrt(L_in))
+    z_allow_bga_in = 0.00022 * B_in / (C_BGA * h_in * math.sqrt(L_in))
+    for f in (100, 150, 200, 220, 300, 500):
         grms = math.sqrt(math.pi / 2 * f * Q * asd)
         g3 = 3 * grms
         z_m = 0.248 * g3 / f ** 2
         z_in = z_m / 0.0254
-        margin = z_allow_in / z_in
-        print(f"{f:16d} Hz {g3:10.1f} {z_m * 1e3:16.3f} mm {z_allow_in * 25.4:13.3f} mm {margin:7.2f}")
-        if f == 200:
-            m200 = margin
-    print("Cards must therefore keep their first mode near or above 200 Hz (edge guides on two edges, 3 mm keep-out, stiffener rails on large boards).")
-    record("Card board Steinberg margin at 200 Hz", m200, 1.0)
+        margin_leaded = z_allow_leaded_in / z_in
+        margin_bga = z_allow_bga_in / z_in
+        print(f"{f:16d} Hz {g3:10.1f} {z_m * 1e3:16.3f} mm {z_allow_leaded_in * 25.4:13.3f} mm {margin_leaded:7.2f}  {margin_bga:7.2f} (BGA/leadless, C={C_BGA})")
+        if f == 220:
+            m200_leaded, m200_bga = margin_leaded, margin_bga
+    print("Cards must therefore keep their first mode near or above 220 Hz (edge guides on two edges, 3 mm keep-out, stiffener rails on large boards; the extra 20 Hz over the original 200 Hz target covers BGA/leadless parts at Steinberg C=1.75).")
+    print("This does not include amplification by the wall-panel mode (~167 Hz, Q~10): a card resonance close to that frequency would see a higher input than modelled here.")
+    record("Card board Steinberg margin at 220 Hz (leaded parts)", m200_leaded, 1.0)
+    record("Card board Steinberg margin at 220 Hz (BGA/leadless parts, C=1.75)", m200_bga, 1.0)
 
 
 def main():
