@@ -235,10 +235,11 @@ evidence = ["electronics/gen_backplane.py", "electronics/kicad/wollemi_backplane
 [[req]]
 id = "ELEC-3"
 text = "EPS cards specified (A/B chains and survival chain, hardware-only protection); schematics captured."
-method = "I"
-evidence = ["docs/eps-card.md", "electronics/eps_diagram.svg"]
-status = "open"
-note = "Specification and diagram done; schematics and parts selection still to do."
+method = "A"
+auto = "kicad_eps"
+evidence = ["docs/eps-card.md", "electronics/eps_diagram.svg", "electronics/gen_eps_card.py"]
+status = "designed"
+note = "Function-block floor plan on the real card outline, DRC clean (electronics/gen_eps_card.py); this is a placement, not a routed schematic with verified part numbers -- real schematic capture and parts selection are still to do."
 
 [[req]]
 id = "OPEN-1"

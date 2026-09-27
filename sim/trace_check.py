@@ -219,6 +219,19 @@ def c_kicad_backplane():
     return ok, "Found 0 DRC violations, 0 unconnected pads" if ok else txt[:120]
 
 
+def c_kicad_eps():
+    ok_all, msgs = True, []
+    for name in ("wollemi_eps_card", "wollemi_survival_card"):
+        rep = os.path.join(ROOT, "electronics", "kicad", f"{name}_drc_report.txt")
+        if not os.path.exists(rep):
+            return False, f"no DRC report for {name} (run electronics/gen_eps_card.py)"
+        txt = open(rep, encoding="utf-8", errors="ignore").read()
+        ok = "Found 0 DRC violations" in txt
+        ok_all = ok_all and ok
+        msgs.append(f"{name}: {'0 violations' if ok else txt[:80]}")
+    return ok_all, "; ".join(msgs)
+
+
 def c_firmware_tests():
     out = subprocess.run([sys.executable, os.path.join(ROOT, "firmware", "tests", "run_tests.py")], capture_output=True, text=True)
     ok = "ALL FIRMWARE TESTS PASSED" in out.stdout

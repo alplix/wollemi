@@ -45,7 +45,7 @@ What is missing is physical: vendor data, schematics of the functional cards, pr
 | `mission/` | Requirements, `traceability.toml` (requirement -> verification), `tests.toml` (planned tests), `fmea.toml` |
 | `sim/` | Budgets, layout rules, balance, data, longevity, link, EPS, ADCS, thermal, structure, orbit lifetime, mission simulation, cost, LED visibility, live verification matrix |
 | `mechanical/` | Voxel packing, parametric build123d assembly, interference/mass properties, STEP/STL/renders |
-| `electronics/` | Connector pinout (single source), KiCad card template and 15-slot backplane strip (DRC clean), EPS diagram |
+| `electronics/` | Connector pinout (single source), KiCad card template and 15-slot backplane strip (DRC clean), EPS diagram, EPS/survival card floor plans (DRC clean, not yet a schematic) |
 | `protocol/` | Message definitions, C/Python generator, tests (round trip, corruption, byte-exact C <-> Python) |
 | `firmware/` | Host-testable core: Ed25519 command authentication, modes, FDIR, command queue, A/B OTA (68 unit checks + signature cross-checks) |
 | `groundstation/` | Pass prediction, contact plan and reference decoder |
