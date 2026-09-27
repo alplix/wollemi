@@ -105,7 +105,7 @@ html
   footer a:hover{color:var(--text);}
   .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
 </style>
-<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.zh.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- 开放 12U 科學觀測站" property="og:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.zh.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="zh_CN" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- 开放 12U 科學觀測站" name="twitter:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+<link href="https://wollemi.athena.org.tr/" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="Wollemi -- Open 12U Science Observatory" name="twitter:title"/><meta content="Wollemi: an open, modular, long-life 12U CubeSat science observatory and reusable satellite platform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.zh.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- 开放 12U 科學觀測站" property="og:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.zh.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="zh_CN" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- 开放 12U 科學觀測站" name="twitter:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "ResearchProject",
   "name": "Wollemi",
@@ -124,6 +124,7 @@ html
 <a href="#gallery">画廊</a>
 <a href="#deployment">部署</a>
 <a href="#specs">规格</a>
+<a href="#electronics">电子学</a>
 <a href="#subsystems">子系统</a>
 <a href="#status">状态</a>
 </nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a class="cur" href="index.zh.html">ZH</a></div>
@@ -277,20 +278,62 @@ html
 </table>
 </div>
 </section>
+<section id="electronics">
+<div class="wrap">
+<h2 class="h">电子学与PCB设计</h2>
+<p class="lead">该航天器是按卡笼结构构建的：相同的 100×100 毫米卡片滑入一个无源背板，每个仪器/子系统组对应一根柱。下面的每个板都是仓库中的真实 KiCad 文件（
+      <span class="code">electronics/kicad/</span>), DRC-clean, 来自同一
+      <span class="code">card_pinout.toml</span> 连接器定义接口文档是基于此构建的
+      <b>这些是平面图（组件布局已证明可匹配），还不是布线原理图。</b></p>
+<div class="grid cols-2">
+<figure class="shot">
+<img alt="Wollemi EPS 块图：两个主电源链加上一个独立的生存链" src="assets/img/eps_diagram.svg"/>
+<figcaption>EPS 块图 -- A/B 链加上独立的生存链</figcaption>
+</figure>
+<div>
+<p style="color:var(--muted)">每张卡共享一个连接器对： <b>WL-P</b> (2×30，电源和控制——双电池总线轨，冗余CAN-FD，PPS/同步定时，一个硬件 <span class="code">KILL_N</span> 主管可以断言没有软件在路径中，并且有一个SWD头，这样任何卡都可以重新编程而无需移除它)和 <b>WL-D</b> (2×15，以太网/高速通道，仅在数据平面卡上配置)。连接器间距为 1.27 毫米是故意的——早期的 0.8 毫米间距在不让电源链相互阻挡的情况下无法在背板上布线。</p>
+</div>
+</div>
+<div class="grid cols-3" style="margin-top:28px;">
+<figure class="shot">
+<img alt="EPS-A/EPS-B 卡的 3D 渲染平面图，仅显示组件布局" src="assets/img/pcb_eps_card.png"/>
+<figcaption>EPS-A / EPS-B 卡 -- 功能块平面图</figcaption>
+</figure>
+<figure class="shot">
+<img alt="独立生存卡平面图的3D渲染图" src="assets/img/pcb_survival_card.png"/>
+<figcaption>生存卡——独立包-C 充电器和烧线驱动器</figcaption>
+</figure>
+<figure class="shot">
+<img alt="带有 WL-P 和 WL-D 连接器的空白 100x100 毫米卡模板的 3D 渲染图" src="assets/img/pcb_card_template.png"/>
+<figcaption>卡片模板 -- 每个柱卡从这里开始</figcaption>
+</figure>
+</div>
+<div class="grid cols-1" style="margin-top:16px;">
+<figure class="shot">
+<img alt="带十五个卡槽的被动背板条的3D渲染图" src="assets/img/pcb_backplane_strip.png" style="max-height:260px; object-fit:contain;"/>
+<figcaption>背板条 -- 15 个卡槽，每链被动 WL-P/WL-D 路由</figcaption>
+</figure>
+</div>
+</div>
+</section>
 <section id="subsystems">
 <div class="wrap">
 <h2 class="h">子系统</h2>
 <p class="lead">每个子系统都是从相同的配置文件生成的，检查是基于这些文件运行的，因此设计变更及其文档永远不会悄悄地脱节。</p>
 <table class="subsys-table">
 <tr><th>子系统</th><th>建筑</th></tr>
-<tr><td>结构</td><td>鋁框架，角軌，四根柱子，翼堆固定柱</td></tr>
-<tr><td>力量</td><td>两个独立的MPPT/电池链（A、B）加上一个独立的生存链（C）；每卡eFuse，硬件关断，保护路径无软件</td></tr>
-<tr><td>热的</td><td>带MLI补丁的被动系统，隔离望远镜柱，电池保险库和生存加热器</td></tr>
-<tr><td>姿态与推进</td><td>反应轮、磁力矩器、恒星跟踪仪；中心线上的碘推进器，通过质心倾斜；阻力帆</td></tr>
-<tr><td>计算</td><td>主管（MSP430FR），两个飞行控制器（STM32H7），大容量存储单元，树莓派 CM5，Jetson Orin Nano</td></tr>
-<tr><td>数据与通信</td><td>带有签名命令的CCSDS数据包、CAN-FD控制平面、以太网数据平面、UHF和S波段无线电</td></tr>
-<tr><td>有效载荷</td><td>26个仪器；飞行控制器（绝非Linux节点）获取的长期科学数据，由Linux计算机进行成像</td></tr>
-<tr><td>地面与运营</td><td>打开 S 波段地面站套件，无人值守参考站，自动化接触规划，用于整个协议的 Kaitai Struct 解码器</td></tr>
+<tr><td>结构</td><td>一个由铝制成的框架，围绕着一个 40 毫米的中央脊柱，在一个 2×2×3 的单元格网格中（外形尺寸为 226.3×226.3×340.5 毫米）。航天器中的每张卡片都共享一个 100×100 毫米的轮廓，带有 20×20 毫米的脊柱凹槽和 8 毫米的导轨凸起——这种格式是为本项目发明的，因为标准的 90/100 毫米板无法通过脊柱。每个翼堆有六个固定柱，而不仅仅是角落，将收纳的第一模式推至约 137 赫兹；早先仅考虑角落的分析仅发现 99 赫兹。</td></tr>
+<tr><td>力量</td><td>两个独立的MPPT/电池链（A、B）加上一个完全独立的生存链（C），该链拥有自己专用的机载太阳能串；每卡eFuse和硬件 <span class="code">KILL_N</span> 行，保护路径中没有任何软件。</td></tr>
+<tr><td>热的</td><td>完全被动。分析发现航天器运行偏冷而非偏热——真正的挑战是-27°C的日食情况和-40°C的安全模式情况，这通过将表面大致分成两半，一部分用于太阳能电池，另一部分用于专用的MLI/低发射率贴片而得以维持。望远镜柱有自己独立的低α/低ε涂层和一个8 W恒温加热器（14-17°C设定点）；电池舱是隔离的（0.1 W/K），配有6 W加热器；生存线有自己独立的2 W加热器，因此温度绝不会低于-20°C。</td></tr>
+<tr><td>姿态与推进</td><td>三个反应轮（每个 30 mN·m·s）、磁力矩器和一个恒星跟踪仪（5 角秒，地面误差约 17 m）在约 120 秒内以 90° 偏转完成，扭矩和动量有 3 倍余量。推进系统是电推进（碘栅格离子/霍尔类），而不是水电阻喷射器，其比冲为：0.5 kg 的碘可提供约 570 m/s 的推力，而 0.8 kg 的水仅提供约 45 m/s 的推力——这足以支持 50 年的轨道衰减补偿、碰撞规避和从一个储罐的受控离轨。
+
+推进器位于中心线上，相对于质心倾斜了几个度；早先在柱内放置的位置产生了足够的轴外扭矩，导致七分钟内一个轮子饱和。拖曳帆是被动的后备方案。</td></tr>
+<tr><td>计算</td><td>一个五层级结构，底部故意超配：MSP430FR 监督器和双热备用 STM32H7 飞行控制器被评定为完整的 50 年任务，因为长期的空间天气科学必须在预期 Linux 锡德失效后仍能持续运行。一个树莓派 CM5（始终开启）和一个 NVIDIA Jetson Orin Nano（成像、重计算）位于其上方，设计寿命为 10-15 年。质量存储单元包含 8×128 GB，具有 6+2 擦除编码、BLAKE2 哈希和周期性擦洗。</td></tr>
+<tr><td>数据与通信</td><td>27 种 CCSDS 消息类型，每条遥控指令都使用计数器和有效窗口进行 Ed25519 签名（链路本身未加密，因为业余频段规则要求）。控制平面采用双 CAN-FD（1 Mbps/5 Mbps）以实现冗余；一个千兆以太网平面承载有效载荷数据。下行链路为 UHF/LoRa 遥测数据（约 0.5 MB/天）加上一个自适应 S 波段科学链路（250 kbps-2 Mbps）——仅从帕穆卡莱参考站来看，大约 28 分钟的接触时间和跨 3-4 次通传约 134 MB/天。</td></tr>
+<tr><td>有效载荷</td><td>26个仪器按寿命清晰划分。长期记录空间天气/地球物理学科学（三轴磁力计、总太阳辐照度辐射计、辐射剂量计、一个16电子/16质子粒子光谱仪、一个X射线/紫外线监测仪、一个CsI+SiPM伽马射线暴探测器、一个芯片级原子钟）直接由飞行控制器获取，绝不通过Linux节点获取。
+
+成像——一台 85 毫米卡塞格林望远镜，地面采样距离约为 5 米，一个共享相同光学系统的约 50 波段高光谱通道，一个热红外微球计和一个广角恒星/背景相机——运行在 Pi/Jetson 侧。上述每个仪器编号都是设计目标，到目前为止仅通过分析验证，而非通过已构建和测试的仪器验证。</td></tr>
+<tr><td>地面与运营</td><td>两个已发布的地面段层级：一个任何人都可以搭建的 30-80 UHF/LoRa 监听器用于接收信标，以及一个约 2,200-4,500 美元的 S 波段科學站（1.2 米天线，SPID BIG-RAS 旋转器）用于完整的下行链路。所有 27 个协议消息都已有一个编译好的、经过验证的 Kaitai Struct 解码器，并计划与 SatNOGS DB/解码器集成，以便任何站点无需接触此仓库即可解码遥测数据。提出了第二个锚地地面站，但尚未安排，频率协调/许可尚未开始。</td></tr>
 </table>
 </div>
 </section>

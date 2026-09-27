@@ -105,7 +105,7 @@ html
   footer a:hover{color:var(--text);}
   .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
 </style>
-<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.de.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" property="og:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." property="og:description"/><meta content="https://wollemi.athena.org.tr/index.de.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="de_DE" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" name="twitter:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+<link href="https://wollemi.athena.org.tr/" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="Wollemi -- Open 12U Science Observatory" name="twitter:title"/><meta content="Wollemi: an open, modular, long-life 12U CubeSat science observatory and reusable satellite platform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.de.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" property="og:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." property="og:description"/><meta content="https://wollemi.athena.org.tr/index.de.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="de_DE" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" name="twitter:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "ResearchProject",
   "name": "Wollemi",
@@ -124,6 +124,7 @@ html
 <a href="#gallery">Galerie</a>
 <a href="#deployment">Bereitstellung</a>
 <a href="#specs">Spezifikationen</a>
+<a href="#electronics">Elektronik</a>
 <a href="#subsystems">Teilsysteme</a>
 <a href="#status">Status</a>
 </nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a class="cur" href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a href="index.zh.html">ZH</a></div>
@@ -277,20 +278,62 @@ html
 </table>
 </div>
 </section>
+<section id="electronics">
+<div class="wrap">
+<h2 class="h">Elektronik &amp; PCB-Design</h2>
+<p class="lead">Das Raumfahrzeug ist als Kartenkäfig aufgebaut: identische 100×100 mm Karten gleiten in eine passive Rückseite, eine Säule pro Instrument-/Subsystemgruppe. Jede Platine unten ist eine echte KiCad-Datei im Repo (
+      <span class="code">electronics/kicad/</span>), DRC-sauber, generiert aus demselben
+      <span class="code">card_pinout.toml</span> Die Konnektor-Definition, das Schnittstellendokument, wird aus aufgebaut --
+      <b>Dies sind Grundrisse (Komponentenplatzierung wurde als passend bewiesen), noch nicht verdrahtete Schaltpläne.</b></p>
+<div class="grid cols-2">
+<figure class="shot">
+<img alt="Wollemi EPS Datenblockdiagramm: zwei Hauptstrompfade plus ein unabhängiger Überlebenspfad" src="assets/img/eps_diagram.svg"/>
+<figcaption>EPS Datenblockdiagramm – Ketten A/B plus die unabhängige Überlebenskette</figcaption>
+</figure>
+<div>
+<p style="color:var(--muted)">Jede Karte teilt ein Steckverbinderpaar: <b>WL-P</b> (2×30, Leistung und Steuerung – doppelte Batterie-Bus-Schienen, redundantes CAN-FD, PPS/SYNC-Timing, eine Hardware <span class="code">KILL_N</span> die der Supervisor ohne Software im Weg und mit einem SWD-Header behaupten kann, sodass jede Karte ohne Entfernen neu programmiert werden kann) und <b>WL-D</b> (2×15, Ethernet/Hochgeschwindigkeitsleitungen, nur auf Datenebene-Karten bestückt). Der Steckverbinderabstand beträgt absichtlich 1,27 mm – ein früherer Abstand von 0,8 mm konnte auf der Rückplane nicht geroutet werden, ohne dass die Stromschienen sich gegenseitig blockierten.</p>
+</div>
+</div>
+<div class="grid cols-3" style="margin-top:28px;">
+<figure class="shot">
+<img alt="3D-Rendering des Grundrisses der EPS-A/EPS-B-Karte, nur Komponentenplatzierung" src="assets/img/pcb_eps_card.png"/>
+<figcaption>EPS-A / EPS-B Karte – Funktionsblock-Grundriss</figcaption>
+</figure>
+<figure class="shot">
+<img alt="3D-Render des Grundrisses der unabhängigen Überlebenskarten" src="assets/img/pcb_survival_card.png"/>
+<figcaption>Überlebenskarten – unabhängiges Pack-C-Ladegerät und Brenndrahttreiber</figcaption>
+</figure>
+<figure class="shot">
+<img alt="3D-Render des leeren Karten-Templates von 100 x 100 Millimeter mit WL-P- und WL-D-Anschlüssen" src="assets/img/pcb_card_template.png"/>
+<figcaption>Kartenvorlage – jede Säule beginnt hier</figcaption>
+</figure>
+</div>
+<div class="grid cols-1" style="margin-top:16px;">
+<figure class="shot">
+<img alt="3D-Rendering des passiven Backplane-Streifens mit fünfzehn Kartensteckplätzen" src="assets/img/pcb_backplane_strip.png" style="max-height:260px; object-fit:contain;"/>
+<figcaption>Backplane-Streifenkarte – 15 Kartensteckplätze, passive WL-P/WL-D-Verkabelung pro Kette</figcaption>
+</figure>
+</div>
+</div>
+</section>
 <section id="subsystems">
 <div class="wrap">
 <h2 class="h">Teilsysteme</h2>
 <p class="lead">Jedes Subsystem wird aus denselben Konfigurationsdateien generiert, gegen die die Prüfungen laufen, sodass sich eine Design-Änderung und ihre Dokumentation niemals leise voneinander entfernen können.</p>
 <table class="subsys-table">
 <tr><th>Subsystem</th><th>Architektur</th></tr>
-<tr><td>Struktur</td><td>Aluminiumrahmen, Eckleisten, vier Säulen, Haltepfosten für die Flügelstapel</td></tr>
-<tr><td>Kraft</td><td>Zwei unabhängige MPPT/Batterie-Ketten (A, B) plus eine unabhängige Überlebenskette (C); eFuse pro Karte, Hardware-Kill, keine Software im Schutzpfad</td></tr>
-<tr><td>Thermisch</td><td>Passiv mit MLI-Patches, isolierte Teleskop-Säule, Batterie-Tresor und Überlebensheizungen</td></tr>
-<tr><td>Haltung und Antrieb</td><td>Reaktionsräder, Magnetorquer, Sterntracker; Iod-Antrieb auf der Mittellinie, geneigt durch den Massenschwerpunkt; Widerstandssegel</td></tr>
-<tr><td>Berechnen</td><td>Supervisor (MSP430FR), zwei Flugsteuerungen (STM32H7), Massenspeichereinheit, Raspberry Pi CM5, Jetson Orin Nano</td></tr>
-<tr><td>Daten &amp; Kommunikation</td><td>CCSDS-Pakete mit signierten Befehlen, CAN-FD-Steuerungsebene, Ethernet-Datenebene, UHF- und S-Band-Funkgeräten</td></tr>
-<tr><td>Nutzlast</td><td>26 Instrumente; langlebige Wissenschaft, erworben von den Flugsteuerungen (niemals die Linux-Knoten), Bildgebung durch die Linux-Computer</td></tr>
-<tr><td>Boden und Betrieb</td><td>Offenes S-Band-Bodenstations-Kit, unbewachte Referenzstation, automatisierte Kontaktplanung, Kaitai Struct-Decoder für das gesamte Protokoll</td></tr>
+<tr><td>Struktur</td><td>Ein Aluminiumrahmen, der um einen 40 mm zentralen Wirbel in einem 2×2×3 Zellenraster gebaut ist (Umfang 226,3×226,3×340,5 mm). Jede Karte im Raumschiff teilt eine 100×100 mm Umrisslinie mit einer 20×20 mm Wirbelnische und einer 8 mm Schienenrelief – ein Format, das für dieses Projekt erfunden wurde, da Standardplatten von 90/100 mm den Wirbel nicht passieren lassen. Sechs Haltepfosten pro Flügelstapel, nicht nur an den Ecken, drücken den verstauten ersten Modus auf etwa 137 Hz; eine frühere Analyse nur der Ecken ergab nur 99 Hz.</td></tr>
+<tr><td>Kraft</td><td>Zwei unabhängige MPPT/Batterie-Ketten (A, B) plus eine vollständig unabhängige Überlebenskette (C) mit ihrem eigenen dedizierten am Körper montierten Solarmodul; pro Karte eFuse und eine Hardware <span class="code">KILL_N</span> Zeile, ohne Software irgendwo im Schutzpfad.</td></tr>
+<tr><td>Thermisch</td><td>Voll passiv. Die Analyse ergab, dass das Raumfahrzeug eher kalt als heiß läuft – der eigentliche Kampf ist ein Eklipsfall von -27 °C und ein Safe-Mode-Fall von -40 °C, der durch die Aufteilung von ungefähr der Hälfte der Oberfläche zwischen den Solarzellen und den speziellen MLI/Low-e-Patches abgewendet wird. Die Teleskop-Säule erhält eine eigene Low-$\alpha$/Low-$\epsilon$-Beschichtung und einen 8-W-thermostaten Heizkörper (14-17 °C Sollwert); der Batteriekasten ist isoliert (0,1 W/K) mit einem 6-W-Heizer, und die Überlebensstrecke hat ihren eigenen 2-W-Heizer, sodass sie nie unter -20 °C fällt.</td></tr>
+<tr><td>Haltung und Antrieb</td><td>Drei Reaktionsräder (je 30 mN·m·s), Magnetorquer und ein Sterntracker (5 Bogensekunden, ca. 17 m Bodenfehler) schließen eine 90°-Drehung in etwa 120 s mit 3x+ Sicherheitszuschlag auf Drehmoment und Impuls ab. Der Antrieb ist elektrisch (Iod-Gitterionen-/Hall-Klasse) und nicht ein Wasser-Resistojet für den spezifischen Impuls: 0,5 kg Iod liefern ca. 570 m/s gegenüber ca. 45 m/s von 0,8 kg Wasser – genug für 50 Jahre Bahnkorrektur, Kollisionsvermeidung und eine kontrollierte Deorbitierung aus einem Tank.
+
+Der Triebwerk sitzt auf der Mittellinie, geneigt um einige Grad durch den Massenschwerpunkt; eine frühere Platzierung im Kolben erzeugte genug außermittriges Drehmoment, um ein Rad in sieben Minuten zu sättigen. Ein Widerstandssegel ist die passive Sicherung.</td></tr>
+<tr><td>Berechnen</td><td>Eine fünfstufige Hierarchie, absichtlich überdimensioniert am unteren Ende: Ein MSP430FR-Supervisor und duale Hot-Standby STM32H7 Flugsteuerungen sind für die volle 50-Jahres-Mission ausgelegt, da die langjährige Weltraumwetter-Wissenschaft lange nach dem erwarteten Ausfall der Linux-Side weiterlaufen muss. Ein Raspberry Pi CM5 (immer aktiv) und ein NVIDIA Jetson Orin Nano (Bildgebung, intensiver Compute) sitzen darüber mit einer Design-Lebensdauer von 10-15 Jahren. Die Massenspeichereinheit enthält 8×128 GB mit 6+2 Erasure Coding, BLAKE2 Hashing und periodischem Scrubbing.</td></tr>
+<tr><td>Daten &amp; Kommunikation</td><td>27 CCSDS-Nachrichtentypen, jeder Telekommando Ed25519-signiert mit einem Zähler und Gültigkeitsfenster (der Link selbst ist unverschlüsselt, da Amateurfunkregeln dies erfordern). Die Steuerungsebene ist dual CAN-FD (1 Mbps/5 Mbps) für Redundanz; eine Gigabit-Ethernet-Ebene trägt Nutzdaten. Der Downlink ist UHF/LoRa-Hausverwaltung (~0,5 MB/Tag) plus ein adaptiver S-Band-Wissenschaftslink (250 kbps-2 Mbps) – allein von der Pamukkale-Referenzstation, ungefähr 28 Minuten Kontakt und ~134 MB/Tag über 3-4 Durchgänge.</td></tr>
+<tr><td>Nutzlast</td><td>26 Instrumente werden sauber nach Lebensdauer getrennt. Langzeitaufzeichnungen von Weltraumwetter/Geophysik-Wissenschaft (Drehmagnetometer, Gesamtsonneneinstrahlungsradiometer, Strahlendosimeter, ein 16-Elektronen/16-Protonen-Teilchenspektrometer, ein Röntgen-/UV-Monitor, ein CsI+SiPM-Gammastrahlenausbruchdetektor, eine Chip-Scale-Atomuhr) werden direkt von den Flugsteuerungen erfasst, niemals von den Linux-Knoten.
+
+Bildgebung – ein 85 mm Cassegrain-Teleskop mit einer ungefähren Bodenabstandsdistanz von 5 m, ein ~50-Band-hyperspektraler Kanal, der dieselbe Optik teilt, ein thermischer IR-Mikrobolometer und eine Weitwinkel-Stern-/Kontextkamera – läuft auf der Pi/Jetson Side. Jede obige Instrumentennummer ist ein Design-Ziel, das bisher nur durch Analyse, nicht durch ein gebautes und getestetes Instrument verifiziert wurde.</td></tr>
+<tr><td>Boden und Betrieb</td><td>Zwei veröffentlichte Bodenstationen-Stufen: ein $30-80 UHF/LoRa-Empfänger, den jeder bauen kann, um das Beacon zu empfangen, und eine ca. $2.200-4.500 S-Band-Wissenschaftsstation (1,2 m Schüssel, SPID BIG-RAS Rotator) für den vollständigen Downlink. Alle 27 Protokollnachrichten verfügen bereits über einen kompilierten, verifizierten Kaitai Struct Decoder, mit geplanter SatNOGS DB/Decoder-Integration, sodass jede Station die Telemetrie dekodieren kann, ohne dieses Repository zu berühren. Eine zweite Ankerbodenstation wird vorgeschlagen, ist aber noch nicht arrangiert, und die Frequenzkoordination/Lizenzierung hat noch nicht begonnen.</td></tr>
 </table>
 </div>
 </section>
