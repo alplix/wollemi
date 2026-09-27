@@ -46,10 +46,11 @@ What is missing is physical: vendor data, schematics of the functional cards, pr
 | `sim/` | Budgets, layout rules, balance, data, longevity, link, EPS, ADCS, thermal, structure, orbit lifetime, mission simulation, cost, LED visibility, live verification matrix |
 | `mechanical/` | Voxel packing, parametric build123d assembly, interference/mass properties, STEP/STL/renders |
 | `electronics/` | Connector pinout (single source), KiCad card template and 15-slot backplane strip (DRC clean), EPS diagram, EPS/survival card floor plans (DRC clean, not yet a schematic) |
-| `protocol/` | Message definitions, C/Python generator, tests (round trip, corruption, byte-exact C <-> Python) |
-| `firmware/` | Host-testable core: Ed25519 command authentication, modes, FDIR, command queue, A/B OTA (68 unit checks + signature cross-checks) |
-| `groundstation/` | Pass prediction, contact plan and reference decoder |
+| `protocol/` | Message definitions, C/Python/Kaitai Struct generators, tests (round trip, corruption, byte-exact C <-> Python, Kaitai model verified against a real compiler) |
+| `firmware/` | Host-testable core: Ed25519 command authentication, modes, FDIR, command queue, A/B OTA (84 unit checks + signature cross-checks) |
+| `groundstation/` | Pass prediction, contact plan, reference decoder, Kaitai Struct decoders for the whole protocol |
 | `tools/` | `check_all.py` (whole regression), FMEA, test-plan and requirement checks, generators for the ICD and the SDD |
+| `site/` | Draft project website (English), prepared but not published -- repository is still private (`site/README.md`) |
 
 ## Quick start
 
