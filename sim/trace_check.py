@@ -203,9 +203,9 @@ def c_chain():
 
 
 def c_kaitai_beacon():
-    out = subprocess.run([sys.executable, os.path.join(ROOT, "groundstation", "kaitai", "verify_beacon_ksy.py")], capture_output=True, text=True)
-    ok = out.returncode == 0 and "All fields in wollemi_beacon.ksy" in out.stdout
-    return ok, "beacon .ksy byte-model matches the real encoder" if ok else (out.stdout + out.stderr)[-200:]
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "groundstation", "kaitai", "verify_all_ksy.py")], capture_output=True, text=True)
+    ok = out.returncode == 0 and "All 27 messages in wollemi_protocol.ksy" in out.stdout
+    return ok, "all 27 messages' .ksy byte-model match the real encoder" if ok else (out.stdout + out.stderr)[-200:]
 
 
 def c_kicad_drc():
