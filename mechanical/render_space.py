@@ -1,6 +1,8 @@
 """Hero shots: the real CAD model composited over a procedurally generated space backdrop (starfield, Earth limb,
-sun glare) -- an illustrative "in orbit" look for outreach use, not a new analysis. The spacecraft geometry, pose
-and colours are exactly what mechanical/wollemi_cad.py builds; only the backdrop behind it is artwork.
+sun glare) -- an illustrative "in orbit" look for outreach use, not a new analysis. The spacecraft geometry and
+pose are exactly what mechanical/wollemi_cad.py builds; the backdrop behind it, and the solar-cell-grid /
+MLI-foil surface materials applied to the wing and wall faces (apply_materials, in place of the flat colours
+used in the technical renders), are artwork for a more recognisably satellite-like look, not a new analysis.
 
 Usage: python mechanical/render_space.py
 Writes to mechanical/out/gallery/space_*.png
@@ -21,16 +23,25 @@ OUT = os.path.join(HERE, "out", "gallery")
 
 def render_rgba(named, az, el, size, zoom=1.0):
     """A close copy of wollemi_cad.render()'s rasteriser, but returns an RGBA array (alpha=0 wherever no
-    triangle was drawn) instead of writing a filled-background PNG, so the result can be composited over
-    a separate backdrop. Kept as a near-duplicate rather than changing the shared function's signature/behaviour."""
+    triangle was drawn), a per-pixel part-id buffer and a per-pixel interpolated world-position buffer,
+    instead of writing a filled-background PNG -- so the result can be composited over a separate backdrop
+    and post-processed with per-part materials (solar cell grid, MLI foil). Kept as a near-duplicate of
+    wollemi_cad.render() rather than changing that shared function's signature/behaviour.
+
+    `named` items are (mesh, color, alpha, name) -- like wollemi_cad's (mesh, color, alpha) tuples plus a
+    part name, so callers can tell which pixels belong to (for example) a part whose name starts with "Wing"."""
     S = 2
     W, H = size[0] * S, size[1] * S
     ca, sa = math.cos(math.radians(az)), math.sin(math.radians(az))
     ce, se = math.cos(math.radians(el)), math.sin(math.radians(el))
 
     V, T, C, IDS = [], [], [], []
+    pid_name = {0: ""}
     off = 0
-    for pid, (mesh, color, _) in enumerate(named):
+    for pid, item in enumerate(named):
+        mesh, color = item[0], item[1]
+        name = item[3] if len(item) > 3 else ""
+        pid_name[pid + 1] = name
         verts, tris = mesh
         V.append(np.asarray(verts, dtype=np.float64))
         T.append(np.asarray(tris, dtype=np.int64) + off)
@@ -66,6 +77,7 @@ def render_rgba(named, az, el, size, zoom=1.0):
     zbuf = np.full((H, W), -1e18)
     idb = np.zeros((H, W), dtype=np.int32)
     img = np.zeros((H, W, 3), dtype=np.float64)
+    wpos = np.zeros((H, W, 3), dtype=np.float64)
     hit = np.zeros((H, W), dtype=bool)
     for i in range(len(T)):
         i0, i1, i2 = T[i]
@@ -92,6 +104,8 @@ def render_rgba(named, az, el, size, zoom=1.0):
         sub[upd] = z[upd]
         idb[ymin:ymax + 1, xmin:xmax + 1][upd] = IDS[i]
         img[ymin:ymax + 1, xmin:xmax + 1][upd] = col[i]
+        wp = l0[..., None] * V[i0] + l1[..., None] * V[i1] + l2[..., None] * V[i2]
+        wpos[ymin:ymax + 1, xmin:xmax + 1][upd] = wp[upd]
         hit[ymin:ymax + 1, xmin:xmax + 1] |= upd
 
     edge = np.zeros((H, W), dtype=bool)
@@ -105,7 +119,11 @@ def render_rgba(named, az, el, size, zoom=1.0):
     alpha = np.where(hit, 255, 0).astype(np.uint8)
     rgba = np.dstack([np.clip(img, 0, 255).astype(np.uint8), alpha])
     out = Image.fromarray(rgba, mode="RGBA").resize(size, Image.LANCZOS)
-    return out
+    # idb/wpos: nearest-neighbour downsample to the output grid (categorical id + UV-ish data; no need for the
+    # supersampled anti-aliasing quality the colour image gets above)
+    idb_small = idb[::S, ::S][:size[1], :size[0]]
+    wpos_small = wpos[::S, ::S][:size[1], :size[0]]
+    return out, idb_small, wpos_small, pid_name
 
 
 def starfield(size, n_stars=900, seed=7, glow=True):
@@ -211,6 +229,74 @@ def add_sun_glare(im, xy, radius=60, brightness=1.0):
     return Image.alpha_composite(im.convert("RGBA"), layer)
 
 
+def part_mask(idb, pid_name, prefix):
+    ids = [pid for pid, name in pid_name.items() if pid and name.startswith(prefix)]
+    if not ids:
+        return np.zeros(idb.shape, dtype=bool)
+    return np.isin(idb, ids)
+
+
+def apply_solar_cells(craft, idb, wpos, pid_name):
+    """Overlay a solar-cell grid on wing pixels: real triple-junction CubeSat cells are dark blue-violet, laid
+    out in a regular grid with a visible seam and a slight per-cell brightness/tint variation, not a flat colour."""
+    mask = part_mask(idb, pid_name, "Wing")
+    if not mask.any():
+        return craft
+    arr = np.array(craft).astype(np.float64)
+    x, z = wpos[..., 0], wpos[..., 2]
+    cell = 27.0  # mm, close to a real triple-junction cell pitch
+    fx = (x / cell) % 1.0
+    fz = (z / cell) % 1.0
+    seam = (np.minimum(fx, 1 - fx) < 0.045) | (np.minimum(fz, 1 - fz) < 0.045)
+    rng = np.random.default_rng(3)
+    cell_id = (np.floor(x / cell) * 1000 + np.floor(z / cell)).astype(np.int64)
+    uniq, inv = np.unique(cell_id[mask], return_inverse=True)
+    tint = rng.uniform(0.85, 1.08, size=len(uniq))
+    cell_tint = np.ones(idb.shape, dtype=np.float64)
+    cell_tint[mask] = tint[inv]
+    cell_rgb = np.array([26, 20, 48])  # dark blue-violet, typical of triple-junction cells under a coverglass
+    base = arr[..., :3]
+    lum = base.mean(axis=-1, keepdims=True) / 255.0
+    shaded_cell = cell_rgb[None, None, :] * (0.55 + 0.65 * lum) * cell_tint[..., None]
+    specular = np.clip((lum[..., 0] - 0.55) * 1.8, 0, 1) ** 2
+    shaded_cell = shaded_cell + specular[..., None] * np.array([40, 42, 60])[None, None, :]
+    out_rgb = np.where(mask[..., None], shaded_cell, base)
+    out_rgb = np.where((mask & seam)[..., None], out_rgb * 0.35, out_rgb)
+    arr[..., :3] = np.clip(out_rgb, 0, 255)
+    return Image.fromarray(arr.astype(np.uint8), mode=craft.mode)
+
+
+def apply_mli_foil(craft, idb, wpos, pid_name, hit):
+    """Overlay a gold/silver multi-layer-insulation crinkle texture on the structural wall/frame pixels --
+    the iconic blanket look, in place of a flat metallic grey."""
+    mask = part_mask(idb, pid_name, "Wall")
+    if not mask.any():
+        return craft
+    H, W = idb.shape
+    rng = np.random.default_rng(5)
+    noise = rng.random((H, W))
+    fine = np.asarray(Image.fromarray((noise * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.4)), dtype=np.float64) / 255.0
+    creases = rng.random((H, W))
+    creases = np.asarray(Image.fromarray((creases * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(0.6)), dtype=np.float64) / 255.0
+    wrinkle = 0.65 + 0.55 * fine + 0.35 * (creases - 0.5)
+    gold = np.array([176, 140, 62])
+    arr = np.array(craft).astype(np.float64)
+    base = arr[..., :3]
+    lum = base.mean(axis=-1, keepdims=True) / 255.0
+    shaded = gold[None, None, :] * (0.35 + 0.9 * lum[..., 0])[..., None] * wrinkle[..., None]
+    hi = np.clip((wrinkle - 1.15), 0, None) * 260
+    shaded = shaded + hi[..., None] * np.array([1.0, 0.95, 0.75])[None, None, :]
+    out_rgb = np.where(mask[..., None], shaded, base)
+    arr[..., :3] = np.clip(out_rgb, 0, 255)
+    return Image.fromarray(arr.astype(np.uint8), mode=craft.mode)
+
+
+def apply_materials(craft, idb, wpos, pid_name, hit):
+    craft = apply_solar_cells(craft, idb, wpos, pid_name)
+    craft = apply_mli_foil(craft, idb, wpos, pid_name, hit)
+    return craft
+
+
 def caption(im, text):
     d = ImageDraw.Draw(im)
     try:
@@ -232,13 +318,14 @@ def main():
     wings_dp = wc.build_wings(geo, True)
 
     def meshes(parts):
-        return [(wc.to_mesh(p["shape"]), p["color"], 1.0) for p in parts]
+        return [(wc.to_mesh(p["shape"]), p["color"], 1.0, p["name"]) for p in parts]
 
     size = (1920, 1280)
     ship = meshes(frame + mods + wings_dp)
 
     print("Earth-limb hero shot...")
-    craft = render_rgba(ship, az=52, el=18, size=size, zoom=1.35)
+    craft, idb, wpos, pid_name = render_rgba(ship, az=52, el=18, size=size, zoom=1.35)
+    craft = apply_materials(craft, idb, wpos, pid_name, idb > 0)
     bg = deep_space_background(size)
     bg = add_earth_limb(bg, size, center=(size[0] * 0.14, size[1] * 1.02), radius=size[1] * 0.62)
     bg = add_sun_glare(bg, (size[0] * 0.92, size[1] * 0.12), radius=34, brightness=0.9)
@@ -246,14 +333,16 @@ def main():
     caption(scene, "Wollemi 12U in orbit -- dawn-dusk sun-synchronous, ~700 km").save(os.path.join(OUT, "space_earth_limb.png"))
 
     print("Deep-space wide shot...")
-    craft2 = render_rgba(ship, az=-35, el=12, size=size, zoom=1.05)
+    craft2, idb2, wpos2, pid_name2 = render_rgba(ship, az=-35, el=12, size=size, zoom=1.05)
+    craft2 = apply_materials(craft2, idb2, wpos2, pid_name2, idb2 > 0)
     bg2 = deep_space_background(size, sun_xy=(size[0] * 0.20, size[1] * 0.24))
     scene2 = Image.alpha_composite(bg2, craft2).convert("RGB")
     caption(scene2, "Wollemi 12U, deployed").save(os.path.join(OUT, "space_deep_field.png"))
 
     print("Stowed, sunlit approach...")
     ship_st = meshes(frame + mods + wc.build_wings(geo, False))
-    craft3 = render_rgba(ship_st, az=32, el=16, size=size, zoom=0.85)
+    craft3, idb3, wpos3, pid_name3 = render_rgba(ship_st, az=32, el=16, size=size, zoom=0.85)
+    craft3 = apply_materials(craft3, idb3, wpos3, pid_name3, idb3 > 0)
     bg3 = deep_space_background(size)
     bg3 = add_sun_glare(bg3, (size[0] * 0.80, size[1] * 0.24), radius=55, brightness=1.1)
     scene3 = Image.alpha_composite(bg3, craft3).convert("RGB")
