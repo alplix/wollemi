@@ -1,0 +1,48 @@
+"""Wollemi's marketing/documentation page (wollemi.athena.org.tr): a plain static site, no accounts, no API,
+nothing dynamic server-side. Run:  uvicorn app:app --port 8778   (see deploy/wollemi-site.service)
+
+The page content is built in the opensat repo (alplix/wollemi), not here: site/translate_site.py and
+site/add_seo.py generate the per-language index.*.html files and inject SEO tags. This directory holds the
+built copy served at wollemi.athena.org.tr; re-run those generators and copy their output here after any
+content change, then redeploy.
+
+Kept as its own tiny service (matching panel/hub/vigil/iris-site/lupinus-site/rhizome-site's one-service-per-tool
+pattern) rather than a route on the hub, so it can be updated/restarted independently and never shares a process
+with anything that handles accounts or secrets.
+"""
+from __future__ import annotations
+
+import pathlib
+
+from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
+
+STATIC = pathlib.Path(__file__).parent
+
+app = FastAPI(title="Wollemi", docs_url=None, redoc_url=None, openapi_url=None)
+CSP = ("default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self'; "
+       "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    resp = await call_next(request)
+    resp.headers.update({"Content-Security-Policy": CSP, "X-Content-Type-Options": "nosniff",
+                         "Referrer-Policy": "strict-origin-when-cross-origin", "X-Frame-Options": "DENY",
+                         "Permissions-Policy": "camera=(), microphone=(), geolocation=()"})
+    if request.url.path.endswith((".png", ".jpg", ".gif", ".ico")):
+        resp.headers["Cache-Control"] = "public, max-age=604800, immutable"
+    elif request.url.path.endswith((".html", "/")) or request.url.path == "":
+        resp.headers["Cache-Control"] = "public, max-age=300"
+    if request.url.scheme == "https" or request.headers.get("x-forwarded-proto") == "https":
+        resp.headers["Strict-Transport-Security"] = "max-age=31536000"
+    return resp
+
+
+@app.exception_handler(404)
+async def not_found(request: Request, exc):
+    return RedirectResponse("/", status_code=302)
+
+
+app.mount("/", StaticFiles(directory=str(STATIC), html=True), name="static")

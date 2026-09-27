@@ -1,0 +1,356 @@
+html
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wollemi -- 开放 12U 科學觀測站</title>
+<meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="description"/>
+<style>
+  :root{
+    --bg:#0d111c; --bg2:#121729; --panel:#161d31; --panel2:#1b2338;
+    --line:#2a3350; --text:#e7ecf7; --muted:#a9b3cc; --muted2:#7c88a8;
+    --accent:#5b7cff; --accent2:#8aa0ff; --gold:#e3c15a; --green:#57b878; --red:#d3675f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:var(--accent2);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header.site{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(13,17,28,0.82); border-bottom:1px solid var(--line);
+  }
+  header.site .bar{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; letter-spacing:.02em; flex-shrink:0;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.links{display:flex; gap:18px; font-size:.88rem; overflow-x:auto; scrollbar-width:none; white-space:nowrap;}
+  nav.links::-webkit-scrollbar{display:none;}
+  nav.links a{color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+  .langsw{display:flex; gap:6px; flex-shrink:0; font-size:.75rem;}
+  .langsw a{color:var(--muted2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 7px;}
+  .langsw a:hover{color:var(--text); border-color:var(--accent);}
+  .langsw a.cur{color:var(--accent2); border-color:var(--accent2);}
+  @media (max-width:640px){ .langsw{width:100%; order:3; flex-wrap:wrap;} }
+  @media (max-width:640px){
+    header.site .bar{flex-wrap:wrap;}
+    nav.links{gap:14px; font-size:.8rem; width:100%; justify-content:flex-start;}
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(91,124,255,.15), rgba(227,193,90,.10));
+    border-bottom:1px solid var(--line); font-size:.85rem; color:var(--muted); text-align:center; padding:8px 16px;
+  }
+  .hero{padding:64px 0 40px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 10px; letter-spacing:-.01em;}
+  .hero .tagline{color:var(--muted); font-size:1.15rem; max-width:720px; margin:0 auto 30px;}
+  .hero-media{position:relative; max-width:900px; margin:0 auto; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px -30px rgba(0,0,0,.6);}
+  .hero-media img{display:block; width:100%; height:auto;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px;}
+  .pill{
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:.85rem; color:var(--muted);
+  }
+  section{padding:56px 0;}
+  section.alt{background:rgba(255,255,255,.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  h2.h{font-size:1.7rem; margin:0 0 8px;}
+  p.lead{color:var(--muted); max-width:760px; margin:0 0 34px; font-size:1.02rem;}
+  .grid{display:grid; gap:20px;}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:860px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .card h3{margin:0 0 8px; font-size:1.05rem;}
+  .card p{color:var(--muted); margin:0; font-size:.94rem;}
+  .obj-id{display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; color:var(--accent2); background:rgba(91,124,255,.12); border:1px solid rgba(91,124,255,.3); padding:2px 8px; border-radius:6px; margin-bottom:10px;}
+  figure.shot{margin:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  figure.shot img{display:block; width:100%; height:280px; object-fit:cover; background:#0b0f19;}
+  figure.shot figcaption{padding:12px 16px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line);}
+  .specs{width:100%; border-collapse:collapse; font-size:.95rem;}
+  .specs th,.specs td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .specs th{color:var(--muted2); font-weight:600; width:190px;}
+  .specs td{color:var(--text);}
+  .anim-block{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center;}
+  @media (max-width:860px){ .anim-block{grid-template-columns:1fr;} }
+  .anim-block img{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block;}
+  .subsys-table{width:100%; border-collapse:collapse;}
+  .subsys-table th,.subsys-table td{padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  .subsys-table th{color:var(--muted2); font-weight:600;}
+  .status-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:860px){ .status-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:center;}
+  .stat .num{font-size:2rem; font-weight:800; color:var(--accent2);}
+  .stat .lbl{color:var(--muted); font-size:.82rem; margin-top:4px;}
+  .note{
+    background:rgba(227,193,90,.07); border:1px solid rgba(227,193,90,.35); border-radius:var(--radius);
+    padding:18px 20px; color:var(--muted); font-size:.92rem;
+  }
+  .note b{color:var(--gold);}
+  ul.tick{list-style:none; margin:0; padding:0;}
+  ul.tick li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.tick li::before{content:"\2713"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  ul.open{list-style:none; margin:0; padding:0;}
+  ul.open li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.open li::before{content:"\25CB"; position:absolute; left:0; color:var(--muted2);}
+  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted2); font-size:.85rem;}
+  footer .cols{display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;}
+  footer h4{color:var(--muted); font-size:.85rem; margin:0 0 10px;}
+  footer a{color:var(--muted2); text-decoration:none;}
+  footer a:hover{color:var(--text);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+</style>
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.zh.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- 开放 12U 科學觀測站" property="og:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.zh.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="zh_CN" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- 开放 12U 科學觀測站" name="twitter:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  "name": "Wollemi",
+  "url": "https://wollemi.athena.org.tr/index.zh.html",
+  "description": "Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。",
+  "image": "https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg",
+  "inLanguage": "zh"
+}</script></head>
+<body>
+<div class="banner">私有仓库 -- 分析级设计。尚无硬件；这里的每一个数字都是工程学估算。设计完成后对公众开放。</div>
+<header class="site">
+<div class="wrap bar">
+<div class="brand"><span class="dot"></span> WOLLEMI</div>
+<nav class="links">
+<a href="#mission">使命</a>
+<a href="#gallery">画廊</a>
+<a href="#deployment">部署</a>
+<a href="#specs">规格</a>
+<a href="#subsystems">子系统</a>
+<a href="#status">状态</a>
+</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a class="cur" href="index.zh.html">ZH</a></div>
+</div>
+</header>
+<section class="hero">
+<div class="wrap">
+<h1>一个开放的12U科學天文台<br/>设计寿命超过第一个十年。</h1>
+<p class="tagline">Wollemi 是一个完全开放、模块化的微型卫星平台，其首个任务是一个科学优先的 12U 立方体卫星，具有分层 50 年生存设计，完全从配置文件生成，并在每次更改时由自动化回归进行检查。</p>
+<div class="hero-media">
+<img alt="沃尔莱米12U航天器在地球轨道上的照片级渲染图，展开配置" src="assets/img/blender_deployed.jpg"/>
+</div>
+<div class="pill-row">
+<span class="pill">12U 立方星载荷外壳</span>
+<span class="pill">約26種科學儀器</span>
+<span class="pill">50年分级设计寿命</span>
+<span class="pill">發布時完全開放</span>
+<span class="pill">23/23 自动检查通过</span>
+</div>
+</div>
+</section>
+<section id="mission">
+<div class="wrap">
+<h2 class="h">使命和目标</h2>
+<p class="lead">Wollemi 是一个开放式、模块化、长寿命的 12U 科學观测站和参考平台。它产生跨越数十年的空间天气、辐射和地球观测数据，在轨道上展示了稳健的电子学和软件，并发布了设计、数据和工具供任何人重复使用。</p>
+<div class="grid cols-3">
+<div class="card">
+<div class="obj-id">OBJ-1</div>
+<h3>空间天气与地球物理学</h3>
+<p>长记录数据：磁场、高能粒子、太阳X射线/紫外线、总太阳辐照度、辐射剂量、等离子体、甚低频（VLF）、伽马射线暴。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-2</div>
+<h3>地球观测</h3>
+<p>5米級類成像望遠鏡，高光譜場景共享相同光學系統，熱紅外，廣角夜間影像。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-3</div>
+<h3>技术与可靠性科学</h3>
+<p>不同计算家族和闪存类型的辐射行为多年变化，误差数据公开发布。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-4</div>
+<h3>可重用平台</h3>
+<p>公交车、单元格网格、背板、协议和工具都是一次设计并重复使用：新的任务是一个配置更改加上新卡，而不是重新设计。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-5</div>
+<h3>完全打开，释放时</h3>
+<p>硬件遵循 CERN-OHL-S-2.0，软件遵循 Apache-2.0，文档遵循 CC-BY-4.0 -- 在设计完成并完成商标检查之后。</p>
+</div>
+<div class="card">
+<h3>设计长寿</h3>
+<p>分层生存架构：信标和监督器被设计为比电池更持久，而电池被设计为比重计算更持久——优雅降级，而非单点故障。</p>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="gallery">
+<div class="wrap">
+<h2 class="h">设计画廊</h2>
+<p class="lead">下面的每张图像都是直接从真实的参数化 CAD 模型渲染的<span class="code">mechanical/wollemi_cad.py</span>, build123d/OpenCascade), 不是一个概念 -- 与质量、干涉和结构检查运行的相同模型。</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="外部等距视图，部署配置" src="assets/img/ext_iso_deployed.png"/>
+<figcaption>外部，已部署——机翼展开，等距视图</figcaption>
+</figure>
+<figure class="shot">
+<img alt="船尾后四分之一外部视图，部署配置" src="assets/img/ext_iso_deployed_far.png"/>
+<figcaption>外部，已部署 -- 船尾后部视图</figcaption>
+</figure>
+<figure class="shot">
+<img alt="外部等距视图，收纳发射配置" src="assets/img/ext_iso_stowed.png"/>
+<figcaption>外部，收纳 -- 发射配置</figcaption>
+</figure>
+<figure class="shot">
+<img alt="航天器朝向地球的纳迪尔视图" src="assets/img/ext_nadir.png"/>
+<figcaption>天顶（面向地球）视图，收纳状态</figcaption>
+</figure>
+<figure class="shot">
+<img alt="内部视图，外墙隐藏，显示四个仪表柱" src="assets/img/interior.png"/>
+<figcaption>内部——外墙隐藏，四根柱子可见</figcaption>
+</figure>
+<figure class="shot">
+<img alt="移除两面墙和天顶板的剖视图" src="assets/img/cutaway.png"/>
+<figcaption>剖面图——移除了两面墙和天顶板</figcaption>
+</figure>
+<figure class="shot">
+<img alt="爆炸装配视图，每个模块均由柱分隔" src="assets/img/exploded.png"/>
+<figcaption>爆炸视图——每个模块按柱着色</figcaption>
+</figure>
+<figure class="shot">
+<img alt="三视图工程學圖：前视图、锡德视图和俯视图" src="assets/img/three_view_drawing.png"/>
+<figcaption>三视图——正面、锡德、顶视图</figcaption>
+</figure>
+<figure class="shot">
+<img alt="部署航天器的360度旋转渲染图" src="assets/img/spin_deployed.gif"/>
+<figcaption>360° 旋转台——部署配置</figcaption>
+</figure>
+</div>
+<h3 style="margin:44px 0 8px; font-size:1.2rem;">在轨道上</h3>
+<p class="lead" style="margin-bottom:22px;">航天器是真实的 CAD 几何体（`mechanical/wollemi_cad.py`），使用真实的路径追踪器（Blender/Cycles）渲染，并使用真实的 NASA 蓝色大理石地球照片；太阳能电池和 MLI 薄膜的表面材料是示意性的，星空是程序化的，但光照和几何形状是物理模拟的，而非手工绘制的。</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="地球轨道上沃尔莱米逼真的渲染图，已部署" src="assets/img/blender_deployed.jpg" style="height:220px;"/>
+<figcaption>已部署，在轨道上（周期路径追踪渲染）</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Wollemi 停放，部署前照片级渲染" src="assets/img/blender_stowed.jpg" style="height:220px;"/>
+<figcaption>存储 -- 部署前（周期路径追踪渲染）</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Wollemi 部署在深空星场中，具有说明性" src="assets/img/space_deep_field.png" style="height:220px;"/>
+<figcaption>部署，深空广角镜头（示意）</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="deployment">
+<div class="wrap">
+<h2 class="h">部署序列</h2>
+<p class="lead">机翼从收起发射构型展开到完全展开的示意图。 <b>铰链/折叠机构本身尚未设计好</b> （参见下方的开放项），因此此动画插值了每个面板的收起和展开的占地面积，而不是模拟一个真实的机构——它的目的是传达概念，而不是验证它。</p>
+<div class="anim-block">
+<img alt="翅膀从收起到完全展开的动画" src="assets/img/deploy_sequence.gif"/>
+<div>
+<h3 style="margin-top:0">两翼，每翼三块面板</h3>
+<p style="color:var(--muted)">每个翼片携带三个双面面板（两面都有单元，因为首选的黎明-黄昏轨道使太阳位于翼片法线轴上而不是始终在同一侧）。每个堆栈的六个固定杆使发射配置的振动模式舒适地高于共享乘车最低要求。</p>
+<table class="specs" style="margin-top:16px;">
+<tr><th>已部署的跨度</th><td>约2.1米尖到尖</td></tr>
+<tr><th>面板数量</th><td>2翼 × 3块面板，双面</td></tr>
+<tr><th>收纳突起</th><td>在立方星设计规范轨道包络内</td></tr>
+<tr><th>释放机构</th><td>烧丝，三个独立抑制器</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="specs">
+<div class="wrap">
+<h2 class="h">一目了然</h2>
+<table class="specs">
+<tr><th>表格</th><td>12U 立方微型卫星外壳，围绕中央脊的 2×2×3 单元格网格，带缺口的 100×100 毫米卡片</td></tr>
+<tr><th>质量/功率</th><td>约占 24 千克预算的 16.8 千克；58 瓦太阳能偏置，28 瓦翻滚，3 瓦安全模式负载</td></tr>
+<tr><th>科學載荷</th><td>约26个仪器：5米级望远镜+高光谱（共享光学）、热红外、磁力计、粒子光谱仪、X射线/紫外线监测仪、总太阳辐照度、VLF/ELF、伽玛射线暴计数器、辐射剂量计、SEU/闪光实验</td></tr>
+<tr><th>计算</th><td>MSP430FR 监视器，2×STM32H7 飞行控制器，大容量存储单元（8×128 GB，6+2 擦除码），树莓派 CM5，英伟达 Jetson Orin Nano</td></tr>
+<tr><th>力量</th><td>两个独立的磷酸铁锂链（A/B）加上一个完全独立的生存链，仅硬件保护（跳闸路径中无MCU）</td></tr>
+<tr><th>推进</th><td>碘电栅离子推进器位于中心线上，相对于质心倾斜；可用 $\Delta v$ 约为 570 m/s，拖曳帆作为被动备份</td></tr>
+<tr><th>通讯</th><td>UHF/LoRa 信标和指令，S 波段科學下行鏈路（250 kbps–2 Mbps 自適應），帶有 Ed25519 簽名的 CCSDS 空間數據包遙控指令</td></tr>
+<tr><th>轨道（首选）</th><td>日出至日落太阳同步，约700公里——去除日食循环，因热和电池寿命原因而受青睐</td></tr>
+<tr><th>验证</th><td>已追踪 47 个要求；大多数在每次运行时自动检查；计划进行 29 项物理测试</td></tr>
+</table>
+</div>
+</section>
+<section id="subsystems">
+<div class="wrap">
+<h2 class="h">子系统</h2>
+<p class="lead">每个子系统都是从相同的配置文件生成的，检查是基于这些文件运行的，因此设计变更及其文档永远不会悄悄地脱节。</p>
+<table class="subsys-table">
+<tr><th>子系统</th><th>建筑</th></tr>
+<tr><td>结构</td><td>鋁框架，角軌，四根柱子，翼堆固定柱</td></tr>
+<tr><td>力量</td><td>两个独立的MPPT/电池链（A、B）加上一个独立的生存链（C）；每卡eFuse，硬件关断，保护路径无软件</td></tr>
+<tr><td>热的</td><td>带MLI补丁的被动系统，隔离望远镜柱，电池保险库和生存加热器</td></tr>
+<tr><td>姿态与推进</td><td>反应轮、磁力矩器、恒星跟踪仪；中心线上的碘推进器，通过质心倾斜；阻力帆</td></tr>
+<tr><td>计算</td><td>主管（MSP430FR），两个飞行控制器（STM32H7），大容量存储单元，树莓派 CM5，Jetson Orin Nano</td></tr>
+<tr><td>数据与通信</td><td>带有签名命令的CCSDS数据包、CAN-FD控制平面、以太网数据平面、UHF和S波段无线电</td></tr>
+<tr><td>有效载荷</td><td>26个仪器；飞行控制器（绝非Linux节点）获取的长期科学数据，由Linux计算机进行成像</td></tr>
+<tr><td>地面与运营</td><td>打开 S 波段地面站套件，无人值守参考站，自动化接触规划，用于整个协议的 Kaitai Struct 解码器</td></tr>
+</table>
+</div>
+</section>
+<section class="alt" id="status">
+<div class="wrap">
+<h2 class="h">状态</h2>
+<p class="lead">设计在分析层面已完成。以下所有内容均由自动检查。
+      <span class="code">python tools/check_all.py</span> 在每次更改中——这里没有任何一次性的主张。</p>
+<div class="status-grid">
+<div class="stat"><div class="num">23/23</div><div class="lbl">自动检查通过</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">需求追溯</div></div>
+<div class="stat"><div class="num">29</div><div class="lbl">计划的体能测试</div></div>
+<div class="stat"><div class="num">~26</div><div class="lbl">科學儀器</div></div>
+</div>
+<div class="grid cols-2">
+<div>
+<h3>在分析层面完成</h3>
+<ul class="tick">
+<li>要求，建筑，带干涉检查的参数化 CAD</li>
+<li>功率、热、姿态、轨道和结构分析</li>
+<li>完整的命令/遥测协议（27个消息），包含C、Python和Kaitai Struct实现</li>
+<li>固件核心（身份验证、模式管理器、故障检测、OTA）包含84个单元检查</li>
+<li>电子学接口：KiCad 卡和背板模板，EPS/生存卡平面图，DRC 清洁</li>
+<li>FMEA、验证矩阵、测试计划、操作概念、成本和进度模型</li>
+</ul>
+</div>
+<div>
+<h3>仍开放</h3>
+<ul class="open">
+<li>不存在硬件：供应商数据、真实原理图、原型和物理测试都还未完成</li>
+<li>发射机会、记录运营商和频率协调尚未安排</li>
+<li>翼铰链/部署机构尚未设计（本站的部署GIF仅为示意）</li>
+<li>双面太阳能电池板没有发现商业先例——一个定制部件</li>
+<li>目标选择仍未确定：飞行任务、飞行级参考设计，还是先进行 FlatSat/气球先导项目</li>
+</ul>
+</div>
+</div>
+<div class="note" style="margin-top:30px;">
+<b>请清晰地阅读：</b> 本頁上的每個數字都是來自模擬或手動計算的工程學估算，而非測量。Wollemi 的任何部分都未建造，此處無任何內容符合飛行要求。
+    </div>
+</div>
+</section>
+<footer>
+<div class="wrap cols">
+<div>
+<h4>沃尔莱米</h4>
+<p style="max-width:320px; color:var(--muted2);">一个开放式、模块化、长寿命的12U科学观测站和可重复使用的小型卫星平台。目前为私人存储库；设计完成后将向公众开放。</p>
+</div>
+<div>
+<h4>阅读更多</h4>
+<a href="https://github.com/alplix/wollemi" style="display:block; margin-bottom:6px;">github.com/alplix/wollemi</a>
+<span style="color:var(--muted2); display:block;">系统设计文档、需求、测试计划和所有分析工具都存储在仓库中 <span class="code">docs/</span> 文件夹</span>
+</div>
+<div>
+<h4>许可（计划中，尚未申请）</h4>
+<span style="display:block;">硬件：CERN-OHL-S-2.0</span>
+<span style="display:block;">软件：Apache-2.0</span>
+<span style="display:block;">文件：CC-BY-4.0</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

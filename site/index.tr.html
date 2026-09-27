@@ -1,0 +1,356 @@
+html
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wollemi -- Açık 12U Bilim Gözlemevi</title>
+<meta content="Wollemi: açık, modüler, uzun ömürlü 12U KüpUydu bilim gözlemevi ve yeniden kullanılabilir uydu platformu." name="description"/>
+<style>
+  :root{
+    --bg:#0d111c; --bg2:#121729; --panel:#161d31; --panel2:#1b2338;
+    --line:#2a3350; --text:#e7ecf7; --muted:#a9b3cc; --muted2:#7c88a8;
+    --accent:#5b7cff; --accent2:#8aa0ff; --gold:#e3c15a; --green:#57b878; --red:#d3675f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:var(--accent2);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header.site{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(13,17,28,0.82); border-bottom:1px solid var(--line);
+  }
+  header.site .bar{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; letter-spacing:.02em; flex-shrink:0;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.links{display:flex; gap:18px; font-size:.88rem; overflow-x:auto; scrollbar-width:none; white-space:nowrap;}
+  nav.links::-webkit-scrollbar{display:none;}
+  nav.links a{color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+  .langsw{display:flex; gap:6px; flex-shrink:0; font-size:.75rem;}
+  .langsw a{color:var(--muted2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 7px;}
+  .langsw a:hover{color:var(--text); border-color:var(--accent);}
+  .langsw a.cur{color:var(--accent2); border-color:var(--accent2);}
+  @media (max-width:640px){ .langsw{width:100%; order:3; flex-wrap:wrap;} }
+  @media (max-width:640px){
+    header.site .bar{flex-wrap:wrap;}
+    nav.links{gap:14px; font-size:.8rem; width:100%; justify-content:flex-start;}
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(91,124,255,.15), rgba(227,193,90,.10));
+    border-bottom:1px solid var(--line); font-size:.85rem; color:var(--muted); text-align:center; padding:8px 16px;
+  }
+  .hero{padding:64px 0 40px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 10px; letter-spacing:-.01em;}
+  .hero .tagline{color:var(--muted); font-size:1.15rem; max-width:720px; margin:0 auto 30px;}
+  .hero-media{position:relative; max-width:900px; margin:0 auto; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px -30px rgba(0,0,0,.6);}
+  .hero-media img{display:block; width:100%; height:auto;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px;}
+  .pill{
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:.85rem; color:var(--muted);
+  }
+  section{padding:56px 0;}
+  section.alt{background:rgba(255,255,255,.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  h2.h{font-size:1.7rem; margin:0 0 8px;}
+  p.lead{color:var(--muted); max-width:760px; margin:0 0 34px; font-size:1.02rem;}
+  .grid{display:grid; gap:20px;}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:860px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .card h3{margin:0 0 8px; font-size:1.05rem;}
+  .card p{color:var(--muted); margin:0; font-size:.94rem;}
+  .obj-id{display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; color:var(--accent2); background:rgba(91,124,255,.12); border:1px solid rgba(91,124,255,.3); padding:2px 8px; border-radius:6px; margin-bottom:10px;}
+  figure.shot{margin:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  figure.shot img{display:block; width:100%; height:280px; object-fit:cover; background:#0b0f19;}
+  figure.shot figcaption{padding:12px 16px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line);}
+  .specs{width:100%; border-collapse:collapse; font-size:.95rem;}
+  .specs th,.specs td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .specs th{color:var(--muted2); font-weight:600; width:190px;}
+  .specs td{color:var(--text);}
+  .anim-block{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center;}
+  @media (max-width:860px){ .anim-block{grid-template-columns:1fr;} }
+  .anim-block img{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block;}
+  .subsys-table{width:100%; border-collapse:collapse;}
+  .subsys-table th,.subsys-table td{padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  .subsys-table th{color:var(--muted2); font-weight:600;}
+  .status-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:860px){ .status-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:center;}
+  .stat .num{font-size:2rem; font-weight:800; color:var(--accent2);}
+  .stat .lbl{color:var(--muted); font-size:.82rem; margin-top:4px;}
+  .note{
+    background:rgba(227,193,90,.07); border:1px solid rgba(227,193,90,.35); border-radius:var(--radius);
+    padding:18px 20px; color:var(--muted); font-size:.92rem;
+  }
+  .note b{color:var(--gold);}
+  ul.tick{list-style:none; margin:0; padding:0;}
+  ul.tick li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.tick li::before{content:"\2713"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  ul.open{list-style:none; margin:0; padding:0;}
+  ul.open li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.open li::before{content:"\25CB"; position:absolute; left:0; color:var(--muted2);}
+  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted2); font-size:.85rem;}
+  footer .cols{display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;}
+  footer h4{color:var(--muted); font-size:.85rem; margin:0 0 10px;}
+  footer a{color:var(--muted2); text-decoration:none;}
+  footer a:hover{color:var(--text);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+</style>
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.tr.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- Açık 12U Bilim Gözlemevi" property="og:title"/><meta content="Wollemi: açık, modüler, uzun ömürlü 12U KüpUydu bilim gözlemevi ve yeniden kullanılabilir uydu platformu." property="og:description"/><meta content="https://wollemi.athena.org.tr/index.tr.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="tr_TR" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- Açık 12U Bilim Gözlemevi" name="twitter:title"/><meta content="Wollemi: açık, modüler, uzun ömürlü 12U KüpUydu bilim gözlemevi ve yeniden kullanılabilir uydu platformu." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  "name": "Wollemi",
+  "url": "https://wollemi.athena.org.tr/index.tr.html",
+  "description": "Wollemi: açık, modüler, uzun ömürlü 12U KüpUydu bilim gözlemevi ve yeniden kullanılabilir uydu platformu.",
+  "image": "https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg",
+  "inLanguage": "tr"
+}</script></head>
+<body>
+<div class="banner">Özel depo -- analiz düzeyinde tasarım. Henüz donanım yok; buradaki her sayı bir mühendislik tahminidir. Tasarım tamamlandığında halka açılacaktır.</div>
+<header class="site">
+<div class="wrap bar">
+<div class="brand"><span class="dot"></span> WOLLEMI</div>
+<nav class="links">
+<a href="#mission">Görev</a>
+<a href="#gallery">Galeri</a>
+<a href="#deployment">Dağıtım</a>
+<a href="#specs">Özellikler</a>
+<a href="#subsystems">Alt sistemler</a>
+<a href="#status">Durum</a>
+</nav><div class="langsw"><a href="index.html">EN</a> <a class="cur" href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a href="index.zh.html">ZH</a></div>
+</div>
+</header>
+<section class="hero">
+<div class="wrap">
+<h1>Açık bir 12U bilim gözlemevi,<br/>İlk on yılını aşacak şekilde inşa edildi.</h1>
+<p class="tagline">Wollemi, tamamen açık, modüler bir küçük uydu platformudur ve ilk görevi, yapılandırma dosyalarından uçtan uca üretilen ve her değişiklikte otomatik bir regresyon testiyle kontrol edilen, katmanlı 50 yıllık bir hayatta kalma tasarımına sahip, bilim odaklı bir 12U CubeSat'tır.</p>
+<div class="hero-media">
+<img alt="Dünya'nın yörüngesindeki Wollemi 12U uzay aracının fotogerçekçi render'ı, dağıtılmış konfigürasyon" src="assets/img/blender_deployed.jpg"/>
+</div>
+<div class="pill-row">
+<span class="pill">12U KüpUydu zarfı</span>
+<span class="pill">~26 bilim aleti</span>
+<span class="pill">50 yıllık kademeli tasarım ömrü</span>
+<span class="pill">Yayınlandığında tamamen açık</span>
+<span class="pill">23/23 otomatik kontroller geçti</span>
+</div>
+</div>
+</section>
+<section id="mission">
+<div class="wrap">
+<h2 class="h">Misyon ve hedefler</h2>
+<p class="lead">Wollemi, açık, modüler, uzun ömürlü bir 12U bilim gözlemevi ve referans platformudur. On yıllarca süren uzay hava durumu, radyasyon ve Dünya gözlem verileri üretir, yörüngede sağlam elektronik ve yazılım sergiler ve tasarım, veri ve araçları herkesin yeniden kullanması için yayınlar.</p>
+<div class="grid cols-3">
+<div class="card">
+<div class="obj-id">OBJ-1</div>
+<h3>Uzay havası ve jeofizik</h3>
+<p>Uzun süreli kayıt verileri: manyetik alan, enerjik parçacıklar, güneş X-ışını/UV, toplam güneş radyasyonu, radyasyon dozu, plazma, VLF, gama ışını patlamaları.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-2</div>
+<h3>Yer gözlemi</h3>
+<p>5 m sınıf görüntüleme teleskobu, aynı optikleri paylaşan hiperspektral sahneler, termal kızılötesi, geniş alan gece görüntüleme.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-3</div>
+<h3>Teknoloji ve güvenilirlik bilimi</h3>
+<p>Üç farklı hesaplama ailesinin ve flaş bellek türlerinin yıllar içindeki radyasyon davranışı, hata verileri açıkça yayınlanmıştır.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-4</div>
+<h3>Yeniden kullanılabilir bir platform</h3>
+<p>Otobüs, hücre ızgarası, arka plaka, protokol ve araçlar bir kez tasarlanır ve yeniden kullanılır: yeni bir görev yeniden tasarım değil, bir konfigürasyon değişikliği artı yeni kartlardır.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-5</div>
+<h3>Tamamen açık, serbest bırakıldığında</h3>
+<p>Donanım CERN-OHL-S-2.0 altında, yazılım Apache-2.0 altında, belgeler CC-BY-4.0 altında -- tasarım tamamlanıp ticari marka kontrolü bittikten sonra.</p>
+</div>
+<div class="card">
+<h3>Tasarım gereği uzun ömürlü</h3>
+<p>Katmanlı bir hayatta kalma mimarisi: işaretçi ve denetleyici, ağır hesaplamalardan daha uzun ömürlü olacak şekilde tasarlanmıştır; bu da pillerden daha uzun ömürlü olacak şekilde tasarlanmıştır -- tek bir hata noktası değil, zarif bozulma.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="gallery">
+<div class="wrap">
+<h2 class="h">Tasarım galerisi</h2>
+<p class="lead">Aşağıdaki her görüntü, gerçek parametrik CAD modelinden doğrudan oluşturulmuştur.<span class="code">mechanical/wollemi_cad.py</span>, build123d/OpenCascade), bir kavram eskizi değil -- kütle, girişim ve yapısal kontrollerin çalıştığı aynı model.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="Dış izometrik görünüm, konuşlandırılmış konfigürasyon" src="assets/img/ext_iso_deployed.png"/>
+<figcaption>Dış, konuşlandırılmış -- kanatlar açık, izometrik görünüm</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Dış arka çeyrek görünüm, konuşlandırılmış konfigürasyon" src="assets/img/ext_iso_deployed_far.png"/>
+<figcaption>Dış, konuşlandırılmış -- arka-dört çeyrek görünüm</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Dış izometrik görünüm, depolanmış fırlatma konfigürasyonu" src="assets/img/ext_iso_stowed.png"/>
+<figcaption>Dış, istiflenmiş -- fırlatma konfigürasyonu</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Uzay aracının nadir Dünya görünümlü görüntüsü" src="assets/img/ext_nadir.png"/>
+<figcaption>Nadir (Dünya'ya bakan) görünüm, depolanmış</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Dış duvarlar gizlenmiş iç görünüm, dört enstrüman sütununu gösteriyor" src="assets/img/interior.png"/>
+<figcaption>İçerisi -- dış duvarlar gizli, dört sütun görünür</figcaption>
+</figure>
+<figure class="shot">
+<img alt="İki duvar ve zenit plakasının çıkarıldığı kesit görünümü" src="assets/img/cutaway.png"/>
+<figcaption>Kesit -- iki duvar ve zenit plaka çıkarıldı</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Her modülün sütun ile ayrıldığı açılmış montaj görünümü" src="assets/img/exploded.png"/>
+<figcaption>Açılmış görünüm -- her modül, sütuna göre renk kodlu</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Üç görünüş izdüşüm mühendislik çizimi: ön, Side ve üst" src="assets/img/three_view_drawing.png"/>
+<figcaption>Üç görünüş çizimi -- ön, yan, üst görünüşler</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Yerleştirilmiş uzay aracının 360 derece dönen render'ı" src="assets/img/spin_deployed.gif"/>
+<figcaption>360° döner tabla -- konuşlandırılmış konfigürasyon</figcaption>
+</figure>
+</div>
+<h3 style="margin:44px 0 8px; font-size:1.2rem;">Yörüngede</h3>
+<p class="lead" style="margin-bottom:22px;">Uzay aracı gerçek CAD geometrisidir (`mechanical/wollemi_cad.py`), gerçek bir yol izleyici (Blender/Cycles) kullanılarak gerçek bir NASA Mavi Mermer Dünya fotoğrafıyla işlenmiştir; güneş hücresi ve MLI-folyo yüzey malzemeleri temsili olup, yıldız alanı prosedüreldir, ancak aydınlatma ve geometri fiziksel olarak simüle edilmiştir, elle çizilmemiştir.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="Dünya'nın yörüngesindeki Wollemi'nin fotogerçekçi render'ı, konuşlandırılmış" src="assets/img/blender_deployed.jpg" style="height:220px;"/>
+<figcaption>Yörüngeye yerleştirildi (Döngü yolu izlenmiş render)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Wollemi'nin depolanmış, konuşlandırma öncesi fotogerçekçi renderı" src="assets/img/blender_stowed.jpg" style="height:220px;"/>
+<figcaption>Depolanmış -- konuşlandırma öncesi (Döngü yolu izlenmiş render)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Wollemi derin uzay yıldız alanına karşı konuşlandırıldı, açıklayıcı" src="assets/img/space_deep_field.png" style="height:220px;"/>
+<figcaption>Dağıtılmış, derin uzay geniş açılı çekim (illüstratif)</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="deployment">
+<div class="wrap">
+<h2 class="h">Dağıtım dizisi</h2>
+<p class="lead">Saklanmış fırlatma konfigürasyonundan tamamen açılmış duruma kanatların açılmasının şematik bir illüstrasyonu. <b>Menteşe/akordeon mekanizmasının kendisi henüz tasarlanmadı</b> (aşağıdaki açık maddelere bakınız), bu animasyon gerçek bir mekanizmayı simüle etmek yerine her panelin depolanmış ve konuşlandırılmış ayak izini enterpole eder -- amacı bunu doğrulamak değil, kavramı iletmektir.</p>
+<div class="anim-block">
+<img alt="Kanatların katlanmış durumdan tamamen açılmış duruma geçiş animasyonu" src="assets/img/deploy_sequence.gif"/>
+<div>
+<h3 style="margin-top:0">İki kanat, her biri üç panel</h3>
+<p style="color:var(--muted)">Her kanat üç çift taraflı panel taşır (her iki yüzeyde de hücreler bulunur, tercih edilen alacakaranlık-alacakaranlık yörüngesi güneşi her zaman tek bir tarafta değil, kanat-normal ekseninde tuttuğu için gereklidir). Her yığın başına altı tutma direği, fırlatma konfigürasyonu titreşim modunu rideshare minimumunun üzerinde rahat bir şekilde tutar.</p>
+<table class="specs" style="margin-top:16px;">
+<tr><th>Dağıtılmış açıklık</th><td>yaklaşık 2,1 m uçtan uca</td></tr>
+<tr><th>Panel sayısı</th><td>2 kanat × 3 panel, çift taraflı</td></tr>
+<tr><th>Saklanmış çıkıntı</th><td>CubeSat Tasarım Spesifikasyonu ray zarfı içinde</td></tr>
+<tr><th>Serbest bırakma mekanizması</th><td>yanma teli, üç bağımsız inhibitör</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="specs">
+<div class="wrap">
+<h2 class="h">Bir bakışta</h2>
+<table class="specs">
+<tr><th>Form</th><td>12U CubeSat zarfı, merkezi bir omurga etrafında 2×2×3 hücre ızgarası, yarıklı 100×100 mm kartlar</td></tr>
+<tr><th>Kütle / güç</th><td>24 kg bütçenin yaklaşık 16,8'i; 58 W güneş yönlü, 28 W yuvarlanan, 3 W güvenli mod yükü</td></tr>
+<tr><th>Bilim yükü</th><td>~26 enstrüman: 5 m sınıf teleskop + hiperspektral (ortak optik), termal IR, manyetometre, parçacık spektrometresi, X-ışını/UV monitörü, toplam güneş radyasyonu, VLF/ELF, Gama-ışın patlaması sayacı, radyasyon dozimetrisi, SEU/flaş deneyleri</td></tr>
+<tr><th>Hesapla</th><td>MSP430FR denetleyicisi, 2×STM32H7 uçuş kontrolcüsü, kütle bellek birimi (8×128 GB, 6+2 silme kodlaması), Raspberry Pi CM5, NVIDIA Jetson Orin Nano</td></tr>
+<tr><th>Güç</th><td>iki bağımsız LiFePO4 zinciri (A/B) artı tamamen bağımsız bir hayatta kalma zinciri, donanım tabanlı koruma (trip yolunda MCU yok)</td></tr>
+<tr><th>İtki</th><td>Merkez hattında iyot elektrikli ızgaralı-iyon itici, kütle merkezinin içinden eğimli; ~570 m/s kullanılabilir delta-v, pasif yedek olarak sürüklenme yelkeni</td></tr>
+<tr><th>İletişim</th><td>UHF/LoRa işaretleyici ve komuta, S-bant bilim iniş bağlantısı (250 kbps–2 Mbps adaptif), Ed25519 ile imzalanmış telekomutalar içeren CCSDS Uzay Paketleri</td></tr>
+<tr><th>Yörünge (tercih edilen)</th><td>şafak-alacakaranlık güneş-senkron, yaklaşık 700 km -- tutulma döngüsünü kaldırır, termal ve pil ömrü nedenleriyle tercih edilir</td></tr>
+<tr><th>Doğrulama</th><td>47 gereksinim izlendi; çoğu her çalıştırmada otomatik olarak kontrol edildi; 29 planlanmış fiziksel test</td></tr>
+</table>
+</div>
+</section>
+<section id="subsystems">
+<div class="wrap">
+<h2 class="h">Alt sistemler</h2>
+<p class="lead">Her alt sistem, kontrollerin karşılaştırıldığı aynı yapılandırma dosyalarından üretildiği için, bir tasarım değişikliği ve onun dokümantasyonu asla sessizce birbirinden ayrılamaz.</p>
+<table class="subsys-table">
+<tr><th>Alt sistem</th><th>Mimarlık</th></tr>
+<tr><td>Yapı</td><td>Alüminyum çerçeve, köşe rayları, dört sütun, kanat yığınları için sabitleme direkleri</td></tr>
+<tr><td>Güç</td><td>İki bağımsız MPPT/batarya zinciri (A, B) artı bağımsız bir hayatta kalma zinciri (C); kart başına eFuse, donanım kesme, koruma yolunda yazılım yok</td></tr>
+<tr><td>Termal</td><td>MLI yamalı pasif, izole teleskop sütunu, pil bölmesi ve hayatta kalma ısıtıcıları</td></tr>
+<tr><td>Tutum ve itki</td><td>Reaksiyon tekerlekleri, manyetorkuvvetlendiriciler, yıldız izleyici; merkez hattında iyot iticisi, kütle merkezinden eğimli; sürükleme yelkeni</td></tr>
+<tr><td>Hesapla</td><td>Denetleyici (MSP430FR), iki uçuş kontrolcüsü (STM32H7), kütle bellek birimi, Raspberry Pi CM5, Jetson Orin Nano</td></tr>
+<tr><td>Veri ve iletişim</td><td>İmzalı komutlara sahip CCSDS paketleri, CAN-FD kontrol düzlemi, Ethernet veri düzlemi, UHF ve S-bant radyo istasyonları</td></tr>
+<tr><td>Yük</td><td>26 enstrüman; uçuş kontrolörleri tarafından edinilen uzun ömürlü bilim (asla Linux düğümleri değil), Linux bilgisayarlar tarafından görüntüleme</td></tr>
+<tr><td>Zemin ve operasyonlar</td><td>Açık S-bant yer istasyonu kiti, gözetimsiz referans istasyonu, otomatik temas planlaması, tüm protokol için Kaitai Struct çözücüler</td></tr>
+</table>
+</div>
+</section>
+<section class="alt" id="status">
+<div class="wrap">
+<h2 class="h">Durum</h2>
+<p class="lead">Tasarım analiz seviyesinde tamamlanmıştır. Aşağıdakilerin hepsi otomatik olarak kontrol edilir.
+      <span class="code">python tools/check_all.py</span> her değişiklikte -- burada hiçbir şey tek seferlik bir iddia değildir.</p>
+<div class="status-grid">
+<div class="stat"><div class="num">23/23</div><div class="lbl">otomatik kontrollerin geçmesi</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">gereksinimler izlendi</div></div>
+<div class="stat"><div class="num">29</div><div class="lbl">planlanmış fiziksel testler</div></div>
+<div class="stat"><div class="num">~26</div><div class="lbl">bilim aletleri</div></div>
+</div>
+<div class="grid cols-2">
+<div>
+<h3>Analiz düzeyinde tamamlandı</h3>
+<ul class="tick">
+<li>Gereksinimler, mimarlık, girişim kontrolü ile parametrik CAD</li>
+<li>Güç, termal, tutum, yörünge ve yapısal analizler</li>
+<li>C, Python ve Kaitai Struct uygulamalarıyla tam komut/telemetri protokolü (27 mesaj)</li>
+<li>84 birim kontrolü ile yazılım çekirdeği (kimlik doğrulama, mod yöneticisi, hata tespiti, OTA)</li>
+<li>Elektronik arayüzü: KiCad kart ve arka panel şablonları, EPS/hayatta kalma kartı kat planları, DRC temiz</li>
+<li>FMEA, doğrulama matrisi, test planı, operasyon konsepti, maliyet ve zaman çizelgesi modeli</li>
+</ul>
+</div>
+<div>
+<h3>Hala açık</h3>
+<ul class="open">
+<li>Donanım yok: satıcı verileri, gerçek şemalar, prototipler ve fiziksel testler hepsi ileride</li>
+<li>Lans fırsatı, kayıtlı operatör ve frekans koordinasyonu henüz düzenlenmedi</li>
+<li>Kanat menteşe/yayılma mekanizması henüz tasarlanmadı (bu sitenin yayılma GIF'i yalnızca örnektir)</li>
+<li>Çift taraflı güneş panellerinin ticari bir örneği bulunmamaktadır -- özel bir parça</li>
+<li>Hedef seçimi hala açık: uçuş görevi, uçuş kalitesinde referans tasarım veya önce bir FlatSat/balon öncüsü</li>
+</ul>
+</div>
+</div>
+<div class="note" style="margin-top:30px;">
+<b>Bunu açıkça okuyun:</b> Bu sayfadaki her sayı, bir ölçüm değil, bir simülasyon veya elle hesaplama ile yapılmış bir mühendislik tahminidir. Wollemi'nin hiçbir parçası inşa edilmemiştir ve burada hiçbir şey uçuşa elverişli değildir.
+    </div>
+</div>
+</section>
+<footer>
+<div class="wrap cols">
+<div>
+<h4>Yünüm</h4>
+<p style="max-width:320px; color:var(--muted2);">Açık, modüler, uzun ömürlü 12U bilim gözlemevi ve yeniden kullanılabilir küçük uydu platformu. Şu an özel depoda; tasarım tamamlandığında halka açılacak.</p>
+</div>
+<div>
+<h4>Daha fazla oku</h4>
+<a href="https://github.com/alplix/wollemi" style="display:block; margin-bottom:6px;">github.com/alplix/wollemi</a>
+<span style="color:var(--muted2); display:block;">Sistem tasarım belgesi, gereksinimler, test planı ve her analiz aracı deponun içinde yer almaktadır. <span class="code">docs/</span> klasör</span>
+</div>
+<div>
+<h4>Lisanslama (planlanmış, henüz başvurulmadı)</h4>
+<span style="display:block;">Donanım: CERN-OHL-S-2.0</span>
+<span style="display:block;">Yazılım: Apache-2.0</span>
+<span style="display:block;">Belgeler: CC-BY-4.0</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

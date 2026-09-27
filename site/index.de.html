@@ -1,0 +1,356 @@
+html
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Wollemi – Open 12U Wissenschafts-Observatorium</title>
+<meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." name="description"/>
+<style>
+  :root{
+    --bg:#0d111c; --bg2:#121729; --panel:#161d31; --panel2:#1b2338;
+    --line:#2a3350; --text:#e7ecf7; --muted:#a9b3cc; --muted2:#7c88a8;
+    --accent:#5b7cff; --accent2:#8aa0ff; --gold:#e3c15a; --green:#57b878; --red:#d3675f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:var(--accent2);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header.site{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(13,17,28,0.82); border-bottom:1px solid var(--line);
+  }
+  header.site .bar{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; letter-spacing:.02em; flex-shrink:0;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.links{display:flex; gap:18px; font-size:.88rem; overflow-x:auto; scrollbar-width:none; white-space:nowrap;}
+  nav.links::-webkit-scrollbar{display:none;}
+  nav.links a{color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+  .langsw{display:flex; gap:6px; flex-shrink:0; font-size:.75rem;}
+  .langsw a{color:var(--muted2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 7px;}
+  .langsw a:hover{color:var(--text); border-color:var(--accent);}
+  .langsw a.cur{color:var(--accent2); border-color:var(--accent2);}
+  @media (max-width:640px){ .langsw{width:100%; order:3; flex-wrap:wrap;} }
+  @media (max-width:640px){
+    header.site .bar{flex-wrap:wrap;}
+    nav.links{gap:14px; font-size:.8rem; width:100%; justify-content:flex-start;}
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(91,124,255,.15), rgba(227,193,90,.10));
+    border-bottom:1px solid var(--line); font-size:.85rem; color:var(--muted); text-align:center; padding:8px 16px;
+  }
+  .hero{padding:64px 0 40px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 10px; letter-spacing:-.01em;}
+  .hero .tagline{color:var(--muted); font-size:1.15rem; max-width:720px; margin:0 auto 30px;}
+  .hero-media{position:relative; max-width:900px; margin:0 auto; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px -30px rgba(0,0,0,.6);}
+  .hero-media img{display:block; width:100%; height:auto;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px;}
+  .pill{
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:.85rem; color:var(--muted);
+  }
+  section{padding:56px 0;}
+  section.alt{background:rgba(255,255,255,.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  h2.h{font-size:1.7rem; margin:0 0 8px;}
+  p.lead{color:var(--muted); max-width:760px; margin:0 0 34px; font-size:1.02rem;}
+  .grid{display:grid; gap:20px;}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:860px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .card h3{margin:0 0 8px; font-size:1.05rem;}
+  .card p{color:var(--muted); margin:0; font-size:.94rem;}
+  .obj-id{display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; color:var(--accent2); background:rgba(91,124,255,.12); border:1px solid rgba(91,124,255,.3); padding:2px 8px; border-radius:6px; margin-bottom:10px;}
+  figure.shot{margin:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  figure.shot img{display:block; width:100%; height:280px; object-fit:cover; background:#0b0f19;}
+  figure.shot figcaption{padding:12px 16px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line);}
+  .specs{width:100%; border-collapse:collapse; font-size:.95rem;}
+  .specs th,.specs td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .specs th{color:var(--muted2); font-weight:600; width:190px;}
+  .specs td{color:var(--text);}
+  .anim-block{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center;}
+  @media (max-width:860px){ .anim-block{grid-template-columns:1fr;} }
+  .anim-block img{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block;}
+  .subsys-table{width:100%; border-collapse:collapse;}
+  .subsys-table th,.subsys-table td{padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  .subsys-table th{color:var(--muted2); font-weight:600;}
+  .status-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:860px){ .status-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:center;}
+  .stat .num{font-size:2rem; font-weight:800; color:var(--accent2);}
+  .stat .lbl{color:var(--muted); font-size:.82rem; margin-top:4px;}
+  .note{
+    background:rgba(227,193,90,.07); border:1px solid rgba(227,193,90,.35); border-radius:var(--radius);
+    padding:18px 20px; color:var(--muted); font-size:.92rem;
+  }
+  .note b{color:var(--gold);}
+  ul.tick{list-style:none; margin:0; padding:0;}
+  ul.tick li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.tick li::before{content:"\2713"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  ul.open{list-style:none; margin:0; padding:0;}
+  ul.open li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.open li::before{content:"\25CB"; position:absolute; left:0; color:var(--muted2);}
+  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted2); font-size:.85rem;}
+  footer .cols{display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;}
+  footer h4{color:var(--muted); font-size:.85rem; margin:0 0 10px;}
+  footer a{color:var(--muted2); text-decoration:none;}
+  footer a:hover{color:var(--text);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+</style>
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.de.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" property="og:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." property="og:description"/><meta content="https://wollemi.athena.org.tr/index.de.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="de_DE" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi – Open 12U Wissenschafts-Observatorium" name="twitter:title"/><meta content="Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  "name": "Wollemi",
+  "url": "https://wollemi.athena.org.tr/index.de.html",
+  "description": "Wollemi: ein offenes, modulares, langlebiges 12U CubeSat-Wissenschaftsobservatorium und wiederverwendbare Satellitenplattform.",
+  "image": "https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg",
+  "inLanguage": "de"
+}</script></head>
+<body>
+<div class="banner">Privates Repository – Analyse-Level-Design. Es existiert noch keine Hardware; jede Zahl hier ist eine Ingenieurwissenschafts-Schätzung. Öffnet sich der Öffentlichkeit, sobald das Design abgeschlossen ist.</div>
+<header class="site">
+<div class="wrap bar">
+<div class="brand"><span class="dot"></span> WOLLEMI</div>
+<nav class="links">
+<a href="#mission">Mission</a>
+<a href="#gallery">Galerie</a>
+<a href="#deployment">Bereitstellung</a>
+<a href="#specs">Spezifikationen</a>
+<a href="#subsystems">Teilsysteme</a>
+<a href="#status">Status</a>
+</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a class="cur" href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a href="index.zh.html">ZH</a></div>
+</div>
+</header>
+<section class="hero">
+<div class="wrap">
+<h1>Ein offenes 12U-Wissenschaftsobservatorium,<br/>gebaut, um sein erstes Jahrzehnt zu überdauern.</h1>
+<p class="tagline">Wollemi ist eine vollständig offene, modulare Klein-Satellitenplattform und seine erste Mission: ein wissenschaftsorientierter 12U CubeSat mit einem gestaffelten 50-Jahres-Überlebens-Design, das Ende-zu-Ende aus Konfigurationsdateien generiert und bei jeder Änderung durch eine automatisierte Regression überprüft wird.</p>
+<div class="hero-media">
+<img alt="Fotorealistisches Rendering des Wollemi 12U Raumschiffs in der Erdumlaufbahn, entfaltete Konfiguration" src="assets/img/blender_deployed.jpg"/>
+</div>
+<div class="pill-row">
+<span class="pill">12U CubeSat-Gehäuse</span>
+<span class="pill">~26 Wissenschaftsinstrumente</span>
+<span class="pill">50-jähriger gestufter Design-Lebenszyklus</span>
+<span class="pill">Vollständig geöffnet bei Veröffentlichung</span>
+<span class="pill">23/23 automatische Prüfungen bestanden</span>
+</div>
+</div>
+</section>
+<section id="mission">
+<div class="wrap">
+<h2 class="h">Mission und Ziele</h2>
+<p class="lead">Wollemi ist ein offenes, modulares, langlebiges 12U-Wissenschaftsobservatorium und Referenzplattform. Es erzeugt Daten zu Weltraumwetter, Strahlung und Erdbeobachtung über mehrere Jahrzehnte, demonstriert robuste Elektronik und Software im Orbit und veröffentlicht das Design, die Daten und die Werkzeuge für die Wiederverwendung durch jedermann.</p>
+<div class="grid cols-3">
+<div class="card">
+<div class="obj-id">OBJ-1</div>
+<h3>Weltraumwetter &amp; Geophysik</h3>
+<p>Langzeitdaten: Magnetfeld, energiereiche Teilchen, solare Röntgen-/UV-Strahlung, totale solare Irradiance, Strahlendosis, Plasma, VLF, Gammastrahlenausbrüche.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-2</div>
+<h3>Erdbeobachtung</h3>
+<p>5 m Klasse-Abbildungsfernrohr, hyperspektrale Szenen mit derselben Optik, thermische Infrarot-, Weitwinkel-Nachtbilder.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-3</div>
+<h3>Technologie- und Zuverlässigkeitswissenschaft</h3>
+<p>Strahlungsverhalten von drei verschiedenen Compute-Familien und von Flash-Speichertypen über Jahre, wobei die Fehlerdaten offen veröffentlicht werden.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-4</div>
+<h3>Eine wiederverwendbare Plattform</h3>
+<p>Der Bus, das Zellgitter, die Rückseite, das Protokoll und das Werkzeug werden einmal entworfen und wiederverwendet: eine neue Mission ist eine Konfigurationsänderung plus neue Karten, nicht ein Neugestaltung.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-5</div>
+<h3>Voll geöffnet, bei Freigabe</h3>
+<p>Hardware unter CERN-OHL-S-2.0, Software unter Apache-2.0, Dokumente unter CC-BY-4.0 – sobald das Design fertiggestellt und eine Markenprüfung abgeschlossen ist.</p>
+</div>
+<div class="card">
+<h3>Langlebigkeit durch Design</h3>
+<p>Eine gestaffelte Überlebensarchitektur: Der Leuchtturm und der Supervisor sind so konzipiert, dass sie die Batterien überdauern, die wiederum die schwere Berechnung überdauern – sanfter Abbau, kein einzelner Fehlerpunkt.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="gallery">
+<div class="wrap">
+<h2 class="h">Design-Galerie</h2>
+<p class="lead">Jedes Bild unten wird direkt aus dem realen parametrischen CAD-Modell gerendert (<span class="code">mechanical/wollemi_cad.py</span>, build123d/OpenCascade), nicht ein Begriffsskizze – dasselbe Modell, gegen das die Massen-, Interferenz- und Struktursprüfungen laufen.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="Außenisometrische Ansicht, aufgestellte Konfiguration" src="assets/img/ext_iso_deployed.png"/>
+<figcaption>Außenansicht, ausgefahren -- Flügel ausgefahren, isometrische Ansicht</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Außenansicht des hinteren Viertels, ausgeklappte Konfiguration" src="assets/img/ext_iso_deployed_far.png"/>
+<figcaption>Außenansicht, ausgefahren -- Heckviertelansicht</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Außenisometrische Ansicht, verstaute Startkonfiguration" src="assets/img/ext_iso_stowed.png"/>
+<figcaption>Außen, verstaut – Startkonfiguration</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Nadir-Blick der Raumsonde zur Erde" src="assets/img/ext_nadir.png"/>
+<figcaption>Nadir (erdwärts gerichtete) Ansicht, verstaut</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Innenansicht mit verdeckten Außenwänden, die die vier Instrumentensäulen zeigt" src="assets/img/interior.png"/>
+<figcaption>Innenraum – Außenwände verdeckt, vier Säulen sichtbar</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Schnittansicht mit zwei Wänden und entferntem Zenitplatte" src="assets/img/cutaway.png"/>
+<figcaption>Querschnitt – zwei Wände und die Zenitplatte entfernt</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Explodierte Baugruppenansicht, die jedes Modul durch eine Säule trennt" src="assets/img/exploded.png"/>
+<figcaption>Explodierte Ansicht – jedes Modul, farbcodiert nach Säule</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Dreiansichtige orthografische Ingenieurwissenschaftszeichnung: Vorderansicht, Seitenansicht und Draufsicht" src="assets/img/three_view_drawing.png"/>
+<figcaption>Drei-Ansichtzeichnung – Front, Side, Top-Ansichten</figcaption>
+</figure>
+<figure class="shot">
+<img alt="360-Grad-Drehrender von Raumfahrzeug-Render" src="assets/img/spin_deployed.gif"/>
+<figcaption>360°-Drehteller – eingesetzte Konfiguration</figcaption>
+</figure>
+</div>
+<h3 style="margin:44px 0 8px; font-size:1.2rem;">In der Umlaufbahn</h3>
+<p class="lead" style="margin-bottom:22px;">Das Raumschiff ist die echte CAD-Geometrie (`mechanical/wollemi_cad.py`), gerendert mit einem echten Pfadtracer (Blender/Cycles) unter Verwendung eines tatsächlichen NASA Blue Marble Erdfotos; die Oberflächenmaterialien der Solarzellen und der MLI-Folie sind illustrativ und der Sternenhimmel ist prozedural, aber die Beleuchtung und Geometrie sind physikalisch simuliert, nicht handgezeichnet.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="Fotorealistische Darstellung von Wollemi in der Erdumlaufbahn, ausgerollt" src="assets/img/blender_deployed.jpg" style="height:220px;"/>
+<figcaption>Bereitgestellt, in der Umlaufbahn (Zyklus-Pfadverfolgung-Render)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Fotorealistisches Rendering von Wollemi verstaut, vor dem Einsatz" src="assets/img/blender_stowed.jpg" style="height:220px;"/>
+<figcaption>Gelagert -- vor dem Einsatz (Zyklus-Pfadverfolgung-Render)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="Wollemi wurde gegen ein Tiefraum-Sternbild eingesetzt, illustrativ" src="assets/img/space_deep_field.png" style="height:220px;"/>
+<figcaption>Bereitgestellt, Tiefraum-Weitwinkelaufnahme (illustrativ)</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="deployment">
+<div class="wrap">
+<h2 class="h">Bereitstellungssequenz</h2>
+<p class="lead">Eine schematische Darstellung des Ausklappens der Flügel von der verstauten Startkonfiguration bis zur vollständigen Ausdehnung. <b>Der Scharnier-/Klappmechanismus selbst ist noch nicht entworfen</b> (siehe die unten aufgeführten Punkte), daher interpoliert diese Animation den verstauten und den ausgeklappten Fußabdruck jedes Panels, anstatt einen echten Mechanismus zu simulieren – sie dient dazu, den Begriff zu vermitteln, nicht ihn zu validieren.</p>
+<div class="anim-block">
+<img alt="Animation des Ausklappens der Flügel von verstaut bis vollständig ausgefahren" src="assets/img/deploy_sequence.gif"/>
+<div>
+<h3 style="margin-top:0">Zwei Flügel, je drei Paneele</h3>
+<p style="color:var(--muted)">Jedes Flügel trägt drei doppelseitige Paneele (Zellen auf beiden Seiten, notwendig, weil die bevorzugte Dämmerungsbahn die Sonne auf der Flügelnormalachse hält und nicht immer auf einer Seite). Sechs Haltepfosten pro Stapel halten den Vibrationsmodus der Startkonfiguration komfortabel über dem Rideshare-Minimum.</p>
+<table class="specs" style="margin-top:16px;">
+<tr><th>Bereitgestellter Bereich</th><td>etwa 2,1 m Spitze zu Spitze</td></tr>
+<tr><th>Anzahl der Paneele</th><td>2 Flügel × 3 Paneele, doppelseitig</td></tr>
+<tr><th>Verstaute Vorsprünge</th><td>innerhalb des CubeSat Design Spezifikations-Schienenumfangs</td></tr>
+<tr><th>Freigabemechanismus</th><td>Branddraht, drei unabhängige Hemmungen</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="specs">
+<div class="wrap">
+<h2 class="h">Auf einen Blick</h2>
+<table class="specs">
+<tr><th>Form</th><td>12U CubeSat-Gehäuse, 2×2×3 Zellenraster um einen zentralen Rumpf, eingeschnittene 100×100 mm Karten</td></tr>
+<tr><th>Masse / Leistung</th><td>etwa 16,8 von 24 kg Budget; 58 W sonnenorientiert, 28 W drehend, 3 W sicherer Modus-Last</td></tr>
+<tr><th>Wissenschaftspaket</th><td>~26 Instrumente: 5 m Klasse-Teleskop + hyperspektral (gemeinsame Optik), thermisches IR, Magnetometer, Teilchenspektrometer, Röntgen-/UV-Monitor, totale Sonnenirradianz, VLF/ELF, Gammablitz-Zähler, Strahlendosimetrie, SEU/Blitz-Experimente</td></tr>
+<tr><th>Berechnen</th><td>MSP430FR-Supervisor, 2×STM32H7-Flugcontroller, Massenspeichereinheit (8×128 GB, 6+2 Erasure Coding), Raspberry Pi CM5, NVIDIA Jetson Orin Nano</td></tr>
+<tr><th>Kraft</th><td>zwei unabhängige LiFePO4-Ketten (A/B) plus eine vollständig unabhängige Überlebenskette, Hardware-Schutz (kein MCU im Trip-Pfad)</td></tr>
+<tr><th>Antrieb</th><td>Iod elektrischer Gitter-Ionenantrieb auf der Mittellinie, geneigt durch den Massenschwerpunkt; ca. 570 m/s verfügbares Delta-v, Segel als passive Reserve</td></tr>
+<tr><th>Kommunikation</th><td>UHF/LoRa-Beacon und -Befehlsgebung, S-Band-Wissenschafts-Downlink (250 kbps–2 Mbps adaptiv), CCSDS Space Packets mit Ed25519-signierten Telebefehlen</td></tr>
+<tr><th>Orbit (bevorzugt)</th><td>Dämmerungs-Abend sonnensynchron, ca. 700 km -- entfernt Eklipsen-Kreislauf, bevorzugt aus thermischen und Akku-Lebensdauergründen</td></tr>
+<tr><th>Überprüfung</th><td>47 Anforderungen nachverfolgt; die meisten automatisch bei jedem Durchlauf geprüft; 29 geplante physische Tests</td></tr>
+</table>
+</div>
+</section>
+<section id="subsystems">
+<div class="wrap">
+<h2 class="h">Teilsysteme</h2>
+<p class="lead">Jedes Subsystem wird aus denselben Konfigurationsdateien generiert, gegen die die Prüfungen laufen, sodass sich eine Design-Änderung und ihre Dokumentation niemals leise voneinander entfernen können.</p>
+<table class="subsys-table">
+<tr><th>Subsystem</th><th>Architektur</th></tr>
+<tr><td>Struktur</td><td>Aluminiumrahmen, Eckleisten, vier Säulen, Haltepfosten für die Flügelstapel</td></tr>
+<tr><td>Kraft</td><td>Zwei unabhängige MPPT/Batterie-Ketten (A, B) plus eine unabhängige Überlebenskette (C); eFuse pro Karte, Hardware-Kill, keine Software im Schutzpfad</td></tr>
+<tr><td>Thermisch</td><td>Passiv mit MLI-Patches, isolierte Teleskop-Säule, Batterie-Tresor und Überlebensheizungen</td></tr>
+<tr><td>Haltung und Antrieb</td><td>Reaktionsräder, Magnetorquer, Sterntracker; Iod-Antrieb auf der Mittellinie, geneigt durch den Massenschwerpunkt; Widerstandssegel</td></tr>
+<tr><td>Berechnen</td><td>Supervisor (MSP430FR), zwei Flugsteuerungen (STM32H7), Massenspeichereinheit, Raspberry Pi CM5, Jetson Orin Nano</td></tr>
+<tr><td>Daten &amp; Kommunikation</td><td>CCSDS-Pakete mit signierten Befehlen, CAN-FD-Steuerungsebene, Ethernet-Datenebene, UHF- und S-Band-Funkgeräten</td></tr>
+<tr><td>Nutzlast</td><td>26 Instrumente; langlebige Wissenschaft, erworben von den Flugsteuerungen (niemals die Linux-Knoten), Bildgebung durch die Linux-Computer</td></tr>
+<tr><td>Boden und Betrieb</td><td>Offenes S-Band-Bodenstations-Kit, unbewachte Referenzstation, automatisierte Kontaktplanung, Kaitai Struct-Decoder für das gesamte Protokoll</td></tr>
+</table>
+</div>
+</section>
+<section class="alt" id="status">
+<div class="wrap">
+<h2 class="h">Status</h2>
+<p class="lead">Das Design ist auf Analyseebene abgeschlossen. Alles darunter wird automatisch überprüft von
+      <span class="code">python tools/check_all.py</span> bei jeder Änderung – nichts hier ist ein einmaliger Anspruch.</p>
+<div class="status-grid">
+<div class="stat"><div class="num">23/23</div><div class="lbl">Automatische Prüfungen bestanden</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">Anforderungen nachverfolgt</div></div>
+<div class="stat"><div class="num">29</div><div class="lbl">geplante physische Tests</div></div>
+<div class="stat"><div class="num">~26</div><div class="lbl">Wissenschaftsinstrumente</div></div>
+</div>
+<div class="grid cols-2">
+<div>
+<h3>Auf Analyseebene abgeschlossen</h3>
+<ul class="tick">
+<li>Anforderungen, Architektur, parametrisches CAD mit Kollisionsprüfungen</li>
+<li>Leistungs-, thermische, Haltungs-, Orbit- und Strukturanalysen</li>
+<li>Vollständiges Befehls-/Telemetrie-Protokoll (27 Nachrichten) mit C-, Python- und Kaitai Struct-Implementierungen</li>
+<li>Firmware-Kern (Authentifizierung, Modusmanager, Fehlererkennung, OTA) mit 84 Einheitenprüfungen</li>
+<li>Elektronik-Schnittstelle: KiCad-Platinen- und Backplane-Vorlagen, EPS/Überlebensplatinen-Grundrisse, DRC-sauber</li>
+<li>FMEA, Verifizierungsmatrix, Testplan, Betriebskonzept, Kosten- und Zeitplanmodell</li>
+</ul>
+</div>
+<div>
+<h3>Noch offen</h3>
+<ul class="open">
+<li>Es existiert keine Hardware: Anbieterdaten, echte Schaltpläne, Prototypen und physische Tests sind alle noch ausstehend</li>
+<li>Startmöglichkeit, Betreiber der Aufzeichnung und Frequenzkoordination noch nicht geregelt</li>
+<li>Flügelgelenk-/Ausmechanismus noch nicht entworfen (das Ausführungs-GIF dieser Seite ist nur illustrativ)</li>
+<li>Zweiseitige Solarmodule haben keinen kommerziellen Präzedenzfall – ein Sonderteil</li>
+<li>Die Wahl des Ziels steht noch offen: Flugmission, flugtaugliches Referenz-Design oder zuerst ein FlatSat/Ballon-Vorläufer</li>
+</ul>
+</div>
+</div>
+<div class="note" style="margin-top:30px;">
+<b>Lesen Sie dies klar:</b> Jede Zahl auf dieser Seite ist eine Ingenieurwissenschaftliche Schätzung aus einer Simulation oder einer manuellen Berechnung, keine Messung. Kein Teil von Wollemi wurde gebaut und nichts hier ist für den Flug qualifiziert.
+    </div>
+</div>
+</section>
+<footer>
+<div class="wrap cols">
+<div>
+<h4>Wollemi</h4>
+<p style="max-width:320px; color:var(--muted2);">Ein offenes, modulares, langlebiges 12U-Wissenschaftsobservatorium und wiederverwendbare Klein-Satellitenplattform. Privatarchiv vorerst; wird öffentlich, sobald das Design fertiggestellt ist.</p>
+</div>
+<div>
+<h4>Mehr lesen</h4>
+<a href="https://github.com/alplix/wollemi" style="display:block; margin-bottom:6px;">github.com/alplix/wollemi</a>
+<span style="color:var(--muted2); display:block;">System Design Document, Anforderungen, Testplan und jedes Analysewerkzeug befinden sich im Repository <span class="code">docs/</span> Ordner.</span>
+</div>
+<div>
+<h4>Lizenzierung (geplant, noch nicht beantragt)</h4>
+<span style="display:block;">Hardware: CERN-OHL-S-2.0</span>
+<span style="display:block;">Software: Apache-2.0</span>
+<span style="display:block;">Dokumente: CC-BY-4.0</span>
+</div>
+</div>
+</footer>
+</body>
+</html>

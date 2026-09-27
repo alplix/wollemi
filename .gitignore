@@ -8,3 +8,4 @@ firmware/tests/*.o
 firmware/tests/auth_cli
 firmware/tests/test_firmware
 sim/out/
+site/.translate_cache.json

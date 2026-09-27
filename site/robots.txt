@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://wollemi.athena.org.tr/sitemap.xml
