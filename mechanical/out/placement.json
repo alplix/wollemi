@@ -841,7 +841,7 @@
    "true_volume_cm3": 79.2
   },
   {
-   "name": "LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse",
+   "name": "LiFePO4 pack C (2S1P, 5 Wh, 6.4 V nominal, ~780 mAh) survival bus, independent string + BMS + fuse",
    "col": 4,
    "tier": "core",
    "mass_kg": 0.1,

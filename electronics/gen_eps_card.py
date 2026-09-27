@@ -80,11 +80,11 @@ def build_eps():
     L.append(gc.footprint("J1", "WL-P", 8.0, 30.0, "gkp", "WL-P 2x30 (control + CAN-FD)"))
     # three MPPT buck channels (10s2p panel string each, 8-40V in, ~24W)
     for i, y in enumerate((22, 46, 70)):
-        L.append(block(f"U{i + 1}", "MPPT_BUCK", 40, y, 26, 18, f"MPPT ch{i + 1}: 8-40V->6.4V, ~24W"))
-    L.append(block("U4", "CHG_BAL", 68, 22, 28, 20, "Pack charger + balancer: CC-CV 7.3V, 3.3A"))
-    L.append(block("U5", "IDEAL_DIODE", 68, 48, 20, 14, "Ideal diode OR-ing to bus"))
-    L.append(block("U6", "EFUSE_OVPUVP", 68, 66, 24, 16, "eFuse + OVP/UVP, hardware only"))
-    L.append(block("U7", "TELEM_MCU", 40, 92, 22, 14, "Telemetry MCU: V/I/T, CAN-FD"))
+        L.append(block(f"U{i + 1}", "LT8490", 40, y, 26, 18, f"MPPT ch{i + 1}: 8-40V->6.4V, ~24W (cand. LT8490)"))
+    L.append(block("U4", "BQ29209-Q1", 68, 22, 28, 20, "2S balance corrector (cand. BQ29209-Q1)"))
+    L.append(block("U5", "LTC4359", 68, 48, 20, 14, "Ideal diode OR-ing (cand. LTC4359)"))
+    L.append(block("U6", "TPS2597x", 68, 66, 24, 16, "eFuse+OVP/UVP, HW only (cand. TPS2597x)"))
+    L.append(block("U7", "STM32G0B1", 40, 92, 22, 14, "Telemetry MCU: V/I/T, CAN-FD (cand. STM32G0B1)"))
     L.append(")")
     return "\n".join(L) + "\n"
 
@@ -92,12 +92,12 @@ def build_eps():
 def build_survival():
     L = outline_and_frame("WOLLEMI SURVIVAL CARD v0 (floor plan)")
     L.append(gc.footprint("J1", "WL-P", 8.0, 30.0, "gkp", "WL-P 2x30 (control + CAN-FD)"))
-    L.append(block("U1", "CHG_C", 45, 22, 26, 18, "Pack C charger: 4s2p ~9.6V, 1A"))
-    L.append(block("U2", "DIRECT_PATH", 45, 46, 22, 16, "Direct string path -> supervisor (sun-only)"))
-    L.append(block("U3", "IDEAL_DIODE", 75, 22, 18, 14, "Ideal diode"))
-    L.append(block("U4", "BURNWIRE1", 45, 68, 24, 16, "Burn-wire driver 1: 3 inhibits (timer, supervisor, sep-sw)"))
-    L.append(block("U5", "BURNWIRE2", 45, 90, 24, 16, "Burn-wire driver 2: 3 inhibits (same)"))
-    L.append(block("U6", "TELEM_MCU", 78, 46, 20, 14, "Telemetry MCU"))
+    L.append(block("U1", "LT8490", 45, 22, 26, 18, "Pack C charger 2S1P ~6.4V, 1A (cand. LT8490)"))
+    L.append(block("U2", "LTC4359", 45, 46, 22, 16, "Direct path -> supervisor (cand. LTC4359)"))
+    L.append(block("U3", "LTC4359", 75, 22, 18, 14, "Ideal diode (cand. LTC4359)"))
+    L.append(block("U4", "MOSFET+AND", 45, 68, 24, 16, "Burn-wire 1: 3-input AND gate + FET (discrete)"))
+    L.append(block("U5", "MOSFET+AND", 45, 90, 24, 16, "Burn-wire 2: 3-input AND gate + FET (discrete)"))
+    L.append(block("U6", "MSP430FR?", 78, 46, 20, 14, "Telemetry: reuse supervisor? (open, see docs/eps-card.md)"))
     L.append(")")
     return "\n".join(L) + "\n"
 

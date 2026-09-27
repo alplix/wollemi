@@ -79,7 +79,7 @@ Interior occupancy: 48 modules, 16.75 kg, centre of mass (-5.8, -7.3, +10.8) mm 
 | D3 | 266 - 276 | LONG: impact protection (double-wall Whipple-type, Nextel/Kevlar layers) for p | 100 x 100 x 10 | 0.80 |
 | D3 | 286 - 336 | SCI: solar X-ray / UV monitor (flare detection) | 60 x 50 x 50 | 0.20 |
 | D3 | 286 - 336 | Survival bus: containment + isolated charger + burn-wire deploy drivers | 60 x 40 x 50 | 0.10 |
-| D3 | 310 - 336 | LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse | 40 x 60 x 25 | 0.10 |
+| D3 | 310 - 336 | LiFePO4 pack C (2S1P, 5 Wh, 6.4 V nominal, ~780 mAh) survival bus, independent | 40 x 60 x 25 | 0.10 |
 
 ## Propulsion bay (between Q2 and Q3)
 

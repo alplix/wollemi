@@ -48,8 +48,10 @@ More mass, volume and board area (~0.3-0.6 kg, ~0.3-0.5U for 6U). Accepted: reli
 
 ## Survival bus (independent emergency source)
 
-A third, fully independent power path: **pack C (5 Wh LiFePO4)** with its own solar string,
-charger, BMS, fuse and containment. It is not connected to buses A/B and feeds only:
+A third, fully independent power path: **pack C (2S1P LiFePO4, 5 Wh, 6.4 V nominal, ~780 mAh)** with its own solar string,
+charger, BMS, fuse and containment. The 2S configuration matches packs A/B's bus convention on purpose (`docs/eps-card.md`): it lets the survival card reuse the same
+charger, ideal-diode and eFuse parts as EPS-A/B (fewer unique parts to qualify and stock for the whole spacecraft), at the cost of needing a small-format LiFePO4 cell
+in this capacity class (not yet sourced). It is not connected to buses A/B and feeds only:
 
 - MSP430 supervisor and beacon transmitter
 - antenna and wing deployment drivers (burn wire), so deployment never depends on packs A/B

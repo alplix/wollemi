@@ -474,7 +474,7 @@ volume_cm3 = 20
 tier = "science"
 
 [[module]]
-name = "LiFePO4 pack C (5 Wh) survival bus, independent string + BMS + fuse"
+name = "LiFePO4 pack C (2S1P, 5 Wh, 6.4 V nominal, ~780 mAh) survival bus, independent string + BMS + fuse"
 mass_kg = 0.10
 power_w = 0.0
 duty = 1.0
