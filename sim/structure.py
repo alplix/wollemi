@@ -58,9 +58,11 @@ def wing_panel_frequency():
     per_edge = S["wing"]["hold_down_points"] // 2
     b_eff = bb / (per_edge - 1) if per_edge >= 2 else bb
     f_ss = (math.pi / 2) * math.sqrt(D / (wp["rho"] * t)) * (1 / a ** 2 + 1 / b_eff ** 2)
-    print(f"Stowed wing panel ({a * 1e3:.0f} x {bb * 1e3:.0f} x {t * 1e3:.1f} mm): {f_edges:.0f} Hz if supported only at its ends; with {per_edge} hold-down posts "
-          f"along each long edge the free span is {b_eff * 1e3:.0f} mm and the mode rises to {f_ss:.0f} Hz")
-    return f_ss
+    f_design = math.sqrt(f_edges * f_ss)   # geometric mean of the two idealised bounds: real point supports lie strictly between "ends only" and "continuous line at each post row"
+    print(f"Stowed wing panel ({a * 1e3:.0f} x {bb * 1e3:.0f} x {t * 1e3:.1f} mm): {f_edges:.0f} Hz if supported only at its ends (lower bound); with {per_edge} hold-down posts "
+          f"along each long edge idealised as a continuous line the mode rises to {f_ss:.0f} Hz (upper bound, optimistic -- the posts are discrete points, not a line). Real point supports fall "
+          f"between these two hand-calculated bounds; a proper FEM or modal test is needed. Design value used below: {f_design:.0f} Hz (geometric mean of the two bounds).")
+    return f_design
 
 
 def rails_and_loads():

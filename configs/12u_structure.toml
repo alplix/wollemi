@@ -92,6 +92,6 @@ lever_m = 0.015
 bolt_circle_m = 0.060
 
 [wing]
-panel_areal_mass_kg_m2 = 3.5
+panel_areal_mass_kg_m2 = 4.2       # = rho*t of materials.pcb_cell_panel (2000 kg/m3 x 2.1 mm); unified after a review found the two figures disagreed
 hold_down_points = 6          # per wing stack: 3 posts along each long edge (corners + mid-length), with preload
 preload_n = 120.0

@@ -9,7 +9,7 @@ load and stiffness specification replaces the generic values below.
 |---|---|---|
 | Frame lateral bending mode (cantilever estimate) | ~900 Hz | 9x over a 100 Hz minimum |
 | Side wall panel (3 mm Al, loaded) | ~167 Hz | 1.7x |
-| **Stowed wing panel (2.1 mm)** | 99 Hz if held only at its ends; **~190 Hz with three hold-down posts along each long edge** | 1.9x (was 0.99x) |
+| **Stowed wing panel (2.1 mm)** | 99 Hz if held only at its ends (lower bound); ~190 Hz if the three hold-down posts are idealised as a continuous line (upper bound, optimistic); design value ~137 Hz (geometric mean) | 1.4x (was 0.99x) |
 | Quasi-static 20 g: rails axial / frame bending stress | 10 / 3 MPa against 240 MPa yield | > 18x |
 | Bolted mounts (telescope, tank, packs, Jetson, ADCS, vault, GRB) at 40 g local | margins 6x to 27x | all >= 6x |
 | Wing hold-down preload vs lift-off (6 points, 120 N preload) | 53 N load per point | 2.3x |
@@ -21,8 +21,10 @@ Verdict: 14 of 14 checks meet their margin after one design change.
 ## Design change found by the analysis
 
 The stowed wing panels (226 x 340 x 2.1 mm, PCB + cells) would resonate at about 99 Hz, right at the minimum stiffness a rideshare provider usually asks for, and worse if
-held only by corner posts. **Each wing stack now has six hold-down posts (three along each long edge, including mid-length)**, which halves the free span and raises the mode to ~190 Hz. Posts pass
-through the panel stack and release together with the burn wire. This is a requirement on the wing mechanical design (`mechanical/`, to be detailed).
+held only by corner posts. **Each wing stack now has six hold-down posts (three along each long edge, including mid-length)**, which halves the free span. The two idealised hand-calculation
+bounds are 99 Hz (posts absent) and ~191 Hz (posts idealised as a continuous line, optimistic, since three points are not a line); `sim/structure.py` now uses their geometric mean, ~138 Hz, as the
+design value (margin 1.4x), rather than reporting the optimistic 190 Hz figure as if it were the answer. Posts pass through the panel stack and release together with the burn wire. This is a
+requirement on the wing mechanical design (`mechanical/`, to be detailed), and the true point-supported frequency needs an FEM model or a modal survey to pin down within the 99-191 Hz range.
 
 ## Cards and modules
 

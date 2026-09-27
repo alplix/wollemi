@@ -81,9 +81,9 @@ evidence = ["sim/eps_design.py"]
 id = "PWR-5"
 text = "Wing panels carry cells on both faces (needed for the dawn-dusk power scenarios)."
 method = "I"
-evidence = ["docs/adcs.md", "mechanical/README.md"]
+evidence = ["docs/adcs.md", "mechanical/README.md", "docs/structure.md"]
 status = "open"
-note = "Feasibility of a 2.1 mm double-sided panel (stiffness, mass, cost) is unproven."
+note = "A vendor search found no off-the-shelf double-sided panel (EnduroSat/AAC Clyde/DHV all single-faced); custom panel and vendor quote needed. Stiffness is checked (sim/structure.py, 1.4x margin on a conservative estimate); mass and cost are still unproven."
 
 [[req]]
 id = "THM-1"
@@ -320,9 +320,9 @@ note = "Depends on launch and licensing."
 id = "OPEN-3"
 text = "Public relay service: any licensed amateur can send and fetch short messages through the store-and-forward payload."
 method = "I"
-evidence = ["docs/protocol.md"]
-status = "open"
-note = "Relay payload protocol messages exist; service policy not written."
+evidence = ["docs/protocol.md", "docs/relay-policy.md"]
+status = "designed"
+note = "Policy written (docs/relay-policy.md); the ground ingestion service it specifies is not yet built."
 
 [[req]]
 id = "OPEN-4"
@@ -344,9 +344,9 @@ note = "Signature check is implemented and tested (firmware/tests)."
 id = "OPEN-6"
 text = "Rate limits and message quotas protect the relay from flooding; policy documented."
 method = "I"
-evidence = ["docs/protocol.md"]
-status = "open"
-note = "Quota policy not yet written."
+evidence = ["docs/relay-policy.md"]
+status = "designed"
+note = "Quotas specified (5 msg/callsign/day, 256-message onboard queue, FIFO drop, 7-day expiry); ground ingestion service and onboard queue enforcement not yet built."
 
 [[req]]
 id = "OPEN-7"

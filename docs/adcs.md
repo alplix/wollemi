@@ -38,6 +38,11 @@ so with cells on one face only, one wing would face away from the sun. The power
 lit, which is only true with **cells on both faces of each panel** (2.1 mm total thickness required; stiffness, mass and cost are open issues).
 The tumbling case is then even better (a double-sided plate averages twice the projected area).
 
+A vendor search (EnduroSat, AAC Clyde Space PHOTON, DHV Technology) found no off-the-shelf CubeSat panel with cells on both faces of one panel: their "single/double/triple deployable"
+naming describes the number of folding hinge segments, not which faces carry cells, because a normal 3-axis-stabilised mission always keeps one face sunward and has no reason to populate
+the back. Double-sided cell mounting for this mission's geometry is therefore a **custom requirement with no found commercial precedent**, not a proven off-the-shelf option; it needs a
+custom panel design and a vendor quote, and the stiffness question is checked separately in `sim/structure.py` (`docs/structure.md`).
+
 ## Open items
 
 - Full simulation: detumble after separation, sun acquisition, nadir tracking, slews, burn mode with flexible modes.
