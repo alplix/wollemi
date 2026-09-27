@@ -162,12 +162,20 @@ def main():
     a("")
     a("## 8. Open items and decisions for the operator")
     a("")
-    a("1. Choose the target: a flight mission, a flight-quality reference design, or the precursor path (FlatSat + balloon); this decides effort and cost by an order of magnitude.")
-    a("2. Confirm the preferred orbit (dawn-dusk sun-synchronous, about 700 km) and whether the outreach LED stays in the flight configuration.")
+    a("1. Choose the target: a flight mission, a flight-quality reference design, or the precursor path (FlatSat + balloon); this decides effort and cost by an order of magnitude. "
+      "*Recommendation (not a decision the design can make): the precursor path first, since it retires the most risk per dollar and keeps the flight-vs-reference choice open until after it.*")
+    a("2. Confirm the preferred orbit (dawn-dusk sun-synchronous, about 700 km) and whether the outreach LED stays in the flight configuration. "
+      "*Recommendation: dawn-dusk is favoured on this analysis for thermal, power and battery-life reasons (`docs/orbit-and-debris.md`, `docs/thermal.md`, `docs/longevity.md`) and is the working assumption "
+      "throughout; the LED is a purely aesthetic choice for the operator, not an engineering one -- the corrected physics (`docs/outreach-led.md`) now shows a blue+violet combination gives both a naked-eye-visible "
+      "flash and a camera beacon at only 10 W, so cost is no longer a reason against it either way.*")
     a("3. Get vendor quotes and datasheets for the thruster, cells, optics and launch; replace estimates and module envelopes.")
     a("4. Detailed design still missing: EPS and other schematics, vendor CAD, boom and antenna mechanisms, umbilical and separation switches, finite-element model, thermal detail model.")
-    a("5. Prior-art and patent search, trademark check for the name, licences and public release (`docs/licensing.md`).")
+    a("5. Prior-art and patent search, trademark check for the name, licences and public release (`docs/licensing.md`). "
+      "*Update: a real trademark conflict was found (Ginkgo Bioworks holds a live US registration on \"GINKGO\" covering computer hardware/software design services) and a same-named unrelated "
+      "open-source HPC library already exists; a rename should be seriously considered before any public release (`docs/licensing.md`). Making the repository public is the operator's decision to make and to act on, not something to be done automatically here.*")
     a("6. Partners: a licensed operator organisation, a launch sponsor or programme, test facilities.")
+    a("7. The 50-year design life versus the 25-year disposal guideline (`LONG-4`, `docs/orbit-and-debris.md`): documented here as \"the 50-year figure is a platform design life; the operational life of any one "
+      "flight ends with a disposal manoeuvre inside the guideline (or a documented exception)\" -- flagged for the operator to confirm or override, since it affects how the mission is described publicly.")
     open(os.path.join(ROOT, "docs", "sdd.md"), "w", encoding="utf-8").write("\n".join(L) + "\n")
     print("wrote docs/sdd.md")
 
