@@ -77,6 +77,25 @@ so tracking with an ordinary SDR is straightforward. Use real orbit elements onc
 
 - `groundstation/predict.py`: pass prediction, Doppler and pass statistics (needs `pip install sgp4`).
 - `groundstation/decode.py`: reference decoder for hex packets and `.wpk` archive streams, built on the generated protocol module.
+- `groundstation/kaitai/wollemi_beacon.ksy`: a [Kaitai Struct](https://kaitai.io/) decoder for the beacon message (see below).
+
+## Open archive: SatNOGS DB integration (OPEN-2, OPEN-7)
+
+"Anyone can receive it" needs more than a public protocol spec: a station that has never heard of this mission still needs to know how to decode its frames. SatNOGS solves exactly this with two
+pieces, both real and already in production for other satellites:
+
+1. **SatNOGS DB** ([db.satnogs.org](https://db.satnogs.org/)): the satellite/transmitter registry. Once the spacecraft has a NORAD ID (post-launch), the mission is registered here with its
+   transmitter frequencies, modulation and framing, so every SatNOGS station's scheduler knows to listen for it.
+2. **SatNOGS Decoders** ([github.com/librespacefoundation/satnogs-decoders](https://github.com/librespacefoundation/satnogs-decoders)): a shared repository of [Kaitai Struct](https://kaitai.io/)
+   (`.ksy`) frame decoders. A satellite operator submits a `.ksy` file describing their telemetry format as a pull request; once merged, **every SatNOGS ground station worldwide automatically
+   decodes that satellite's frames** and the decoded fields land in SatNOGS DB's telemetry API (open, CC-BY-SA) -- not just the stations the project itself runs. This is the concrete mechanism
+   behind OPEN-7 ("data published continuously in an open archive").
+
+**Status:** `groundstation/kaitai/wollemi_beacon.ksy` is a first decoder, for the `beacon` message (the one message explicitly meant to be "decodable by any listener", `protocol/messages.toml`).
+Its byte-level model (CCSDS primary header bit-packing, the Wollemi secondary header, the payload fields) is verified against the real protocol encoder by
+`groundstation/kaitai/verify_beacon_ksy.py`, which is part of the automatic regression. **What is not yet done:** the `.ksy` file's actual Kaitai Struct syntax has not been run through the
+official `kaitai-struct-compiler` (it needs a Java toolchain, not available in this environment) -- that check, plus a real decoder for the other 26 messages, are needed before submitting the
+pull request, and the PR itself can only be usefully merged once the spacecraft has real transmitter details (frequency, modulation) to register in SatNOGS DB alongside it.
 
 ## Anchor stations (COLAV-4: at least two)
 

@@ -202,6 +202,12 @@ def c_chain():
     return "CHAIN CHECK OK" in out, out.strip().splitlines()[-1][:160] if out.strip() else "no output"
 
 
+def c_kaitai_beacon():
+    out = subprocess.run([sys.executable, os.path.join(ROOT, "groundstation", "kaitai", "verify_beacon_ksy.py")], capture_output=True, text=True)
+    ok = out.returncode == 0 and "All fields in wollemi_beacon.ksy" in out.stdout
+    return ok, "beacon .ksy byte-model matches the real encoder" if ok else (out.stdout + out.stderr)[-200:]
+
+
 def c_kicad_drc():
     rep = os.path.join(ROOT, "electronics", "kicad", "drc_report.txt")
     if not os.path.exists(rep):

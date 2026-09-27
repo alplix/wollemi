@@ -41,6 +41,7 @@ OPTIONAL = [
     ("FMEA coverage", "tools/fmea_check.py", [PY, "tools/fmea_check.py"], "FMEA coverage OK", r"FMEA coverage.*", False),
     ("Requirements sync", "tools/req_sync_check.py", [PY, "tools/req_sync_check.py"], "REQ SYNC OK", r"REQ SYNC.*", False),
     ("Long-life chain", "sim/chain_check.py", [PY, "sim/chain_check.py"], "CHAIN CHECK OK", r"CHAIN CHECK.*", False),
+    ("Beacon Kaitai model", "groundstation/kaitai/verify_beacon_ksy.py", [PY, "groundstation/kaitai/verify_beacon_ksy.py"], "All fields in wollemi_beacon.ksy", r"All fields.*", False),
     ("Test plan coverage", "tools/test_plan_check.py", [PY, "tools/test_plan_check.py"], "TEST PLAN coverage OK", r"TEST PLAN coverage.*", False),
 ]
 
