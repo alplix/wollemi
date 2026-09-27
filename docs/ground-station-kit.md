@@ -94,9 +94,13 @@ pieces, both real and already in production for other satellites:
 **Status:** `groundstation/kaitai/wollemi_protocol.ksy` covers all 27 messages (`protocol/gen_kaitai.py`, generated from the same `protocol/messages.toml` the C and Python implementations use, so the
 three can never silently drift apart), switching on the CCSDS APID in the primary header to pick each message's payload type. Its byte-level model (CCSDS primary header bit-packing, the Wollemi
 secondary header, telecommand counter/valid-until/signature placement, every payload field) is verified against the real protocol encoder by `groundstation/kaitai/verify_all_ksy.py` (one real
-encoded packet per message, every field checked), which is part of the automatic regression. **What is not yet done:** the `.ksy` file's actual Kaitai Struct syntax has not been run through the
-official `kaitai-struct-compiler` (it needs a Java toolchain, not available in this environment) -- that check is needed before submitting the pull request, and the PR itself can only be usefully
-merged once the spacecraft has real transmitter details (frequency, modulation) to register in SatNOGS DB alongside it.
+encoded packet per message, every field checked), which is part of the automatic regression.
+
+**The `.ksy` has also been run through the real, official `kaitai-struct-compiler`** (not just the hand-parser model check above): `groundstation/kaitai/compile_check.py` -- optional, not part of
+`tools/check_all.py` since a JVM and the compiler are not a standing dependency of this repository -- downloads/locates `kaitai-struct-compiler` and a JVM, compiles the `.ksy` to a real Python
+parser, and round-trips all 27 messages through it. **Confirmed working: kaitai-struct-compiler 0.11, Eclipse Temurin JDK 17, 2026-09-27 -- all 27 messages compiled and decoded correctly.** Re-run
+`compile_check.py` after any future change to `protocol/messages.toml` or `protocol/gen_kaitai.py` to reconfirm; it prints `SKIPPED` harmlessly on a machine without Java. What remains before a real
+pull request to `satnogs-decoders`: the spacecraft needs real transmitter details (frequency, modulation) to register in SatNOGS DB alongside the decoder, which only exists post-launch.
 
 ## Anchor stations (COLAV-4: at least two)
 

@@ -1,11 +1,12 @@
 """Verify wollemi_protocol.ksy (protocol/gen_kaitai.py) against the real protocol encoder, for all 27 messages.
 
-Same caveat as before: no Java/kaitai-struct-compiler is available in this environment, so this does not prove
-the emitted YAML is syntactically valid Kaitai Struct -- it proves the byte/bit *model* the generator emits
-(header sizes, tc-extra placement, signature placement, field order and sizes) is correct, by hand-parsing a
-real encoded packet the same way `protocol/gen_kaitai.py`'s `body_type()` declares the layout, independently of
-`wollemi_proto.decode()` (so a bug shared between the two would not hide here), for every message in
-protocol/messages.toml.
+This check needs no JVM by design (unlike compile_check.py, which runs the real kaitai-struct-compiler when one
+is available), so it always runs as part of the regression. It does not prove the emitted YAML is syntactically
+valid Kaitai Struct -- it proves the byte/bit *model* the generator emits (header sizes, tc-extra placement,
+signature placement, field order and sizes) is correct, by hand-parsing a real encoded packet the same way
+`protocol/gen_kaitai.py`'s `body_type()` declares the layout, independently of `wollemi_proto.decode()` (so a
+bug shared between the two would not hide here), for every message in protocol/messages.toml. See
+groundstation/kaitai/compile_check.py for the real-compiler check (confirmed working 2026-09-27).
 
 Usage: python groundstation/kaitai/verify_all_ksy.py
 """
@@ -92,9 +93,9 @@ def main():
     print()
     print(f"All {n_checked} messages in wollemi_protocol.ksy match the real encoder output, field by field.")
     print("This proves the WIRE-FORMAT MODEL is correct for every message; it does not prove the .ksy file's")
-    print("Kaitai Struct syntax compiles (no Java / kaitai-struct-compiler is available in this environment) --")
-    print("run `kaitai-struct-compiler --target python wollemi_protocol.ksy` and parse a real capture before")
-    print("submitting it to https://github.com/librespacefoundation/satnogs-decoders.")
+    print("Kaitai Struct syntax compiles on its own -- run groundstation/kaitai/compile_check.py for that (it")
+    print("needs a JVM and the compiler, and is confirmed working as of 2026-09-27) before submitting this to")
+    print("https://github.com/librespacefoundation/satnogs-decoders.")
     return 0
 
 

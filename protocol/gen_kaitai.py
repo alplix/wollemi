@@ -9,10 +9,11 @@ Writes groundstation/kaitai/wollemi_protocol.ksy (replaces the earlier hand-writ
 covered only the beacon message; this file covers all 27).
 
 Important limits, stated here so they are not lost on the way to a real submission:
-- The .ksy syntax has not been run through the official `kaitai-struct-compiler` (no Java toolchain in this
-  environment). `groundstation/kaitai/verify_all_ksy.py` instead hand-parses real encoder output for every
-  message and checks every field, which proves the byte/bit *model* this generator emits is correct -- it does
-  not prove the emitted YAML is syntactically valid Kaitai Struct. Run the real compiler before submitting.
+- `groundstation/kaitai/verify_all_ksy.py` hand-parses real encoder output for every message and checks every
+  field, proving the byte/bit *model* this generator emits is correct without needing a JVM.
+  `groundstation/kaitai/compile_check.py` additionally runs the emitted .ksy through the real, official
+  `kaitai-struct-compiler` when one is available (confirmed working: kaitai-struct-compiler 0.11, Eclipse
+  Temurin JDK 17, 2026-09-27, all 27 messages) -- re-run it after changing this generator or messages.toml.
 - Telecommand messages ("kind = tc") are unsigned/zero-signature in ground test fixtures; a real capture would
   carry a real Ed25519 signature in that same 64-byte field, which this decoder does not attempt to verify
   (`firmware/common/wl_auth.c` is the verifier; a passive ground decoder has no reason to hold the private key).
