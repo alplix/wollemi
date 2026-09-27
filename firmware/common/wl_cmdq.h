@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Time-tagged command queue with absolute-time and orbit-position triggers (pure logic, host-testable). */
 #ifndef WL_CMDQ_H
 #define WL_CMDQ_H

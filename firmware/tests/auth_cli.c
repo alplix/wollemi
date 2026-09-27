@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Command-line wrapper around wl_auth_check for cross-language tests.
  * usage: auth_cli <last_counter> <now_coarse> <pubkey_hex> [<prev_pubkey_hex|-> ] <packet_hex>
  * prints the integer result code. */

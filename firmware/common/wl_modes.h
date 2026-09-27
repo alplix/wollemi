@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Spacecraft mode manager and degradation ladder (pure logic, host-testable). */
 #ifndef WL_MODES_H
 #define WL_MODES_H

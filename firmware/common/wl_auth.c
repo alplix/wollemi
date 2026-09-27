@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 #include "wl_auth.h"
 #include <string.h>
 #include "../../protocol/generated/wollemi_proto.h"

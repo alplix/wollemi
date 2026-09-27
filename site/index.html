@@ -126,7 +126,7 @@
       12U CubeSat with a tiered 50-year survival design, generated end to end from configuration files and checked
       by an automated regression on every change.</p>
     <div class="hero-media">
-      <img src="assets/img/space_earth_limb.png" alt="Illustration of the Wollemi 12U spacecraft in orbit above Earth, deployed configuration">
+      <img src="assets/img/blender_deployed.jpg" alt="Photorealistic render of the Wollemi 12U spacecraft in orbit above Earth, deployed configuration">
     </div>
     <div class="pill-row">
       <span class="pill">12U CubeSat envelope</span>
@@ -230,20 +230,21 @@
     </div>
 
     <h3 style="margin:44px 0 8px; font-size:1.2rem;">In orbit</h3>
-    <p class="lead" style="margin-bottom:22px;">Illustrative compositions -- the spacecraft is the real CAD geometry
-      rendered by the same tool as above; the starfield, Earth and sun are artwork, not photographs.</p>
+    <p class="lead" style="margin-bottom:22px;">The spacecraft is the real CAD geometry (`mechanical/wollemi_cad.py`), rendered with a real path tracer
+      (Blender/Cycles) using an actual NASA Blue Marble Earth photograph; the solar-cell and MLI-foil surface materials are illustrative, and the
+      starfield is procedural, but the lighting and geometry are physically simulated, not hand-drawn.</p>
     <div class="grid cols-3">
       <figure class="shot">
-        <img src="assets/img/space_earth_limb.png" alt="Wollemi in orbit above Earth, deployed, sun in the background" style="height:220px;">
-        <figcaption>Deployed, dawn-dusk sun-synchronous orbit</figcaption>
+        <img src="assets/img/blender_deployed.jpg" alt="Photorealistic render of Wollemi in orbit above Earth, deployed" style="height:220px;">
+        <figcaption>Deployed, in orbit (Cycles path-traced render)</figcaption>
       </figure>
       <figure class="shot">
-        <img src="assets/img/space_deep_field.png" alt="Wollemi deployed against a deep-space starfield" style="height:220px;">
-        <figcaption>Deployed, deep-space wide shot</figcaption>
+        <img src="assets/img/blender_stowed.jpg" alt="Photorealistic render of Wollemi stowed, pre-deployment" style="height:220px;">
+        <figcaption>Stowed -- pre-deployment (Cycles path-traced render)</figcaption>
       </figure>
       <figure class="shot">
-        <img src="assets/img/space_stowed_sunlit.png" alt="Wollemi stowed, pre-deployment, sunlit" style="height:220px;">
-        <figcaption>Stowed -- pre-deployment</figcaption>
+        <img src="assets/img/space_deep_field.png" alt="Wollemi deployed against a deep-space starfield, illustrative" style="height:220px;">
+        <figcaption>Deployed, deep-space wide shot (illustrative)</figcaption>
       </figure>
     </div>
   </div>

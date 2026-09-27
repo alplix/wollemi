@@ -49,7 +49,7 @@ def total_len(msg, payload):
 
 def gen_python(cfg):
     nodes = cfg["nodes"]
-    L = ['"""GENERATED from protocol/messages.toml by protocol/gen.py. Do not edit."""',
+    L = ['# SPDX-FileCopyrightText: 2026 Wollemi contributors', '# SPDX-License-Identifier: Apache-2.0', '"""GENERATED from protocol/messages.toml by protocol/gen.py. Do not edit."""',
          "import struct", "", f"NODES = {nodes!r}", "NODE_NAMES = {v: k for k, v in NODES.items()}",
          f"SEC_LEN = {SEC_LEN}", f"TC_EXTRA = {TC_EXTRA}", f"SIG_LEN = {SIG}", "",
          "MESSAGES = {}", ""]
@@ -162,7 +162,8 @@ def decode(pkt):
 
 def gen_c(cfg):
     nodes = cfg["nodes"]
-    H = ["/* GENERATED from protocol/messages.toml by protocol/gen.py. Do not edit. */",
+    H = ["/* SPDX-FileCopyrightText: 2026 Wollemi contributors */", "/* SPDX-License-Identifier: Apache-2.0 */",
+         "/* GENERATED from protocol/messages.toml by protocol/gen.py. Do not edit. */",
          "#ifndef WOLLEMI_PROTO_H", "#define WOLLEMI_PROTO_H", "#include <stdint.h>", "#include <stddef.h>",
          "#include <string.h>", "",
          f"#define WL_SEC_LEN {SEC_LEN}", f"#define WL_TC_EXTRA {TC_EXTRA}", f"#define WL_SIG_LEN {SIG}", ""]

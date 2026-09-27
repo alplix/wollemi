@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Telecommand authentication: CRC, structure, validity window, replay protection and Ed25519 signature.
  * Host-testable pure C99; the signature primitive is TweetNaCl (firmware/third_party/tweetnacl, public domain). */
 #ifndef WL_AUTH_H

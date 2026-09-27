@@ -14,8 +14,9 @@ Wollemi builds on the work of many open projects and communities. Nothing here i
 
 ## Software and tools used
 
-- **KiCad** (electronics, DRC), **build123d** and **OpenCascade** (CAD), **numpy**, **scipy**, **Pillow**, **cryptography** (Ed25519 signing on the ground side), **sgp4** (orbit propagation), Python and GCC.
+- **KiCad** (electronics, DRC), **build123d** and **OpenCascade** (CAD), **numpy**, **scipy**, **Pillow**, **cryptography** (Ed25519 signing on the ground side), **sgp4** (orbit propagation), **Blender/Cycles** (the photorealistic renders in `mechanical/out/gallery/blender_*`), Python and GCC.
 - **TweetNaCl** (Daniel J. Bernstein, Bernard van Gastel, Wesley Janssen, Tanja Lange, Peter Schwabe, Sjaak Smetsers): public-domain Ed25519 implementation used for verification in the firmware core (`firmware/third_party/tweetnacl`).
+- **NASA Visible Earth "Blue Marble"** (`mechanical/blender_assets/earth_bluemarble.jpg`, land_ocean_ice_cloud_2048.jpg, https://visibleearth.nasa.gov/images/57735): public-domain Earth imagery (Reto Stockli, Robert Simmon and the MODIS teams) used as the Earth texture in the photorealistic renders; not a copyright claim on Earth, only attribution for the specific image.
 
 ## People and organisations
 

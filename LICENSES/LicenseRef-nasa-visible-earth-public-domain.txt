@@ -1,0 +1,6 @@
+NASA Visible Earth public domain dedication
+
+NASA Visible Earth imagery is generally not copyrighted (per NASA's media usage guidelines,
+https://www.nasa.gov/nasa-brand-center/images-and-media/) and may be used freely; this LicenseRef exists only
+because SPDX has no single standard identifier for that policy. It carries no additional terms.
+CREDITS.md records the specific image and its creators (Reto Stockli, Robert Simmon and the MODIS teams).

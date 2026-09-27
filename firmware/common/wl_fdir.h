@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Heartbeat monitoring and staged FDIR escalation (pure logic, host-testable). */
 #ifndef WL_FDIR_H
 #define WL_FDIR_H

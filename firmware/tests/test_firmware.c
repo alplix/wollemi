@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* Host unit tests for the firmware core: mode ladder, FDIR, command queue, OTA. */
 #include <stdio.h>
 #include <string.h>

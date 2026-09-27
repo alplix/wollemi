@@ -1,0 +1,7 @@
+TweetNaCl public domain dedication
+
+TweetNaCl (Daniel J. Bernstein, Bernard van Gastel, Wesley Janssen, Tanja Lange, Peter Schwabe, Sjaak Smetsers)
+is dedicated to the public domain by its authors, per https://tweetnacl.cr.yp.to/. This LicenseRef exists only
+because SPDX has no single standard identifier for a public-domain dedication; it carries no additional terms
+beyond that dedication. See firmware/third_party/tweetnacl/README.md for the exact version and checksums used
+in this repository.

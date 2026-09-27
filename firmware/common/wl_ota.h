@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Wollemi contributors
+// SPDX-License-Identifier: Apache-2.0
+
 /* A/B over-the-air update state machine with confirm-or-rollback (pure logic, host-testable).
  * Flash access, hashing and the actual boot switch are supplied by the HAL; this module decides what is allowed and when to roll back. */
 #ifndef WL_OTA_H

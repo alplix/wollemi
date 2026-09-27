@@ -1,3 +1,5 @@
+/* SPDX-FileCopyrightText: 2026 Wollemi contributors */
+/* SPDX-License-Identifier: Apache-2.0 */
 /* GENERATED from protocol/messages.toml by protocol/gen.py. Do not edit. */
 #ifndef WOLLEMI_PROTO_H
 #define WOLLEMI_PROTO_H

@@ -1,0 +1,46 @@
+version = 1
+SPDX-PackageName = "Wollemi"
+SPDX-PackageSupplier = "Wollemi contributors"
+SPDX-PackageDownloadLocation = "https://github.com/alplix/wollemi"
+
+# Licensing plan for a project that is still private (docs/licensing.md): nothing here is applied to a public
+# release yet, and this file itself is preparation, not a claim of REUSE (https://reuse.software/) compliance.
+# The mapping below follows docs/licensing.md's directory table exactly; see that document for the reasoning.
+# Individual files may still carry their own SPDX-License-Identifier / SPDX-FileCopyrightText header (several
+# do, see firmware/common/ and the protocol generators); where they do not, this file is the declaration of
+# record for that path, per the REUSE.toml mechanism.
+
+# ---------------------------------------------------------------- hardware design: CERN-OHL-S-2.0
+[[annotations]]
+path = ["electronics/**", "mechanical/**", "configs/**"]
+SPDX-FileCopyrightText = "2026 Wollemi contributors"
+SPDX-License-Identifier = "CERN-OHL-S-2.0"
+
+# ---------------------------------------------------------------- software and tools: Apache-2.0
+[[annotations]]
+path = ["sim/**", "firmware/common/**", "firmware/tests/**", "protocol/**", "groundstation/**", "tools/**"]
+SPDX-FileCopyrightText = "2026 Wollemi contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+# ---------------------------------------------------------------- third-party code and assets: keep the upstream terms
+[[annotations]]
+path = "firmware/third_party/tweetnacl/**"
+SPDX-FileCopyrightText = "Daniel J. Bernstein, Bernard van Gastel, Wesley Janssen, Tanja Lange, Peter Schwabe, Sjaak Smetsers"
+SPDX-License-Identifier = "LicenseRef-tweetnacl-public-domain"
+
+[[annotations]]
+path = "mechanical/blender_assets/earth_bluemarble.jpg"
+SPDX-FileCopyrightText = "NASA (Reto Stockli, Robert Simmon and the MODIS Land/Atmosphere/Ocean Groups), Visible Earth"
+SPDX-License-Identifier = "LicenseRef-nasa-visible-earth-public-domain"
+
+# ---------------------------------------------------------------- documentation, figures and the draft website: CC-BY-4.0
+[[annotations]]
+path = ["docs/**", "mission/**", "site/**", "README.md", "CREDITS.md", "mechanical/out/*.png", "mechanical/out/*.svg", "mechanical/out/gallery/**"]
+SPDX-FileCopyrightText = "2026 Wollemi contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# ---------------------------------------------------------------- this file and the plan itself
+[[annotations]]
+path = ["REUSE.toml", "LICENSES/**"]
+SPDX-FileCopyrightText = "2026 Wollemi contributors"
+SPDX-License-Identifier = "CC0-1.0"
