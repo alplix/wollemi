@@ -22,6 +22,8 @@ import time
 import urllib.error
 import urllib.request
 
+from bs4 import CData, Comment, Doctype, ProcessingInstruction
+
 for _stream in (sys.stdout, sys.stderr):
     # Windows console codepages (e.g. cp1254 on a Turkish locale) can't encode the non-Latin script
     # language labels (Русский, 中文) printed as progress headers below.
@@ -102,6 +104,9 @@ def translate(text, tgt, cache):
 
 
 def should_translate(node):
+    if isinstance(node, (Doctype, Comment, CData, ProcessingInstruction)):
+        return False  # these are NavigableString subclasses too; find_all(string=True) matches them,
+        # and rewriting the Doctype node's text (e.g. "html") turns it into a stray visible text node.
     if node.parent is None or node.parent.name in ("script", "style"):
         return False
     for anc in node.parents:
