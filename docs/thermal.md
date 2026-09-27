@@ -41,6 +41,7 @@ The optics limit (10-30 C, swing <= 6 K) only has to hold while imaging, so the 
 
 ## Open items
 
+- Physics review: wings are now checked as an isolated sun-pointing radiator (`sim/thermal.py`): 30 C at the maximum-power-point absorptivity, 63 C in the worst case of no power extraction; both are far inside typical solar-cell limits, so no active thermal control is needed for the wings themselves. The off-maximum-power-point effect on the *body* faces is now quantified as an advisory (not yet fed back into the node temperatures): up to about 19 W of extra absorbed heat in the NOMINAL case and up to about 51 W in the dawn-dusk case (where generation exceeds load the most), against a modelled total dissipation of 17.5-27.5 W. This is the largest unresolved thermal gap and should get a dedicated MPPT-aware case before flight.
 - Physics review: safe mode needs the optics heater off (8 W would exceed the 10.9 W body-cell power); `sim/thermal.py` now checks the modelled heater power against the budgeted 2.2 W, uses the analytic side view factor (0.23 instead of 0.17) and adds cold and hot environment extremes. Not yet modelled: wing panels, the cell operating point (cells that do not extract power run hotter, up to ~20 W extra on a lit face in the worst case), a tank temperature limit.
 
 - Propulsion bay: tank and thruster reach ~100 C in burn mode in this model; real thermal isolation, radiator and the vendor's heat rejection must be designed.

@@ -225,6 +225,33 @@ def report(title, beta, power, **kw):
     return res
 
 
+def wing_temperature(alpha, eps=0.85):
+    """Equilibrium temperature of a double-sided wing panel pointed straight at the sun, radiating from both faces, no conduction to the bus
+    (a deployed wing is only weakly conducted to the frame through its hinge, so treating it as thermally isolated is the conservative, simple bound)."""
+    return (alpha * S / (2 * eps * SIG)) ** 0.25 - 273.15
+
+
+def off_mpp_report():
+    """Advisory only (not fed back into the node integration): when the load is well below the illuminated generation, MPPT trackers back off
+    (sim/eps_design.py) and the cells run closer to open-circuit than to their maximum-power point, so less of the absorbed sunlight leaves as
+    electricity and more stays as heat. alpha_eff can then rise from about 0.6 (at MPP) toward about 0.9 (no extraction, worst case)."""
+    import sys
+    sys.path.insert(0, os.path.join(ROOT, "sim"))
+    import budget
+    r = budget.compute(cfg)
+    print("Off-maximum-power-point advisory (not included in the temperatures above): when illuminated generation exceeds the load, the array is not")
+    print("fully at its maximum power point and a lit face can run hotter than the alpha=0.6 assumption models. Worst case (alpha 0.9, no extraction):")
+    for sc in r["scenarios"]:
+        if sc["gen"] <= 0:
+            continue
+        duty = min(1.0, sc["cons"] / sc["gen"])
+        extra_frac = 0.3 * (1 - duty)          # additional fraction of the incident flux retained as heat instead of leaving as electricity
+        extra_w = extra_frac / 0.6 * sc["gen"]  # approx.: sc['gen'] was computed at alpha_eff~0.6; back out the incident optical power it implies
+        print(f"  {sc['name'][:42]:42s}: extraction duty ~{duty * 100:3.0f} % -> up to ~{extra_w:.1f} W of extra absorbed heat, spread over the lit faces")
+    print("This does not change the pass/fail verdicts above; it flags that the hottest cases (large excess generation, e.g. dawn-dusk NOMINAL) have less")
+    print("margin than modelled and should get a dedicated MPPT-aware thermal case before flight.")
+
+
 def main():
     print(f"Orbit period {PERIOD / 60:.1f} min, Earth angular radius {math.degrees(RHO):.1f} deg")
     print("Column masses (kg): " + ", ".join(f"Q{q} {col_mass[q]:.2f}" for q in (1, 2, 3, 4)) +
@@ -265,6 +292,13 @@ def main():
     print()
     print("Reading: batteries and electronics limits are checked automatically; a flagged line means the coating, conduction or")
     print("heater assumptions need to change (radiator area, heat straps, wing-back radiators, heater power).")
+    print()
+    t_mpp, t_worst = wing_temperature(0.6), wing_temperature(0.9)
+    print(f"Wing panel, sun-pointing steady state (isolated from the bus, radiating both faces): {t_mpp:.0f} C at maximum power point (alpha 0.6), "
+          f"{t_worst:.0f} C worst case if not extracting power (alpha 0.9); both are well inside typical solar-cell operating limits (-100..+100 C), "
+          f"so the wings do not need active thermal control.")
+    print()
+    off_mpp_report()
     return 1 if report.failed else 0
 
 
