@@ -21,6 +21,8 @@ FILES = [
     ("index.es.html", "es", "es_ES"),
     ("index.ru.html", "ru", "ru_RU"),
     ("index.zh.html", "zh", "zh_CN"),
+    ("index.ja.html", "ja", "ja_JP"),
+    ("index.ko.html", "ko", "ko_KR"),
 ]
 
 
@@ -39,9 +41,12 @@ def process(fname, lang, og_locale):
     image = f"{BASE_URL}/assets/img/blender_deployed.jpg"
 
     for tag in head.find_all(["link", "meta", "script"]):
-        if tag.name == "link" and tag.get("rel") in ("canonical", "icon", "apple-touch-icon"):
+        if tag.name == "link" and set(tag.get("rel") or []) & {"canonical", "icon", "apple-touch-icon"}:
+            # bs4 treats "rel" as a multi-valued attribute (tag.get("rel") is a list, e.g. ["canonical"]),
+            # so a plain "in (...)" tuple-membership check against it never matches -- it silently left
+            # every earlier run's canonical/icon/apple-touch-icon tags in place instead of replacing them.
             tag.decompose()
-        elif tag.name == "meta" and (tag.get("property", "").startswith(("og:", "twitter:")) or tag.get("name") == "twitter:card" or tag.get("name") == "robots"):
+        elif tag.name == "meta" and (tag.get("property", "").startswith("og:") or tag.get("name", "").startswith("twitter:") or tag.get("name") == "robots"):
             tag.decompose()
         elif tag.name == "script" and tag.get("type") == "application/ld+json":
             tag.decompose()

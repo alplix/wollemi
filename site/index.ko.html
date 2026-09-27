@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>볼레미 -- 오픈 12U 과학 관측소</title>
+<meta content="Wollemi: 개방형, 모듈형, 장수명 12U 큐브샛 과학 관측소 및 재사용 가능한 위성 플랫폼." name="description"/>
+<style>
+  :root{
+    --bg:#0d111c; --bg2:#121729; --panel:#161d31; --panel2:#1b2338;
+    --line:#2a3350; --text:#e7ecf7; --muted:#a9b3cc; --muted2:#7c88a8;
+    --accent:#5b7cff; --accent2:#8aa0ff; --gold:#e3c15a; --green:#57b878; --red:#d3675f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:var(--accent2);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header.site{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(13,17,28,0.82); border-bottom:1px solid var(--line);
+  }
+  header.site .bar{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; letter-spacing:.02em; flex-shrink:0;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.links{display:flex; gap:18px; font-size:.88rem; overflow-x:auto; scrollbar-width:none; white-space:nowrap;}
+  nav.links::-webkit-scrollbar{display:none;}
+  nav.links a{color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+  .langsw{display:flex; gap:6px; flex-shrink:0; font-size:.75rem;}
+  .langsw a{color:var(--muted2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 7px;}
+  .langsw a:hover{color:var(--text); border-color:var(--accent);}
+  .langsw a.cur{color:var(--accent2); border-color:var(--accent2);}
+  @media (max-width:640px){ .langsw{width:100%; order:3; flex-wrap:wrap;} }
+  @media (max-width:640px){
+    header.site .bar{flex-wrap:wrap;}
+    nav.links{gap:14px; font-size:.8rem; width:100%; justify-content:flex-start;}
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(91,124,255,.15), rgba(227,193,90,.10));
+    border-bottom:1px solid var(--line); font-size:.85rem; color:var(--muted); text-align:center; padding:8px 16px;
+  }
+  .hero{padding:64px 0 40px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 10px; letter-spacing:-.01em;}
+  .hero .tagline{color:var(--muted); font-size:1.15rem; max-width:720px; margin:0 auto 30px;}
+  .hero-media{position:relative; max-width:900px; margin:0 auto; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px -30px rgba(0,0,0,.6);}
+  .hero-media img{display:block; width:100%; height:auto;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px;}
+  .pill{
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:.85rem; color:var(--muted);
+  }
+  section{padding:56px 0;}
+  section.alt{background:rgba(255,255,255,.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  h2.h{font-size:1.7rem; margin:0 0 8px;}
+  p.lead{color:var(--muted); max-width:760px; margin:0 0 34px; font-size:1.02rem;}
+  .grid{display:grid; gap:20px;}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:860px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .card h3{margin:0 0 8px; font-size:1.05rem;}
+  .card p{color:var(--muted); margin:0; font-size:.94rem;}
+  .obj-id{display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; color:var(--accent2); background:rgba(91,124,255,.12); border:1px solid rgba(91,124,255,.3); padding:2px 8px; border-radius:6px; margin-bottom:10px;}
+  figure.shot{margin:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  figure.shot img{display:block; width:100%; height:280px; object-fit:cover; background:#0b0f19;}
+  figure.shot figcaption{padding:12px 16px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line);}
+  .specs{width:100%; border-collapse:collapse; font-size:.95rem;}
+  .specs th,.specs td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .specs th{color:var(--muted2); font-weight:600; width:190px;}
+  .specs td{color:var(--text);}
+  .anim-block{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center;}
+  @media (max-width:860px){ .anim-block{grid-template-columns:1fr;} }
+  .anim-block img{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block;}
+  .subsys-table{width:100%; border-collapse:collapse;}
+  .subsys-table th,.subsys-table td{padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  .subsys-table th{color:var(--muted2); font-weight:600;}
+  .status-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:860px){ .status-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:center;}
+  .stat .num{font-size:2rem; font-weight:800; color:var(--accent2);}
+  .stat .lbl{color:var(--muted); font-size:.82rem; margin-top:4px;}
+  .note{
+    background:rgba(227,193,90,.07); border:1px solid rgba(227,193,90,.35); border-radius:var(--radius);
+    padding:18px 20px; color:var(--muted); font-size:.92rem;
+  }
+  .note b{color:var(--gold);}
+  ul.tick{list-style:none; margin:0; padding:0;}
+  ul.tick li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.tick li::before{content:"\2713"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  ul.open{list-style:none; margin:0; padding:0;}
+  ul.open li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.open li::before{content:"\25CB"; position:absolute; left:0; color:var(--muted2);}
+  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted2); font-size:.85rem;}
+  footer .cols{display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;}
+  footer h4{color:var(--muted); font-size:.85rem; margin:0 0 10px;}
+  footer a{color:var(--muted2); text-decoration:none;}
+  footer a:hover{color:var(--text);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+
+  /* -- motion, 3D viewer, stat strip, manifesto beats -- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+  .viewer-wrap{max-width:900px; margin:0 auto;}
+  .viewer{
+    width:100%; height:440px; border-radius:var(--radius); overflow:hidden; touch-action:none;
+    border:1px solid var(--line); background:radial-gradient(ellipse at 50% 28%, rgba(91,124,255,.16), transparent 62%), #0b0f19;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
+  }
+  .viewer canvas{display:block; opacity:0; transition:opacity .5s ease;}
+  .viewer.ready canvas{opacity:1;}
+  @media (max-width:640px){ .viewer{height:320px;} }
+  .viewer-toggle{display:flex; gap:8px; justify-content:center; margin-top:16px;}
+  .viewer-toggle button{
+    background:var(--panel2); border:1px solid var(--line); color:var(--muted); padding:8px 20px;
+    border-radius:999px; cursor:pointer; font-size:.85rem; transition:background .2s,border-color .2s,color .2s;
+  }
+  .viewer-toggle button:hover{color:var(--text); border-color:var(--accent2);}
+  .viewer-toggle button.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .viewer-hint{text-align:center; color:var(--muted2); font-size:.8rem; margin-top:10px;}
+  .stat-strip{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin:34px 0 8px;}
+  .stat-chip{
+    background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid var(--line); border-radius:16px;
+    padding:16px 22px; min-width:150px; text-align:center;
+  }
+  .stat-chip .num{
+    display:block; font-size:2rem; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(90deg,var(--accent2),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-chip .lbl{display:block; color:var(--muted); font-size:.78rem; margin-top:4px;}
+  figure.shot{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+  figure.shot:hover{transform:translateY(-5px); box-shadow:0 22px 44px -22px rgba(91,124,255,.4); border-color:var(--accent);}
+  h2.h{position:relative; padding-top:18px;}
+  h2.h::before{content:""; position:absolute; top:0; left:0; width:44px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--gold));}
+  .beat{padding:70px 0; text-align:center;}
+  .beat p{
+    font-size:clamp(1.35rem,3vw,2.05rem); font-weight:700; max-width:780px; margin:0 auto; line-height:1.4;
+    background:linear-gradient(90deg,var(--text),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+</style>
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.ja.html" hreflang="ja" rel="alternate"/><link href="index.ko.html" hreflang="ko" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.ko.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="볼레미 -- 오픈 12U 과학 관측소" property="og:title"/><meta content="Wollemi: 개방형, 모듈형, 장수명 12U 큐브샛 과학 관측소 및 재사용 가능한 위성 플랫폼." property="og:description"/><meta content="https://wollemi.athena.org.tr/index.ko.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="ko_KR" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="볼레미 -- 오픈 12U 과학 관측소" name="twitter:title"/><meta content="Wollemi: 개방형, 모듈형, 장수명 12U 큐브샛 과학 관측소 및 재사용 가능한 위성 플랫폼." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  "name": "Wollemi",
+  "url": "https://wollemi.athena.org.tr/index.ko.html",
+  "description": "Wollemi: 개방형, 모듈형, 장수명 12U 큐브샛 과학 관측소 및 재사용 가능한 위성 플랫폼.",
+  "image": "https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg",
+  "inLanguage": "ko"
+}</script></head>
+<body>
+<div class="banner">개인 저장소 -- 분석 수준 디자인. 아직 하드웨어는 존재하지 않으며, 여기에 있는 모든 수치는 공학적 추정치입니다. 디자인이 완료되면 공개됩니다.</div>
+<header class="site">
+<div class="wrap bar">
+<div class="brand"><span class="dot"></span> WOLLEMI</div>
+<nav class="links">
+<a href="#mission">임무</a>
+<a href="#gallery">갤러리</a>
+<a href="#deployment">배포</a>
+<a href="#specs">사양</a>
+<a href="#electronics">전자공학</a>
+<a href="#subsystems">하위 시스템</a>
+<a href="#status">상태</a>
+</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a href="index.zh.html">ZH</a> <a href="index.ja.html">JA</a> <a class="cur" href="index.ko.html">KO</a></div>
+</div>
+</header>
+<section class="hero">
+<div class="wrap">
+<h1 class="reveal in">개방형 12U 과학 관측소<br/>첫 10년을 넘기도록 만들어졌다.</h1>
+<p class="tagline reveal in">Wollemi는 완전히 개방형 모듈식 소형 위성 플랫폼이며, 첫 번째 임무는 구성 파일에서 엔드투엔드로 생성되고 모든 변경 사항에 대해 자동 회귀 테스트로 확인되는 계층적 50년 생존성 디자인을 갖춘 과학 우선 12U 큐브샛입니다.</p>
+<div class="hero-media viewer-wrap reveal in">
+<div aria-label="Interactive 3D model of the Wollemi spacecraft, real CAD geometry" class="viewer" data-initial="deployed" data-wollemi-viewer="" id="hero-viewer" role="img"></div>
+<div class="viewer-toggle" data-wollemi-toggle="hero-viewer">
+<button class="on" data-state="deployed">배포됨</button>
+<button data-state="stowed">적재된</button>
+</div>
+<p class="viewer-hint">궤도를 돌리려면 드래그하고, 스크롤하여 확대/축소하려면 한 번 클릭하세요 -- 이것은 사진이 아닌 실제 파라메트릭 CAD 모델입니다.</p>
+</div>
+<div class="stat-strip reveal in">
+<div class="stat-chip"><span class="num" data-count="50" data-suffix="-yr">0</span><span class="lbl">계층적 생존 디자인</span></div>
+<div class="stat-chip"><span class="num" data-count="26">0</span><span class="lbl">과학 기구</span></div>
+<div class="stat-chip"><span class="num" data-count="500" data-suffix="+ m/s">0</span><span class="lbl">사용 가능한 델타-v</span></div>
+<div class="stat-chip"><span class="num" data-count="47">0</span><span class="lbl">요구사항 추적</span></div>
+</div>
+<div class="pill-row">
+<span class="pill">12U 큐브샛 외피</span>
+<span class="pill">~26 과학 기구</span>
+<span class="pill">50년 계층적 디자인 수명</span>
+<span class="pill">출시 시 완전히 개방됨</span>
+<span class="pill">23/23 자동 검사 통과</span>
+</div>
+</div>
+</section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">슬라이드웨어 없음: 이 쪽의 모든 렌더링, 도면 및 숫자는 하나의 실제 확인된 모델에서 나옵니다. 변경하면 쪽도 함께 변경됩니다.</p>
+</div>
+</section>
+<section id="mission">
+<div class="wrap">
+<h2 class="h">임무 및 목표</h2>
+<p class="lead">Wollemi는 개방형, 모듈형, 장수명 12U 과학 관측소 및 참조 플랫폼입니다. 이는 수십 년에 걸친 우주 기상, 방사선 및 지구 관측 데이터를 생성하고, 궤도에서 견고한 전자공학 및 소프트웨어를 시연하며, 누구나 재사용할 수 있도록 디자인, 데이터 및 도구를 공개합니다.</p>
+<div class="grid cols-3">
+<div class="card">
+<div class="obj-id">OBJ-1</div>
+<h3>우주 기상 및 지구물리학</h3>
+<p>장기 기록 데이터: 자기장, 고에너지 입자, 태양 X선/자외선, 총 태양 복사량, 방사선량, 플라즈마, VLF, 감마선 폭발.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-2</div>
+<h3>지구 관측</h3>
+<p>5m 유형 이미징 망원경, 동일 광학계를 공유하는 초분광 장면, 열적외선, 광각 야간 영상.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-3</div>
+<h3>기술 및 신뢰성 과학</h3>
+<p>다양한 컴퓨팅 계열과 플래시 메모리 유형의 연도별 방사선 거동을 공개 오류 데이터와 함께 발표합니다.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-4</div>
+<h3>재사용 가능한 플랫폼</h3>
+<p>버스, 셀 그리드, 백플레인, 프로토콜 및 툴링은 한 번 설계하고 재사용됩니다. 새로운 임무는 재설계가 아니라 구성 변경과 새 카드 추가입니다.</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-5</div>
+<h3>완전히 열림, 해제 시</h3>
+<p>하드웨어는 CERN-OHL-S-2.0 하에, 소프트웨어는 Apache-2.0 하에, 문서는 CC-BY-4.0 하에 -- 디자인이 완료되고 상표권 확인이 끝난 후.</p>
+</div>
+<div class="card">
+<h3>디자인으로 구현된 긴 수명</h3>
+<p>계층적 생존 아키텍처: 비콘과 감독자는 배터리보다 오래 지속되도록 설계되었고, 배터리는 무거운 컴퓨팅보다 오래 지속되도록 설계되었습니다. 이는 단일 실패 지점이 아닌 점진적 저하를 의미합니다.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="gallery">
+<div class="wrap">
+<h2 class="h">디자인 갤러리</h2>
+<p class="lead">아래의 모든 이미지는 실제 파라메트릭 CAD 모델에서 직접 렌더링되었습니다.<span class="code">mechanical/wollemi_cad.py</span>, build123d/OpenCascade)는 개념 스케치가 아니라 -- 질량, 간섭 및 구조 검사가 실행되는 동일한 모델입니다.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="외부 아이소메트릭 뷰, 전개된 구성" src="assets/img/ext_iso_deployed.png"/>
+<figcaption>외부, 전개됨 -- 날개 펼침, 아이소메트릭 뷰</figcaption>
+</figure>
+<figure class="shot">
+<img alt="외부 후방 사분면 뷰, 전개된 구성" src="assets/img/ext_iso_deployed_far.png"/>
+<figcaption>외부, 전개됨 -- 후방-사분면 뷰</figcaption>
+</figure>
+<figure class="shot">
+<img alt="외부 아이소메트릭 뷰, 수납 발사 구성" src="assets/img/ext_iso_stowed.png"/>
+<figcaption>외부, 적재됨 -- 발사 구성</figcaption>
+</figure>
+<figure class="shot">
+<img alt="우주선의 지구를 향한 나디르 시야" src="assets/img/ext_nadir.png"/>
+<figcaption>나디르(지면 방향) 뷰, 수납됨</figcaption>
+</figure>
+<figure class="shot">
+<img alt="외부 벽이 가려진 내부 모습으로, 네 개의 기기 기둥이 보입니다." src="assets/img/interior.png"/>
+<figcaption>내부 -- 외부 벽은 가려져 있고, 네 개의 기둥이 보임</figcaption>
+</figure>
+<figure class="shot">
+<img alt="두 개의 벽과 천정판이 제거된 단면도" src="assets/img/cutaway.png"/>
+<figcaption>단면도 -- 두 벽과 천장판 제거</figcaption>
+</figure>
+<figure class="shot">
+<img alt="기둥으로 분리된 모든 모듈을 보여주는 분해 조립도" src="assets/img/exploded.png"/>
+<figcaption>분해된 보기 -- 기둥별로 색상 코딩된 모든 모듈</figcaption>
+</figure>
+<figure class="shot">
+<img alt="삼면 정투상 공학 도면: 정면, 측면 및 평면" src="assets/img/three_view_drawing.png"/>
+<figcaption>삼면도 - 정면, 측면, 평면도</figcaption>
+</figure>
+<figure class="shot">
+<img alt="배치된 우주선의 360도 회전 렌더링" src="assets/img/spin_deployed.gif"/>
+<figcaption>360도 회전판 -- 배포된 구성</figcaption>
+</figure>
+</div>
+<h3 style="margin:44px 0 8px; font-size:1.2rem;">궤도상에서</h3>
+<p class="lead" style="margin-bottom:22px;">우주선은 실제 CAD 형상(`mechanical/wollemi_cad.py`)이며, 실제 NASA 블루 마블 지구 사진을 사용하여 실제 경로 추적기(Blender/Cycles)로 렌더링됩니다. 태양 전지판 및 MLI 포일 표면 재질은 예시적인 것이고 별자리는 절차적이지만, 조명과 기하학은 손으로 그린 것이 아니라 물리적으로 시뮬레이션되었습니다.</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="지구 궤도 상의 월레미의 사진처럼 사실적인 렌더링, 전개됨" src="assets/img/blender_deployed.jpg" style="height:220px;"/>
+<figcaption>궤도에 배치됨 (사이클 경로 추적 렌더링)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="월레미가 적재된, 배치 전의 포토리얼리스틱 렌더링" src="assets/img/blender_stowed.jpg" style="height:220px;"/>
+<figcaption>적재됨 -- 배포 전 (사이클 경로 추적 렌더)</figcaption>
+</figure>
+<figure class="shot">
+<img alt="볼레미는 심우주 성운을 배경으로 배치되어 있어 설명적입니다." src="assets/img/space_deep_field.png" style="height:220px;"/>
+<figcaption>배치됨, 심우주 광각 샷 (예시)</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="deployment">
+<div class="wrap">
+<h2 class="h">배포 순서</h2>
+<p class="lead">수납된 발사 구성에서 완전히 전개되는 날개의 개방을 보여주는 개략도. <b>힌지/아코디언 메커니즘 자체는 아직 설계되지 않았습니다.</b> (아래 열린 항목 참조), 따라서 이 애니메이션은 실제 메커니즘을 시뮬레이션하는 것이 아니라 각 패널의 수납 및 전개된 면적을 보간합니다. 이는 개념을 전달하기 위한 것이지 검증하기 위한 것이 아닙니다.</p>
+<div class="anim-block">
+<img alt="접혀 있던 날개가 완전히 펼쳐지는 애니메이션" src="assets/img/deploy_sequence.gif"/>
+<div>
+<h3 style="margin-top:0">두 개의 날개, 각 세 개의 패널</h3>
+<p style="color:var(--muted)">각 날개는 세 개의 양면 패널(양쪽 면에 셀이 있음, 선호되는 새벽-황혼 궤도가 태양을 항상 한쪽이 아닌 날개 법선 축에 두기 때문에 필요함)을 지니고 있습니다. 스택당 6개의 하향 지지대가 발사 구성 진동 모드를 라이드셰어 최소치보다 편안하게 높게 유지합니다.</p>
+<table class="specs" style="margin-top:16px;">
+<tr><th>배포된 범위</th><td>끝에서 끝까지 약 2.1m</td></tr>
+<tr><th>패널 수</th><td>날개 2개 × 패널 3개, 양면</td></tr>
+<tr><th>보관된 돌출부</th><td>큐브샛 디자인 사양 레일 엔벨로프 내</td></tr>
+<tr><th>방출 메커니즘</th><td>번 와이어, 세 개의 독립적인 억제기</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="specs">
+<div class="wrap">
+<h2 class="h">한눈에 보기</h2>
+<table class="specs">
+<tr><th>양식</th><td>12U 큐브샛 외피, 중앙 스파인 주위 2×2×3 셀 그리드, 노치 처리된 100×100mm 카드</td></tr>
+<tr><th>질량 / 동력</th><td>24kg 예산 중 약 16.8kg; 58W 태양 편향, 28W 회전, 3W 안전 모드 부하</td></tr>
+<tr><th>과학 페이로드</th><td>~26개 기기: 5m 유형 망원경 + 초분광(공유 광학), 열적외선, 자기계측기, 입자 분광기, X선/UV 모니터, 총 태양 복사 에너지, VLF/ELF, 감마선 폭발 계수기, 방사선 선량계, SEU/플래시 실험</td></tr>
+<tr><th>계산하다</th><td>MSP430FR 슈퍼바이저, 2×STM32H7 비행 컨트롤러, 대용량 메모리 장치 (8×128GB, 6+2 지우기 코딩), 라즈베리 파이 CM5, NVIDIA Jetson Orin Nano</td></tr>
+<tr><th>힘</th><td>두 개의 독립적인 LiFePO4 체인(A/B)과 완전히 독립적인 생존 체인, 하드웨어 전용 보호(트립 경로에 MCU 없음)</td></tr>
+<tr><th>추진</th><td>중앙선에 위치한 아이오딘 전기 격자 이온 추진기, 질량 중심을 통해 경사지게 배치; 약 570 m/s의 가용 델타-v, 수동 백업으로 항력 돛</td></tr>
+<tr><th>통신</th><td>UHF/LoRa 비콘 및 명령, S-밴드 과학 다운링크 (250 kbps–2 Mbps 적응형), Ed25519 서명된 원격 명령을 포함하는 CCSDS 우주 패킷</td></tr>
+<tr><th>궤도 (선호)</th><td>새벽-황혼 태양 동기, 약 700km -- 일식 순환 제거, 열 및 배터리 수명상의 이유로 선호됨</td></tr>
+<tr><th>검증</th><td>47개 요구사항 추적됨; 대부분은 매 실행 시 자동으로 확인됨; 29개 물리적 테스트 계획됨</td></tr>
+</table>
+</div>
+</section>
+<section id="electronics">
+<div class="wrap">
+<h2 class="h">전자공학 및 PCB 디자인</h2>
+<p class="lead">우주선은 카드 케이지 형태로 제작되었습니다: 동일한 100×100mm 카드가 수동 백플레인에 삽입되며, 기기/하위 시스템 그룹당 하나의 기둥이 있습니다. 아래의 모든 보드는 저장소에 있는 실제 KiCad 파일입니다.
+      <span class="code">electronics/kicad/</span>), DRC-clean, 동일한 것에서 생성됨
+      <span class="code">card_pinout.toml</span> 커넥터 정의 인터페이스 문서는 다음으로부터 구축됩니다 --
+      <b>이것들은 배선되지 않은 회로도이며, 부품 배치가 들어맞는 것을 입증한 평면도입니다.</b></p>
+<div class="grid cols-2">
+<figure class="shot">
+<img alt="Wollemi EPS 블록 다이어그램: 두 개의 주요 전원 체인과 독립적인 생존 체인" src="assets/img/eps_diagram.svg"/>
+<figcaption>EPS 블록 다이어그램 -- 체인 A/B와 독립 생존 체인</figcaption>
+</figure>
+<div>
+<p style="color:var(--muted)">모든 카드는 하나의 커넥터 쌍을 공유합니다. <b>WL-P</b> (2×30, 전원 및 제어 -- 이중 배터리 버스 레일, 이중화 CAN-FD, PPS/SYNC 타이밍, 하드웨어 <span class="code">KILL_N</span> 감독자는 소프트웨어 없이도 주장할 수 있고, SWD 헤더가 있어 어떤 카드든 제거하지 않고도 재프로그래밍할 수 있습니다) 그리고 <b>WL-D</b> (2×15, 이더넷/고속 레인, 데이터 플레인 카드에만 장착됨). 커넥터 피치는 의도적으로 1.27mm입니다. 이전의 0.8mm 피치는 전원 체인이 서로 막히지 않고 백플레인에 배선될 수 없었습니다.</p>
+</div>
+</div>
+<div class="grid cols-3" style="margin-top:28px;">
+<figure class="shot">
+<img alt="EPS-A/EPS-B 카드 평면도의 3D 렌더링, 부품 배치만" src="assets/img/pcb_eps_card.png"/>
+<figcaption>EPS-A / EPS-B 카드 -- 기능 블록 평면도</figcaption>
+</figure>
+<figure class="shot">
+<img alt="독립 생존 카드 평면도의 3D 렌더링" src="assets/img/pcb_survival_card.png"/>
+<figcaption>서바이벌 카드 -- 독립형 팩-C 충전기 및 번-와이어 드라이버</figcaption>
+</figure>
+<figure class="shot">
+<img alt="WL-P 및 WL-D 커넥터가 있는 빈 100x100 밀리미터 카드 템플릿의 3D 렌더링" src="assets/img/pcb_card_template.png"/>
+<figcaption>카드 템플릿 -- 모든 기둥 카드는 여기서 시작합니다</figcaption>
+</figure>
+</div>
+<div class="grid cols-1" style="margin-top:16px;">
+<figure class="shot">
+<img alt="15개의 카드 슬롯이 있는 수동 백플레인 스트립의 3D 렌더링" src="assets/img/pcb_backplane_strip.png" style="max-height:260px; object-fit:contain;"/>
+<figcaption>백플레인 스트립 - 15개 카드 슬롯, 체인당 수동 WL-P/WL-D 라우팅</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="subsystems">
+<div class="wrap">
+<h2 class="h">하위 시스템</h2>
+<p class="lead">모든 서브시스템은 검사가 실행되는 동일한 구성 파일에서 생성되므로, 디자인 변경과 그 문서가 조용히 어긋날 수 없습니다.</p>
+<table class="subsys-table">
+<tr><th>하위 시스템</th><th>건축</th></tr>
+<tr><td>구조</td><td>2×2×3 셀 격자(외곽 치수 226.3×226.3×340.5 mm) 내에 40 mm 중앙 스파인을 둘러싼 알루미늄 프레임. 우주선 내 모든 카드는 20×20 mm 스파인 노치와 8 mm 레일 릴리프가 있는 100×100 mm 윤곽선을 공유하는데, 이는 표준 90/100 mm 보드가 스파인을 통과하지 못하기 때문에 이 프로젝트를 위해 고안된 형식이다. 날개 스택당 6개의 고정 지지대가 모서리뿐만 아니라 전체를 밀어 넣어 보관된 첫 번째 모드를 약 137 Hz로 만들며, 이전의 모서리만 분석한 결과는 99 Hz에 불과했다.</td></tr>
+<tr><td>힘</td><td>두 개의 독립적인 MPPT/배터리 체인(A, B)과 자체 전용 본체 장착형 태양광 스트링을 갖춘 완전히 독립적인 생존 체인(C); 카드당 eFuse 및 하드웨어 <span class="code">KILL_N</span> 보호 경로에 소프트웨어가 전혀 없는 라인.</td></tr>
+<tr><td>열</td><td>완전히 수동적입니다. 분석 결과 우주선이 뜨겁기보다는 차갑게 작동하는 것으로 나타났으며, 실제 문제는 태양 전지판과 전용 MLI/저방사 패치 사이에 표면의 약 절반을 분할함으로써 막아낸 -27°C 일식 사례와 -40°C 안전 모드 사례입니다. 망원경 기둥은 자체 저알파/저엡실론 코팅과 8W 열정밀 히터(14-17°C 설정점)를 갖추고 있으며, 배터리 금고는 6W 히터로 격리(0.1W/K)되어 있고, 생존 스트링은 자체 2W 히터를 갖추고 있어 -20°C 이하로 떨어지지 않습니다.</td></tr>
+<tr><td>태도 및 추진</td><td>세 개의 반응 휠(각 30 mN·m·s), 자기 토크기 및 항성 추적기(5 arcsec, 지상 오차 약 17 m)는 토크 및 운동량에 3배의 여유를 두고 약 120초 만에 90° 선회합니다. 비추력의 경우 추진 시스템은 물 저항 제트 대신 전기식(아이오딘 그리드 이온/홀 클래스)입니다. 아이오딘 0.5 kg은 물 0.8 kg에 의한 약 45 m/s에 대해 약 570 m/s를 제공하는데, 이는 50년간의 항력 보충, 충돌 회피 및 한 탱크로부터의 제어된 궤도 이탈에 충분합니다.
+
+추스터는 중심선에 위치하며, 질량 중심을 기준으로 몇 도 기울어져 있습니다. 이전에 기둥 내부에 배치했을 때는 7분 만에 바퀴를 포화시킬 만큼 충분한 비축 토크가 발생했습니다. 드래그 세일은 수동 백업입니다.</td></tr>
+<tr><td>계산하다</td><td>하단에 의도적으로 과잉 프로비저닝된 5단계 계층 구조: MSP430FR 슈퍼바이저와 이중 핫 스탠바이 STM32H7 비행 컨트롤러는 장기간의 우주 기상 과학 임무를 위해 50년 전체 임무를 수행하도록 평가되었는데, 이는 리눅스 측이 고장 날 것으로 예상되는 시점 이후에도 장기간 계속 실행되어야 하기 때문이다. 그 위에는 10~15년의 디자인 수명을 가진 라즈베리 파이 CM5(항상 켜짐)와 엔비디아 젯슨 오린 나노(이미징, 대규모 컴퓨팅)가 위치한다. 대용량 메모리 장치는 6+2 삭제 코딩, BLAKE2 해싱 및 주기적인 스크러빙을 통해 8×128GB를 저장한다.</td></tr>
+<tr><td>데이터 및 통신</td><td>27가지 CCSDS 메시지 유형, 모든 원격 명령은 카운터와 유효성 창으로 Ed25519 서명됨 (링크 자체는 아마추어 대역 규칙에 따라 암호화되지 않음). 제어 평면은 이중 CAN-FD (1Mbps/5Mbps)로 이중화를 제공하며, 기가비트 이더넷 평면이 페이로드 데이터를 전송합니다. 다운링크는 UHF/LoRa 하우스키핑(~0.5MB/일)과 적응형 S-밴드 과학 링크(250kbps-2Mbps)로 구성되며, 파무클레 기준국만으로 대략 28분 접촉 및 3~4회 통과 동안 약 134MB/일이 발생합니다.</td></tr>
+<tr><td>페이로드</td><td>26개 기기가 수명에 따라 깔끔하게 분리됩니다. 장기 기록 우주 기상/지구물리학 과학(삼축 자기계, 총 태양 복사선량계, 방사선 선량계, 16전자/16양성자 입자 분광기, X선/UV 모니터, CsI+SiPM 감마선 폭발 검출기, 칩 스케일 원자 시계)은 플라이트 컨트롤러에 의해 직접 획득되며, 리눅스 노드에는 절대 획득되지 않습니다.
+
+이미징 -- 약 5m 지상 샘플 거리의 85mm 카세그레인 망원경, 동일 광학계를 공유하는 약 50밴드 초분광 채널, 열적-IR 마이크로볼로미터 및 광각 항성/컨텍스트 카메라 -- 는 Pi/Jetson 측에서 실행됩니다. 위에 언급된 모든 기기 번호는 지금까지 분석만으로 검증되었을 뿐, 제작 및 테스트된 기기로 검증된 것은 아닙니다.</td></tr>
+<tr><td>지상 및 운영</td><td>두 가지 공개된 지상국 계층: 비콘을 수신할 수 있는 누구나 만들 수 있는 30-80 UHF/LoRa 리스너와 전체 다운링크를 위한 약 2,200-4,500달러 상당의 S-band 과학국(1.2m 접시, SPID BIG-RAS 로테이터). 모든 27개 프로토콜 메시지는 이미 컴파일되고 검증된 Kaitai Struct 디코더를 가지고 있으며, SatNOGS DB/디코더 통합이 계획되어 있어 어떤 스테이션이든 이 저장소에 손대지 않고도 원격 측정 데이터를 디코딩할 수 있습니다. 두 번째 앵커 지상국이 제안되었지만 아직 준비되지 않았으며, 주파수 조정/라이선싱은 시작되지 않았습니다.</td></tr>
+</table>
+</div>
+</section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">50년은 대부분의 위성 운영자가 활동하는 기간보다 더 깁니다. 감독관과 비콘은 이 코드를 작성한 모든 사람이 떠난 후에도 계속 신호를 보내도록 만들어졌습니다.</p>
+</div>
+</section>
+<section class="alt" id="status">
+<div class="wrap">
+<h2 class="h">상태</h2>
+<p class="lead">디자인은 분석 수준에서 완료되었습니다. 아래의 모든 사항은 자동으로 확인됩니다.
+      <span class="code">python tools/check_all.py</span> 모든 변경 사항에 대해 -- 여기에는 일회성 주장이 없습니다.</p>
+<div class="status-grid">
+<div class="stat"><div class="num">23/23</div><div class="lbl">자동 검사 통과</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">요구사항 추적</div></div>
+<div class="stat"><div class="num">29</div><div class="lbl">계획된 신체 테스트</div></div>
+<div class="stat"><div class="num">~26</div><div class="lbl">과학 기구</div></div>
+</div>
+<div class="grid cols-2">
+<div>
+<h3>분석 수준에서 완료됨</h3>
+<ul class="tick">
+<li>요구사항, 건축, 간섭 검사를 포함한 파라메트릭 CAD</li>
+<li>동력, 열, 자세, 궤도 및 구조 해석</li>
+<li>C, Python 및 Kaitai Struct 구현을 포함한 전체 명령어/텔레메트리 프로토콜 (27개 메시지)</li>
+<li>84개 단위 검사를 포함하는 펌웨어 코어(인증, 모드 관리자, 오류 감지, OTA)</li>
+<li>전자공학 인터페이스: KiCad 카드 및 백플레인 템플릿, EPS/서바이벌 카드 평면도, DRC 클린</li>
+<li>FMEA, 검증 매트릭스, 테스트 계획, 운용 개념, 비용 및 일정 모델</li>
+</ul>
+</div>
+<div>
+<h3>아직 열려 있음</h3>
+<ul class="open">
+<li>하드웨어는 존재하지 않습니다: 공급업체 데이터, 실제 회로도, 프로토타입 및 물리적 테스트는 모두 선행됩니다.</li>
+<li>발사 기회, 기록 운영자 및 진동수 조정이 아직 준비되지 않음</li>
+<li>날개 힌지/전개 메커니즘은 아직 설계되지 않았습니다 (이 사이트의 전개 GIF는 예시용입니다).</li>
+<li>양면 태양광 패널은 상업적 선례가 없는 부품입니다.</li>
+<li>목표 선정은 아직 미정: 비행 임무, 비행 품질 참조 디자인, 또는 FlatSat/풍선 선행 연구 중 하나</li>
+</ul>
+</div>
+</div>
+<div class="note" style="margin-top:30px;">
+<b>이것을 분명히 읽으세요:</b> 이 쪽의 모든 숫자는 측정값이 아닌 시뮬레이션 또는 수동 계산에 의한 공학 추정치입니다. Wollemi의 어떤 부분도 제작되지 않았으며, 여기에 있는 어떤 것도 비행 자격을 갖추고 있지 않습니다.
+    </div>
+</div>
+</section>
+<footer>
+<div class="wrap cols">
+<div>
+<h4>볼레미</h4>
+<p style="max-width:320px; color:var(--muted2);">개방형, 모듈형, 장수명 12U 과학 관측소 및 재사용 소형 위성 플랫폼. 현재는 비공개 저장소이며, 디자인이 완료되면 대중에게 공개됩니다.</p>
+</div>
+<div>
+<h4>더 읽어보기</h4>
+<a href="https://github.com/alplix/wollemi" style="display:block; margin-bottom:6px;">github.com/alplix/wollemi</a>
+<span style="color:var(--muted2); display:block;">시스템 디자인 문서, 요구사항, 테스트 계획 및 모든 분석 도구는 리포지토리에 있습니다. <span class="code">docs/</span> 폴더.</span>
+</div>
+<div>
+<h4>라이선스 (계획 중, 아직 신청하지 않음)</h4>
+<span style="display:block;">하드웨어: CERN-OHL-S-2.0</span>
+<span style="display:block;">소프트웨어: Apache-2.0</span>
+<span style="display:block;">문서: CC-BY-4.0</span>
+</div>
+</div>
+</footer>
+<script src="viewer.js" type="module"></script>
+</body>
+</html>

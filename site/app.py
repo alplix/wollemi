@@ -21,8 +21,12 @@ from fastapi.staticfiles import StaticFiles
 STATIC = pathlib.Path(__file__).parent
 
 app = FastAPI(title="Wollemi", docs_url=None, redoc_url=None, openapi_url=None)
-CSP = ("default-src 'self'; script-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self'; "
-       "base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
+CSP = ("default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; "
+       # the cloudflareinsights host is Cloudflare's own automatic RUM beacon, injected at the edge for any
+       # proxied zone -- not something this app adds or can turn off from here, just allow-listed so it
+       # doesn't show up as a (harmless) CSP violation in the console.
+       "style-src 'self' 'unsafe-inline'; img-src 'self'; connect-src 'self' https://cdn.jsdelivr.net "
+       "https://cloudflareinsights.com; base-uri 'none'; form-action 'none'; frame-ancestors 'none'")
 
 
 @app.middleware("http")

@@ -45,6 +45,8 @@ LANGS = [
     ("spa", "es", "Español"),
     ("rus", "ru", "Русский"),
     ("zho", "zh", "中文"),
+    ("jpn", "ja", "日本語"),
+    ("kor", "ko", "한국어"),
 ]
 EN_LABEL = "English"
 

@@ -105,8 +105,49 @@
   footer a{color:var(--muted2); text-decoration:none;}
   footer a:hover{color:var(--text);}
   .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+
+  /* -- motion, 3D viewer, stat strip, manifesto beats -- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+  .viewer-wrap{max-width:900px; margin:0 auto;}
+  .viewer{
+    width:100%; height:440px; border-radius:var(--radius); overflow:hidden; touch-action:none;
+    border:1px solid var(--line); background:radial-gradient(ellipse at 50% 28%, rgba(91,124,255,.16), transparent 62%), #0b0f19;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
+  }
+  .viewer canvas{display:block; opacity:0; transition:opacity .5s ease;}
+  .viewer.ready canvas{opacity:1;}
+  @media (max-width:640px){ .viewer{height:320px;} }
+  .viewer-toggle{display:flex; gap:8px; justify-content:center; margin-top:16px;}
+  .viewer-toggle button{
+    background:var(--panel2); border:1px solid var(--line); color:var(--muted); padding:8px 20px;
+    border-radius:999px; cursor:pointer; font-size:.85rem; transition:background .2s,border-color .2s,color .2s;
+  }
+  .viewer-toggle button:hover{color:var(--text); border-color:var(--accent2);}
+  .viewer-toggle button.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .viewer-hint{text-align:center; color:var(--muted2); font-size:.8rem; margin-top:10px;}
+  .stat-strip{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin:34px 0 8px;}
+  .stat-chip{
+    background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid var(--line); border-radius:16px;
+    padding:16px 22px; min-width:150px; text-align:center;
+  }
+  .stat-chip .num{
+    display:block; font-size:2rem; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(90deg,var(--accent2),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-chip .lbl{display:block; color:var(--muted); font-size:.78rem; margin-top:4px;}
+  figure.shot{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+  figure.shot:hover{transform:translateY(-5px); box-shadow:0 22px 44px -22px rgba(91,124,255,.4); border-color:var(--accent);}
+  h2.h{position:relative; padding-top:18px;}
+  h2.h::before{content:""; position:absolute; top:0; left:0; width:44px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--gold));}
+  .beat{padding:70px 0; text-align:center;}
+  .beat p{
+    font-size:clamp(1.35rem,3vw,2.05rem); font-weight:700; max-width:780px; margin:0 auto; line-height:1.4;
+    background:linear-gradient(90deg,var(--text),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
 </style>
-<link href="https://wollemi.athena.org.tr/" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="Wollemi -- Open 12U Science Observatory" name="twitter:title"/><meta content="Wollemi: an open, modular, long-life 12U CubeSat science observatory and reusable satellite platform." name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.zh.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- 开放 12U 科學觀測站" property="og:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.zh.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="zh_CN" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- 开放 12U 科學觀測站" name="twitter:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.ja.html" hreflang="ja" rel="alternate"/><link href="index.ko.html" hreflang="ko" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.zh.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="Wollemi -- 开放 12U 科學觀測站" property="og:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.zh.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="zh_CN" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="ja_JP" property="og:locale:alternate"/><meta content="ko_KR" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="Wollemi -- 开放 12U 科學觀測站" name="twitter:title"/><meta content="Wollemi：一个开放式、模块化、长寿命的 12U 立方星科學觀測站和可重複使用衛星平台。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "ResearchProject",
   "name": "Wollemi",
@@ -128,15 +169,26 @@
 <a href="#electronics">电子学</a>
 <a href="#subsystems">子系统</a>
 <a href="#status">状态</a>
-</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a class="cur" href="index.zh.html">ZH</a></div>
+</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a class="cur" href="index.zh.html">ZH</a> <a href="index.ja.html">JA</a> <a href="index.ko.html">KO</a></div>
 </div>
 </header>
 <section class="hero">
 <div class="wrap">
-<h1>一个开放的12U科學天文台<br/>设计寿命超过第一个十年。</h1>
-<p class="tagline">Wollemi 是一个完全开放、模块化的微型卫星平台，其首个任务是一个科学优先的 12U 立方体卫星，具有分层 50 年生存设计，完全从配置文件生成，并在每次更改时由自动化回归进行检查。</p>
-<div class="hero-media">
-<img alt="沃尔莱米12U航天器在地球轨道上的照片级渲染图，展开配置" src="assets/img/blender_deployed.jpg"/>
+<h1 class="reveal in">一个开放的12U科學天文台<br/>设计寿命超过第一个十年。</h1>
+<p class="tagline reveal in">Wollemi 是一个完全开放、模块化的微型卫星平台，其首个任务是一个科学优先的 12U 立方体卫星，具有分层 50 年生存设计，完全从配置文件生成，并在每次更改时由自动化回归进行检查。</p>
+<div class="hero-media viewer-wrap reveal in">
+<div aria-label="Interactive 3D model of the Wollemi spacecraft, real CAD geometry" class="viewer" data-initial="deployed" data-wollemi-viewer="" id="hero-viewer" role="img"></div>
+<div class="viewer-toggle" data-wollemi-toggle="hero-viewer">
+<button class="on" data-state="deployed">已部署</button>
+<button data-state="stowed">存放</button>
+</div>
+<p class="viewer-hint">拖动以环绕；单击一次以启用滚动缩放——这是真正的参数化 CAD 模型，不是图片。</p>
+</div>
+<div class="stat-strip reveal in">
+<div class="stat-chip"><span class="num" data-count="50" data-suffix="-yr">0</span><span class="lbl">分层生存设计</span></div>
+<div class="stat-chip"><span class="num" data-count="26">0</span><span class="lbl">科學儀器</span></div>
+<div class="stat-chip"><span class="num" data-count="500" data-suffix="+ m/s">0</span><span class="lbl">可用 $\Delta v$</span></div>
+<div class="stat-chip"><span class="num" data-count="47">0</span><span class="lbl">需求追溯</span></div>
 </div>
 <div class="pill-row">
 <span class="pill">12U 立方星载荷外壳</span>
@@ -145,6 +197,11 @@
 <span class="pill">發布時完全開放</span>
 <span class="pill">23/23 自动检查通过</span>
 </div>
+</div>
+</section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">无幻灯片：本頁上的每一个渲染、图画和数字都来自一个真实、经过核实的模型——更改它，本頁也会随之改变。</p>
 </div>
 </section>
 <section id="mission">
@@ -338,6 +395,11 @@
 </table>
 </div>
 </section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">五十年的时间比大多数卫星运营商的寿命都要长。主管和信标的建造是为了在所有编写此代码的人都离开很久之后仍然能够发出信号。</p>
+</div>
+</section>
 <section class="alt" id="status">
 <div class="wrap">
 <h2 class="h">状态</h2>
@@ -396,5 +458,6 @@
 </div>
 </div>
 </footer>
+<script src="viewer.js" type="module"></script>
 </body>
 </html>

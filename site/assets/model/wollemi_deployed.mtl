@@ -1,0 +1,23 @@
+newmtl solar_cell
+Kd 0.102 0.078 0.188
+Ka 0 0 0
+Ks 0.2 0.2 0.2
+Ns 20
+
+newmtl mli_foil
+Kd 0.690 0.549 0.243
+Ka 0 0 0
+Ks 0.2 0.2 0.2
+Ns 20
+
+newmtl aluminum
+Kd 0.588 0.608 0.647
+Ka 0 0 0
+Ks 0.2 0.2 0.2
+Ns 20
+
+newmtl module
+Kd 0.784 0.667 0.353
+Ka 0 0 0
+Ks 0.2 0.2 0.2
+Ns 20

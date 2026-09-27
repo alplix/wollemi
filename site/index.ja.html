@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ウォレミ -- オープン12U科学観測所</title>
+<meta content="Wollemi：オープンでモジュール式、長寿命の12Uキューブサット科学観測所および再利用可能な衛星プラットフォーム。" name="description"/>
+<style>
+  :root{
+    --bg:#0d111c; --bg2:#121729; --panel:#161d31; --panel2:#1b2338;
+    --line:#2a3350; --text:#e7ecf7; --muted:#a9b3cc; --muted2:#7c88a8;
+    --accent:#5b7cff; --accent2:#8aa0ff; --gold:#e3c15a; --green:#57b878; --red:#d3675f;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--text); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.55;
+  }
+  a{color:var(--accent2);}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  header.site{
+    position:sticky; top:0; z-index:50; backdrop-filter:blur(10px);
+    background:rgba(13,17,28,0.82); border-bottom:1px solid var(--line);
+  }
+  header.site .bar{display:flex; align-items:center; justify-content:space-between; padding:14px 0; gap:12px;}
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size:1.15rem; letter-spacing:.02em; flex-shrink:0;}
+  .brand .dot{width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent);}
+  nav.links{display:flex; gap:18px; font-size:.88rem; overflow-x:auto; scrollbar-width:none; white-space:nowrap;}
+  nav.links::-webkit-scrollbar{display:none;}
+  nav.links a{color:var(--muted); text-decoration:none;}
+  nav.links a:hover{color:var(--text);}
+  .langsw{display:flex; gap:6px; flex-shrink:0; font-size:.75rem;}
+  .langsw a{color:var(--muted2); text-decoration:none; border:1px solid var(--line); border-radius:6px; padding:3px 7px;}
+  .langsw a:hover{color:var(--text); border-color:var(--accent);}
+  .langsw a.cur{color:var(--accent2); border-color:var(--accent2);}
+  @media (max-width:640px){ .langsw{width:100%; order:3; flex-wrap:wrap;} }
+  @media (max-width:640px){
+    header.site .bar{flex-wrap:wrap;}
+    nav.links{gap:14px; font-size:.8rem; width:100%; justify-content:flex-start;}
+  }
+  .banner{
+    background:linear-gradient(90deg, rgba(91,124,255,.15), rgba(227,193,90,.10));
+    border-bottom:1px solid var(--line); font-size:.85rem; color:var(--muted); text-align:center; padding:8px 16px;
+  }
+  .hero{padding:64px 0 40px; text-align:center;}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.4rem); margin:0 0 10px; letter-spacing:-.01em;}
+  .hero .tagline{color:var(--muted); font-size:1.15rem; max-width:720px; margin:0 auto 30px;}
+  .hero-media{position:relative; max-width:900px; margin:0 auto; border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); box-shadow:0 30px 80px -30px rgba(0,0,0,.6);}
+  .hero-media img{display:block; width:100%; height:auto;}
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:26px;}
+  .pill{
+    background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:7px 16px; font-size:.85rem; color:var(--muted);
+  }
+  section{padding:56px 0;}
+  section.alt{background:rgba(255,255,255,.015); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  h2.h{font-size:1.7rem; margin:0 0 8px;}
+  p.lead{color:var(--muted); max-width:760px; margin:0 0 34px; font-size:1.02rem;}
+  .grid{display:grid; gap:20px;}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:860px){ .grid.cols-2,.grid.cols-3,.grid.cols-4{grid-template-columns:1fr;} }
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); padding:22px;
+  }
+  .card h3{margin:0 0 8px; font-size:1.05rem;}
+  .card p{color:var(--muted); margin:0; font-size:.94rem;}
+  .obj-id{display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.06em; color:var(--accent2); background:rgba(91,124,255,.12); border:1px solid rgba(91,124,255,.3); padding:2px 8px; border-radius:6px; margin-bottom:10px;}
+  figure.shot{margin:0; background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+  figure.shot img{display:block; width:100%; height:280px; object-fit:cover; background:#0b0f19;}
+  figure.shot figcaption{padding:12px 16px; color:var(--muted); font-size:.88rem; border-top:1px solid var(--line);}
+  .specs{width:100%; border-collapse:collapse; font-size:.95rem;}
+  .specs th,.specs td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  .specs th{color:var(--muted2); font-weight:600; width:190px;}
+  .specs td{color:var(--text);}
+  .anim-block{display:grid; grid-template-columns:1.1fr .9fr; gap:34px; align-items:center;}
+  @media (max-width:860px){ .anim-block{grid-template-columns:1fr;} }
+  .anim-block img{width:100%; border-radius:var(--radius); border:1px solid var(--line); display:block;}
+  .subsys-table{width:100%; border-collapse:collapse;}
+  .subsys-table th,.subsys-table td{padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; font-size:.92rem;}
+  .subsys-table th{color:var(--muted2); font-weight:600;}
+  .status-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:30px;}
+  @media (max-width:860px){ .status-grid{grid-template-columns:repeat(2,1fr);} }
+  .stat{background:var(--panel2); border:1px solid var(--line); border-radius:var(--radius); padding:20px; text-align:center;}
+  .stat .num{font-size:2rem; font-weight:800; color:var(--accent2);}
+  .stat .lbl{color:var(--muted); font-size:.82rem; margin-top:4px;}
+  .note{
+    background:rgba(227,193,90,.07); border:1px solid rgba(227,193,90,.35); border-radius:var(--radius);
+    padding:18px 20px; color:var(--muted); font-size:.92rem;
+  }
+  .note b{color:var(--gold);}
+  ul.tick{list-style:none; margin:0; padding:0;}
+  ul.tick li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.tick li::before{content:"\2713"; position:absolute; left:0; color:var(--green); font-weight:700;}
+  ul.open{list-style:none; margin:0; padding:0;}
+  ul.open li{padding:6px 0 6px 26px; position:relative; color:var(--muted); font-size:.94rem;}
+  ul.open li::before{content:"\25CB"; position:absolute; left:0; color:var(--muted2);}
+  footer{padding:40px 0 60px; border-top:1px solid var(--line); color:var(--muted2); font-size:.85rem;}
+  footer .cols{display:flex; flex-wrap:wrap; gap:40px; justify-content:space-between;}
+  footer h4{color:var(--muted); font-size:.85rem; margin:0 0 10px;}
+  footer a{color:var(--muted2); text-decoration:none;}
+  footer a:hover{color:var(--text);}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; background:var(--panel2); border:1px solid var(--line); border-radius:6px; padding:1px 6px; font-size:.88em;}
+
+  /* -- motion, 3D viewer, stat strip, manifesto beats -- */
+  .reveal{opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.16,.8,.3,1), transform .7s cubic-bezier(.16,.8,.3,1);}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
+  .viewer-wrap{max-width:900px; margin:0 auto;}
+  .viewer{
+    width:100%; height:440px; border-radius:var(--radius); overflow:hidden; touch-action:none;
+    border:1px solid var(--line); background:radial-gradient(ellipse at 50% 28%, rgba(91,124,255,.16), transparent 62%), #0b0f19;
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
+  }
+  .viewer canvas{display:block; opacity:0; transition:opacity .5s ease;}
+  .viewer.ready canvas{opacity:1;}
+  @media (max-width:640px){ .viewer{height:320px;} }
+  .viewer-toggle{display:flex; gap:8px; justify-content:center; margin-top:16px;}
+  .viewer-toggle button{
+    background:var(--panel2); border:1px solid var(--line); color:var(--muted); padding:8px 20px;
+    border-radius:999px; cursor:pointer; font-size:.85rem; transition:background .2s,border-color .2s,color .2s;
+  }
+  .viewer-toggle button:hover{color:var(--text); border-color:var(--accent2);}
+  .viewer-toggle button.on{background:var(--accent); color:#fff; border-color:var(--accent);}
+  .viewer-hint{text-align:center; color:var(--muted2); font-size:.8rem; margin-top:10px;}
+  .stat-strip{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin:34px 0 8px;}
+  .stat-chip{
+    background:linear-gradient(180deg,var(--panel),var(--panel2)); border:1px solid var(--line); border-radius:16px;
+    padding:16px 22px; min-width:150px; text-align:center;
+  }
+  .stat-chip .num{
+    display:block; font-size:2rem; font-weight:800; letter-spacing:-.02em;
+    background:linear-gradient(90deg,var(--accent2),var(--gold)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .stat-chip .lbl{display:block; color:var(--muted); font-size:.78rem; margin-top:4px;}
+  figure.shot{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+  figure.shot:hover{transform:translateY(-5px); box-shadow:0 22px 44px -22px rgba(91,124,255,.4); border-color:var(--accent);}
+  h2.h{position:relative; padding-top:18px;}
+  h2.h::before{content:""; position:absolute; top:0; left:0; width:44px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--accent),var(--gold));}
+  .beat{padding:70px 0; text-align:center;}
+  .beat p{
+    font-size:clamp(1.35rem,3vw,2.05rem); font-weight:700; max-width:780px; margin:0 auto; line-height:1.4;
+    background:linear-gradient(90deg,var(--text),var(--accent2)); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+</style>
+<link href="index.html" hreflang="en" rel="alternate"/><link href="index.tr.html" hreflang="tr" rel="alternate"/><link href="index.de.html" hreflang="de" rel="alternate"/><link href="index.fr.html" hreflang="fr" rel="alternate"/><link href="index.es.html" hreflang="es" rel="alternate"/><link href="index.ru.html" hreflang="ru" rel="alternate"/><link href="index.zh.html" hreflang="zh" rel="alternate"/><link href="index.ja.html" hreflang="ja" rel="alternate"/><link href="index.ko.html" hreflang="ko" rel="alternate"/><link href="index.html" hreflang="x-default" rel="alternate"/><meta content="index, follow" name="robots"/><link href="https://wollemi.athena.org.tr/index.ja.html" rel="canonical"/><link href="assets/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/><link href="assets/favicon-192.png" rel="icon" sizes="192x192" type="image/png"/><link href="assets/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/><meta content="website" property="og:type"/><meta content="ウォレミ -- オープン12U科学観測所" property="og:title"/><meta content="Wollemi：オープンでモジュール式、長寿命の12Uキューブサット科学観測所および再利用可能な衛星プラットフォーム。" property="og:description"/><meta content="https://wollemi.athena.org.tr/index.ja.html" property="og:url"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" property="og:image"/><meta content="ja_JP" property="og:locale"/><meta content="en_US" property="og:locale:alternate"/><meta content="tr_TR" property="og:locale:alternate"/><meta content="de_DE" property="og:locale:alternate"/><meta content="fr_FR" property="og:locale:alternate"/><meta content="es_ES" property="og:locale:alternate"/><meta content="ru_RU" property="og:locale:alternate"/><meta content="zh_CN" property="og:locale:alternate"/><meta content="ko_KR" property="og:locale:alternate"/><meta content="summary_large_image" name="twitter:card"/><meta content="ウォレミ -- オープン12U科学観測所" name="twitter:title"/><meta content="Wollemi：オープンでモジュール式、長寿命の12Uキューブサット科学観測所および再利用可能な衛星プラットフォーム。" name="twitter:description"/><meta content="https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg" name="twitter:image"/><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "ResearchProject",
+  "name": "Wollemi",
+  "url": "https://wollemi.athena.org.tr/index.ja.html",
+  "description": "Wollemi：オープンでモジュール式、長寿命の12Uキューブサット科学観測所および再利用可能な衛星プラットフォーム。",
+  "image": "https://wollemi.athena.org.tr/assets/img/blender_deployed.jpg",
+  "inLanguage": "ja"
+}</script></head>
+<body>
+<div class="banner">プライベートリポジトリ -- 分析レベルのデザイン。ハードウェアはまだ存在せず、ここに記載されているすべての数値は工学的な推定値です。デザインが完了したら一般公開されます。</div>
+<header class="site">
+<div class="wrap bar">
+<div class="brand"><span class="dot"></span> WOLLEMI</div>
+<nav class="links">
+<a href="#mission">ミッション</a>
+<a href="#gallery">ギャラリー</a>
+<a href="#deployment">デプロイメント</a>
+<a href="#specs">仕様</a>
+<a href="#electronics">電子工学</a>
+<a href="#subsystems">サブシステム</a>
+<a href="#status">ステータス</a>
+</nav><div class="langsw"><a href="index.html">EN</a> <a href="index.tr.html">TR</a> <a href="index.de.html">DE</a> <a href="index.fr.html">FR</a> <a href="index.es.html">ES</a> <a href="index.ru.html">RU</a> <a href="index.zh.html">ZH</a> <a class="cur" href="index.ja.html">JA</a> <a href="index.ko.html">KO</a></div>
+</div>
+</header>
+<section class="hero">
+<div class="wrap">
+<h1 class="reveal in">オープンな12Uの科学観測所<br/>最初の10年を超えるように作られている。</h1>
+<p class="tagline reveal in">Wollemiは完全にオープンでモジュラーな小型衛星プラットフォームであり、その最初のミッションは、設定ファイルからエンドツーエンドで生成され、あらゆる変更に対して自動回帰テストでチェックされる、階層的な50年生存設計を持つ科学優先の12Uキューブサットです。</p>
+<div class="hero-media viewer-wrap reveal in">
+<div aria-label="Interactive 3D model of the Wollemi spacecraft, real CAD geometry" class="viewer" data-initial="deployed" data-wollemi-viewer="" id="hero-viewer" role="img"></div>
+<div class="viewer-toggle" data-wollemi-toggle="hero-viewer">
+<button class="on" data-state="deployed">展開済み</button>
+<button data-state="stowed">積み込まれた</button>
+</div>
+<p class="viewer-hint">ドラッグして軌道を描き、一度クリックするとスクロールしてズームできるようになります。これは画像ではなく、実際のパラメトリックCADモデルです。</p>
+</div>
+<div class="stat-strip reveal in">
+<div class="stat-chip"><span class="num" data-count="50" data-suffix="-yr">0</span><span class="lbl">階層的サバイバルデザイン</span></div>
+<div class="stat-chip"><span class="num" data-count="26">0</span><span class="lbl">科学機器</span></div>
+<div class="stat-chip"><span class="num" data-count="500" data-suffix="+ m/s">0</span><span class="lbl">利用可能なデルタV</span></div>
+<div class="stat-chip"><span class="num" data-count="47">0</span><span class="lbl">要件の追跡</span></div>
+</div>
+<div class="pill-row">
+<span class="pill">12U キューブサットエンベロープ</span>
+<span class="pill">科学機器約26点</span>
+<span class="pill">50年間の段階的なデザイン寿命</span>
+<span class="pill">リリース時に完全に開く</span>
+<span class="pill">23/23の自動チェックが通過しました</span>
+</div>
+</div>
+</section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">スライドウェアなし：このページ上のすべてのレンダリング、図、数字は、一つ実在し確認されたモデルから来ています。それを変更すると、ページもそれに合わせて変更されます。</p>
+</div>
+</section>
+<section id="mission">
+<div class="wrap">
+<h2 class="h">ミッションと目標</h2>
+<p class="lead">Wollemiは、オープンでモジュール式、長寿命の12Uの科学観測所およびリファレンスプラットフォームです。これは、数十年にわたる宇宙天気、放射線、地球観測データを生成し、軌道上での堅牢な電子工学とソフトウェアを実証し、デザイン、データ、およびツールを誰でも再利用できるように公開しています。</p>
+<div class="grid cols-3">
+<div class="card">
+<div class="obj-id">OBJ-1</div>
+<h3>宇宙天気と地球物理学</h3>
+<p>長期記録データ：磁場、高エネルギー粒子、太陽X線/UV、全太陽放射照度、放射線量、プラズマ、VLF、ガンマ線バースト。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-2</div>
+<h3>地球観測</h3>
+<p>5 m クラス撮像望遠鏡、同じ光学系を共有するハイパースペクトルシーン、熱赤外、広視野夜間画像。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-3</div>
+<h3>テクノロジーと信頼性科学</h3>
+<p>異なる3つのコンピューティングファミリーとフラッシュメモリタイプの経年的な放射線挙動を、エラーデータを公開して示す。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-4</div>
+<h3>再利用可能なプラットフォーム</h3>
+<p>バス、セルグリッド、バックプレーン、プロトコル、およびツールは一度設計され再利用されます。新しいミッションは再設計ではなく、構成変更と新しいカードの追加です。</p>
+</div>
+<div class="card">
+<div class="obj-id">OBJ-5</div>
+<h3>完全に開く、解放時に</h3>
+<p>ハードウェアはCERN-OHL-S-2.0、ソフトウェアはApache-2.0、ドキュメントはCC-BY-4.0の下で提供されます -- デザインが完了し、商標チェックが終了した後。</p>
+</div>
+<div class="card">
+<h3>設計による長寿命</h3>
+<p>階層的な生存アーキテクチャ：ビーコンとスーパーバイザーはバッテリーよりも長持ちするように設計されており、バッテリーはヘビーコンピューティングよりも長持ちするように設計されています。単一障害点ではなく、段階的な劣化です。</p>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="gallery">
+<div class="wrap">
+<h2 class="h">デザインギャラリー</h2>
+<p class="lead">以下のすべての画像は、実際のパラメトリックCADモデルから直接レンダリングされています。<span class="code">mechanical/wollemi_cad.py</span>, build123d/OpenCascade) は概念スケッチではなく、質量、干渉、構造チェックが実行されるのと同じモデルです。</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="外観アイソメトリックビュー、展開構成" src="assets/img/ext_iso_deployed.png"/>
+<figcaption>外観、展開中 -- 翼を広げた、アイソメトリックビュー</figcaption>
+</figure>
+<figure class="shot">
+<img alt="後部四分円の外観、展開構成" src="assets/img/ext_iso_deployed_far.png"/>
+<figcaption>外観、展開中 -- 後部四分の一の眺め</figcaption>
+</figure>
+<figure class="shot">
+<img alt="外部アイソメトリックビュー、格納発射構成" src="assets/img/ext_iso_stowed.png"/>
+<figcaption>外部、格納済み -- 発射構成</figcaption>
+</figure>
+<figure class="shot">
+<img alt="宇宙船の地球を向いたナディアからの眺め" src="assets/img/ext_nadir.png"/>
+<figcaption>ナディル（地球側）視点、格納状態</figcaption>
+</figure>
+<figure class="shot">
+<img alt="外壁を隠した内部の眺めで、4本の楽器の柱が見える" src="assets/img/interior.png"/>
+<figcaption>内部 -- 外壁は隠され、4本の柱が見える</figcaption>
+</figure>
+<figure class="shot">
+<img alt="二つの壁と天頂板を取り除いた断面図" src="assets/img/cutaway.png"/>
+<figcaption>カットアウェイ -- 2つの壁と天頂板を除去</figcaption>
+</figure>
+<figure class="shot">
+<img alt="柱によって分離された各モジュールを示す展開アセンブリビュー" src="assets/img/exploded.png"/>
+<figcaption>分解図 -- 各モジュールは柱ごとに色分けされています</figcaption>
+</figure>
+<figure class="shot">
+<img alt="三面図の工学図面：正面、シデー、上面" src="assets/img/three_view_drawing.png"/>
+<figcaption>三面図 -- 正面、シデー、上面図</figcaption>
+</figure>
+<figure class="shot">
+<img alt="展開された宇宙船の360度回転レンダリング" src="assets/img/spin_deployed.gif"/>
+<figcaption>360°ターンテーブル -- デプロイされた構成</figcaption>
+</figure>
+</div>
+<h3 style="margin:44px 0 8px; font-size:1.2rem;">軌道上</h3>
+<p class="lead" style="margin-bottom:22px;">宇宙船は実際のCADジオメトリ（`mechanical/wollemi_cad.py`）であり、実際のNASAブルーマーブル地球写真を使用して実際のパスレーサー（Blender/Cycles）でレンダリングされています。太陽電池とMLIフォイルの表面素材は説明的なものであり、星空は手続き的なものですが、照明とジオメトリは手描きではなく物理的にシミュレーションされています。</p>
+<div class="grid cols-3">
+<figure class="shot">
+<img alt="地球上空を周回するウォレミのフォトリアリスティックなレンダリング、展開済み" src="assets/img/blender_deployed.jpg" style="height:220px;"/>
+<figcaption>展開済み、軌道上（サイクルパス・トレースレンダリング）</figcaption>
+</figure>
+<figure class="shot">
+<img alt="展開前の、ウォレミのフォトリアリスティックなレンダリング" src="assets/img/blender_stowed.jpg" style="height:220px;"/>
+<figcaption>格納済み -- 配備前（サイクルパス・トレースレンダリング）</figcaption>
+</figure>
+<figure class="shot">
+<img alt="ウォレミは深宇宙の星空を背景に展開され、象徴的である" src="assets/img/space_deep_field.png" style="height:220px;"/>
+<figcaption>展開済み、深宇宙のワイドショット（図解）</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="deployment">
+<div class="wrap">
+<h2 class="h">デプロイメントシーケンス</h2>
+<p class="lead">格納された発射構成から完全に展開するまでの翼の展開の概略図。 <b>ヒンジ/アコーディオン機構自体はまだ設計されていません</b> （下記のオープン項目を参照）ため、このアニメーションは実際の機構をシミュレーションするのではなく、各パネルの格納時と展開時のフットプリントを補間しています。これは概念を伝えるためのものであり、検証するためのものではありません。</p>
+<div class="anim-block">
+<img alt="翼が格納状態から完全に展開するアニメーション" src="assets/img/deploy_sequence.gif"/>
+<div>
+<h3 style="margin-top:0">二つの翼、それぞれ三つのパネル</h3>
+<p style="color:var(--muted)">各翼は3枚の両面パネル（両面にセルあり。好ましい夜明けから夕暮れにかけての軌道は、常に片側ではなく翼法線軸上に太陽を保つため必要）を保持しています。スタックあたり6本のホールドダウンポストが、発射構成の振動モードをライドシェアの最小値よりも快適に上回るように保っています。</p>
+<table class="specs" style="margin-top:16px;">
+<tr><th>展開されたスパン</th><td>先端から先端まで約2.1m</td></tr>
+<tr><th>パネル数</th><td>2枚の翼 × 3枚のパネル、両面</td></tr>
+<tr><th>収納された突出部</th><td>CubeSat設計仕様のレールエンベロープ内</td></tr>
+<tr><th>解放機構</th><td>バーンワイヤー、3つの独立した抑制</td></tr>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section class="alt" id="specs">
+<div class="wrap">
+<h2 class="h">一目でわかる</h2>
+<table class="specs">
+<tr><th>フォーム</th><td>12U キューブサットエンベロープ、中央の背骨の周りに2×2×3セルのグリッド、切り欠きのある100×100 mmのカード</td></tr>
+<tr><th>質量／パワー</th><td>24kg予算の約16.8kg、58Wの太陽指向、28Wの自転、3Wのセーフモード負荷</td></tr>
+<tr><th>科学ペイロード</th><td>約26の機器：5mクラス望遠鏡＋ハイパースペクトル（共通光学系）、熱赤外線、磁力計、粒子分光計、X線/UVモニター、全太陽放射照度、VLF/ELF、ガンマ線バーストカウンター、放射線線量計、SEU/フラッシュ実験</td></tr>
+<tr><th>計算する</th><td>MSP430FRスーパーバイザー、2×STM32H7フライトコントローラー、マスメモリユニット（8×128GB、6+2消去符号化）、Raspberry Pi CM5、NVIDIA Jetson Orin Nano</td></tr>
+<tr><th>力</th><td>2つの独立したLiFePO4チェーン（A/B）と、完全に独立したサバイバルチェーン、ハードウェアのみの保護（トリップパスにMCUなし）</td></tr>
+<tr><th>推進</th><td>中心線上にヨウ素電気格子イオン推進器を配置し、重心を貫通するように傾斜させました。利用可能なデルタVは約570 m/s、ドラッグセイルをパッシブバックアップとします。</td></tr>
+<tr><th>通信</th><td>UHF/LoRaビーコンとコマンド、Sバンド科学ダウンリンク（250 kbps～2 Mbps適応）、Ed25519署名テレコマンド付きCCSDSスペースパケット</td></tr>
+<tr><th>軌道（推奨）</th><td>夜明けから夕方までの太陽同期、約700km -- 日食の循環を除去し、熱とバッテリー寿命の観点から好まれる</td></tr>
+<tr><th>検証</th><td>47の要件を追跡しました。ほとんどは実行ごとに自動的にチェックされます。29の物理テストが計画されています。</td></tr>
+</table>
+</div>
+</section>
+<section id="electronics">
+<div class="wrap">
+<h2 class="h">電子工学およびPCBデザイン</h2>
+<p class="lead">宇宙船はカードケージとして構築されています。同一の100×100 mmのカードがパッシブバックプレーンにスライドし、機器/サブシステムグループごとに1つの柱があります。以下のすべてのボードはリポジトリ内の実際のKiCadファイルです。
+      <span class="code">electronics/kicad/</span>), DRCクリーン、同じものから生成
+      <span class="code">card_pinout.toml</span> コネクタ定義のインターフェースドキュメントはこれに基づいて構築されています。
+      <b>これらはフロアプラン（コンポーネント配置は適合性が証明済み）であり、まだ配線図ではありません。</b></p>
+<div class="grid cols-2">
+<figure class="shot">
+<img alt="Wollemi EPSブロック図：2つの主要な電源チェーンと独立したサバイバルチェーン" src="assets/img/eps_diagram.svg"/>
+<figcaption>EPSブロック図 -- チェーンA/Bと独立生存チェーン</figcaption>
+</figure>
+<div>
+<p style="color:var(--muted)">すべてのカードは1つのコネクタペアを共有しています。 <b>WL-P</b> (2×30、電力と制御 -- デュアルバッテリーバスレール、冗長CAN-FD、PPS/同期タイミング、ハードウェア <span class="code">KILL_N</span> スーパーバイザーは、ソフトウェアが介在しない状態で、SWDヘッダーがあれば、カードを取り外すことなくどのカードでも再プログラムできると主張できる) <b>WL-D</b> (2×15、イーサネット/高速レーン、データプレーンカードにのみ搭載)。コネクタピッチは意図的に1.27 mmです。以前の0.8 mmピッチでは、電源チェーンが互いを遮断するため、バックプレーン上に配線することができませんでした。</p>
+</div>
+</div>
+<div class="grid cols-3" style="margin-top:28px;">
+<figure class="shot">
+<img alt="EPS-A/EPS-Bカードのフロアプランの3Dレンダリング、コンポーネント配置のみ" src="assets/img/pcb_eps_card.png"/>
+<figcaption>EPS-A / EPS-B カード -- ファンクションブロックフロアプラン</figcaption>
+</figure>
+<figure class="shot">
+<img alt="独立したサバイバルカードのフロアプランの3Dレンダリング" src="assets/img/pcb_survival_card.png"/>
+<figcaption>サバイバルカード -- 独立パック-C充電器とバーンワイヤードライバー</figcaption>
+</figure>
+<figure class="shot">
+<img alt="WL-PおよびWL-Dコネクタ付きの空白の100×100ミリメートルカードテンプレートの3Dレンダリング" src="assets/img/pcb_card_template.png"/>
+<figcaption>カードテンプレート -- すべての柱カードはここから始まります</figcaption>
+</figure>
+</div>
+<div class="grid cols-1" style="margin-top:16px;">
+<figure class="shot">
+<img alt="15枚のカードスロットを備えたパッシブバックプレーンストリップの3Dレンダリング" src="assets/img/pcb_backplane_strip.png" style="max-height:260px; object-fit:contain;"/>
+<figcaption>バックプレーンストリップ - 15カードスロット、チェーンごとのパッシブWL-P/WL-Dルーティング</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="subsystems">
+<div class="wrap">
+<h2 class="h">サブシステム</h2>
+<p class="lead">すべてのサブシステムは、チェックが実行されるのと同じ設定ファイルから生成されるため、デザインの変更とそのドキュメントが静かに乖離することはありません。</p>
+<table class="subsys-table">
+<tr><th>サブシステム</th><th>建築</th></tr>
+<tr><td>構造</td><td>2×2×3セルグリッド（外形寸法 226.3×226.3×340.5 mm）の中央の40 mmの背骨を囲むアルミニウムフレーム。宇宙船内のすべてのカードは、20×20 mmの背骨ノッチと8 mmのレールリリーフを持つ100×100 mmの輪郭を共有している。これは、標準の90/100 mmボードでは背骨をクリアできないため、このプロジェクトのために考案された形式である。翼スタックごとに6本のホールドダウンポストが、角だけでなく、収納された最初のモードを約137 Hzに押し上げている。以前の角のみの解析では99 Hzしか見つからなかった。</td></tr>
+<tr><td>力</td><td>2つの独立したMPPT/バッテリーチェーン（A、B）と、専用のボディマウント型ソーラーストリングを備えた完全に独立したサバイバルチェーン（C）；カードごとのeFuseとハードウェア <span class="code">KILL_N</span> 保護パス上にソフトウェアが一切ないライン。</td></tr>
+<tr><td>熱</td><td>完全に受動的。解析の結果、宇宙機は高温ではなく低温で動作することが判明した。真の課題は、太陽電池と専用のMLI/低放射率パッチで表面の約半分を分割することによって回避される、-27°Cの食害ケースと-40°Cのセーフモードケースである。望遠鏡の柱には独自の低α/低εコーティングと8Wの恒温ヒーター（設定温度14～17°C）が装備されており、バッテリー保管庫は6Wのヒーターで隔離されている（0.1W/K）、生存ストリングには独自の2Wヒーターが装備されており、-20°Cを下回らないようにしている。</td></tr>
+<tr><td>姿勢と推進</td><td>3つのリアクションホイール（各30 mN・m・s）、磁気トルカ、および恒星トラッカー（5秒角、地上誤差約17 m）により、トルクと運動量に3倍の余裕をもって約120秒で90°のスルーが完了します。比推力については、推進剤は水抵抗ジェットではなく電気式（ヨウ素グリッドイオン/ホールクラス）です。ヨウ素0.5 kgは、水0.8 kgによる約45 m/sに対して約570 m/sを賄うのに十分であり、これは50年間の抗力補償、衝突回避、およびタンク1つからの制御された軌道離脱に十分です。
+
+スラスタは中心線上に配置され、重心に対して数度傾けられています。以前のインカラム配置では、7分で車輪を飽和させるのに十分な軸外トルクが発生しました。ドラッグセイルが受動的なバックアップです。</td></tr>
+<tr><td>計算する</td><td>5階層の階層構造で、下層は意図的に過剰にプロビジョニングされています。MSP430FRスーパーバイザーとデュアルホットスタンバイのSTM32H7フライトコントローラーは、50年間のミッション全体にわたって評価されています。なぜなら、長期記録の宇宙天気科学は、Linuxシデーが故障すると予想されるずっと後も稼働し続けなければならないからです。その上には、10〜15年のデザイン寿命を持つRaspberry Pi CM5（常時稼働）とNVIDIA Jetson Orin Nano（画像処理、重い計算）が配置されています。マスメモリユニットは、6+2の消去符号化、BLAKE2ハッシュ、および定期的なスクラビングを備えた8×128 GBを保持しています。</td></tr>
+<tr><td>データと通信</td><td>27のCCSDSメッセージタイプ。すべてのテレコマンドはカウンターと有効期間でEd25519署名されています（アマチュアバンドの規則により、リンク自体は暗号化されていません）。制御プレーンは冗長性のためにデュアルCAN-FD（1 Mbps/5 Mbps）であり、ギガビットイーサネットプレーンがペイロードデータを伝送します。ダウンリンクはUHF/LoRaのハウスキーピング（約0.5 MB/日）と、適応型Sバンドの科学リンク（250 kbps-2 Mbps）で構成されています。パムッカルレ参照局単体から、およそ28分の接触時間と3～4回のパスで約134 MB/日となります。</td></tr>
+<tr><td>ペイロード</td><td>26の機器が寿命によって明確に分類されている。長期記録の宇宙天気/地球物理学科学（三軸磁力計、全太陽放射照度放射計、放射線線量計、16電子/16陽子粒子分光計、X線/UVモニター、CsI+SiPMガンマ線バースト検出器、チップスケール原子時計）は、フライトコントローラーによって直接取得され、Linuxノードによって取得されることはない。
+
+イメージング――約5mの地上サンプル距離における85mmカセグレン望遠鏡、同じ光学系を共有する約50バンドのハイパースペクトルチャネル、熱赤外マイクロボロメーター、広視野の恒星/コンテキストカメラ――はPi/Jetson側で動作します。上記のすべての機器番号は、構築・試験された機器によるものではなく、分析によってのみ検証されたデザイン目標です。</td></tr>
+<tr><td>地上および運用</td><td>公開された地上セグメントの階層は2つあります。ビコンを受信するための誰でも構築できる30〜80 UHF/LoRaリスナーと、完全なダウンリンクのための約2,200〜4,500ドルのSバンド科学ステーション（1.2mアンテナ、SPID BIG-RASローテーター）です。27のプロトコルメッセージはすべて、コンパイルされ検証済みのKaitai Structデコーダーを持っており、SatNOGS DB/デコーダー統合が計画されているため、どのステーションでもこのリポジトリに触れることなくテレメトリをデコードできます。2つ目のアンカー地上局が提案されていますが、まだ手配されておらず、周波数調整/ライセンス取得は開始されていません。</td></tr>
+</table>
+</div>
+</section>
+<section class="beat">
+<div class="wrap">
+<p class="reveal">50年はほとんどの衛星事業者の寿命よりも長い。監視装置とビーコンは、このコードを書いた誰もが去った後も信号を送り続けるように作られている。</p>
+</div>
+</section>
+<section class="alt" id="status">
+<div class="wrap">
+<h2 class="h">ステータス</h2>
+<p class="lead">デザインは解析レベルで完了しています。以下はすべて自動的にチェックされます。
+      <span class="code">python tools/check_all.py</span> 変更のたびに――ここにあるものはどれも単発の主張ではありません。</p>
+<div class="status-grid">
+<div class="stat"><div class="num">23/23</div><div class="lbl">自動チェックが合格した</div></div>
+<div class="stat"><div class="num">47</div><div class="lbl">要件の追跡</div></div>
+<div class="stat"><div class="num">29</div><div class="lbl">計画された身体的テスト</div></div>
+<div class="stat"><div class="num">〜26</div><div class="lbl">科学機器</div></div>
+</div>
+<div class="grid cols-2">
+<div>
+<h3>分析レベルで完了</h3>
+<ul class="tick">
+<li>要件、建築、干渉チェック付きパラメトリックCAD</li>
+<li>電力、熱、姿勢、軌道、構造解析</li>
+<li>C、Python、Kaitai Structの実装による完全なコマンド/テレメトリプロトコル（27メッセージ）</li>
+<li>ファームウェアコア（認証、モードマネージャー、障害検出、OTA）と84のユニットチェック</li>
+<li>電子工学インターフェース：KiCadカードおよびバックプレーンテンプレート、EPS/サバイバルカードフロアプラン、DRCクリーン</li>
+<li>FMEA、検証マトリックス、テスト計画、運用概念、コストおよびスケジュールモデル</li>
+</ul>
+</div>
+<div>
+<h3>まだ開いています</h3>
+<ul class="open">
+<li>ハードウェアは存在しません：ベンダーデータ、実際の回路図、プロトタイプ、物理的なテストはすべて先行しています</li>
+<li>発射機会、記録オペレーター、周波数調整はまだ手配されていません</li>
+<li>翼ヒンジ/展開機構はまだ設計されていません（このサイトの展開GIFは参考用です）</li>
+<li>両面ソーラーパネルには商業的な先例が見当たらない――カスタム部品</li>
+<li>ターゲットの選択は未定：飛行ミッション、飛行品質リファレンスデザイン、またはFlatSat/バルーンの前駆体か</li>
+</ul>
+</div>
+</div>
+<div class="note" style="margin-top:30px;">
+<b>これをはっきりと読んでください。</b> このページ上のすべての数値は、測定値ではなく、シミュレーションまたは手計算による工学的な推定値です。Wollemiのどの部分も建造されておらず、ここにあるものは飛行に適合していません。
+    </div>
+</div>
+</section>
+<footer>
+<div class="wrap cols">
+<div>
+<h4>ウォレミ</h4>
+<p style="max-width:320px; color:var(--muted2);">オープンでモジュール式、長寿命の12U科学観測所および再利用可能な小型衛星プラットフォーム。現在は非公開リポジトリですが、デザインが完成次第一般公開されます。</p>
+</div>
+<div>
+<h4>続きを読む</h4>
+<a href="https://github.com/alplix/wollemi" style="display:block; margin-bottom:6px;">github.com/alplix/wollemi</a>
+<span style="color:var(--muted2); display:block;">システムデザインドキュメント、要件、テスト計画、およびすべての分析ツールはリポジトリ内に存在します。 <span class="code">docs/</span> フォルダ</span>
+</div>
+<div>
+<h4>ライセンス（計画中、未申請）</h4>
+<span style="display:block;">ハードウェア：CERN-OHL-S-2.0</span>
+<span style="display:block;">ソフトウェア：Apache-2.0</span>
+<span style="display:block;">文書: CC-BY-4.0</span>
+</div>
+</div>
+</footer>
+<script src="viewer.js" type="module"></script>
+</body>
+</html>

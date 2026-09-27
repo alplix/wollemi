@@ -10,6 +10,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -21,6 +23,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -32,6 +36,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -43,6 +49,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -54,6 +62,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -65,6 +75,8 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
   <url>
@@ -76,6 +88,34 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
     <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
+  </url>
+  <url>
+    <loc>https://wollemi.athena.org.tr/index.ja.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://wollemi.athena.org.tr/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://wollemi.athena.org.tr/index.tr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://wollemi.athena.org.tr/index.de.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://wollemi.athena.org.tr/index.fr.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
+  </url>
+  <url>
+    <loc>https://wollemi.athena.org.tr/index.ko.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://wollemi.athena.org.tr/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://wollemi.athena.org.tr/index.tr.html"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://wollemi.athena.org.tr/index.de.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://wollemi.athena.org.tr/index.fr.html"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://wollemi.athena.org.tr/index.es.html"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://wollemi.athena.org.tr/index.ru.html"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://wollemi.athena.org.tr/index.zh.html"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://wollemi.athena.org.tr/index.ja.html"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://wollemi.athena.org.tr/index.ko.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://wollemi.athena.org.tr/"/>
   </url>
 </urlset>
