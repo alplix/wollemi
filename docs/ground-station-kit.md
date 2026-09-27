@@ -25,7 +25,7 @@ S-band part is where Wollemi adds value. Wollemi's high-rate data (about 134 MB 
 | **1.2 m** | +12.6 | +9.6 | **+6.6** | +3.6 |
 | 1.8 m | +16.2 | +13.2 | +10.1 | +7.1 |
 
-Reading: a 0.9 m dish supports 500 kbps comfortably, 1.2 m supports the 1 Mbps design rate with margin.
+Reading: a 0.9 m dish supports 500 kbps comfortably, 1.2 m supports the 1 Mbps design rate with margin. (A 0.9 m dish is light enough for a SatNOGS/SATRAN-class open-hardware rotator; the 1.2 m dish that reaches the full 1 Mbps design rate needs the heavier rotator below.)
 The spacecraft should support **adaptive rate** (250 kbps to 2 Mbps) so smaller stations still get data.
 Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous losses; full budget still open.
 
@@ -37,12 +37,26 @@ Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous
 | 2.4 GHz helical or patch feed | custom or amateur-radio surplus | 50-150 | feed illumination must match the dish f/D |
 | Low-noise amplifier (2.4 GHz) | amateur/Wi-Fi-band LNA | 30-100 | noise figure drives the system temperature assumed in the link budget |
 | Band-pass filter + bias tee + coax/connectors | | 50-150 | keeps Wi-Fi/ISM interference out |
-| Az/el rotator with controller | amateur-radio class (Yaesu/SPID-class or open-source) | 300-1200 | must handle the wind load of a 1.2 m dish; open-source rotator designs exist |
+| Az/el rotator with controller | **SPID BIG-RAS class** (see below; open-source SatNOGS/SATRAN rotators do not hold a 1.2 m dish) | 1500-1700 | 1300 Nm torque, 318 kg load rating, hamlib-compatible |
 | Wideband SDR (or down-converter + narrowband SDR) | AD9363-class (e.g. PlutoSDR/LimeSDR family) or a 2.4 GHz down-converter feeding an RTL-SDR-class device | 150-500 | adaptive-rate receiver, Doppler tracking in software |
 | Compute (tracking, decode, upload) | Raspberry Pi class | 50-100 | runs `groundstation/predict.py`-derived tracking, the decoder, and upload to the archive |
 | Mounts, enclosure, cabling, misc | | 100-300 | weatherproofing for an unattended station |
-| **Total, science station** | | **roughly 900 - 2900** | consistent with the "on the order of one to a few thousand dollars" estimate above and with `configs/12u_cost.toml` (ground segment, two sites: 6-40 k likely 15 k total) |
+| **Total, science station** | | **roughly 2200 - 4500** (RF chain ~900-2900 + rotator ~1500-1700) | within `configs/12u_cost.toml` (ground segment, two sites: 6-40 k likely 15 k total) |
 | Listener station (UHF/LoRa) | LoRa board + small computer | 30-80 | no dish or rotator |
+
+### Rotator: SatNOGS/SATRAN is the wrong choice here, a heavier commercial unit is needed
+
+The project's own preference (open, reusable, community hardware) points at the SatNOGS rotator or the lighter SATRAN kit (< 200 USD) first, but both are sized for Yagis and light parabolic-grid antennas:
+SatNOGS builders report the standard rotator handling a 24 dB parabolic grid antenna without a counterweight, but **failing under the weight and wind load of a 1.2 m dish** (community reports; see
+[SatNOGS Rotator v3](https://wiki.satnogs.org/SatNOGS_Rotator_v3)). A dish-class science station therefore needs a heavier-duty unit:
+
+- **Selected reference: SPID BIG-RAS az/el rotator** -- 1300 Nm turning torque, 2712 Nm brake torque, 318 kg vertical load rating, 0.5 deg resolution, about 1250 GBP (~1550 USD) as of March 2026 ([The DX Shop](https://thedxshop.com/product/spid-big-ras-heavy-duty-azimuth-elevation-rotator/)). This is well above the BOM range for the RF chain alone, so the total science-station cost should be read as **roughly 2200-4500 USD** once the rotator is priced in, not 900-2900; `configs/12u_cost.toml`'s 6-40 k (likely 15 k) range for two complete ground sites already covers this.
+- **Wind-load sanity check:** a 1.2 m dish has a frontal area of about 1.13 m^2. At a 30 m/s design gust (108 km/h), broadside-on (worst case; Cd ~1.2 for a dish-like flat disc), the wind force is about
+  0.5 x 1.225 kg/m^3 x 30^2 x 1.2 x 1.13 m^2 ~ 750 N. For a plausible mount standoff of 0.15-0.3 m, that is a wind torque of roughly 110-225 N m about the elevation axis -- 6-12x below the BIG-RAS's
+  1300 Nm rating, so the unit has a large margin even in strong wind; a lighter (and cheaper) SPID RAS or BIG-RAK could also be checked against the same 750 N figure once a real mount geometry exists.
+- **Software integration**: the SatNOGS client talks to rotators through `hamlib`, which already supports the SPID protocol and most commercial az/el rotators, so choosing a heavier commercial unit does
+  not require new client software -- only a `hamlib` rotctld configuration for the SPID protocol.
+- The **listener station** (UHF/LoRa, a small Yagi) stays on the SatNOGS or SATRAN open-hardware rotator; only the S-band science station needs the commercial unit.
 
 - Mechanical: 1.2 m offset mesh dish, az/el rotator with enough torque, printable mounts.
 - RF: 2.4 GHz feed, low-noise amplifier, band-pass filter, bias tee, coax; SDR (for example an AD9363-based
@@ -75,9 +89,21 @@ so tracking with an ordinary SDR is straightforward. Use real orbit elements onc
 - Collision-avoidance commanding needs at least one reliable station with transmit capability (COLAV-1, COLAV-4). The kit therefore also needs a **transmit variant** (licensed operator) and a
   documented process for the operator of record; both anchors should eventually have it so a single station outage does not stop commanding.
 
+## Frequency coordination and licensing: where to start (Turkey, reference site)
+
+- **National society:** Turkiye Radyo Amatorleri Cemiyeti (TRAC) is Turkey's IARU member society and the entry point for amateur-satellite frequency coordination questions and for the operator's own
+  amateur radio licence.
+- **National regulator:** BTK (Bilgi Teknolojileri ve Iletisim Kurumu) administers spectrum and station licensing in Turkey; an amateur satellite still needs the standard IARU international
+  coordination (below) plus whatever domestic filing BTK requires for a transmitting ground station and, separately, for the spacecraft's amateur-satellite service use.
+- **International coordination:** the actual satellite frequency assignment is coordinated globally through the **IARU Satellite Adviser** and regional advisory panel (not a national body alone,
+  since a satellite's footprint is global); the request process and forms are published at [iaru.org/reference/satellites](https://www.iaru.org/reference/satellites/). This should start as soon as
+  the link budget and orbit are stable, well before any hardware is built (`mission/requirements.md`, REG-1).
+- None of this has been started; it is a real open item (`REG-1`, `COLAV-1`), not a design task, and is why `docs/risks.md` (R2) rates it high.
+
 ## Open items
 
-- Choose the RF front end and SDR with actual pricing and availability.
-- Rotator design or selection for a 1.2 m dish; wind loading.
-- Frequency coordination, licensing and the operator-of-record process (amateur satellite service, IARU).
-- Prototype with a spare dish and verify against a known S-band source before finalising the BOM.
+- RF front end and SDR are chosen at reference-design level (this document); actual purchase needs current availability and a supplier that ships to Turkey.
+- Rotator selection is closed at reference-design level for the science station (SPID BIG-RAS class); the listener station keeps the SatNOGS/SATRAN open-hardware rotator. A real mount design (standoff,
+  mast, guying) is still needed to replace the order-of-magnitude wind-torque check above.
+- Frequency coordination, licensing and the operator-of-record process: entry points identified above (TRAC, BTK, IARU); the actual coordination has not been started.
+- Prototype with a spare dish and verify against a known S-band source before finalising the BOM (`GND-01`, `mission/tests.toml`).
