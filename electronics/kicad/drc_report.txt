@@ -1,5 +1,5 @@
-** Drc report for ginkgo_card_template.kicad_pcb **
-** Created on 2026-09-27T01:35:04 **
+** Drc report for wollemi_card_template.kicad_pcb **
+** Created on 2026-09-27T13:13:31 **
 ** Report includes: Errors, Warnings, Exclusions **
 
 ** Found 0 DRC violations **

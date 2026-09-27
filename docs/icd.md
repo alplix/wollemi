@@ -9,7 +9,7 @@ the launch-provider values in section 6 are assumptions to be replaced by the pr
 |---|---|---|
 | Form factor | 12U CubeSat, envelope 226.3 x 226.3 x 340.5 mm, rails 8.5 mm | `configs/12u_geometry.toml` |
 | Mass at launch | 16.75 kg (limit 24 kg) | `sim/budget.py` |
-| Centre of mass (offset from the geometric centre) | (-5.8, -7.3, +10.8) mm stowed; (-5.8, -7.3, +10.8) mm wings deployed | `mechanical/ginkgo_cad.py` |
+| Centre of mass (offset from the geometric centre) | (-5.8, -7.3, +10.8) mm stowed; (-5.8, -7.3, +10.8) mm wings deployed | `mechanical/wollemi_cad.py` |
 | Moments of inertia (kg m2) | stowed (0.198, 0.188, 0.139); deployed (0.198, 0.346, 0.297) | same |
 | Stowed wing stack thickness | 6.3 mm (allowed protrusion 6.5 mm), six hold-down posts per wing | `docs/structure.md` |
 | External protrusions | patch antennas 4 mm; thruster nozzle flush; boom and UHF antenna stowed inside the envelope | CAD |
@@ -22,7 +22,7 @@ the launch-provider values in section 6 are assumptions to be replaced by the pr
 | Item | Value |
 |---|---|
 | Main bus | VBAT_A and VBAT_B, 2S LiFePO4 5.0 - 7.3 V (nominal 6.4 V); cards accept 4.5 - 8.6 V; every card has its own eFuse (trip 1.5x nominal) |
-| Card connectors | GK-P 60 pins (power, CAN-FD A/B, PPS, SYNC, SLOT_ID, SLOT_SEL, KILL_N, FAULT_N, RESET_N, I2C, UART, SWD) and GK-D 30 pins (Ethernet, fast lanes), pitch 1.27 mm |
+| Card connectors | WL-P 60 pins (power, CAN-FD A/B, PPS, SYNC, SLOT_ID, SLOT_SEL, KILL_N, FAULT_N, RESET_N, I2C, UART, SWD) and WL-D 30 pins (Ethernet, fast lanes), pitch 1.27 mm |
 | Backplane | 15 slots plus hub per column, bussed signals daisy-chained, GND and battery planes (`electronics/gen_backplane.py`, DRC clean) |
 | Battery packs | A and B: 2S2P 26650 LiFePO4, 42 Wh each; C: 5 Wh survival pack with independent charger |
 | Solar | wings: 6 panels x 20 cells (10s2p), Vmp ~24 V, ~24 W each; body cells 0.267 m2 usable; survival string 4s2p |
@@ -34,12 +34,12 @@ the launch-provider values in section 6 are assumptions to be replaced by the pr
 
 | Item | Value |
 |---|---|
-| Packet format | CCSDS Space Packet with Ginkgo secondary header, CRC-16, signed telecommands (Ed25519), 27 messages (`docs/protocol-messages.md`) |
+| Packet format | CCSDS Space Packet with Wollemi secondary header, CRC-16, signed telecommands (Ed25519), 27 messages (`docs/protocol-messages.md`) |
 | Onboard buses | CAN-FD A and B control plane; Gigabit Ethernet data plane between the Linux computers, MMU and the S-band modem |
 | UHF | 433 MHz amateur band, LoRa/AX.25 beacon and commands, about 5 kbps |
 | S-band | 2.4 GHz amateur band, 1.0 Mbps design rate (250 kbps - 2 Mbps adaptive), efficiency 0.65 |
 | Reference ground station | Pamukkale (37.9 N, 29.1 E): 3.7 passes/day of 447 s |
-| Data products | CFDP file transfer, `.gpk` archive files and JSON index (`docs/protocol.md`) |
+| Data products | CFDP file transfer, `.wpk` archive files and JSON index (`docs/protocol.md`) |
 
 ## 4. Thermal interfaces
 

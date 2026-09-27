@@ -6,7 +6,7 @@ can fairly say "copied" and so we know what to reuse instead of reinventing. Thi
 
 ## 1. Closest existing work
 
-| Project | What it is | Relation to Ginkgo |
+| Project | What it is | Relation to Wollemi |
 |---|---|---|
 | [OreSat](https://www.oresat.org/) (Portland State Aerospace Society) | Fully open-source 2U CubeSat with a **card/backplane bus** replacing PC/104 stacks: cards slide into frames, CAN bus at 1 Mbps, 2-cell Li-ion power bus, scalable 1U-3U | **Closest**: the card-slot idea, CAN control bus, open hardware. See [OreSat overview](https://www.oresat.org/technologies/cubesat-subsystems), [backplane repo](https://github.com/oresat/oresat-backplane), [structure paper](https://arc.aiaa.org/doi/10.2514/6.2021-1256) |
 | [LibreCube](https://librecube.org/) | Open ecosystem of PC/104-format boards with ECSS/CCSDS standards | Same spirit; PC/104 stack, not a cell grid. Their use of CCSDS/ECSS matches our protocol choices |
@@ -35,7 +35,7 @@ CAN as control bus; volunteer ground network model (SatNOGS, TinyGS); COTS parts
   power bus levels) so existing open cards could be reused, instead of a private variant.
 - **Modular open avionics, electric propulsion on cubesats, redundant power** are all established.
 
-## 4. Where Ginkgo's contribution really is (claims we can defend)
+## 4. Where Wollemi's contribution really is (claims we can defend)
 
 1. **Design rules as code plus config-driven verification**: one set of TOML files drives budgets, layout rules,
    geometric packing, interference checks, mass properties, data and longevity analysis. To our knowledge this
@@ -54,8 +54,9 @@ CAN as control bus; volunteer ground network model (SatNOGS, TinyGS); COTS parts
 - Read the OreSat structure paper and backplane repository in detail (the publisher blocked automated access, so
   only the abstract-level summary above was used).
 - Search patents (e.g. card-slot CubeSat structures, "Card-Sat" style filings) before publishing card format details.
-- **Name check:** a quick search found no satellite called Ginkgo, but "Ginkgo" is also a well-known company name
-  (Ginkgo Bioworks), so check trademarks before public release; the name is easy to change.
+- **Name check:** the project was renamed from "Ginkgo" to "Wollemi" after a search found the earlier name conflicted with a live trademark (Ginkgo Bioworks) and an unrelated open-source HPC library
+  (`docs/licensing.md`). A quick search for "Wollemi" found no satellite or well-known company of that name and no conflict at this pass, but a full trademark clearance is still needed before public
+  release; the name is easy to change again while the repository is small.
 - Add a `CREDITS.md` when the repository is opened.
 
 Sources: OreSat, LibreCube, UPSat, AcubeSAT, SatNOGS, AMSAT, ThrustMe links above.

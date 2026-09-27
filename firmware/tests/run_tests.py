@@ -11,12 +11,12 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(ROOT, "protocol", "generated"))
-import ginkgo_proto as gp  # noqa: E402
+import wollemi_proto as gp  # noqa: E402
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey  # noqa: E402
 from cryptography.hazmat.primitives.serialization import Encoding, PublicFormat  # noqa: E402
 
 FLAGS = ["-std=c99", "-Wall", "-Wextra", "-Werror", "-O2"]
-COMMON = ["gk_auth.c", "gk_modes.c", "gk_fdir.c", "gk_cmdq.c", "gk_ota.c"]
+COMMON = ["wl_auth.c", "wl_modes.c", "wl_fdir.c", "wl_cmdq.c", "wl_ota.c"]
 EXT = ".exe" if os.name == "nt" else ""
 
 
@@ -24,14 +24,14 @@ def build():
     gcc = shutil.which("gcc")
     if not gcc:
         raise SystemExit("gcc not found")
-    common = [os.path.join(ROOT, "firmware", "common", f) for f in COMMON if f != "gk_auth.c"]
+    common = [os.path.join(ROOT, "firmware", "common", f) for f in COMMON if f != "wl_auth.c"]
     unit = os.path.join(HERE, "test_firmware" + EXT)
     subprocess.run([gcc, *FLAGS, os.path.join(HERE, "test_firmware.c"), *common, "-o", unit], check=True)
     auth = os.path.join(HERE, "auth_cli" + EXT)
     tweet = os.path.join(ROOT, "firmware", "third_party", "tweetnacl", "tweetnacl.c")
     # TweetNaCl is third-party code: build it without -Werror
     subprocess.run([gcc, "-std=c99", "-O2", "-c", tweet, "-o", os.path.join(HERE, "tweetnacl.o")], check=True)
-    subprocess.run([gcc, *FLAGS, os.path.join(HERE, "auth_cli.c"), os.path.join(ROOT, "firmware", "common", "gk_auth.c"),
+    subprocess.run([gcc, *FLAGS, os.path.join(HERE, "auth_cli.c"), os.path.join(ROOT, "firmware", "common", "wl_auth.c"),
                     os.path.join(HERE, "tweetnacl.o"), "-o", auth], check=True)
     return unit, auth
 

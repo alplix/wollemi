@@ -1,9 +1,9 @@
-# Ginkgo card connector pinouts: single source for the KiCad card template and the interface document.
+# Wollemi card connector pinouts: single source for the KiCad card template and the interface document.
 # Each connector is a list of pin PAIRS (odd pin = row A, even pin = row B): pair k holds pins 2k-1 and 2k.
 # Differential pairs sit in one pair with ground pairs between them.
 
 [gkp]
-title = "GK-P power and control, 2 x 30"
+title = "WL-P power and control, 2 x 30"
 pairs = [
   ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"], ["VBAT_A", "VBAT_B"],
   ["GND", "GND"],
@@ -31,7 +31,7 @@ pairs = [
 ]
 
 [gkd]
-title = "GK-D data, 2 x 15 (data-plane cards only)"
+title = "WL-D data, 2 x 15 (data-plane cards only)"
 pairs = [
   ["ETH0_P", "ETH0_N"], ["GND", "GND"],
   ["ETH1_P", "ETH1_N"], ["GND", "GND"],

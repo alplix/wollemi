@@ -1,4 +1,4 @@
-# Ginkgo sponsor brief (draft, one page)
+# Wollemi sponsor brief (draft, one page)
 
 *Analysis-level design, private repository. All numbers are engineering estimates with the uncertainty stated in `docs/cost.md`; nothing has been built or tested.*
 

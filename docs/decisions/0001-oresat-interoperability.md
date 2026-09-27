@@ -29,9 +29,9 @@ the [CANopen primer](https://oresat-software.readthedocs.io/en/latest/primers/ca
    and commands.
 2. **Node ids:** FC-A 0x01, FC-B 0x02, supervisor 0x03, cards at multiples of 0x04 (slot id x 4) so the numbering stays compatible
    with OreSat's scheme.
-3. **Power input range:** cards accept 4.5 - 8.6 V (`docs/electrical-interface.md`), which covers Ginkgo's LiFePO4 bus (5.0 - 7.3 V) and
+3. **Power input range:** cards accept 4.5 - 8.6 V (`docs/electrical-interface.md`), which covers Wollemi's LiFePO4 bus (5.0 - 7.3 V) and
    the upper part of OreSat's Li-ion bus; a card meant for both declares it in its descriptor.
-4. **Connector and mechanics:** Ginkgo's own (GK-P/GK-D, notched 100 x 100 card). No electrical or mechanical plug compatibility is promised;
+4. **Connector and mechanics:** Wollemi's own (WL-P/WL-D, notched 100 x 100 card). No electrical or mechanical plug compatibility is promised;
    an adapter or a shared subset can be discussed with the OreSat team.
 
 ## Consequences

@@ -5,7 +5,7 @@ configs/12u_layout.toml. Sizes are rounded up to the voxel size (built-in cleara
 spine corner and the outer rail corner of every column are blocked.
 
 Usage: python mechanical/pack.py [science.toml layout.toml geometry.toml]
-Writes mechanical/out/placement.json (used by ginkgo_cad.py).
+Writes mechanical/out/placement.json (used by wollemi_cad.py).
 """
 import itertools
 import json

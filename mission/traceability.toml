@@ -7,7 +7,7 @@
 id = "SYS-1"
 text = "12U CubeSat envelope (226.3 x 226.3 x 340.5 mm) with rails; deployer interface compatible."
 method = "I"
-evidence = ["mechanical/ginkgo_cad.py", "configs/12u_geometry.toml"]
+evidence = ["mechanical/wollemi_cad.py", "configs/12u_geometry.toml"]
 status = "designed"
 note = "Rails and envelope modelled; dispenser tabs, springs and contact surfaces simplified: check against the chosen dispenser drawing."
 
@@ -23,14 +23,14 @@ id = "SYS-3"
 text = "All modules fit geometrically inside their assigned columns with no interference (exact boolean check)."
 method = "A"
 auto = "fit"
-evidence = ["mechanical/pack.py", "mechanical/ginkgo_cad.py"]
+evidence = ["mechanical/pack.py", "mechanical/wollemi_cad.py"]
 
 [[req]]
 id = "SYS-4"
 text = "Centre of mass within 20 mm (x, y) and 70 mm (z) of the geometric centre at launch."
 method = "A"
 auto = "com"
-evidence = ["mechanical/ginkgo_cad.py"]
+evidence = ["mechanical/wollemi_cad.py"]
 note = "Typical dispenser targets; verify with the chosen dispenser."
 
 [[req]]
@@ -112,7 +112,7 @@ id = "ADCS-2"
 text = "Thruster misalignment torque during a burn stays below the magnetorquer average torque (thrust line through the CoM +-5 mm)."
 method = "A"
 auto = "thrust_torque"
-evidence = ["mechanical/ginkgo_cad.py", "docs/adcs.md"]
+evidence = ["mechanical/wollemi_cad.py", "docs/adcs.md"]
 
 [[req]]
 id = "PROP-1"
@@ -127,7 +127,7 @@ id = "PROP-2"
 text = "Exhaust plume clear of the solar wings."
 method = "A"
 auto = "plume"
-evidence = ["mechanical/ginkgo_cad.py"]
+evidence = ["mechanical/wollemi_cad.py"]
 note = "Plume half-angle 12 deg is an assumption; verify with the vendor plume map."
 
 [[req]]
@@ -164,7 +164,7 @@ id = "COM-4"
 text = "Telecommands carry a valid Ed25519 signature, counter and validity window; the supervisor rejects others (replay, expired, forged, tampered, bad CRC)."
 method = "T"
 auto = "firmware_tests"
-evidence = ["firmware/common/gk_auth.c", "firmware/tests/run_tests.py"]
+evidence = ["firmware/common/wl_auth.c", "firmware/tests/run_tests.py"]
 note = "TweetNaCl for the host build; review a maintained/verified library before flight."
 
 [[req]]
@@ -172,7 +172,7 @@ id = "FW-1"
 text = "Mode manager, FDIR escalation, time-tagged command queue and A/B OTA with rollback behave as specified (68 unit checks, gcc -Werror), including SCIENCE_LITE when the heavy computer is lost."
 method = "T"
 auto = "firmware_tests"
-evidence = ["firmware/common/gk_modes.c", "firmware/common/gk_fdir.c", "firmware/common/gk_cmdq.c", "firmware/common/gk_ota.c"]
+evidence = ["firmware/common/wl_modes.c", "firmware/common/wl_fdir.c", "firmware/common/wl_cmdq.c", "firmware/common/wl_ota.c"]
 
 [[req]]
 id = "DATA-1"
@@ -208,7 +208,7 @@ id = "SIM-1"
 text = "Closed-loop simulation of the real mode manager over 60 days with injected faults shows no brownout and correct degradation and recovery in a typical and a dawn-dusk orbit."
 method = "A"
 auto = "mission_sim"
-evidence = ["sim/mission_sim.py", "firmware/common/gk_modes.c", "docs/mission-simulation.md"]
+evidence = ["sim/mission_sim.py", "firmware/common/wl_modes.c", "docs/mission-simulation.md"]
 
 [[req]]
 id = "FMEA-1"
@@ -223,14 +223,14 @@ id = "ELEC-1"
 text = "Card template passes KiCad DRC with the spine notch, connectors and keep-outs defined."
 method = "A"
 auto = "kicad_drc"
-evidence = ["electronics/gen_card.py", "electronics/kicad/ginkgo_card_template.kicad_pcb"]
+evidence = ["electronics/gen_card.py", "electronics/kicad/wollemi_card_template.kicad_pcb"]
 
 [[req]]
 id = "ELEC-2"
 text = "Column backplane strip (15 slots + hub, bussed CAN/PPS/SYNC/SLOT_SEL/KILL/FAULT/RESET/I2C, GND and battery planes) passes DRC with zones refilled and no unconnected items."
 method = "A"
 auto = "kicad_backplane"
-evidence = ["electronics/gen_backplane.py", "electronics/kicad/ginkgo_backplane_strip.kicad_pcb"]
+evidence = ["electronics/gen_backplane.py", "electronics/kicad/wollemi_backplane_strip.kicad_pcb"]
 
 [[req]]
 id = "ELEC-3"
@@ -336,7 +336,7 @@ note = "Protocol is fully specified in protocol/messages.toml; nothing is encryp
 id = "OPEN-5"
 text = "Only spacecraft control commands are authenticated (signed, not encrypted); public relay traffic needs no key."
 method = "I"
-evidence = ["firmware/common/gk_auth.c"]
+evidence = ["firmware/common/wl_auth.c"]
 status = "designed"
 note = "Signature check is implemented and tested (firmware/tests)."
 

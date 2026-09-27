@@ -1,7 +1,7 @@
 """ADCS sizing: disturbance torques, wheel and magnetorquer sizing, slew, burn torque and imaging smear.
 
 Usage: python sim/adcs.py
-Inertias come from the CAD model (mechanical/ginkgo_cad.py, kg m^2). All disturbance models are first-order
+Inertias come from the CAD model (mechanical/wollemi_cad.py, kg m^2). All disturbance models are first-order
 worst-case estimates; a full simulation (flexible modes, wheel micro-vibration, sensor noise) is still to do.
 """
 import math

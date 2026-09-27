@@ -3,13 +3,13 @@
 | File | Role |
 |---|---|
 | `predict.py` | Pass prediction, Doppler and pass statistics with SGP4 (`pip install sgp4`) |
-| `decode.py` | Reference decoder for Ginkgo packets (hex, `.gpk` streams), uses `protocol/generated/ginkgo_proto.py` |
+| `decode.py` | Reference decoder for Wollemi packets (hex, `.wpk` streams), uses `protocol/generated/wollemi_proto.py` |
 
 ```
 python groundstation/predict.py --days 7                       # demo orbit, four sites
 python groundstation/predict.py --tle L1 L2 --lat 39.93 --lon 32.86 --alt 0.9
 python groundstation/decode.py --demo
-python groundstation/decode.py --file capture.gpk
+python groundstation/decode.py --file capture.wpk
 ```
 
 Design, link margins and hardware plan: `docs/ground-station-kit.md`. Signature verification of telecommands (Ed25519) is still to be added

@@ -1,10 +1,10 @@
 # Credits (draft)
 
-Ginkgo builds on the work of many open projects and communities. Nothing here implies endorsement by any of them.
+Wollemi builds on the work of many open projects and communities. Nothing here implies endorsement by any of them.
 
 ## Closest precedents and inspiration
 
-- **OreSat** (Portland State Aerospace Society and collaborators): open-source card/backplane CubeSat architecture, CAN bus with CANopen, open software framework. Ginkgo's card and backplane concept is closest to OreSat and follows its CANopen conventions (`docs/decisions/0001-oresat-interoperability.md`).
+- **OreSat** (Portland State Aerospace Society and collaborators): open-source card/backplane CubeSat architecture, CAN bus with CANopen, open software framework. Wollemi's card and backplane concept is closest to OreSat and follows its CANopen conventions (`docs/decisions/0001-oresat-interoperability.md`).
 - **LibreCube**, **UPSat** and the **Libre Space Foundation**, **AcubeSAT**, **EIRSAT-1**, **PULSE-A**: open-source satellite hardware and software, standards use (ECSS, CCSDS).
 - **SatNOGS** and **TinyGS**: volunteer ground station networks and open satellite databases.
 - **AMSAT** and **AMSAT-OSCAR 7**: proof that a satellite can outlive its battery and its first operators; sun-only survival mode.

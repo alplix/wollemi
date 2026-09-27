@@ -13,8 +13,8 @@ VOCAB = {"hardware", "retry", "restart", "power_cycle", "switch_redundant", "deg
          "sun_only", "ground_action", "design"}
 SUBSYSTEMS = {"Power", "Thermal", "Compute", "Comms", "ADCS", "Propulsion", "Structure", "Payload", "Software", "Ground"}
 REQUIRED = ("id", "sys", "item", "mode", "effect", "detect", "response", "fdir", "S", "L", "D")
-FIRMWARE_REFS = {"gk_auth": "firmware/common/gk_auth.c", "gk_ota": "firmware/common/gk_ota.c", "gk_modes": "firmware/common/gk_modes.c",
-                 "gk_fdir": "firmware/common/gk_fdir.c"}
+FIRMWARE_REFS = {"wl_auth": "firmware/common/wl_auth.c", "wl_ota": "firmware/common/wl_ota.c", "wl_modes": "firmware/common/wl_modes.c",
+                 "wl_fdir": "firmware/common/wl_fdir.c"}
 
 
 def main():

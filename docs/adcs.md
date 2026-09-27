@@ -1,6 +1,6 @@
 # Attitude determination and control (draft v0)
 
-Tool: `python sim/adcs.py` (first-order sizing, inertias from the CAD model); geometry checks from `mechanical/ginkgo_cad.py`.
+Tool: `python sim/adcs.py` (first-order sizing, inertias from the CAD model); geometry checks from `mechanical/wollemi_cad.py`.
 
 ## Sizing results (700 km, deployed inertia about 0.18 / 0.34 / 0.27 kg m2)
 

@@ -1,11 +1,11 @@
-# Ginkgo mission requirements (v1, 12U science observatory)
+# Wollemi mission requirements (v1, 12U science observatory)
 
 Supersedes the 2U draft. Every requirement with an ID in the tables below is tracked in `mission/traceability.toml` (method, evidence, status) and covered by a planned test in `mission/tests.toml`;
 `python tools/req_sync_check.py` keeps this document and the traceability file consistent. Status is in `docs/verification-matrix.md` (generated).
 
 ## 1. Mission statement and objectives
 
-**Ginkgo** is an open, modular, long-life 12U science observatory and reference platform: it produces multi-decade space-weather, radiation and Earth-observation data, demonstrates robust
+**Wollemi** is an open, modular, long-life 12U science observatory and reference platform: it produces multi-decade space-weather, radiation and Earth-observation data, demonstrates robust
 electronics and software in orbit, and publishes the design, data and tools for anyone to reuse.
 
 | ID | Objective |

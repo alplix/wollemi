@@ -1,6 +1,6 @@
-# Ginkgo protocol: single source for flight (C) and ground (Python) code and for the message reference.
+# Wollemi protocol: single source for flight (C) and ground (Python) code and for the message reference.
 #
-# Transport: CCSDS Space Packet (6-byte primary header) + Ginkgo secondary header (8 bytes) + payload
+# Transport: CCSDS Space Packet (6-byte primary header) + Wollemi secondary header (8 bytes) + payload
 #            [+ 64-byte Ed25519 signature for telecommands] + CRC-16/CCITT-FALSE. Big-endian on the wire.
 # APID (11 bits) = node (3 bits) << 8 | message id (8 bits).
 # Field types: u8 u16 u32 i8 i16 i32 f32 and bytes[N].

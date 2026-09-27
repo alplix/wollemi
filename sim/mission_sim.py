@@ -51,11 +51,11 @@ def load_lib():
     gcc = shutil.which("gcc")
     if not gcc:
         raise SystemExit("gcc not found")
-    subprocess.run([gcc, "-std=c99", "-O2", "-shared", "-fPIC", os.path.join(ROOT, "firmware", "common", "gk_modes.c"), "-o", path], check=True)
+    subprocess.run([gcc, "-std=c99", "-O2", "-shared", "-fPIC", os.path.join(ROOT, "firmware", "common", "wl_modes.c"), "-o", path], check=True)
     lib = ctypes.CDLL(path)
-    lib.gk_modes_init.argtypes = [ctypes.POINTER(State)]
-    lib.gk_modes_step.argtypes = [ctypes.POINTER(State), ctypes.POINTER(Inputs)]
-    lib.gk_modes_step.restype = ctypes.c_int
+    lib.wl_modes_init.argtypes = [ctypes.POINTER(State)]
+    lib.wl_modes_step.argtypes = [ctypes.POINTER(State), ctypes.POINTER(Inputs)]
+    lib.wl_modes_step.restype = ctypes.c_int
     _LIB = lib
     return lib
 
@@ -87,7 +87,7 @@ def simulate(beta_deg, days=60, dt=30.0, verbose=False):
     cap_wh = 84.0
     max_charge_w = 42.0
     st, inp = State(), Inputs()
-    lib.gk_modes_init(ctypes.byref(st))
+    lib.wl_modes_init(ctypes.byref(st))
     soc_wh = cap_wh * 0.9
     t = 0.0
     stats = {"time": {m: 0.0 for m in MODES}, "transitions": 0, "min_soc": 100.0, "brownout_s": 0.0, "burn_h": 0.0, "burn_wanted_h": 0.0,
@@ -136,7 +136,7 @@ def simulate(beta_deg, days=60, dt=30.0, verbose=False):
         inp.science_requested = 1 if sci else 0
         inp.burn_requested = 1 if burn else 0
         inp.soc_pct = max(0, min(100, int(100 * soc_wh / cap)))
-        changed = lib.gk_modes_step(ctypes.byref(st), ctypes.byref(inp))
+        changed = lib.wl_modes_step(ctypes.byref(st), ctypes.byref(inp))
         mode = MODES[st.mode]
         if changed:
             stats["transitions"] += 1

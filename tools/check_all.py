@@ -28,7 +28,7 @@ CHECKS = [
     ("Firmware tests", [PY, "firmware/tests/run_tests.py"], "ALL FIRMWARE TESTS PASSED", r"authentication cross-checks:.*", False),
     ("Thermal model", [PY, "sim/thermal.py"], "NOMINAL, dawn-dusk", r"NOMINAL, dawn-dusk.*", True),
     ("Geometric packing", [PY, "mechanical/pack.py"], "All modules placed", r"Whole interior.*", False),
-    ("CAD assembly and checks", [PY, "mechanical/ginkgo_cad.py"], "0 interferences", r"\d+ overlapping.*", True),
+    ("CAD assembly and checks", [PY, "mechanical/wollemi_cad.py"], "0 interferences", r"\d+ overlapping.*", True),
     ("Verification matrix", [PY, "sim/trace_check.py"], "0 auto FAIL", r"\d+ requirements:.*", True),
 ]
 

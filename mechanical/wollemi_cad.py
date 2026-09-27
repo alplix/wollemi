@@ -1,6 +1,6 @@
-"""Ginkgo 12U parametric CAD assembly (build123d / OpenCascade).
+"""Wollemi 12U parametric CAD assembly (build123d / OpenCascade).
 
-Usage: python mechanical/ginkgo_cad.py
+Usage: python mechanical/wollemi_cad.py
 Needs mechanical/out/placement.json (run pack.py first; this script runs it if missing).
 
 Builds the frame (rails, walls, plates with windows, cross bulkheads, spine), every placed module,
@@ -513,9 +513,9 @@ def main():
 
     # a shape can belong to only one compound: build, export, then release before the next assembly
     for tag, wings in (("stowed", wings_st), ("deployed", wings_dp)):
-        assy = comp(frame + mods + wings, f"Ginkgo 12U {tag}")
-        export_step(assy, os.path.join(OUT, f"ginkgo_12u_{tag}.step"))
-        export_stl(assy, os.path.join(OUT, f"ginkgo_12u_{tag}.stl"))
+        assy = comp(frame + mods + wings, f"Wollemi 12U {tag}")
+        export_step(assy, os.path.join(OUT, f"wollemi_12u_{tag}.step"))
+        export_stl(assy, os.path.join(OUT, f"wollemi_12u_{tag}.stl"))
         for p in frame + mods + wings:
             p["shape"].parent = None
         assy = None
@@ -530,15 +530,15 @@ def main():
         return out
 
     render(meshes(frame + mods + wings_st), os.path.join(OUT, "render_stowed.png"),
-           title="Ginkgo 12U: stowed (launch configuration)")
+           title="Wollemi 12U: stowed (launch configuration)")
     render(meshes(frame + mods + wings_dp), os.path.join(OUT, "render_deployed.png"), az=30, el=24,
-           title="Ginkgo 12U: wings deployed")
+           title="Wollemi 12U: wings deployed")
     render(meshes(frame + mods, hide=("Wall", "Nadir plate", "Zenith plate")), os.path.join(OUT, "render_interior.png"),
-           az=35, el=26, title="Ginkgo 12U: interior (walls hidden; Q1 blue, Q2 orange, Q3 green, Q4 red)")
+           az=35, el=26, title="Wollemi 12U: interior (walls hidden; Q1 blue, Q2 orange, Q3 green, Q4 red)")
     render(meshes(frame + mods, hide=("Wall +X", "Wall +Y", "Zenith plate")), os.path.join(OUT, "render_cutaway.png"),
-           az=215, el=28, title="Ginkgo 12U: cutaway from the trailing side")
+           az=215, el=28, title="Wollemi 12U: cutaway from the trailing side")
     render(meshes(frame + mods + wings_st), os.path.join(OUT, "render_nadir.png"), az=35, el=-50,
-           title="Ginkgo 12U: nadir end (telescope aperture, camera windows), wings stowed")
+           title="Wollemi 12U: nadir end (telescope aperture, camera windows), wings stowed")
     print("Rendered PNG views to mechanical/out/")
 
     # bill of materials

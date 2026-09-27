@@ -68,7 +68,7 @@ def main(cfg_path, lay_path):
     import os
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sys.path.insert(0, os.path.join(root, "mechanical"))
-    import ginkgo_cad as gc
+    import wollemi_cad as gc
     placed = json.load(open(os.path.join(root, "mechanical", "out", "placement.json")))["placed"]
     gmod = tomllib.load(open(os.path.join(root, "configs", "12u_geometry.toml"), "rb"))
     M, (cx, cy, cz), _I = gc.mass_props(placed, cfg, False, gmod)

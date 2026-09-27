@@ -1,10 +1,10 @@
-/* Command-line wrapper around gk_auth_check for cross-language tests.
+/* Command-line wrapper around wl_auth_check for cross-language tests.
  * usage: auth_cli <last_counter> <now_coarse> <pubkey_hex> [<prev_pubkey_hex|-> ] <packet_hex>
  * prints the integer result code. */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../common/gk_auth.h"
+#include "../common/wl_auth.h"
 
 static int unhex(const char *s, uint8_t *out, int max) {
   int n = (int)strlen(s) / 2;
@@ -19,8 +19,8 @@ static int unhex(const char *s, uint8_t *out, int max) {
 
 int main(int argc, char **argv) {
   if (argc < 6) return 2;
-  gk_auth_t a;
-  gk_auth_init(&a);
+  wl_auth_t a;
+  wl_auth_init(&a);
   a.last_counter = (uint32_t)strtoul(argv[1], 0, 10);
   const uint32_t now = (uint32_t)strtoul(argv[2], 0, 10);
   uint8_t pub[32];
@@ -35,6 +35,6 @@ int main(int argc, char **argv) {
   uint8_t pkt[512];
   const int n = unhex(argv[5], pkt, sizeof pkt);
   if (n < 0) return 2;
-  printf("%d\n", gk_auth_check(&a, pkt, (size_t)n, now));
+  printf("%d\n", wl_auth_check(&a, pkt, (size_t)n, now));
   return 0;
 }

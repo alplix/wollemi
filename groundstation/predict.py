@@ -1,4 +1,4 @@
-"""Pass prediction and Doppler for the Ginkgo ground kit (uses the sgp4 package: pip install sgp4).
+"""Pass prediction and Doppler for the Wollemi ground kit (uses the sgp4 package: pip install sgp4).
 
 Usage:
   python groundstation/predict.py                     # demo: 700 km sun-synchronous orbit, three sites
@@ -29,7 +29,7 @@ def tle_checksum(line):
     return total % 10
 
 
-def make_tle(inc_deg, raan_deg, ecc, argp_deg, ma_deg, mean_motion, epoch=(2026, 270.5), satnum=99999, name="GINKGO"):
+def make_tle(inc_deg, raan_deg, ecc, argp_deg, ma_deg, mean_motion, epoch=(2026, 270.5), satnum=99999, name="WOLLEMI"):
     yy, doy = epoch
     l1 = f"1 {satnum:05d}U 26001A   {yy % 100:02d}{doy:012.8f}  .00000200  00000-0  10000-3 0  999"
     l1 = l1[:68].ljust(68)

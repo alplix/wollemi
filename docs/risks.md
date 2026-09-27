@@ -24,7 +24,7 @@ Likelihood (L) and impact (I) on a 1-5 scale; score = L x I. Mitigations are act
 | R18 | **Deployment failure** of wings or antenna | 2 | 4 | 8 | Body cells alone keep safe mode alive (10.9 W vs 3.1 W); independent burn-wire supply on the survival bus |
 | R19 | **Parts sourcing and export controls** (iodine thruster, triple-junction cells, Jetson) | 3 | 3 | 9 | Identify alternatives per part; check regulations early; keep interfaces vendor-neutral |
 | R20 | **Requirements drift** between design documents | 3 | 2 | 6 | Verification matrix (`sim/trace_check.py`) and configs as the single source keep documents consistent |
-| R21 | **Name and trademark** ("Ginkgo") conflicts | 2 | 2 | 4 | Check trademarks before going public; the name is easy to change |
+| R21 | **Name and trademark** ("Wollemi") conflicts | 2 | 2 | 4 | Check trademarks before going public; the name is easy to change |
 | R22 | **Prior-art or patent conflict** with card/backplane concepts | 2 | 3 | 6 | Prior-art review done (`docs/prior-art.md`), full search before publication; credit OreSat |
 
 ## Top actions right now

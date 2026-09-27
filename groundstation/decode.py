@@ -1,18 +1,18 @@
-"""Reference decoder for Ginkgo packets (ground kit).
+"""Reference decoder for Wollemi packets (ground kit).
 
 Usage:
   python groundstation/decode.py --hex 0801...        # decode one packet given as hex
-  python groundstation/decode.py --file capture.gpk   # decode a concatenated packet stream (archive .gpk format)
+  python groundstation/decode.py --file capture.wpk   # decode a concatenated packet stream (archive .wpk format)
   python groundstation/decode.py --demo               # encode and decode a sample beacon
 
-A .gpk file is a plain concatenation of complete CCSDS Space Packets (see docs/protocol.md, section 5).
+A .wpk file is a plain concatenation of complete CCSDS Space Packets (see docs/protocol.md, section 5).
 """
 import argparse
 import os
 import sys
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "protocol", "generated"))
-import ginkgo_proto as gp  # noqa: E402
+import wollemi_proto as gp  # noqa: E402
 
 
 def split_stream(data):

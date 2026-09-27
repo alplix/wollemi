@@ -1,7 +1,7 @@
-"""Generate the Ginkgo card template (KiCad PCB) and the pinout tables from card_pinout.toml.
+"""Generate the Wollemi card template (KiCad PCB) and the pinout tables from card_pinout.toml.
 
 Usage: python electronics/gen_card.py
-Writes electronics/kicad/ginkgo_card_template.kicad_pcb and electronics/pinout.md, then runs
+Writes electronics/kicad/wollemi_card_template.kicad_pcb and electronics/pinout.md, then runs
 kicad-cli DRC if it is installed.
 """
 import os
@@ -52,7 +52,7 @@ def pads(conn, pitch=None, row=3.0):
 
 def footprint(ref, value, x, y, conn, label):
     pd, length = pads(conn)
-    lines = [f'  (footprint "Ginkgo:{value}_placeholder" (layer "F.Cu") (uuid "{u()}") (at {x} {y})',
+    lines = [f'  (footprint "Wollemi:{value}_placeholder" (layer "F.Cu") (uuid "{u()}") (at {x} {y})',
              f'    (property "Reference" "{ref}" (at 0 {-length / 2 - 2:.2f} 0) (layer "F.SilkS") (uuid "{u()}") '
              f'(effects (font (size 1 1) (thickness 0.15))))',
              f'    (property "Value" "{value}" (at 0 {length / 2 + 2:.2f} 0) (layer "F.Fab") (uuid "{u()}") '
@@ -91,7 +91,7 @@ def build():
     # KiCad y grows downward; origin at the card's top-left corner; notch at the bottom-left (spine corner).
     rr = card["rail_relief"]
     pts = [(0, 0), (W - rr, 0), (W - rr, rr), (W, rr), (W, H), (NX, H), (NX, H - NY), (0, H - NY)]
-    L = ['(kicad_pcb', '  (version 20241229)', '  (generator "ginkgo_gen_card")', '  (generator_version "1.0")',
+    L = ['(kicad_pcb', '  (version 20241229)', '  (generator "wollemi_gen_card")', '  (generator_version "1.0")',
          f'  (general (thickness {card["thickness"]}) (legacy_teardrops no))', '  (paper "A4")',
          '  (layers',
          '    (0 "F.Cu" signal) (4 "In1.Cu" signal) (6 "In2.Cu" signal) (2 "B.Cu" signal)',
@@ -108,8 +108,8 @@ def build():
         L.append(line(x1, y1, x2, y2))
     for x, y in ((4, 4), (W - 4, 4), (W - 4, H - 4), (NX + 4, H - 4)):
         L.append(hole(x, y, card["hole_d"]))
-    L.append(footprint("J1", "GK-P", 8.0, 28.0, "gkp", "GK-P 2x30"))
-    L.append(footprint("J2", "GK-D", 8.0, 62.0, "gkd", "GK-D 2x15"))
+    L.append(footprint("J1", "WL-P", 8.0, 28.0, "gkp", "WL-P 2x30"))
+    L.append(footprint("J2", "WL-D", 8.0, 62.0, "gkd", "WL-D 2x15"))
     g = card["guide_keepout"]
     for name, poly in (("guide keepout top", [(0, 0), (W, 0), (W, g), (0, g)]),
                        ("guide keepout right", [(W - g, g), (W, g), (W, H), (W - g, H)])):
@@ -118,7 +118,7 @@ def build():
                  f'(hatch edge 0.5) (connect_pads (clearance 0)) (min_thickness 0.25) '
                  f'(keepout (tracks not_allowed) (vias not_allowed) (pads allowed) (copperpour not_allowed) (footprints allowed)) '
                  f'(polygon (pts {pts_s})))')
-    L.append(text("GINKGO CARD v0", 26, 14))
+    L.append(text("WOLLEMI CARD v0", 26, 14))
     L.append(text("100 x 100, spine notch 20 x 20 (bottom-left)", 26, 18.5, size=0.9))
     L.append(text("SPINE SIDE", 1.5, H - NY - 4, size=0.9))
     L.append(text("OUTER: guides 3 mm, rail relief 8x8", 50, 14, size=0.9))
@@ -153,19 +153,19 @@ PRO = """{
       }
     }
   },
-  "meta": { "filename": "ginkgo_card_template.kicad_pro", "version": 3 }
+  "meta": { "filename": "wollemi_card_template.kicad_pro", "version": 3 }
 }
 """
 
 
 def main():
-    path = os.path.join(HERE, "kicad", "ginkgo_card_template.kicad_pcb")
+    path = os.path.join(HERE, "kicad", "wollemi_card_template.kicad_pcb")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     open(path, "w", encoding="utf-8").write(build())
     write_pinout_md()
     # template: no routing yet, so unconnected items and generated-library warnings are silenced on purpose;
     # cards derived from the template must re-enable them.
-    open(os.path.join(os.path.dirname(path), "ginkgo_card_template.kicad_pro"), "w", encoding="utf-8").write(PRO)
+    open(os.path.join(os.path.dirname(path), "wollemi_card_template.kicad_pro"), "w", encoding="utf-8").write(PRO)
     print(f"Wrote {path} and pinout.md; nets: {len(NETS)}")
     if os.path.exists(KICAD_CLI):
         rep = os.path.join(HERE, "kicad", "drc_report.txt")

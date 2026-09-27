@@ -22,7 +22,7 @@ Tool: `python groundstation/contact_plan.py` (passes and roles for the reference
 - Pass roles each day: first pass = command upload and time synchronisation; highest-elevation pass = bulk S-band downlink; low passes = UHF housekeeping. About 23 min/day of usable S-band contact
   (`groundstation/contact_plan.py`), enough for the ~44 MB/day of science data plus imaging (`docs/data-plan.md`).
 - Redundancy: a second station (or the volunteer network) is needed for commanding continuity; a single outage removes a day of contacts (FMEA COM-04).
-- Commanding: all commands are time-tagged sequences loaded 24-48 h ahead (COLAV-2), validated on the ground against the power, attitude and thermal state (`gk_cmdq`, `gk_auth`), signed with the operational key.
+- Commanding: all commands are time-tagged sequences loaded 24-48 h ahead (COLAV-2), validated on the ground against the power, attitude and thermal state (`wl_cmdq`, `wl_auth`), signed with the operational key.
 
 ## 3. Launch and early operations (LEOP)
 

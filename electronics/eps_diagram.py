@@ -9,7 +9,7 @@ W, H = 1500, 900
 out = [f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="1500" font-family="sans-serif" font-size="14">',
        '<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#94a3b8"/></marker></defs>',
        f'<rect width="{W}" height="{H}" fill="#0f1420"/>',
-       '<text x="20" y="30" fill="#e2e8f0" font-size="20">Ginkgo EPS block diagram (draft v0): two main chains plus an independent survival chain</text>']
+       '<text x="20" y="30" fill="#e2e8f0" font-size="20">Wollemi EPS block diagram (draft v0): two main chains plus an independent survival chain</text>']
 
 
 def box(x, y, w, h, title, lines=(), fill="#1e293b", stroke="#475569"):

@@ -9,7 +9,7 @@ Overview of how the pieces fit; details are in the documents listed at the end. 
  |  Column Q1        Column Q2          Column Q3            Column Q4              central spine     |
  |  telescope        attitude, optics   compute, comms,      energy vault,          (backplane hub,   |
  |  + spectrometer   + trim ballast     quiet science        hard-radiation science  harness)         |
- |        each column: 3 decks of Ginkgo cards (100 x 100 mm, spine notch) on a passive backplane strip |
+ |        each column: 3 decks of Wollemi cards (100 x 100 mm, spine notch) on a passive backplane strip |
  |                       propulsion bay across Q2/Q3 on the -X centre line                             |
  +------------------------------------------------------------------------------------------------------+
    wings (2 x 3 double-sided panels), body cells, antennas, apertures on the outer skin

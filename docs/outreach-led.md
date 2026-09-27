@@ -59,7 +59,7 @@ Caution: 405 nm is near-ultraviolet; irradiance at these ranges is many orders o
 ## Rules (why it will not hurt the mission)
 
 - **Never during imaging or observations**: the telescope also looks at nadir, so flashes are allowed only in eclipse or twilight passes when the camera is off; the mode
-  manager should forbid the LED in SCIENCE mode (to add to `gk_modes`).
+  manager should forbid the LED in SCIENCE mode (to add to `wl_modes`).
 - **Off in safe and survival modes**, and inside the power budget only from the battery in burst mode.
 - **Sky courtesy**: bright, unannounced satellites are unpopular with astronomers and the public. Publish flash times and locations, keep the flasher short (seconds per pass),
   and consider an "event only" policy (for example a few dates a year, coordinated with observing communities).

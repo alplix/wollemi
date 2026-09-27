@@ -12,7 +12,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "sim"))
 sys.path.insert(0, os.path.join(ROOT, "mechanical"))
 import budget  # noqa: E402
-import ginkgo_cad as gc  # noqa: E402
+import wollemi_cad as gc  # noqa: E402
 
 
 def load(p):
@@ -52,7 +52,7 @@ def main():
     a("|---|---|---|")
     a(f"| Form factor | 12U CubeSat, envelope {ox:.1f} x {oy:.1f} x {oz:.1f} mm, rails {fr['rail']} mm | `configs/12u_geometry.toml` |")
     a(f"| Mass at launch | {r['mass_kg']:.2f} kg (limit 24 kg) | `sim/budget.py` |")
-    a(f"| Centre of mass (offset from the geometric centre) | ({com[0]:+.1f}, {com[1]:+.1f}, {com[2]:+.1f}) mm stowed; ({comd[0]:+.1f}, {comd[1]:+.1f}, {comd[2]:+.1f}) mm wings deployed | `mechanical/ginkgo_cad.py` |")
+    a(f"| Centre of mass (offset from the geometric centre) | ({com[0]:+.1f}, {com[1]:+.1f}, {com[2]:+.1f}) mm stowed; ({comd[0]:+.1f}, {comd[1]:+.1f}, {comd[2]:+.1f}) mm wings deployed | `mechanical/wollemi_cad.py` |")
     a(f"| Moments of inertia (kg m2) | stowed ({inertia[0]:.3f}, {inertia[1]:.3f}, {inertia[2]:.3f}); deployed ({inertia_d[0]:.3f}, {inertia_d[1]:.3f}, {inertia_d[2]:.3f}) | same |")
     a(f"| Stowed wing stack thickness | {stack:.1f} mm (allowed protrusion {fr['protrusion_limit']} mm), six hold-down posts per wing | `docs/structure.md` |")
     a(f"| External protrusions | patch antennas 4 mm; thruster nozzle flush; boom and UHF antenna stowed inside the envelope | CAD |")
@@ -65,7 +65,7 @@ def main():
     a("| Item | Value |")
     a("|---|---|")
     a("| Main bus | VBAT_A and VBAT_B, 2S LiFePO4 5.0 - 7.3 V (nominal 6.4 V); cards accept 4.5 - 8.6 V; every card has its own eFuse (trip 1.5x nominal) |")
-    a(f"| Card connectors | GK-P {n_gkp} pins (power, CAN-FD A/B, PPS, SYNC, SLOT_ID, SLOT_SEL, KILL_N, FAULT_N, RESET_N, I2C, UART, SWD) and GK-D {n_gkd} pins (Ethernet, fast lanes), pitch {pin['card']['connector_pitch']} mm |")
+    a(f"| Card connectors | WL-P {n_gkp} pins (power, CAN-FD A/B, PPS, SYNC, SLOT_ID, SLOT_SEL, KILL_N, FAULT_N, RESET_N, I2C, UART, SWD) and WL-D {n_gkd} pins (Ethernet, fast lanes), pitch {pin['card']['connector_pitch']} mm |")
     a("| Backplane | 15 slots plus hub per column, bussed signals daisy-chained, GND and battery planes (`electronics/gen_backplane.py`, DRC clean) |")
     a("| Battery packs | A and B: 2S2P 26650 LiFePO4, 42 Wh each; C: 5 Wh survival pack with independent charger |")
     a(f"| Solar | wings: 6 panels x 20 cells (10s2p), Vmp ~24 V, ~24 W each; body cells 0.267 m2 usable; survival string 4s2p |")
@@ -77,12 +77,12 @@ def main():
     a("")
     a("| Item | Value |")
     a("|---|---|")
-    a("| Packet format | CCSDS Space Packet with Ginkgo secondary header, CRC-16, signed telecommands (Ed25519), 27 messages (`docs/protocol-messages.md`) |")
+    a("| Packet format | CCSDS Space Packet with Wollemi secondary header, CRC-16, signed telecommands (Ed25519), 27 messages (`docs/protocol-messages.md`) |")
     a("| Onboard buses | CAN-FD A and B control plane; Gigabit Ethernet data plane between the Linux computers, MMU and the S-band modem |")
     a(f"| UHF | 433 MHz amateur band, LoRa/AX.25 beacon and commands, about {link['uhf_rate_bps'] / 1000:.0f} kbps |")
     a(f"| S-band | 2.4 GHz amateur band, {link['sband_rate_bps'] / 1e6:.1f} Mbps design rate (250 kbps - 2 Mbps adaptive), efficiency {link['link_efficiency']} |")
     a(f"| Reference ground station | Pamukkale (37.9 N, 29.1 E): {link['passes_per_station_day']} passes/day of {link['pass_s']} s |")
-    a("| Data products | CFDP file transfer, `.gpk` archive files and JSON index (`docs/protocol.md`) |")
+    a("| Data products | CFDP file transfer, `.wpk` archive files and JSON index (`docs/protocol.md`) |")
     a("")
     a("## 4. Thermal interfaces")
     a("")

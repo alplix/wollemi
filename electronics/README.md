@@ -2,10 +2,10 @@
 
 | File | Role |
 |---|---|
-| `card_pinout.toml` | Single source for the GK-P and GK-D connector pinouts and the card outline |
+| `card_pinout.toml` | Single source for the WL-P and WL-D connector pinouts and the card outline |
 | `gen_card.py` | Generates the KiCad card template and `pinout.md`, runs `kicad-cli` DRC (needs KiCad 10) |
-| `kicad/ginkgo_card_template.kicad_pcb` | 100 x 100 mm card with the 20 x 20 mm spine notch, 4 x M2.5 holes, edge-guide keep-outs, GK-P and GK-D connector placeholders with every net assigned |
-| `kicad/ginkgo_card_template.svg`, `_top.png` | Renders |
+| `kicad/wollemi_card_template.kicad_pcb` | 100 x 100 mm card with the 20 x 20 mm spine notch, 4 x M2.5 holes, edge-guide keep-outs, WL-P and WL-D connector placeholders with every net assigned |
+| `kicad/wollemi_card_template.svg`, `_top.png` | Renders |
 | `pinout.md` | Generated pin tables |
 
 ```

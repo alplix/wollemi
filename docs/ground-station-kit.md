@@ -1,8 +1,8 @@
 # Open ground-station kit (draft v0)
 
-Goal: anyone can receive Ginkgo's science data and telemetry cheaply. SatNOGS provides the network and
+Goal: anyone can receive Wollemi's science data and telemetry cheaply. SatNOGS provides the network and
 database ([SatNOGS](https://satnogs.org/)) and is primarily VHF/UHF today, with S-band named as a goal, so the
-S-band part is where Ginkgo adds value. Ginkgo's high-rate data (about 134 MB per day at the Pamukkale reference station, see
+S-band part is where Wollemi adds value. Wollemi's high-rate data (about 134 MB per day at the Pamukkale reference station, see
 `docs/data-plan.md`) needs S-band; UHF LoRa only carries about 0.5 MB/day.
 
 ## Two station classes
@@ -48,7 +48,7 @@ Assumptions: 150 K system temperature, 6.5 dB required Eb/N0, 3 dB miscellaneous
 - RF: 2.4 GHz feed, low-noise amplifier, band-pass filter, bias tee, coax; SDR (for example an AD9363-based
   or similar wideband device) or a down-converter feeding a low-cost SDR.
 - Compute: Raspberry Pi class, running the receiver, tracking, Doppler correction and upload to the open archive.
-- Software: SatNOGS-compatible client plugin (decoder for the Ginkgo protocol, CFDP receiver, CCSDS frame
+- Software: SatNOGS-compatible client plugin (decoder for the Wollemi protocol, CFDP receiver, CCSDS frame
   decoding), open data upload, tracking from orbit elements.
 - Documentation: build guide, BOM with sourcing notes, alignment and calibration procedure.
 - Reference decoder in Python shared with the flight protocol description (`groundstation/decode.py`, `docs/protocol.md`).
@@ -62,7 +62,7 @@ so tracking with an ordinary SDR is straightforward. Use real orbit elements onc
 ## Software already in the repository
 
 - `groundstation/predict.py`: pass prediction, Doppler and pass statistics (needs `pip install sgp4`).
-- `groundstation/decode.py`: reference decoder for hex packets and `.gpk` archive streams, built on the generated protocol module.
+- `groundstation/decode.py`: reference decoder for hex packets and `.wpk` archive streams, built on the generated protocol module.
 
 ## Anchor stations (COLAV-4: at least two)
 

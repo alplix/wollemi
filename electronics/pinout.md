@@ -2,7 +2,7 @@
 
 Generated from `electronics/card_pinout.toml` by `electronics/gen_card.py`; do not edit by hand.
 
-## GK-P power and control, 2 x 30
+## WL-P power and control, 2 x 30
 
 | Pin pair | Row A (odd) | Row B (even) |
 |---|---|---|
@@ -39,7 +39,7 @@ Generated from `electronics/card_pinout.toml` by `electronics/gen_card.py`; do n
 
 Pin counts: CAN_A_H x1, CAN_A_L x1, CAN_B_H x1, CAN_B_L x1, FAULT_N x1, GND x16, I2C_SCL x1, I2C_SDA x1, KILL_N x1, NRST_DBG x1, PPS_N x1, PPS_P x1, RESET_N x1, RSV x7, SLOT_ID0 x1, SLOT_ID1 x1, SLOT_ID2 x1, SLOT_ID3 x1, SLOT_SEL0 x1, SLOT_SEL1 x1, SLOT_SEL2 x1, SLOT_SEL3 x1, SWD_CLK x1, SWD_IO x1, SYNC_N x1, SYNC_P x1, UART_RX x1, UART_TX x1, VBAT x10, VREF x1
 
-## GK-D data, 2 x 15 (data-plane cards only)
+## WL-D data, 2 x 15 (data-plane cards only)
 
 | Pin pair | Row A (odd) | Row B (even) |
 |---|---|---|

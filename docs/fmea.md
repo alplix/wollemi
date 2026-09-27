@@ -41,7 +41,7 @@ Source: `mission/fmea.toml`; generated and checked by `python tools/fmea_check.p
 |---|---|---|---|---|---|---|---|---|---|
 | COM-01 | S-band transmitter | power amplifier failure | no bulk downlink; UHF only (about 0.5 MB/day) | TX telemetry, ground non-reception | UHF carries priority-1 subsets; ground commands the spare or repeats | `degrade` | 3 | 3 | 2 |
 | COM-02 | UHF radio and antenna | antenna fails to deploy or radio fails | loss of beacon and commanding path | no contact at expected passes | survival beacon designed as a separate low-power path; deployment retried with burn-wire on the survival supply | `retry` | 5 | 2 | 3 |
-| COM-03 | Command channel | replay or forged telecommand | unauthorised spacecraft control | signature, counter and validity check (gk_auth) | command rejected and logged; key rotation available | `design` | 5 | 2 | 1 |
+| COM-03 | Command channel | replay or forged telecommand | unauthorised spacecraft control | signature, counter and validity check (wl_auth) | command rejected and logged; key rotation available | `design` | 5 | 2 | 1 |
 | COM-04 | Ground network | single station outage (weather, failure, power) | no contacts for a day or more; collision-avoidance commands delayed | planned contact log | second station, volunteer network, autonomous store-and-forward; commanding planned with 24-48 h margin | `ground_action` | 3 | 4 | 1 |
 
 ### Compute
@@ -97,7 +97,7 @@ Source: `mission/fmea.toml`; generated and checked by `python tools/fmea_check.p
 
 | ID | Item | Failure mode | Effect | Detection | Response | FDIR | S | L | D |
 |---|---|---|---|---|---|---|---|---|---|
-| SWD-01 | Over-the-air update | corrupt or interrupted update | node fails to boot the new image | hash check before commit, confirm timeout | A/B slots, confirm-or-rollback (gk_ota); never overwrite the running slot | `design` | 4 | 3 | 1 |
+| SWD-01 | Over-the-air update | corrupt or interrupted update | node fails to boot the new image | hash check before commit, confirm timeout | A/B slots, confirm-or-rollback (wl_ota); never overwrite the running slot | `design` | 4 | 3 | 1 |
 | SWD-02 | Flight software defect | logic error in FDIR or mode manager | wrong mode or missed recovery | unit tests, closed-loop simulation, hardware-in-the-loop, telemetry review | supervisor independent of flight software; safe mode; patch via OTA | `survival_mode` | 4 | 3 | 3 |
 | SWD-03 | Key or signature failure | operational key lost or compromised | cannot command, or unauthorised command risk | rejected commands, ground audit | previous key still valid, key_rotate signed by the offline root key | `ground_action` | 4 | 2 | 3 |
 

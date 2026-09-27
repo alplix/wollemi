@@ -1,6 +1,6 @@
 # Design identity (draft v0): what makes this design ours
 
-Project name: **Ginkgo**. The ginkgo is a "living fossil" that has survived for ~270 million
+Project name: **Wollemi**. The wollemi is a "living fossil" that has survived for ~270 million
 years, which is the design philosophy: build for decades, degrade gracefully, never die of a
 single fault.
 
@@ -14,7 +14,7 @@ openly, and we document prior art honestly. A `docs/prior-art.md` review is part
 
 ### Distinctive contributions
 
-1. **Ginkgo Cell Standard (GCS)** (close to OreSat's card/backplane; the differences are the grid, spine, notched card and checked rules). The 12U body is a 2 x 2 x 3 grid of ~113 mm cells around a
+1. **Wollemi Cell Standard (WCS)** (close to OreSat's card/backplane; the differences are the grid, spine, notched card and checked rules). The 12U body is a 2 x 2 x 3 grid of ~113 mm cells around a
    central spine and cross bulkheads. Each payload is a self-contained "cassette" occupying a
    defined number of cells, with fixed mechanical, thermal, power and data interfaces. New
    missions re-use the bus and swap cassettes. The cell grid is derived directly from the
@@ -45,6 +45,6 @@ openly, and we document prior art honestly. A `docs/prior-art.md` review is part
 
 ### Optional visual signature (to decide in the mechanical phase)
 
-- Ginkgo-leaf fan deployment for the solar wings (single pivot, single release line, fewer
+- Wollemi-leaf fan deployment for the solar wings (single pivot, single release line, fewer
   mechanisms). Trade-off: less efficient use of rectangular cell area. To be evaluated.
 - Distinctive solar cell pattern and marking on the panels; engraved emblem on the memory plate.

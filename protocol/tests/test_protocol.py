@@ -10,7 +10,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "generated"))
-import ginkgo_proto as gp  # noqa: E402
+import wollemi_proto as gp  # noqa: E402
 
 RNG = random.Random(1234)
 ranges = {"u8": (0, 255), "u16": (0, 65535), "u32": (0, 2 ** 32 - 1), "i8": (-128, 127), "i16": (-32768, 32767),

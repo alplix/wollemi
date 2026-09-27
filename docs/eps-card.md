@@ -44,6 +44,6 @@ Each chain is electrically and physically independent (separate deck, separate v
 
 ## Open items
 
-- Choose parts and capture the schematics in KiCad; layout to the Ginkgo card outline (notch, relief, GK-P connector).
+- Choose parts and capture the schematics in KiCad; layout to the Wollemi card outline (notch, relief, WL-P connector).
 - Decide whether pack heaters run from the EPS cards or from local heater cards (thermostat, hardware only).
 - Wing harness: connector and hinge routing for double-sided panels.

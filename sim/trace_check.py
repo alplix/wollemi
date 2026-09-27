@@ -36,7 +36,7 @@ def c_fit():
 
 
 def c_com():
-    import ginkgo_cad as gc
+    import wollemi_cad as gc
     M, com, _ = gc.mass_props(PLACEMENT["placed"], CFG, False, GEO)
     ok = abs(com[0]) <= 20 and abs(com[1]) <= 20 and abs(com[2]) <= 70
     return ok, f"CoM ({com[0]:+.1f}, {com[1]:+.1f}, {com[2]:+.1f}) mm"
@@ -125,7 +125,7 @@ def c_slew():
 
 
 def c_thrust_torque():
-    import ginkgo_cad as gc
+    import wollemi_cad as gc
     M, com, _ = gc.mass_props(PLACEMENT["placed"], CFG, False, GEO)
     bay = next(p for p in PLACEMENT["placed"] if p["name"].startswith("Bus: micro-propulsion"))
     plume = (bay["min"][0], (bay["min"][1] + bay["max"][1]) / 2, (bay["min"][2] + bay["max"][2]) / 2)
@@ -146,7 +146,7 @@ def c_deltav():
 
 
 def c_plume():
-    import ginkgo_cad as gc
+    import wollemi_cad as gc
     M, com, _ = gc.mass_props(PLACEMENT["placed"], CFG, False, GEO)
     bay = next(p for p in PLACEMENT["placed"] if p["name"].startswith("Bus: micro-propulsion"))
     plume = (-GEO["frame"]["outer"][0] / 2, (bay["min"][1] + bay["max"][1]) / 2, (bay["min"][2] + bay["max"][2]) / 2)

@@ -1,12 +1,12 @@
-"""Generate the Ginkgo column backplane strip (KiCad) from card_pinout.toml.
+"""Generate the Wollemi column backplane strip (KiCad) from card_pinout.toml.
 
 Usage: python electronics/gen_backplane.py
-Writes electronics/kicad/ginkgo_backplane_strip.kicad_pcb (+ project file) and runs kicad-cli DRC with zone refill.
+Writes electronics/kicad/wollemi_backplane_strip.kicad_pcb (+ project file) and runs kicad-cli DRC with zone refill.
 
 Strip: 90 x 330 mm, 6 layers (F.Cu pads, In1 GND plane, In2 signal chains, In3 VBAT_A plane, In4 VBAT_B plane, B.Cu GND).
-15 GK-P receptacle placeholders at a 20 mm pitch plus one hub receptacle. Bussed signals are daisy-chained between the
+15 WL-P receptacle placeholders at a 20 mm pitch plus one hub receptacle. Bussed signals are daisy-chained between the
 same pins of consecutive slots on In2 (row A and row B vias are offset by 0.7 mm so the chains never touch other vias).
-GND and the battery rails reach planes through vias; SLOT_ID[3:0] is strapped to GND per slot; GK-D pads are left for a cable header.
+GND and the battery rails reach planes through vias; SLOT_ID[3:0] is strapped to GND per slot; WL-D pads are left for a cable header.
 """
 import os
 import subprocess
@@ -106,10 +106,10 @@ def build():
                         if net in CHAIN:
                             chains.setdefault((net, row, j), []).append((sy, vx, vy))
             length = len(pin[conn]["pairs"]) * PITCH + 2.0
-            fp.append(f'  (footprint "Ginkgo:GK-{tag}_backplane_placeholder" (layer "F.Cu") (uuid "{u()}") (at {cx} {sy})\n'
+            fp.append(f'  (footprint "Wollemi:WL-{tag}_backplane_placeholder" (layer "F.Cu") (uuid "{u()}") (at {cx} {sy})\n'
                       f'    (property "Reference" "J_{sname}_{tag}" (at 0 {-ROW / 2 - 2.6:.1f} 0) (layer "F.SilkS") (uuid "{u()}") '
                       f'(effects (font (size 0.8 0.8) (thickness 0.12))))\n'
-                      f'    (property "Value" "GK-{tag}" (at 0 {ROW / 2 + 2.6:.1f} 0) (layer "F.Fab") (uuid "{u()}") '
+                      f'    (property "Value" "WL-{tag}" (at 0 {ROW / 2 + 2.6:.1f} 0) (layer "F.Fab") (uuid "{u()}") '
                       f'(effects (font (size 0.8 0.8) (thickness 0.12))))\n'
                       f'    (attr smd)\n'
                       f'    (fp_rect (start {-length / 2:.2f} -2.6) (end {length / 2:.2f} 2.6) (stroke (width 0.05) (type default)) '
@@ -147,10 +147,10 @@ def build():
     corners = [(0, 0), (BOARD_W, 0), (BOARD_W, BOARD_L), (0, BOARD_L)]
     for (x1, y1), (x2, y2) in zip(corners, corners[1:] + corners[:1]):
         edge.append(f'  (gr_line (start {x1} {y1}) (end {x2} {y2}) (stroke (width 0.1) (type default)) (layer "Edge.Cuts") (uuid "{u()}"))')
-    label = (f'  (gr_text "GINKGO BACKPLANE STRIP v0 - 15 slots, 20 mm pitch" (at 6 {BOARD_L - 12} 90) (layer "F.SilkS") '
+    label = (f'  (gr_text "WOLLEMI BACKPLANE STRIP v0 - 15 slots, 20 mm pitch" (at 6 {BOARD_L - 12} 90) (layer "F.SilkS") '
              f'(uuid "{u()}") (effects (font (size 1.2 1.2) (thickness 0.18)) (justify left)))')
 
-    head = ['(kicad_pcb', '  (version 20241229)', '  (generator "ginkgo_gen_backplane")', '  (generator_version "1.0")',
+    head = ['(kicad_pcb', '  (version 20241229)', '  (generator "wollemi_gen_backplane")', '  (generator_version "1.0")',
             '  (general (thickness 1.6) (legacy_teardrops no))', '  (paper "A3")',
             '  (layers',
             '    (0 "F.Cu" signal) (4 "In1.Cu" signal) (6 "In2.Cu" signal) (8 "In3.Cu" signal) (10 "In4.Cu" signal) (2 "B.Cu" signal)',
@@ -177,17 +177,17 @@ PRO = """{
       }
     }
   },
-  "meta": { "filename": "ginkgo_backplane_strip.kicad_pro", "version": 3 }
+  "meta": { "filename": "wollemi_backplane_strip.kicad_pro", "version": 3 }
 }
 """
 
 
 def main():
-    path = os.path.join(HERE, "kicad", "ginkgo_backplane_strip.kicad_pcb")
+    path = os.path.join(HERE, "kicad", "wollemi_backplane_strip.kicad_pcb")
     os.makedirs(os.path.dirname(path), exist_ok=True)
     text = build()
     open(path, "w", encoding="utf-8").write(text)
-    open(os.path.join(os.path.dirname(path), "ginkgo_backplane_strip.kicad_pro"), "w", encoding="utf-8").write(PRO)
+    open(os.path.join(os.path.dirname(path), "wollemi_backplane_strip.kicad_pro"), "w", encoding="utf-8").write(PRO)
     print(f"Wrote {path}: nets {len(nets.ids)}, {text.count('(segment')} tracks, {text.count('(via ')} vias")
     if os.path.exists(KICAD_CLI):
         rep = os.path.join(HERE, "kicad", "backplane_drc_report.txt")

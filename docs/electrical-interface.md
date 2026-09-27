@@ -1,6 +1,6 @@
 # Card and backplane electrical interface (draft v0)
 
-The **Ginkgo card** is the electrical and mechanical unit of the platform: a 100 x 100 mm board with a
+The **Wollemi card** is the electrical and mechanical unit of the platform: a 100 x 100 mm board with a
 20 x 20 mm corner cut-out that clears the central spine (see `mechanical/README.md`), seated in one of the four
 columns of the 12U frame. This document defines what a card sees. Tools: `sim/eps_design.py` (power numbers).
 
@@ -18,9 +18,9 @@ columns of the 12U frame. This document defines what a card sees. Tools: `sim/ep
 ## 2. Two connectors per card
 
 The exact pin-by-pin table is generated from `electronics/card_pinout.toml` (see `electronics/pinout.md`) and is the same data that
-drives the KiCad card template `electronics/kicad/ginkgo_card_template.kicad_pcb` (KiCad 10, DRC clean).
+drives the KiCad card template `electronics/kicad/wollemi_card_template.kicad_pcb` (KiCad 10, DRC clean).
 
-**GK-P (power and control), 2 x 30 pins, 1.27 mm pitch (0.8 mm was not routable on the notched card), blind-mate board-to-board.**
+**WL-P (power and control), 2 x 30 pins, 1.27 mm pitch (0.8 mm was not routable on the notched card), blind-mate board-to-board.**
 Connector family to be chosen after checking current rating, mating cycles and outgassing data (candidates in the Samtec ERM8/ERF8
 class and similar); the pin allocation below is independent of the vendor.
 
@@ -38,7 +38,7 @@ class and similar); the pin allocation below is independent of the vendor.
 | Debug | 4 | `SWD_CLK/IO`, `NRST_DBG`, `VREF` | ground use and integration test |
 | Reset + reserve | 8 | `RESET_N` (with `SLOT_SEL` qualification), 7 x `RSV` | left free on purpose |
 
-**GK-D (data), optional, 2 x 15 pins, only for data-plane cards** (Jetson, CM5, mass memory unit, S-band modem).
+**WL-D (data), optional, 2 x 15 pins, only for data-plane cards** (Jetson, CM5, mass memory unit, S-band modem).
 
 | Group | Pins | Signals |
 |---|---|---|
@@ -51,9 +51,9 @@ RF signals never use the backplane connectors: coax (SMP/MMCX) directly from the
 
 ## Backplane
 
-Each column has a passive **backplane strip** (90 x 330 mm, 6 layers) on its inner wall carrying one GK-P receptacle per slot at a 20 mm pitch (up to 15 slots plus a hub receptacle). Bussed signals
+Each column has a passive **backplane strip** (90 x 330 mm, 6 layers) on its inner wall carrying one WL-P receptacle per slot at a 20 mm pitch (up to 15 slots plus a hub receptacle). Bussed signals
 run as daisy chains between identical pins; GND and the two battery rails are planes reached through vias; `SLOT_ID[3:0]` is strapped to ground per slot. Generated from
-`electronics/card_pinout.toml` by `electronics/gen_backplane.py` (KiCad, DRC checked). The data connector GK-D is cabled to a switch card, not routed on the strip.
+`electronics/card_pinout.toml` by `electronics/gen_backplane.py` (KiCad, DRC checked). The data connector WL-D is cabled to a switch card, not routed on the strip.
 
 ## 3. Power rules for cards
 
@@ -91,7 +91,7 @@ thermal model and health monitoring; it also feeds the geometry BOM used by the 
 
 ## 7. Interoperability note (OreSat)
 
-OreSat uses a 1 Mbps CAN bus with CANopen and a 6.0 - 8.4 V power bus on its backplane. Ginkgo keeps CANopen NMT/heartbeat/SDO conventions
+OreSat uses a 1 Mbps CAN bus with CANopen and a 6.0 - 8.4 V power bus on its backplane. Wollemi keeps CANopen NMT/heartbeat/SDO conventions
 so open tooling can be reused, and requires a wide input voltage range on cards so they can be adapted; the **connector and pinout are
 not electrically compatible** with OreSat cards and a compatibility adapter or a shared subset would need to be agreed with that
 project. This is a decision item, not a promise.

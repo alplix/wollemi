@@ -11,7 +11,7 @@ import tomllib
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "sim"))
 sys.path.insert(0, os.path.join(ROOT, "mechanical"))
-import ginkgo_cad as gc  # noqa: E402
+import wollemi_cad as gc  # noqa: E402
 import thermal as T  # noqa: E402
 
 

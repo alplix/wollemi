@@ -1,7 +1,7 @@
-# Ginkgo protocol specification (draft v0)
+# Wollemi protocol specification (draft v0)
 
 Single source of truth: `protocol/messages.toml`. `python protocol/gen.py` generates the flight C header
-(`protocol/generated/ginkgo_proto.h`), the ground Python module (`ginkgo_proto.py`) and the message
+(`protocol/generated/wollemi_proto.h`), the ground Python module (`wollemi_proto.py`) and the message
 reference (`docs/protocol-messages.md`). `python protocol/tests/test_protocol.py` checks round trips,
 corruption detection and byte-exact agreement between C and Python.
 
@@ -10,7 +10,7 @@ identical on every link, and usable by any volunteer station with the open refer
 
 ## 1. Packet format
 
-Every message is a CCSDS Space Packet (CCSDS 133.0-B) with a Ginkgo secondary header; all fields big-endian.
+Every message is a CCSDS Space Packet (CCSDS 133.0-B) with a Wollemi secondary header; all fields big-endian.
 
 | Bytes | Field | Notes |
 |---|---|---|
@@ -66,7 +66,7 @@ Packets or a data product).
 
 **Open archive** (published continuously):
 
-- `*.gpk`: the exact wire packets, concatenated (lossless raw record), one file per APID group per day;
+- `*.wpk`: the exact wire packets, concatenated (lossless raw record), one file per APID group per day;
 - `*.json`: index (time span, APID, counts, hashes) and instrument metadata (units, calibration version);
 - `MANIFEST` with SHA-256 of every file, plus a copy of the protocol version (`messages.toml`, `docs/protocol.md`) used
   to produce them, so a future user can decode without our tools;

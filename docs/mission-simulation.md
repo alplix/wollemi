@@ -1,6 +1,6 @@
 # Closed-loop mission simulation (draft v0)
 
-Tool: `python sim/mission_sim.py [days]`. The **real firmware mode manager** (`firmware/common/gk_modes.c`, compiled to a shared library and called through ctypes) is driven by an
+Tool: `python sim/mission_sim.py [days]`. The **real firmware mode manager** (`firmware/common/wl_modes.c`, compiled to a shared library and called through ctypes) is driven by an
 orbit, power and fault model for 60 days, at 30 s steps, for two orbits. Power numbers come from the design budgets (`sim/budget.py`): sun-biased generation 94 W (eclipse orbit) or
 125 W (dawn-dusk), tumbling 45 W; loads NOMINAL 20.4 W, SCIENCE 27.9 W, ECLIPSE 17.9 W, BURN 53.1 W, SAFE 3.1 W, SURVIVAL 0.7 W. Battery 84 Wh, charge limit 42 W.
 
@@ -28,7 +28,7 @@ Verdict: no brownout and correct degradation and recovery in both orbits.
 
 - The mode ladder behaves as designed with hysteresis (safe mode entered below 20 % charge, left above 45 %), and the thruster runs only in sunlight and only with a sun-biased attitude.
 - The first run showed that **after the Jetson failure the spacecraft never returned to SCIENCE mode**, because that mode required heavy compute, so imaging campaigns stopped entirely.
-  Fix made: a **SCIENCE_LITE** mode (`gk_modes`): with the Jetson lost, imaging continues on the Pi CM5 at reduced processing; the Jetson coming back restores SCIENCE. Unit tests added (68 checks) and the simulation re-run:
+  Fix made: a **SCIENCE_LITE** mode (`wl_modes`): with the Jetson lost, imaging continues on the Pi CM5 at reduced processing; the Jetson coming back restores SCIENCE. Unit tests added (68 checks) and the simulation re-run:
   science time rose from 9 h and 15 h to 76 h and 119 h.
 - In an eclipse orbit the mode changes every half orbit (about 28 per day); harmless but the telemetry and event log must not flood: log mode changes only when the cause is not a routine eclipse.
 - Energy is plentiful: the batteries are full most of the time and much sunlight is shed, so more power-hungry instruments or a bigger heater budget fit if the volume and thermal design allow.

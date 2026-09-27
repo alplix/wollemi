@@ -1,12 +1,12 @@
-# Ginkgo
+# Wollemi
 
 > **Private for now.** The repository will be opened to the public once the design is complete. No licence has been applied yet; the plan (`docs/licensing.md`) is CERN-OHL-S-2.0 for hardware,
 > Apache-2.0 for software and CC-BY-4.0 for documents. Analysis-level design only: no hardware exists, nothing here is qualified for flight, and every number is an engineering estimate.
 
-Ginkgo is an open, modular, fully documented small-satellite **platform** and a first mission built on it: a science-first, long-life **12U observatory** with a tiered 50-year survival design.
+Wollemi is an open, modular, fully documented small-satellite **platform** and a first mission built on it: a science-first, long-life **12U observatory** with a tiered 50-year survival design.
 Everything is generated from configuration files and checked by tools, so a derived mission is a configuration change plus new cards.
 
-*Türkçe özet:* Ginkgo, açık kaynak, modüler bir küçük uydu platformu ve üzerine kurulu ilk görev: uzun ömürlü, bilim öncelikli 12U gözlemevi. Tasarım analiz düzeyinde tamamlandı (donanım yok);
+*Türkçe özet:* Wollemi, açık kaynak, modüler bir küçük uydu platformu ve üzerine kurulu ilk görev: uzun ömürlü, bilim öncelikli 12U gözlemevi. Tasarım analiz düzeyinde tamamlandı (donanım yok);
 her sayı config dosyalarından üretilen araçlarla doğrulanıyor. Depo şimdilik özel, tasarım olgunlaşınca herkese açılacak.
 
 ## Where things stand
@@ -57,7 +57,7 @@ What is missing is physical: vendor data, schematics of the functional cards, pr
 pip install build123d cryptography sgp4       # CAD kernel, signing tests, orbit propagation (numpy, scipy, pillow come with build123d); KiCad 10 optional for DRC
 python tools/check_all.py                     # runs every analysis and test, writes docs/status.md   (--quick skips CAD, thermal and the verification matrix)
 python sim/trace_check.py                     # live requirements verification matrix
-python mechanical/ginkgo_cad.py               # full CAD assembly and checks, exports into mechanical/out/
+python mechanical/wollemi_cad.py               # full CAD assembly and checks, exports into mechanical/out/
 python tools/gen_sdd.py                       # regenerate the system design document
 ```
 

@@ -4,12 +4,12 @@ Pure C99 logic that will run unchanged on the flight controller and supervisor; 
 
 | Module | Role |
 |---|---|
-| `common/gk_auth.*` | Telecommand authentication: CRC, TC check, validity window, replay counter, Ed25519 (TweetNaCl), current + previous key |
-| `common/gk_modes.*` | Mode manager and degradation ladder (LAUNCH, DEPLOY, COMMISSION, NOMINAL, SCIENCE, SCIENCE_LITE, BURN, ECLIPSE, SAFE, SURVIVAL; levels L0-L3) |
-| `common/gk_fdir.*` | Heartbeat monitoring and escalation retry -> restart -> power-cycle -> switch redundant -> degrade |
-| `common/gk_cmdq.*` | Time-tagged command queue (absolute time and orbit position triggers, mode masks, validity windows) |
-| `common/gk_ota.*` | A/B update state machine with confirm-or-rollback |
-| `../protocol/generated/ginkgo_proto.h` | Generated packet code shared with the ground software |
+| `common/wl_auth.*` | Telecommand authentication: CRC, TC check, validity window, replay counter, Ed25519 (TweetNaCl), current + previous key |
+| `common/wl_modes.*` | Mode manager and degradation ladder (LAUNCH, DEPLOY, COMMISSION, NOMINAL, SCIENCE, SCIENCE_LITE, BURN, ECLIPSE, SAFE, SURVIVAL; levels L0-L3) |
+| `common/wl_fdir.*` | Heartbeat monitoring and escalation retry -> restart -> power-cycle -> switch redundant -> degrade |
+| `common/wl_cmdq.*` | Time-tagged command queue (absolute time and orbit position triggers, mode masks, validity windows) |
+| `common/wl_ota.*` | A/B update state machine with confirm-or-rollback |
+| `../protocol/generated/wollemi_proto.h` | Generated packet code shared with the ground software |
 
 ```
 pip install cryptography
