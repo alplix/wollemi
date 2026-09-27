@@ -60,7 +60,16 @@ function initViewer(mount) {
         // export_obj.py's OBJ has no vn (vertex normal) data, and this three.js version's OBJLoader
         // doesn't compute normals when they're missing -- without this the lit material has nothing to
         // shade against and every face renders flat black regardless of the lights in the scene.
-        obj.traverse((child) => { if (child.isMesh) child.geometry.computeVertexNormals(); });
+        // The custom rasteriser that wrote the OBJ also doesn't guarantee consistent CCW winding, so the
+        // computed normals point inward on some faces -- those then read as unlit black from the camera's
+        // default angle. THREE.DoubleSide makes every face shade correctly from either side rather than
+        // depending on winding order being right.
+        obj.traverse((child) => {
+          if (!child.isMesh) return;
+          child.geometry.computeVertexNormals();
+          const mats = Array.isArray(child.material) ? child.material : [child.material];
+          mats.forEach((m) => { m.side = THREE.DoubleSide; });
+        });
         // export_obj.py writes Z-up, X/Y in mm centred on the spine -- rotate so Z (long axis) reads as up on screen.
         obj.rotation.x = -Math.PI / 2.4;
         obj.rotation.z = Math.PI / 6;

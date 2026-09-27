@@ -39,6 +39,11 @@ async def security_headers(request: Request, call_next):
         resp.headers["Cache-Control"] = "public, max-age=604800, immutable"
     elif request.url.path.endswith((".html", "/")) or request.url.path == "":
         resp.headers["Cache-Control"] = "public, max-age=300"
+    elif request.url.path.endswith((".js", ".obj", ".mtl", ".svg")):
+        # short-lived on purpose: without an explicit Cache-Control, Cloudflare's default edge caching
+        # still caches these extensions by its own heuristic, and a fix here can otherwise sit stale at
+        # the edge for a while after a redeploy with no way to tell from the origin logs.
+        resp.headers["Cache-Control"] = "public, max-age=300, must-revalidate"
     if request.url.scheme == "https" or request.headers.get("x-forwarded-proto") == "https":
         resp.headers["Strict-Transport-Security"] = "max-age=31536000"
     return resp
